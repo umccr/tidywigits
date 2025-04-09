@@ -1,0 +1,48 @@
+Package: tidywigits
+Title: Tidy WiGiTS
+Version: 0.0.0.9000
+Description: Tidy outputs from The Hartwig Medical Foundation's WiGiTS
+             suite of genome and transcriptome analysis tools.
+             Writes to various formats for downstream ingestion
+             into data warehouses and databases.
+Authors@R:
+    c(person(given = "Peter",
+           family = "Diakumis",
+           role = c("aut", "cre"),
+           email = "peterdiakumis@gmail.com",
+           comment = c(ORCID = "0000-0002-7502-7545"))
+     )
+URL: https://github.com/umccr/tidywigits, https://umccr.github.io/tidywigits/
+BugReports: https://github.com/umccr/tidywigits/issues
+License: MIT + file LICENSE
+Depends:
+    R (>= 4.1)
+Imports:
+    argparse,
+    assertthat,
+    cli,
+    DBI,
+    dplyr,
+    fs,
+    ggplot2,
+    glue,
+    purrr,
+    RPostgres,
+    R6,
+    readr,
+    rlang,
+    scales,
+    tibble,
+    tidyr
+Suggests:
+    knitr,
+    rmarkdown,
+    testthat (>= 3.0.0)
+Roxygen: list(markdown = TRUE,
+              roclets = c("namespace", "rd", "roxytest::testthat_roclet"))
+biocViews:
+ByteCompile: true
+Config/testthat/edition: 3
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.3.2
