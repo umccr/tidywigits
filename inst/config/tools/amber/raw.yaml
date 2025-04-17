@@ -1,0 +1,102 @@
+description:
+  'AMBER is designed to generate a tumor BAF file for use in PURPLE from a
+  provided VCF of likely heterozygous SNP sites.'
+raw:
+  bafpcf:
+    description: 'BAF segments using PCF algorithm.'
+    pattern: ".*\\.amber\\.baf\\.pcf$"
+    ftype: 'tsv'
+    schema:
+      latest:
+        - field: 'sampleID'
+          type: 'char'
+        - field: 'chrom'
+          type: 'char'
+        - field: 'arm'
+          type: 'char'
+        - field: 'start.pos'
+          type: 'int'
+        - field: 'end.pos'
+          type: 'int'
+        - field: 'n.probes'
+          type: 'int'
+        - field: 'mean'
+          type: 'float'
+  baftsv:
+    description: 'BAF for reference and tumor at each heterozygous site.'
+    pattern: ".*\\.amber\\.baf\\.tsv\\.gz$"
+    ftype: 'tsv'
+    schema:
+      latest:
+        - field: 'chromosome'
+          type: 'char'
+        - field: 'position'
+          type: 'int'
+        - field: 'tumorBAF'
+          type: 'float'
+        - field: 'tumorModifiedBAF'
+          type: 'float'
+        - field: 'tumorDepth'
+          type: 'int'
+        - field: 'normalBAF'
+          type: 'float'
+        - field: 'normalModifiedBAF'
+          type: 'float'
+        - field: 'normalDepth'
+          type: 'int'
+  contaminationtsv:
+    description: 'Entry at each homozygous site in the reference and tumor.'
+    pattern: ".*\\.amber\\.contamination\\.tsv$"
+    ftype: 'tsv'
+    schema:
+      latest:
+        - field: 'chromosome'
+          type: 'char'
+        - field: 'position'
+          type: 'int'
+        - field: 'ref'
+          type: 'char'
+        - field: 'alt'
+          type: 'char'
+        - field: 'normalDepth'
+          type: 'int'
+        - field: 'normalRefSupport'
+          type: 'int'
+        - field: 'normalAltSupport'
+          type: 'int'
+        - field: 'tumorDepth'
+          type: 'int'
+        - field: 'tumorRefSupport'
+          type: 'int'
+        - field: 'tumorAltSupport'
+          type: 'int'
+  homozygousregion:
+    description: 'Regions of homozygosity found in the reference.'
+    pattern: ".*\\.amber\\.homozygousregion\\.tsv$"
+    ftype: 'tsv'
+    schema:
+      latest:
+        - field: 'chromosome'
+          type: 'char'
+        - field: 'startPosition'
+          type: 'int'
+        - field: 'endPosition'
+          type: 'int'
+        - field: 'snpCount'
+          type: 'int'
+        - field: 'homCount'
+          type: 'int'
+        - field: 'hetCount'
+          type: 'int'
+        - field: 'filter'
+          type: 'char'
+  qc:
+    description: 'QC metrics'
+    pattern: ".*\\.amber\\.qc$"
+    ftype: 'tsv'
+    schema:
+      latest:
+        - field: 'variable'
+          type: 'char'
+        - field: 'value'
+          type: 'char'
