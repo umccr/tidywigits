@@ -4,7 +4,7 @@ description:
 raw:
   bafpcf:
     description: 'BAF segments using PCF algorithm.'
-    pattern: ".*\\.amber\\.baf\\.pcf$"
+    pattern: "\\.amber\\.baf\\.pcf$"
     ftype: 'tsv'
     schema:
       latest:
@@ -24,7 +24,7 @@ raw:
           type: 'float'
   baftsv:
     description: 'BAF for reference and tumor at each heterozygous site.'
-    pattern: ".*\\.amber\\.baf\\.tsv\\.gz$"
+    pattern: "\\.amber\\.baf\\.tsv\\.gz$"
     ftype: 'tsv'
     schema:
       latest:
@@ -46,7 +46,7 @@ raw:
           type: 'int'
   contaminationtsv:
     description: 'Entry at each homozygous site in the reference and tumor.'
-    pattern: ".*\\.amber\\.contamination\\.tsv$"
+    pattern: "\\.amber\\.contamination\\.tsv$"
     ftype: 'tsv'
     schema:
       latest:
@@ -72,7 +72,7 @@ raw:
           type: 'int'
   homozygousregion:
     description: 'Regions of homozygosity found in the reference.'
-    pattern: ".*\\.amber\\.homozygousregion\\.tsv$"
+    pattern: "\\.amber\\.homozygousregion\\.tsv$"
     ftype: 'tsv'
     schema:
       latest:
@@ -92,7 +92,7 @@ raw:
           type: 'char'
   qc:
     description: 'QC metrics'
-    pattern: ".*\\.amber\\.qc$"
+    pattern: "\\.amber\\.qc$"
     ftype: 'tsv'
     schema:
       latest:
