@@ -1,17 +1,22 @@
 #' @title File Object
 #'
-#' @description Represents a file output from a workflow.
+#' @description
+#' Represents a file output from a workflow.
 #' A File has an absolute path and a basename. Given a suffix pattern,
 #' it can also have a prefix (e.g. for file `foo.txt` and a `\\.txt` suffix
 #' pattern, the prefix will be `foo`).
 #'
 #' @examples
-#' f1 <- File$new(readr::readr_example("mtcars.csv"))
-#' (bname_f1 <- f1$bname)
+#' f1 <- File$new(readr::readr_example("mtcars.csv"), "\\.csv")
+#' (b <- f1$bname)
+#' (p <- f1$prefix)
+#' (sp <- f1$suffix_pattern)
 #'
 #' @testexamples
 #' expect_true(inherits(f1, c("File", "R6")))
-#' expect_equal(bname_f1, "mtcars.csv")
+#' expect_equal(b, "mtcars.csv")
+#' expect_equal(p, "mtcars")
+#' expect_equal(sp, "\\.csv")
 #'
 #' @export
 File <- R6::R6Class(
@@ -50,8 +55,8 @@ File <- R6::R6Class(
     print = function(...) {
       cat("#--- File ---#\n")
       cat(glue("Path: {self$path}"), "\n")
-      cat(glue("Basename: {self$bname}"), "\n")
-      cat(glue("Suffix pattern: {self$suffix_pattern}", .null = NULL), "\n")
+      cat(glue("Basenm: {self$bname}"), "\n")
+      cat(glue("Sufpat: {self$suffix_pattern}", .null = NULL), "\n")
       cat(glue("Prefix: {self$prefix}", .null = NULL), "\n")
       invisible(self)
     }

@@ -2,16 +2,38 @@
 % Please edit documentation in R/Tool.R
 \name{Tool}
 \alias{Tool}
-\title{Tool Class}
+\title{Tool Object}
 \description{
 Base class for all wigits tools.
+}
+\examples{
+\dontrun{
+name <- "amber"
+outdir <- here::here(
+  "nogit/oncoanalyser-wgts-dna/20250407e2ff5344/L2500331_L2500332/amber"
+)
+prefix <- NULL
+x <- Tool$new(name, outdir, prefix)
+}
+
 }
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
-\item{\code{odir}}{Output directory for the tool.}
+\item{\code{name}}{(\code{character(1)})\cr
+Name of tool.}
 
-\item{\code{prefix}}{Prefix for the tool.}
+\item{\code{outdir}}{(\code{character(1)})\cr
+Output directory of tool}
+
+\item{\code{prefix}}{(named \code{character(3)})\cr
+Prefix of tool: c(wgs_tumor = NULL, wgs_normal = NULL, wts_tumor = NULL).}
+
+\item{\code{config}}{(\code{Config()})\cr
+Config of tool.}
+
+\item{\code{files}}{(\code{tibble()})\cr
+Tibble of files matching available Tool patterns.}
 }
 \if{html}{\out{</div>}}
 }
@@ -20,6 +42,7 @@ Base class for all wigits tools.
 \itemize{
 \item \href{#method-Tool-new}{\code{Tool$new()}}
 \item \href{#method-Tool-print}{\code{Tool$print()}}
+\item \href{#method-Tool-list_files}{\code{Tool$list_files()}}
 \item \href{#method-Tool-clone}{\code{Tool$clone()}}
 }
 }
@@ -29,15 +52,20 @@ Base class for all wigits tools.
 \subsection{Method \code{new()}}{
 Create a new Tool object.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Tool$new(odir, prefix)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Tool$new(name, outdir, prefix)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{odir}}{Output directory for the tool.}
+\item{\code{name}}{(\code{character(1)})\cr
+Name of tool.}
 
-\item{\code{prefix}}{Prefix for the tool.}
+\item{\code{outdir}}{(\code{character(1)})\cr
+Output directory of tool.}
+
+\item{\code{prefix}}{(named \code{character(3)})\cr
+Prefix of tool: c(wgs_tumor = NULL, wgs_normal = NULL, wts_tumor = NULL).}
 }
 \if{html}{\out{</div>}}
 }
@@ -58,6 +86,16 @@ Print details about the Tool.
 }
 \if{html}{\out{</div>}}
 }
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Tool-list_files"></a>}}
+\if{latex}{\out{\hypertarget{method-Tool-list_files}{}}}
+\subsection{Method \code{list_files()}}{
+List files in given tool directory.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Tool$list_files()}\if{html}{\out{</div>}}
+}
+
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-Tool-clone"></a>}}

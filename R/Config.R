@@ -40,6 +40,7 @@ Config <- R6::R6Class(
     #' @description Print details about the Tool.
     #' @param ... (ignored).
     print = function(...) {
+      cat("#--- Config ---#\n")
       print(self$tool)
       invisible(self)
     },
@@ -115,7 +116,7 @@ Config <- R6::R6Class(
         sep = ", ",
         last = " or "
       )
-      s <- self$raw_schemas()
+      s <- self$raw_schemas_all()
       invalid <- s |>
         tidyr::unnest("schema") |>
         dplyr::mutate(invalid_type = !.data$type %in% valid_types) |>
