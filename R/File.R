@@ -53,11 +53,16 @@ File <- R6::R6Class(
     #' @description Print details about the File.
     #' @param ... (ignored).
     print = function(...) {
+      # fmt: skip
+      res <- tibble::tribble(
+        ~var, ~value,
+        "path", self$path,
+        "basename", self$bname,
+        "suffixpat", self$suffix_pattern,
+        "prefix", self$prefix
+      )
       cat("#--- File ---#\n")
-      cat(glue("Path: {self$path}"), "\n")
-      cat(glue("Basenm: {self$bname}"), "\n")
-      cat(glue("Sufpat: {self$suffix_pattern}", .null = NULL), "\n")
-      cat(glue("Prefix: {self$prefix}", .null = NULL), "\n")
+      print(res)
       invisible(self)
     }
   )

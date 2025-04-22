@@ -57,6 +57,7 @@ Tool <- R6::R6Class(
         "prefix", self$prefix
       ) |>
         tidyr::unnest("value")
+      cat("#--- Tool ---#\n")
       print(res)
       invisible(self)
     },
