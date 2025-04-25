@@ -5,11 +5,10 @@
 #' @examples
 #' \dontrun{
 #' name <- "amber"
-#' outdir <- here::here(
+#' path <- here::here(
 #'   "nogit/oncoanalyser-wgts-dna/20250407e2ff5344/L2500331_L2500332/amber"
 #' )
-#' prefix <- NULL
-#' x <- Tool$new(name, outdir, prefix)
+#' x <- Tool$new(name, path)
 #' }
 #'
 #' @export
@@ -19,12 +18,9 @@ Tool <- R6::R6Class(
     #' @field name (`character(1)`)\cr
     #' Name of tool.
     name = NULL,
-    #' @field outdir  (`character(1)`)\cr
+    #' @field path  (`character(1)`)\cr
     #' Output directory of tool
-    outdir = NULL,
-    #' @field prefix (named `character(3)`)\cr
-    #' Prefix of tool: c(wgs_tumor = NULL, wgs_normal = NULL, wts_tumor = NULL).
-    prefix = NULL,
+    path = NULL,
     #' @field config (`Config()`)\cr
     #' Config of tool.
     config = NULL,
@@ -35,14 +31,11 @@ Tool <- R6::R6Class(
     #' @description Create a new Tool object.
     #' @param name (`character(1)`)\cr
     #' Name of tool.
-    #' @param outdir (`character(1)`)\cr
+    #' @param path (`character(1)`)\cr
     #' Output directory of tool.
-    #' @param prefix (named `character(3)`)\cr
-    #' Prefix of tool: c(wgs_tumor = NULL, wgs_normal = NULL, wts_tumor = NULL).
-    initialize = function(name, outdir, prefix) {
+    initialize = function(name, path) {
       self$name <- name
-      self$outdir <- outdir
-      self$prefix <- prefix
+      self$path <- path
       self$config <- Config$new(self$name)
       self$files <- self$list_files()
     },
@@ -53,8 +46,7 @@ Tool <- R6::R6Class(
       res <- tibble::tribble(
         ~var, ~value,
         "name", self$name,
-        "outdir", self$outdir,
-        "prefix", self$prefix
+        "path", self$path
       ) |>
         tidyr::unnest("value")
       cat("#--- Tool ---#\n")
@@ -64,7 +56,7 @@ Tool <- R6::R6Class(
     #' @description List files in given tool directory.
     list_files = function() {
       patterns <- self$config$raw_patterns()
-      files <- list_files_dir(self$outdir)
+      files <- list_files_dir(self$path)
       res <- files |>
         dplyr::rowwise() |>
         dplyr::mutate(
@@ -91,7 +83,8 @@ Tool <- R6::R6Class(
               suffix_pattern = .data$pattern
             )
           ),
-          prefix = FileObj$prefix
+          prefix = FileObj$prefix,
+          schema = list(self$config$raw_schema(.data$parser))
         )
       res
     }
