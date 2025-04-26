@@ -9,8 +9,8 @@
 #' @examples
 #' f1 <- File$new(readr::readr_example("mtcars.csv"), "\\.csv")
 #' (b <- f1$bname)
-#' (p <- f1$prefix)
 #' (sp <- f1$suffix_pattern)
+#' (p <- f1$prefix)
 #'
 #' @testexamples
 #' expect_true(inherits(f1, c("File", "R6")))

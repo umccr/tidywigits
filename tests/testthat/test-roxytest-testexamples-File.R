@@ -2,12 +2,12 @@
 
 # File R/File.R: @testexamples
 
-test_that("Function File() @ L21", {
+test_that("Function File() @ L22", {
   
   f1 <- File$new(readr::readr_example("mtcars.csv"), "\\.csv")
   (b <- f1$bname)
-  (p <- f1$prefix)
   (sp <- f1$suffix_pattern)
+  (p <- f1$prefix)
   
   expect_true(inherits(f1, c("File", "R6")))
   expect_equal(b, "mtcars.csv")

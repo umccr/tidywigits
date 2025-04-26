@@ -1,66 +1,3 @@
-#' @title Parser Object
-#'
-#' @description
-#' A class to parse files based on their type.
-#' @export
-Parser <- R6::R6Class(
-  "Parser",
-  public = list(
-    #' @field parsers (`list()`)\cr
-    #' List of registered parsers
-    parsers = NULL,
-
-    #' @description Create a new Parser object.
-    initialize = function() {
-      self$parsers <- list()
-    },
-
-    #' @description Register a parser for a specific file type.
-    #' @param type (`character(1)`)\cr
-    #' File type (e.g., "bafpcf", "baftsv").
-    #' @param fun (`function`)\cr
-    #' Parsing function for the file type.
-    register_parser = function(type, fun) {
-      self$parsers[[type]] <- fun
-    },
-
-    #' @description Parse a file based on its type.
-    #' @param file (`character(1)`)\cr
-    #' File path.
-    #' @param type (`character(1)`)\cr
-    #' File type.
-    #' @param schema (`tibble()`)\cr
-    #' Schema for validation (optional).
-    #' @return Parsed data.
-    parse = function(file, type, schema = NULL) {
-      if (!type %in% names(self$parsers)) {
-        stop(sprintf("No parser registered for file type '%s'.", type))
-      }
-      parsed_data <- self$parsers[[type]](file)
-      if (!is.null(schema)) {
-        self$validate_schema(parsed_data, schema)
-      }
-      return(parsed_data)
-    },
-
-    #' @description Validate parsed data against a schema.
-    #' @param data (`data.frame`)\cr
-    #' Parsed data.
-    #' @param schema (`tibble()`)\cr
-    #' Schema for validation.
-    validate_schema = function(data, schema) {
-      expected_columns <- schema$field
-      actual_columns <- colnames(data)
-      if (!all(expected_columns %in% actual_columns)) {
-        stop(sprintf(
-          "Schema validation failed. Missing columns: %s",
-          paste(setdiff(expected_columns, actual_columns), collapse = ", ")
-        ))
-      }
-    }
-  )
-)
-
 #' Parse file
 #'
 #' @description
@@ -130,7 +67,7 @@ parse_file <- function(fname, schema, type) {
       col_types = col_types
     ) |>
       purrr::set_names(col_names_new)
-    return(d)
+    return(d[])
   }
   d <- readr::read_delim(
     file = fname,
@@ -138,5 +75,5 @@ parse_file <- function(fname, schema, type) {
     col_names = col_names,
     col_types = col_types
   )
-  return(d)
+  return(d[])
 }

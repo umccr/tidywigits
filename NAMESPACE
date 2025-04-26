@@ -3,7 +3,6 @@
 export(Amber)
 export(Config)
 export(File)
-export(Parser)
 export(Tool)
 export(list_files_dir)
 importFrom(R6,R6Class)
