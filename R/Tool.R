@@ -87,6 +87,14 @@ Tool <- R6::R6Class(
           schema = list(self$config$raw_schema(.data$parser))
         )
       res
+    },
+    #' @description Evaluate function in the context of the Tool's
+    #' environment.
+    #' @param fun (`character(1)`)\cr
+    #' Function from Tool to evaluate.
+    eval_func = function(fun) {
+      assertthat::assert_that(rlang::is_scalar_character(fun))
+      get(fun, envir = self)
     }
   )
 )

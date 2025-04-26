@@ -9,11 +9,10 @@ Base class for all wigits tools.
 \examples{
 \dontrun{
 name <- "amber"
-outdir <- here::here(
+path <- here::here(
   "nogit/oncoanalyser-wgts-dna/20250407e2ff5344/L2500331_L2500332/amber"
 )
-prefix <- NULL
-x <- Tool$new(name, outdir, prefix)
+x <- Tool$new(name, path)
 }
 
 }
@@ -23,11 +22,8 @@ x <- Tool$new(name, outdir, prefix)
 \item{\code{name}}{(\code{character(1)})\cr
 Name of tool.}
 
-\item{\code{outdir}}{(\code{character(1)})\cr
+\item{\code{path}}{(\code{character(1)})\cr
 Output directory of tool}
-
-\item{\code{prefix}}{(named \code{character(3)})\cr
-Prefix of tool: c(wgs_tumor = NULL, wgs_normal = NULL, wts_tumor = NULL).}
 
 \item{\code{config}}{(\code{Config()})\cr
 Config of tool.}
@@ -43,6 +39,7 @@ Tibble of files matching available Tool patterns.}
 \item \href{#method-Tool-new}{\code{Tool$new()}}
 \item \href{#method-Tool-print}{\code{Tool$print()}}
 \item \href{#method-Tool-list_files}{\code{Tool$list_files()}}
+\item \href{#method-Tool-eval_func}{\code{Tool$eval_func()}}
 \item \href{#method-Tool-clone}{\code{Tool$clone()}}
 }
 }
@@ -52,7 +49,7 @@ Tibble of files matching available Tool patterns.}
 \subsection{Method \code{new()}}{
 Create a new Tool object.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Tool$new(name, outdir, prefix)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Tool$new(name, path)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -61,11 +58,8 @@ Create a new Tool object.
 \item{\code{name}}{(\code{character(1)})\cr
 Name of tool.}
 
-\item{\code{outdir}}{(\code{character(1)})\cr
+\item{\code{path}}{(\code{character(1)})\cr
 Output directory of tool.}
-
-\item{\code{prefix}}{(named \code{character(3)})\cr
-Prefix of tool: c(wgs_tumor = NULL, wgs_normal = NULL, wts_tumor = NULL).}
 }
 \if{html}{\out{</div>}}
 }
@@ -96,6 +90,25 @@ List files in given tool directory.
 \if{html}{\out{<div class="r">}}\preformatted{Tool$list_files()}\if{html}{\out{</div>}}
 }
 
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Tool-eval_func"></a>}}
+\if{latex}{\out{\hypertarget{method-Tool-eval_func}{}}}
+\subsection{Method \code{eval_func()}}{
+Evaluate function in the context of the Tool's
+environment.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Tool$eval_func(fun)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{fun}}{(\code{character(1)})\cr
+Function from Tool to evaluate.}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-Tool-clone"></a>}}
