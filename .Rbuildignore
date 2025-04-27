@@ -1,6 +1,7 @@
 ^CODE_OF_CONDUCT\.md$
 ^Dockerfile$
 ^LICENSE\.md$
+^Makefile$
 ^README\.qmd$
 ^\.DS_Store$
 ^\.Rproj\.user$
@@ -9,11 +10,13 @@
 ^\.dvc$
 ^\.dvcignore$
 ^\.github$
+^\.lintr$
 ^\.pre-commit-config\.yaml$
+^\.vscode$
 ^_pkgdown\.yaml$
 ^air\.toml$
-^deploy$
 ^data-raw$
+^deploy$
 ^docs$
 ^nogit$
 ^pkgdown$
