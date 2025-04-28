@@ -55,7 +55,7 @@ Tool <- R6::R6Class(
     },
     #' @description List files in given tool directory.
     list_files = function() {
-      patterns <- self$config$raw_patterns()
+      patterns <- self$config$.raw_patterns()
       files <- list_files_dir(self$path)
       res <- files |>
         dplyr::rowwise() |>
@@ -84,7 +84,7 @@ Tool <- R6::R6Class(
             )
           ),
           prefix = FileObj$prefix,
-          schema = list(self$config$raw_schema(.data$parser))
+          schema = list(self$config$.raw_schema(.data$parser))
         )
       res
     },
@@ -92,9 +92,24 @@ Tool <- R6::R6Class(
     #' environment.
     #' @param fun (`character(1)`)\cr
     #' Function from Tool to evaluate.
-    eval_func = function(fun) {
+    #' @param envir (`environment()`)\cr
+    #' Environment to evaluate the function within.
+    .eval_func = function(fun, envir = self) {
       assertthat::assert_that(rlang::is_scalar_character(fun))
-      get(fun, envir = self)
+      get(fun, envir)
+    },
+    #' @description Tidy a list of files
+    #' @param envir (`environment()`)\cr
+    #' Environment to evaluate the function within.
+    .tidy = function(envir = NULL) {
+      assertthat::assert_that(!is.null(envir))
+      self$files |>
+        dplyr::mutate(parser = glue("tidy_{parser}")) |>
+        dplyr::rowwise() |>
+        dplyr::mutate(
+          tidy = list(self$.eval_func(.data$parser, envir)(.data$path))
+        ) |>
+        dplyr::ungroup()
     }
   )
 )

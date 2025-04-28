@@ -18,7 +18,7 @@
 #' )
 #' prefix <- NULL
 #' x <- Tool$new(name, outdir, prefix)
-#' schemas_all <- x$config$schemas_all
+#' schemas_all <- x$config$raw_schemas_all
 #' files_all <- x$files
 #' ftype <- "baftsv"
 #' fname <-
