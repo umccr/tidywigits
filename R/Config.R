@@ -6,9 +6,9 @@
 #' \dontrun{
 #' tool <- "amber"
 #' conf <- Config$new(tool)
-#' conf$config
-#' conf$raw_schemas_valid()
+#' conf$.raw_schemas_valid()
 #' conf$schemas_all
+#' conf$.tidy_descriptions()
 #' }
 #' @export
 Config <- R6::R6Class(
@@ -20,9 +20,12 @@ Config <- R6::R6Class(
     #' @field config (`list()`)\cr
     #' Config list.
     config = NULL,
-    #' @field schemas_all (`tibble()`)\cr
+    #' @field raw_schemas_all (`tibble()`)\cr
     #' All raw schemas for tool.
-    schemas_all = NULL,
+    raw_schemas_all = NULL,
+    #' @field tidy_schemas_all (`tibble()`)\cr
+    #' All tidy schemas for tool.
+    tidy_schemas_all = NULL,
 
     #' @description Create a new Config object.
     #' @param tool (`character(1)`)\cr
@@ -34,8 +37,9 @@ Config <- R6::R6Class(
       msg2 <- glue("'{tool}' is not a valid tool.\nCurrently supported: {msg1}")
       assertthat::assert_that(tool %in% valid_tools, msg = msg2)
       self$tool <- tool
-      self$config <- self$read()
-      self$schemas_all <- self$raw_schemas_all()
+      self$config <- self$.read()
+      self$raw_schemas_all <- self$.raw_schemas_all()
+      self$tidy_schemas_all <- self$.tidy_schemas_all()
     },
     #' @description Print details about the Tool.
     #' @param ... (ignored).
@@ -46,7 +50,7 @@ Config <- R6::R6Class(
     },
     #' @description Read YAML configs.
     #' @return A `list()` with the parsed data.
-    read = function() {
+    .read = function() {
       pkg_config_path <- system.file(
         glue("config/tools/{self$tool}"),
         package = "tidywigits"
@@ -56,28 +60,28 @@ Config <- R6::R6Class(
       list(raw = raw, tidy = tidy)
     },
     #' @description Return all output file patterns.
-    raw_patterns = function() {
+    .raw_patterns = function() {
       self$config[["raw"]][["raw"]] |>
         purrr::map("pattern") |>
         tibble::enframe() |>
         tidyr::unnest("value")
     },
     #' @description Return all output file schema versions.
-    raw_versions = function() {
+    .raw_versions = function() {
       self$config[["raw"]][["raw"]] |>
         purrr::map(\(file) file[["schema"]] |> names()) |>
         tibble::enframe() |>
         tidyr::unnest("value")
     },
     #' @description Return all output file descriptions.
-    raw_descriptions = function() {
+    .raw_descriptions = function() {
       self$config[["raw"]][["raw"]] |>
         purrr::map("description") |>
         tibble::enframe() |>
         tidyr::unnest("value")
     },
     #' @description Return all output file schemas.
-    raw_schemas_all = function() {
+    .raw_schemas_all = function() {
       self$config[["raw"]][["raw"]] |>
         purrr::map(\(rawfile) {
           rawfile[["schema"]] |>
@@ -90,15 +94,15 @@ Config <- R6::R6Class(
             ) |>
             tibble::enframe(name = "version", value = "schema")
         }) |>
-        dplyr::bind_rows(.id = "file")
+        dplyr::bind_rows(.id = "name")
     },
     #' @description Get raw file schema.
     #' @param x (`character(1)`)\cr
     #' Raw file name.
     #' @param v (`character(1)`)\cr
     #' Version (def: latest).
-    raw_schema = function(x, v = "latest") {
-      s <- self$schemas_all
+    .raw_schema = function(x, v = "latest") {
+      s <- self$raw_schemas_all
       assertthat::assert_that(
         x %in% s[["file"]],
         msg = glue("{x} not found in schemas for {self$tool}.")
@@ -109,14 +113,14 @@ Config <- R6::R6Class(
         tidyr::unnest("schema")
     },
     #' @description Validate schema.
-    raw_schemas_valid = function() {
+    .raw_schemas_valid = function() {
       valid_types <- c("char", "int", "float")
       valid_types_print <- glue::glue_collapse(
         valid_types,
         sep = ", ",
         last = " or "
       )
-      s <- self$raw_schemas_all()
+      s <- self$raw_schemas_all
       invalid <- s |>
         tidyr::unnest("schema") |>
         dplyr::mutate(invalid_type = !.data$type %in% valid_types) |>
@@ -138,6 +142,44 @@ Config <- R6::R6Class(
         return(FALSE)
       }
       return(TRUE)
+    },
+    #' @description Return all tidy tibble descriptions.
+    .tidy_descriptions = function() {
+      self$config[["tidy"]][["tidy"]] |>
+        purrr::map(\(tt) {
+          tt[["description"]]
+        }) |>
+        tibble::enframe() |>
+        tidyr::unnest("value")
+    },
+    #' @description Return all tidy tibble schemas.
+    .tidy_schemas_all = function() {
+      self$config[["tidy"]][["tidy"]] |>
+        purrr::map(
+          \(tt)
+            {
+              tt[["schema"]] |>
+                purrr::map(\(s) {
+                  tibble::as_tibble_row(s)
+                })
+            } |>
+              dplyr::bind_rows()
+        ) |>
+        tibble::enframe(value = "schema")
+    },
+    #' @description Get tidy tbl schema.
+    #' @param x (`character(1)`)\cr
+    #' Tidy tbl name.
+    .tidy_schema = function(x) {
+      s <- self$tidy_schemas_all
+      assertthat::assert_that(
+        x %in% s[["name"]],
+        msg = glue("{x} not found in schemas for {self$tool}.")
+      )
+      s |>
+        dplyr::filter(.data$name == x) |>
+        dplyr::select("schema") |>
+        tidyr::unnest("schema")
     }
-  )
+  ) # end public
 )

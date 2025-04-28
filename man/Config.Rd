@@ -10,9 +10,9 @@ Config YAML file parsing.
 \dontrun{
 tool <- "amber"
 conf <- Config$new(tool)
-conf$config
-conf$raw_schemas_valid()
+conf$.raw_schemas_valid()
 conf$schemas_all
+conf$.tidy_descriptions()
 }
 }
 \section{Public fields}{
@@ -24,8 +24,11 @@ Tool name.}
 \item{\code{config}}{(\code{list()})\cr
 Config list.}
 
-\item{\code{schemas_all}}{(\code{tibble()})\cr
+\item{\code{raw_schemas_all}}{(\code{tibble()})\cr
 All raw schemas for tool.}
+
+\item{\code{tidy_schemas_all}}{(\code{tibble()})\cr
+All tidy schemas for tool.}
 }
 \if{html}{\out{</div>}}
 }
@@ -34,13 +37,16 @@ All raw schemas for tool.}
 \itemize{
 \item \href{#method-Config-new}{\code{Config$new()}}
 \item \href{#method-Config-print}{\code{Config$print()}}
-\item \href{#method-Config-read}{\code{Config$read()}}
-\item \href{#method-Config-raw_patterns}{\code{Config$raw_patterns()}}
-\item \href{#method-Config-raw_versions}{\code{Config$raw_versions()}}
-\item \href{#method-Config-raw_descriptions}{\code{Config$raw_descriptions()}}
-\item \href{#method-Config-raw_schemas_all}{\code{Config$raw_schemas_all()}}
-\item \href{#method-Config-raw_schema}{\code{Config$raw_schema()}}
-\item \href{#method-Config-raw_schemas_valid}{\code{Config$raw_schemas_valid()}}
+\item \href{#method-Config-.read}{\code{Config$.read()}}
+\item \href{#method-Config-.raw_patterns}{\code{Config$.raw_patterns()}}
+\item \href{#method-Config-.raw_versions}{\code{Config$.raw_versions()}}
+\item \href{#method-Config-.raw_descriptions}{\code{Config$.raw_descriptions()}}
+\item \href{#method-Config-.raw_schemas_all}{\code{Config$.raw_schemas_all()}}
+\item \href{#method-Config-.raw_schema}{\code{Config$.raw_schema()}}
+\item \href{#method-Config-.raw_schemas_valid}{\code{Config$.raw_schemas_valid()}}
+\item \href{#method-Config-.tidy_descriptions}{\code{Config$.tidy_descriptions()}}
+\item \href{#method-Config-.tidy_schemas_all}{\code{Config$.tidy_schemas_all()}}
+\item \href{#method-Config-.tidy_schema}{\code{Config$.tidy_schema()}}
 \item \href{#method-Config-clone}{\code{Config$clone()}}
 }
 }
@@ -80,12 +86,12 @@ Print details about the Tool.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Config-read"></a>}}
-\if{latex}{\out{\hypertarget{method-Config-read}{}}}
-\subsection{Method \code{read()}}{
+\if{html}{\out{<a id="method-Config-.read"></a>}}
+\if{latex}{\out{\hypertarget{method-Config-.read}{}}}
+\subsection{Method \code{.read()}}{
 Read YAML configs.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Config$read()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Config$.read()}\if{html}{\out{</div>}}
 }
 
 \subsection{Returns}{
@@ -93,52 +99,52 @@ A \code{list()} with the parsed data.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Config-raw_patterns"></a>}}
-\if{latex}{\out{\hypertarget{method-Config-raw_patterns}{}}}
-\subsection{Method \code{raw_patterns()}}{
+\if{html}{\out{<a id="method-Config-.raw_patterns"></a>}}
+\if{latex}{\out{\hypertarget{method-Config-.raw_patterns}{}}}
+\subsection{Method \code{.raw_patterns()}}{
 Return all output file patterns.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Config$raw_patterns()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Config$.raw_patterns()}\if{html}{\out{</div>}}
 }
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Config-raw_versions"></a>}}
-\if{latex}{\out{\hypertarget{method-Config-raw_versions}{}}}
-\subsection{Method \code{raw_versions()}}{
+\if{html}{\out{<a id="method-Config-.raw_versions"></a>}}
+\if{latex}{\out{\hypertarget{method-Config-.raw_versions}{}}}
+\subsection{Method \code{.raw_versions()}}{
 Return all output file schema versions.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Config$raw_versions()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Config$.raw_versions()}\if{html}{\out{</div>}}
 }
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Config-raw_descriptions"></a>}}
-\if{latex}{\out{\hypertarget{method-Config-raw_descriptions}{}}}
-\subsection{Method \code{raw_descriptions()}}{
+\if{html}{\out{<a id="method-Config-.raw_descriptions"></a>}}
+\if{latex}{\out{\hypertarget{method-Config-.raw_descriptions}{}}}
+\subsection{Method \code{.raw_descriptions()}}{
 Return all output file descriptions.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Config$raw_descriptions()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Config$.raw_descriptions()}\if{html}{\out{</div>}}
 }
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Config-raw_schemas_all"></a>}}
-\if{latex}{\out{\hypertarget{method-Config-raw_schemas_all}{}}}
-\subsection{Method \code{raw_schemas_all()}}{
+\if{html}{\out{<a id="method-Config-.raw_schemas_all"></a>}}
+\if{latex}{\out{\hypertarget{method-Config-.raw_schemas_all}{}}}
+\subsection{Method \code{.raw_schemas_all()}}{
 Return all output file schemas.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Config$raw_schemas_all()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Config$.raw_schemas_all()}\if{html}{\out{</div>}}
 }
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Config-raw_schema"></a>}}
-\if{latex}{\out{\hypertarget{method-Config-raw_schema}{}}}
-\subsection{Method \code{raw_schema()}}{
+\if{html}{\out{<a id="method-Config-.raw_schema"></a>}}
+\if{latex}{\out{\hypertarget{method-Config-.raw_schema}{}}}
+\subsection{Method \code{.raw_schema()}}{
 Get raw file schema.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Config$raw_schema(x, v = "latest")}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Config$.raw_schema(x, v = "latest")}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -154,14 +160,52 @@ Version (def: latest).}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Config-raw_schemas_valid"></a>}}
-\if{latex}{\out{\hypertarget{method-Config-raw_schemas_valid}{}}}
-\subsection{Method \code{raw_schemas_valid()}}{
+\if{html}{\out{<a id="method-Config-.raw_schemas_valid"></a>}}
+\if{latex}{\out{\hypertarget{method-Config-.raw_schemas_valid}{}}}
+\subsection{Method \code{.raw_schemas_valid()}}{
 Validate schema.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Config$raw_schemas_valid()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Config$.raw_schemas_valid()}\if{html}{\out{</div>}}
 }
 
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Config-.tidy_descriptions"></a>}}
+\if{latex}{\out{\hypertarget{method-Config-.tidy_descriptions}{}}}
+\subsection{Method \code{.tidy_descriptions()}}{
+Return all tidy tibble descriptions.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Config$.tidy_descriptions()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Config-.tidy_schemas_all"></a>}}
+\if{latex}{\out{\hypertarget{method-Config-.tidy_schemas_all}{}}}
+\subsection{Method \code{.tidy_schemas_all()}}{
+Return all tidy tibble schemas.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Config$.tidy_schemas_all()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Config-.tidy_schema"></a>}}
+\if{latex}{\out{\hypertarget{method-Config-.tidy_schema}{}}}
+\subsection{Method \code{.tidy_schema()}}{
+Get tidy tbl schema.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Config$.tidy_schema(x)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{x}}{(\code{character(1)})\cr
+Tidy tbl name.}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-Config-clone"></a>}}
