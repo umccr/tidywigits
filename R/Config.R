@@ -32,7 +32,23 @@ Config <- R6::R6Class(
     #' Tool name.
     initialize = function(tool) {
       tool <- tolower(tool)
-      valid_tools <- c("amber", "cobalt", "purple")
+      valid_tools <- c(
+        "alignments",
+        "amber",
+        "bamtools",
+        "chord",
+        "cobalt",
+        "cuppa",
+        "flagstats",
+        "gridss",
+        "lilac",
+        "linx",
+        "purple",
+        "sage",
+        "sigs",
+        "virusbreakend",
+        "virusinterpreter"
+      )
       msg1 <- glue::glue_collapse(valid_tools, sep = ", ", last = " and ")
       msg2 <- glue("'{tool}' is not a valid tool.\nCurrently supported: {msg1}")
       assertthat::assert_that(tool %in% valid_tools, msg = msg2)
