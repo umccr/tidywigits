@@ -20,8 +20,8 @@ a <- Alignments$new(path)
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
-\item{\code{tidy}}{(\verb{function(1)})\cr
-Tidy function}
+\item{\code{tidy}}{(\code{tibble()})\cr
+Tidy tibble.}
 }
 \if{html}{\out{</div>}}
 }

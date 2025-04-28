@@ -14,8 +14,8 @@ Amber <- R6::R6Class(
   "Amber",
   inherit = Tool,
   public = list(
-    #' @field tidy (`function(1)`)\cr
-    #' Tidy function
+    #' @field tidy (`tibble()`)\cr
+    #' Tidy tibble.
     tidy = NULL,
     #' @description Create a new Amber object.
     #' @param path (`character(1)`)\cr

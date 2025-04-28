@@ -30,7 +30,7 @@ Chord <- R6::R6Class(
     parse_prediction = function(x) {
       schema <- self$config$.raw_schema("prediction")
       d <- parse_file(x, schema, type = "tsv")
-      d
+      d[]
     },
     #' @description Tidy `prediction.txt` file.
     #' @param x (`character(1)`)\cr
