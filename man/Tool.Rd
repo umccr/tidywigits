@@ -39,7 +39,8 @@ Tibble of files matching available Tool patterns.}
 \item \href{#method-Tool-new}{\code{Tool$new()}}
 \item \href{#method-Tool-print}{\code{Tool$print()}}
 \item \href{#method-Tool-list_files}{\code{Tool$list_files()}}
-\item \href{#method-Tool-eval_func}{\code{Tool$eval_func()}}
+\item \href{#method-Tool-.eval_func}{\code{Tool$.eval_func()}}
+\item \href{#method-Tool-.tidy}{\code{Tool$.tidy()}}
 \item \href{#method-Tool-clone}{\code{Tool$clone()}}
 }
 }
@@ -92,13 +93,13 @@ List files in given tool directory.
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Tool-eval_func"></a>}}
-\if{latex}{\out{\hypertarget{method-Tool-eval_func}{}}}
-\subsection{Method \code{eval_func()}}{
+\if{html}{\out{<a id="method-Tool-.eval_func"></a>}}
+\if{latex}{\out{\hypertarget{method-Tool-.eval_func}{}}}
+\subsection{Method \code{.eval_func()}}{
 Evaluate function in the context of the Tool's
 environment.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Tool$eval_func(fun)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Tool$.eval_func(fun, envir = self)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -106,6 +107,27 @@ environment.
 \describe{
 \item{\code{fun}}{(\code{character(1)})\cr
 Function from Tool to evaluate.}
+
+\item{\code{envir}}{(\code{environment()})\cr
+Environment to evaluate the function within.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Tool-.tidy"></a>}}
+\if{latex}{\out{\hypertarget{method-Tool-.tidy}{}}}
+\subsection{Method \code{.tidy()}}{
+Tidy a list of files
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Tool$.tidy(envir = NULL)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{envir}}{(\code{environment()})\cr
+Environment to evaluate the function within.}
 }
 \if{html}{\out{</div>}}
 }

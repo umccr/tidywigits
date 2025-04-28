@@ -8,22 +8,21 @@
 #'   "nogit/oncoanalyser-wgts-dna/20250407e2ff5344/L2500331_L2500332/amber"
 #' )
 #' a <- Amber$new(path)
-#' d <-
-#' a$files |>
-#'   dplyr::mutate(parser = glue("tidy_{parser}")) |>
-#'   dplyr::rowwise() |>
-#'   dplyr::mutate(d = list(a$eval_func(.data$parser)(.data$path)))
 #' }
 #' @export
 Amber <- R6::R6Class(
   "Amber",
   inherit = Tool,
   public = list(
+    #' @field tidy (`function(1)`)\cr
+    #' Tidy function
+    tidy = NULL,
     #' @description Create a new Amber object.
     #' @param path (`character(1)`)\cr
     #' Output directory of tool.
     initialize = function(path) {
       super$initialize(name = "amber", path = path)
+      self$tidy = super$.tidy(envir = self)
     },
     #' @description Read `baf.pcf` file.
     #' @param x (`character(1)`)\cr

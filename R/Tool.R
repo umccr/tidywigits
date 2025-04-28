@@ -92,9 +92,24 @@ Tool <- R6::R6Class(
     #' environment.
     #' @param fun (`character(1)`)\cr
     #' Function from Tool to evaluate.
-    eval_func = function(fun) {
+    #' @param envir (`environment()`)\cr
+    #' Environment to evaluate the function within.
+    .eval_func = function(fun, envir = self) {
       assertthat::assert_that(rlang::is_scalar_character(fun))
-      get(fun, envir = self)
+      get(fun, envir)
+    },
+    #' @description Tidy a list of files
+    #' @param envir (`environment()`)\cr
+    #' Environment to evaluate the function within.
+    .tidy = function(envir = NULL) {
+      assertthat::assert_that(!is.null(envir))
+      self$files |>
+        dplyr::mutate(parser = glue("tidy_{parser}")) |>
+        dplyr::rowwise() |>
+        dplyr::mutate(
+          tidy = list(self$.eval_func(.data$parser, envir)(.data$path))
+        ) |>
+        dplyr::ungroup()
     }
   )
 )

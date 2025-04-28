@@ -12,15 +12,18 @@ path <- here::here(
   "nogit/oncoanalyser-wgts-dna/20250407e2ff5344/L2500331_L2500332/amber"
 )
 a <- Amber$new(path)
-d <-
-a$files |>
-  dplyr::mutate(parser = glue("tidy_{parser}")) |>
-  dplyr::rowwise() |>
-  dplyr::mutate(d = list(a$eval_func(.data$parser)(.data$path)))
 }
 }
 \section{Super class}{
 \code{\link[tidywigits:Tool]{tidywigits::Tool}} -> \code{Amber}
+}
+\section{Public fields}{
+\if{html}{\out{<div class="r6-fields">}}
+\describe{
+\item{\code{tidy}}{(\verb{function(1)})\cr
+Tidy function}
+}
+\if{html}{\out{</div>}}
 }
 \section{Methods}{
 \subsection{Public methods}{
@@ -42,7 +45,8 @@ a$files |>
 \if{html}{\out{
 <details open><summary>Inherited methods</summary>
 <ul>
-<li><span class="pkg-link" data-pkg="tidywigits" data-topic="Tool" data-id="eval_func"><a href='../../tidywigits/html/Tool.html#method-Tool-eval_func'><code>tidywigits::Tool$eval_func()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="tidywigits" data-topic="Tool" data-id=".eval_func"><a href='../../tidywigits/html/Tool.html#method-Tool-.eval_func'><code>tidywigits::Tool$.eval_func()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="tidywigits" data-topic="Tool" data-id=".tidy"><a href='../../tidywigits/html/Tool.html#method-Tool-.tidy'><code>tidywigits::Tool$.tidy()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="tidywigits" data-topic="Tool" data-id="list_files"><a href='../../tidywigits/html/Tool.html#method-Tool-list_files'><code>tidywigits::Tool$list_files()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="tidywigits" data-topic="Tool" data-id="print"><a href='../../tidywigits/html/Tool.html#method-Tool-print'><code>tidywigits::Tool$print()</code></a></span></li>
 </ul>
