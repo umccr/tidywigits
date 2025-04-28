@@ -2,6 +2,7 @@
 
 export(Alignments)
 export(Amber)
+export(Chord)
 export(Config)
 export(File)
 export(Tool)

@@ -1,8 +1,8 @@
 description:
-  'Just a single file with DuplicateReadCount and Frequency'
+  'Just a single file with DuplicateReadCount and Frequency.'
 raw:
   dupfreq:
-    description: 'Duplicate read count and frequency'
+    description: 'Duplicate read count and frequency.'
     pattern: "\\.duplicate_freq\\.tsv$"
     ftype: 'tsv'
     schema:

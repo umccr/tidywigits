@@ -14,8 +14,8 @@ Alignments <- R6::R6Class(
   "Alignments",
   inherit = Tool,
   public = list(
-    #' @field tidy (`function(1)`)\cr
-    #' Tidy function
+    #' @field tidy (`tibble()`)\cr
+    #' Tidy tibble.
     tidy = NULL,
     #' @description Create a new Alignments object.
     #' @param path (`character(1)`)\cr

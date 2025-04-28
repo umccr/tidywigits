@@ -91,7 +91,7 @@ raw:
         - field: 'filter'
           type: 'char'
   qc:
-    description: 'QC metrics'
+    description: 'QC metrics.'
     pattern: "\\.amber\\.qc$"
     ftype: 'tsv'
     schema:
