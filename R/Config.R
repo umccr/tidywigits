@@ -104,11 +104,11 @@ Config <- R6::R6Class(
     .raw_schema = function(x, v = "latest") {
       s <- self$raw_schemas_all
       assertthat::assert_that(
-        x %in% s[["file"]],
+        x %in% s[["name"]],
         msg = glue("{x} not found in schemas for {self$tool}.")
       )
       s |>
-        dplyr::filter(.data$file == x) |>
+        dplyr::filter(.data$name == x) |>
         dplyr::select("schema") |>
         tidyr::unnest("schema")
     },
@@ -127,7 +127,7 @@ Config <- R6::R6Class(
         dplyr::filter(invalid_type) |>
         dplyr::mutate(
           warn = glue::glue(
-            "{.data$file} -> {.data$version} -> {.data$field} -> {.data$type}"
+            "{.data$name} -> {.data$version} -> {.data$field} -> {.data$type}"
           )
         )
       if (nrow(invalid) > 0) {

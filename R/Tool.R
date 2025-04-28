@@ -55,7 +55,7 @@ Tool <- R6::R6Class(
     },
     #' @description List files in given tool directory.
     list_files = function() {
-      patterns <- self$config$raw_patterns()
+      patterns <- self$config$.raw_patterns()
       files <- list_files_dir(self$path)
       res <- files |>
         dplyr::rowwise() |>
@@ -84,7 +84,7 @@ Tool <- R6::R6Class(
             )
           ),
           prefix = FileObj$prefix,
-          schema = list(self$config$raw_schema(.data$parser))
+          schema = list(self$config$.raw_schema(.data$parser))
         )
       res
     },

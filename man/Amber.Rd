@@ -12,8 +12,9 @@ path <- here::here(
   "nogit/oncoanalyser-wgts-dna/20250407e2ff5344/L2500331_L2500332/amber"
 )
 a <- Amber$new(path)
-d <- a$files |>
-  dplyr::mutate(parser = glue("parse_{parser}")) |>
+d <-
+a$files |>
+  dplyr::mutate(parser = glue("tidy_{parser}")) |>
   dplyr::rowwise() |>
   dplyr::mutate(d = list(a$eval_func(.data$parser)(.data$path)))
 }
@@ -26,10 +27,15 @@ d <- a$files |>
 \itemize{
 \item \href{#method-Amber-new}{\code{Amber$new()}}
 \item \href{#method-Amber-parse_bafpcf}{\code{Amber$parse_bafpcf()}}
+\item \href{#method-Amber-tidy_bafpcf}{\code{Amber$tidy_bafpcf()}}
 \item \href{#method-Amber-parse_baftsv}{\code{Amber$parse_baftsv()}}
+\item \href{#method-Amber-tidy_baftsv}{\code{Amber$tidy_baftsv()}}
 \item \href{#method-Amber-parse_contaminationtsv}{\code{Amber$parse_contaminationtsv()}}
+\item \href{#method-Amber-tidy_contaminationtsv}{\code{Amber$tidy_contaminationtsv()}}
 \item \href{#method-Amber-parse_homozygousregion}{\code{Amber$parse_homozygousregion()}}
+\item \href{#method-Amber-tidy_homozygousregion}{\code{Amber$tidy_homozygousregion()}}
 \item \href{#method-Amber-parse_qc}{\code{Amber$parse_qc()}}
+\item \href{#method-Amber-tidy_qc}{\code{Amber$tidy_qc()}}
 \item \href{#method-Amber-clone}{\code{Amber$clone()}}
 }
 }
@@ -79,12 +85,48 @@ Path to file.}
 }
 }
 \if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Amber-tidy_bafpcf"></a>}}
+\if{latex}{\out{\hypertarget{method-Amber-tidy_bafpcf}{}}}
+\subsection{Method \code{tidy_bafpcf()}}{
+Tidy \code{baf.pcf} file.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Amber$tidy_bafpcf(x)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{x}}{(\code{character(1)})\cr
+Path to file.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-Amber-parse_baftsv"></a>}}
 \if{latex}{\out{\hypertarget{method-Amber-parse_baftsv}{}}}
 \subsection{Method \code{parse_baftsv()}}{
 Read \code{baf.tsv.gz} file.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Amber$parse_baftsv(x)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{x}}{(\code{character(1)})\cr
+Path to file.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Amber-tidy_baftsv"></a>}}
+\if{latex}{\out{\hypertarget{method-Amber-tidy_baftsv}{}}}
+\subsection{Method \code{tidy_baftsv()}}{
+Tidy \code{baf.tsv.gz} file.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Amber$tidy_baftsv(x)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -115,6 +157,24 @@ Path to file.}
 }
 }
 \if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Amber-tidy_contaminationtsv"></a>}}
+\if{latex}{\out{\hypertarget{method-Amber-tidy_contaminationtsv}{}}}
+\subsection{Method \code{tidy_contaminationtsv()}}{
+Tidy \code{contamination.tsv} file.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Amber$tidy_contaminationtsv(x)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{x}}{(\code{character(1)})\cr
+Path to file.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-Amber-parse_homozygousregion"></a>}}
 \if{latex}{\out{\hypertarget{method-Amber-parse_homozygousregion}{}}}
 \subsection{Method \code{parse_homozygousregion()}}{
@@ -133,12 +193,48 @@ Path to file.}
 }
 }
 \if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Amber-tidy_homozygousregion"></a>}}
+\if{latex}{\out{\hypertarget{method-Amber-tidy_homozygousregion}{}}}
+\subsection{Method \code{tidy_homozygousregion()}}{
+Tidy \code{homozygousregion.tsv} file.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Amber$tidy_homozygousregion(x)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{x}}{(\code{character(1)})\cr
+Path to file.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-Amber-parse_qc"></a>}}
 \if{latex}{\out{\hypertarget{method-Amber-parse_qc}{}}}
 \subsection{Method \code{parse_qc()}}{
-Read \code{homozygousregion.tsv} file.
+Read \code{qc} file.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Amber$parse_qc(x)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{x}}{(\code{character(1)})\cr
+Path to file.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Amber-tidy_qc"></a>}}
+\if{latex}{\out{\hypertarget{method-Amber-tidy_qc}{}}}
+\subsection{Method \code{tidy_qc()}}{
+Tidy \code{qc} file.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Amber$tidy_qc(x)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
