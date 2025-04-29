@@ -1,0 +1,21 @@
+description:
+  'Cancer of Unknown Primary Prediction Algorithm.'
+raw:
+  datacsv:
+    description: 'CUPPA visualisation data.'
+    pattern: "\\.cup\\.data\\.csv$"
+    ftype: 'csv'
+    schema:
+      latest:
+        - field: 'Category'
+          type: 'char'
+        - field: 'ResultType'
+          type: 'char'
+        - field: 'DataType'
+          type: 'char'
+        - field: 'Value'
+          type: 'char'
+        - field: 'RefCancerType'
+          type: 'char'
+        - field: 'RefValue'
+          type: 'float'
