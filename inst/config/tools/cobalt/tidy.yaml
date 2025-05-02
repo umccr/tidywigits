@@ -1,0 +1,11 @@
+version: "v0.0.1"
+tidy:
+  gcmed:
+    description: 'GC median read depth.'
+    schema:
+      - field: 'gc_bucket'
+        type: 'char'
+        description: 'GC bucket number'
+      - field: 'median'
+        type: 'float'
+        description: 'Median read depth in bucket'

@@ -1,0 +1,13 @@
+description:
+  'Count bam lines determines the read depth ratios of the supplied tumor and reference genomes.'
+raw:
+  gcmed:
+    description: 'GC median read depth.'
+    pattern: "\\.cobalt\\.gc\\.median\\.tsv$"
+    ftype: 'tsv'
+    schema:
+      latest:
+        - field: '#gcBucket'
+          type: 'char'
+        - field: 'median'
+          type: 'float'

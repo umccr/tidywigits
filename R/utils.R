@@ -9,6 +9,7 @@
 #' Tibble with field and type.
 #' @param type (`character(1)`)\cr
 #' File type (tsv, csv, vcf, tsv-nohead).
+#' @param ... Passed on to `readr::read_delim`.
 #'
 #' @examples
 #' \dontrun{
@@ -34,7 +35,7 @@
 #' type <- "tsv-nohead"
 #'
 #' }
-parse_file <- function(fname, schema, type) {
+parse_file <- function(fname, schema, type, ...) {
   assertthat::assert_that(file.exists(fname))
   assertthat::assert_that(
     tibble::is_tibble(schema),
@@ -73,7 +74,8 @@ parse_file <- function(fname, schema, type) {
     file = fname,
     delim = delim,
     col_names = col_names,
-    col_types = col_types
+    col_types = col_types,
+    ...
   )
   return(d[])
 }

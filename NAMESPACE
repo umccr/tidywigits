@@ -3,6 +3,7 @@
 export(Alignments)
 export(Amber)
 export(Chord)
+export(Cobalt)
 export(Config)
 export(Cuppa)
 export(File)
