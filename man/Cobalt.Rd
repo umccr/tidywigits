@@ -31,6 +31,8 @@ Tidy tibble.}
 \item \href{#method-cobalt-new}{\code{Cobalt$new()}}
 \item \href{#method-cobalt-parse_gcmed}{\code{Cobalt$parse_gcmed()}}
 \item \href{#method-cobalt-tidy_gcmed}{\code{Cobalt$tidy_gcmed()}}
+\item \href{#method-cobalt-parse_ratiomed}{\code{Cobalt$parse_ratiomed()}}
+\item \href{#method-cobalt-tidy_ratiomed}{\code{Cobalt$tidy_ratiomed()}}
 \item \href{#method-cobalt-clone}{\code{Cobalt$clone()}}
 }
 }
@@ -87,6 +89,42 @@ Path to file.}
 Tidy \code{gc.median.tsv} file.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Cobalt$tidy_gcmed(x)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{x}}{(\code{character(1)})\cr
+Path to file.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-cobalt-parse_ratiomed"></a>}}
+\if{latex}{\out{\hypertarget{method-cobalt-parse_ratiomed}{}}}
+\subsection{Method \code{parse_ratiomed()}}{
+Read \code{ratio.median.tsv} file.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Cobalt$parse_ratiomed(x)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{x}}{(\code{character(1)})\cr
+Path to file.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-cobalt-tidy_ratiomed"></a>}}
+\if{latex}{\out{\hypertarget{method-cobalt-tidy_ratiomed}{}}}
+\subsection{Method \code{tidy_ratiomed()}}{
+Tidy \code{ratio.median.tsv} file.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Cobalt$tidy_ratiomed(x)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{

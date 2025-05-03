@@ -97,7 +97,7 @@ Amber <- R6::R6Class(
     #' Path to file.
     parse_qc = function(x) {
       schema <- self$config$.raw_schema("qc")
-      d <- parse_file(x, schema, type = "tsv-nohead")
+      d <- parse_file(x, schema, type = "txt-nohead", delim = "\t")
       d
     },
     #' @description Tidy `qc` file.
