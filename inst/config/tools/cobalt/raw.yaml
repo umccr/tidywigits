@@ -1,0 +1,79 @@
+description:
+  'Count bam lines determines the read depth ratios of the supplied tumor and reference genomes.'
+raw:
+  gcmed:
+    description: 'GC median read depth.'
+    pattern: "\\.cobalt\\.gc\\.median\\.tsv$"
+    ftype: 'tsv'
+    schema:
+      latest:
+        - field: '#gcBucket'
+          type: 'char'
+        - field: 'median'
+          type: 'float'
+  ratiomed:
+    description: 'Chromosome median ratios.'
+    pattern: "\\.cobalt\\.ratio\\.median\\.tsv$"
+    ftype: 'tsv'
+    schema:
+      latest:
+        - field: 'chromosome'
+          type: 'char'
+        - field: 'medianRatio'
+          type: 'float'
+        - field: 'count'
+          type: 'int'
+  ratiotsv:
+    description: 'Read counts and ratios (with reference or supposed diploid regions).'
+    pattern: "\\.cobalt\\.ratio\\.tsv\\.gz$"
+    ftype: 'tsv'
+    schema:
+      latest:
+        - field: 'chromosome'
+          type: 'char'
+        - field: 'position'
+          type: 'int'
+        - field: 'referenceReadDepth'
+          type: 'float'
+        - field: 'tumorReadDepth'
+          type: 'float'
+        - field: 'referenceGCRatio'
+          type: 'float'
+        - field: 'tumorGCRatio'
+          type: 'float'
+        - field: 'referenceGCDiploidRatio'
+          type: 'float'
+        - field: 'referenceGCContent'
+          type: 'float'
+        - field: 'tumorGCContent'
+          type: 'float'
+  ratiopcf:
+    description: 'Segmented regions determined from the ratios (piecewise constant fit).'
+    pattern: "\\.cobalt\\.ratio\\.pcf$"
+    ftype: 'tsv'
+    schema:
+      latest:
+        - field: 'sampleID'
+          type: 'char'
+        - field: 'chrom'
+          type: 'char'
+        - field: 'arm'
+          type: 'char'
+        - field: 'start.pos'
+          type: 'int'
+        - field: 'end.pos'
+          type: 'int'
+        - field: 'n.probes'
+          type: 'int'
+        - field: 'mean'
+          type: 'float'
+  version:
+    description: 'Version of the tool.'
+    pattern: "cobalt\\.version$"
+    ftype: 'txt'
+    schema:
+      latest:
+        - field: 'variable'
+          type: 'char'
+        - field: 'value'
+          type: 'char'

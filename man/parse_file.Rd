@@ -4,7 +4,7 @@
 \alias{parse_file}
 \title{Parse file}
 \usage{
-parse_file(fname, schema, type)
+parse_file(fname, schema, type, ...)
 }
 \arguments{
 \item{fname}{(\code{character(1)})\cr
@@ -15,6 +15,8 @@ Tibble with field and type.}
 
 \item{type}{(\code{character(1)})\cr
 File type (tsv, csv, vcf, tsv-nohead).}
+
+\item{...}{Passed on to \code{readr::read_delim}.}
 }
 \description{
 Parses files.
