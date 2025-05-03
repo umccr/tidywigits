@@ -93,7 +93,7 @@ raw:
   qc:
     description: 'QC metrics.'
     pattern: "\\.amber\\.qc$"
-    ftype: 'tsv-nohead'
+    ftype: 'txt-nohead'
     schema:
       latest:
         - field: 'variable'
