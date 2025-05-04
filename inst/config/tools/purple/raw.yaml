@@ -1,0 +1,13 @@
+description:
+  'Purity Ploidy Estimator.'
+raw:
+  version:
+    description: 'Version of the tool.'
+    pattern: "purple\\.version$"
+    ftype: 'txt'
+    schema:
+      latest:
+        - field: 'variable'
+          type: 'char'
+        - field: 'value'
+          type: 'char'

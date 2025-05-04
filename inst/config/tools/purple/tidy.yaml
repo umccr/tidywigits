@@ -1,0 +1,11 @@
+version: "v0.0.1"
+tidy:
+  version:
+    description: 'Version of the tool'
+    schema:
+      - field: 'version'
+        type: 'char'
+        description: 'version of the tool'
+      - field: 'date_build'
+        type: 'char'
+        description: 'build date'
