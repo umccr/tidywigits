@@ -1,0 +1,30 @@
+description:
+  'Just a single file with DuplicateReadCount and Frequency.'
+raw:
+  annotated:
+    description: 'Processed oncoviral call/annotation data.'
+    pattern: "\\.virus\\.annotated\\.tsv$"
+    ftype: 'tsv'
+    schema:
+      latest:
+        - field: taxid
+          type: char
+        - field: name
+          type: char
+        - field: qcStatus
+          type: char
+        - field: integrations
+          type: char
+        - field: interpretation
+          type: char
+        - field: percentageCovered
+          type: char
+        - field: meanCoverage
+          type: char
+        - field: expectedClonalCoverage
+          type: char
+        - field: reported
+          type: char
+        - field: driverLikelihood
+          type: char
+
