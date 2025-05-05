@@ -36,10 +36,12 @@ Chord <- R6::R6Class(
     #' @param x (`character(1)`)\cr
     #' Path to file.
     tidy_prediction = function(x) {
-      raw <- self$parse_prediction(x)
       schema <- self$config$.tidy_schema("prediction")
-      colnames(raw) <- schema[["field"]]
-      raw
+      raw <- self$parse_prediction(x)
+      d <- raw |>
+        dplyr::select(-c("sample"))
+      colnames(d) <- schema[["field"]]
+      d
     },
     #' @description Read `signatures.txt` file.
     #' @param x (`character(1)`)\cr
@@ -75,9 +77,16 @@ Chord <- R6::R6Class(
     #' Path to file.
     tidy_signatures = function(x) {
       raw <- self$parse_signatures(x)
+      d <- raw |>
+        tidyr::pivot_longer(
+          cols = -c("sample"),
+          names_to = "signature",
+          values_to = "count"
+        ) |>
+        dplyr::select("signature", "count")
       schema <- self$config$.tidy_schema("signatures")
-      colnames(raw) <- schema[["field"]]
-      raw
+      assertthat::assert_that(all(colnames(d) == schema[["field"]]))
+      d
     }
   )
 )
