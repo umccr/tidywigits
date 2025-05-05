@@ -7,7 +7,7 @@
 #' tool <- "amber"
 #' conf <- Config$new(tool)
 #' conf$.raw_schemas_valid()
-#' conf$schemas_all
+#' conf$.raw_schemas_all()
 #' conf$.tidy_descriptions()
 #' }
 #' @export

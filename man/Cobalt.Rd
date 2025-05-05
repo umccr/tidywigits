@@ -33,6 +33,12 @@ Tidy tibble.}
 \item \href{#method-cobalt-tidy_gcmed}{\code{Cobalt$tidy_gcmed()}}
 \item \href{#method-cobalt-parse_ratiomed}{\code{Cobalt$parse_ratiomed()}}
 \item \href{#method-cobalt-tidy_ratiomed}{\code{Cobalt$tidy_ratiomed()}}
+\item \href{#method-cobalt-parse_ratiotsv}{\code{Cobalt$parse_ratiotsv()}}
+\item \href{#method-cobalt-tidy_ratiotsv}{\code{Cobalt$tidy_ratiotsv()}}
+\item \href{#method-cobalt-parse_ratiopcf}{\code{Cobalt$parse_ratiopcf()}}
+\item \href{#method-cobalt-tidy_ratiopcf}{\code{Cobalt$tidy_ratiopcf()}}
+\item \href{#method-cobalt-parse_version}{\code{Cobalt$parse_version()}}
+\item \href{#method-cobalt-tidy_version}{\code{Cobalt$tidy_version()}}
 \item \href{#method-cobalt-clone}{\code{Cobalt$clone()}}
 }
 }
@@ -125,6 +131,114 @@ Path to file.}
 Tidy \code{ratio.median.tsv} file.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Cobalt$tidy_ratiomed(x)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{x}}{(\code{character(1)})\cr
+Path to file.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-cobalt-parse_ratiotsv"></a>}}
+\if{latex}{\out{\hypertarget{method-cobalt-parse_ratiotsv}{}}}
+\subsection{Method \code{parse_ratiotsv()}}{
+Read \code{ratio.tsv} file.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Cobalt$parse_ratiotsv(x)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{x}}{(\code{character(1)})\cr
+Path to file.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-cobalt-tidy_ratiotsv"></a>}}
+\if{latex}{\out{\hypertarget{method-cobalt-tidy_ratiotsv}{}}}
+\subsection{Method \code{tidy_ratiotsv()}}{
+Tidy \code{ratio.tsv} file.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Cobalt$tidy_ratiotsv(x)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{x}}{(\code{character(1)})\cr
+Path to file.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-cobalt-parse_ratiopcf"></a>}}
+\if{latex}{\out{\hypertarget{method-cobalt-parse_ratiopcf}{}}}
+\subsection{Method \code{parse_ratiopcf()}}{
+Read \code{ratio.pcf} file.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Cobalt$parse_ratiopcf(x)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{x}}{(\code{character(1)})\cr
+Path to file.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-cobalt-tidy_ratiopcf"></a>}}
+\if{latex}{\out{\hypertarget{method-cobalt-tidy_ratiopcf}{}}}
+\subsection{Method \code{tidy_ratiopcf()}}{
+Tidy \code{ratio.pcf} file.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Cobalt$tidy_ratiopcf(x)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{x}}{(\code{character(1)})\cr
+Path to file.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-cobalt-parse_version"></a>}}
+\if{latex}{\out{\hypertarget{method-cobalt-parse_version}{}}}
+\subsection{Method \code{parse_version()}}{
+Read \code{cobalt.version} file.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Cobalt$parse_version(x)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{x}}{(\code{character(1)})\cr
+Path to file.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-cobalt-tidy_version"></a>}}
+\if{latex}{\out{\hypertarget{method-cobalt-tidy_version}{}}}
+\subsection{Method \code{tidy_version()}}{
+Tidy \code{cobalt.version} file.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Cobalt$tidy_version(x)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
