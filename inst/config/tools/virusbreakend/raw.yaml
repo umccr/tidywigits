@@ -1,0 +1,59 @@
+description:
+  'Viral integration recognition using single breakends.'
+raw:
+  summary:
+    description: 'VIRUSBreakend analysis summary.'
+    pattern: "\\.virusbreakend\\.vcf\\.summary\\.tsv$"
+    ftype: 'tsv'
+    schema:
+      latest:
+        - field: taxid_genus
+          type: char
+        - field: name_genus
+          type: char
+        - field: reads_genus_tree
+          type: int
+        - field: taxid_species
+          type: char
+        - field: name_species
+          type: char
+        - field: reads_species_tree
+          type: int
+        - field: taxid_assigned
+          type: char
+        - field: name_assigned
+          type: char
+        - field: reads_assigned_tree
+          type: int
+        - field: reads_assigned_direct
+          type: int
+        - field: reference
+          type: char
+        - field: reference_taxid
+          type: char
+        - field: reference_kmer_count
+          type: int
+        - field: alternate_kmer_count
+          type: int
+        - field: rname
+          type: char
+        - field: startpos
+          type: int
+        - field: endpos
+          type: int
+        - field: numreads
+          type: int
+        - field: covbases
+          type: int
+        - field: coverage
+          type: float
+        - field: meandepth
+          type: float
+        - field: meanbaseq
+          type: float
+        - field: meanmapq
+          type: float
+        - field: integrations
+          type: float
+        - field: QCStatus
+          type: char
