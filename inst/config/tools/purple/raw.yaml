@@ -1,0 +1,285 @@
+description:
+  'Purity Ploidy Estimator.'
+raw:
+  version:
+    description: 'Version of the tool.'
+    pattern: "^purple\\.version$"
+    ftype: 'txt'
+    schema:
+      latest:
+        - field: 'variable'
+          type: 'char'
+        - field: 'value'
+          type: 'char'
+  cnvgenetsv:
+    description: 'Copy number alterations of each gene in the HMF gene panel.'
+    pattern: "\\.purple\\.cnv\\.gene\\.tsv$"
+    ftype: 'tsv'
+    schema:
+      latest:
+        - field: chromosome
+          type: char
+        - field: start
+          type: float
+        - field: end
+          type: float
+        - field: gene
+          type: char
+        - field: minCopyNumber
+          type: float
+        - field: maxCopyNumber
+          type: float
+        - field: somaticRegions
+          type: float
+        - field: transcriptId
+          type: char
+        - field: isCanonical
+          type: char
+        - field: chromosomeBand
+          type: char
+        - field: minRegions
+          type: float
+        - field: minRegionStart
+          type: float
+        - field: minRegionEnd
+          type: float
+        - field: minRegionStartSupport
+          type: char
+        - field: minRegionEndSupport
+          type: char
+        - field: minRegionMethod
+          type: char
+        - field: minMinorAlleleCopyNumber
+          type: float
+        - field: depthWindowCount
+          type: float
+  cnvsomtsv:
+    description: 'Copy number profile of all (contiguous) segments of the tumor sample.'
+    pattern: "\\.purple\\.cnv\\.somatic\\.tsv$"
+    ftype: 'tsv'
+    schema:
+      latest:
+        - field: chromosome
+          type: char
+        - field: start
+          type: int
+        - field: end
+          type: int
+        - field: copyNumber
+          type: float
+        - field: bafCount
+          type: int
+        - field: observedBAF
+          type: float
+        - field: baf
+          type: float
+        - field: segmentStartSupport
+          type: char
+        - field: segmentEndSupport
+          type: char
+        - field: method
+          type: char
+        - field: depthWindowCount
+          type: int
+        - field: gcContent
+          type: float
+        - field: minStart
+          type: int
+        - field: maxStart
+          type: int
+        - field: minorAlleleCopyNumber
+          type: float
+        - field: majorAlleleCopyNumber
+          type: float
+  drivercatalog:
+    description: 'Significant amplifications and deletions that occur in the HMF gene panel.'
+    pattern: "\\.purple\\.driver\\.catalog\\.(germline|somatic)\\.tsv$"
+    ftype: 'tsv'
+    schema:
+      latest:
+        - field: chromosome
+          type: char
+        - field: chromosomeBand
+          type: char
+        - field: gene
+          type: char
+        - field: transcript
+          type: char
+        - field: isCanonical
+          type: char
+        - field: driver
+          type: char
+        - field: category
+          type: char
+        - field: likelihoodMethod
+          type: char
+        - field: driverLikelihood
+          type: float
+        - field: missense
+          type: float
+        - field: nonsense
+          type: float
+        - field: splice
+          type: float
+        - field: inframe
+          type: float
+        - field: frameshift
+          type: float
+        - field: biallelic
+          type: char
+        - field: minCopyNumber
+          type: float
+        - field: maxCopyNumber
+          type: float
+  germdeltsv:
+    description: 'Germline deletions.'
+    pattern: "\\.purple\\.germline\\.deletion\\.tsv$"
+    ftype: 'tsv'
+    schema:
+      latest:
+        - field: gene
+          type: char
+        - field: chromosome
+          type: char
+        - field: chromosomeBand
+          type: char
+        - field: regionStart
+          type: float
+        - field: regionEnd
+          type: float
+        - field: depthWindowCount
+          type: float
+        - field: exonStart
+          type: float
+        - field: exonEnd
+          type: float
+        - field: detectionMethod
+          type: char
+        - field: germlineStatus
+          type: char
+        - field: tumorStatus
+          type: char
+        - field: germlineCopyNumber
+          type: float
+        - field: tumorCopyNumber
+          type: float
+        - field: filter
+          type: char
+        - field: cohortFrequency
+          type: float
+        - field: reported
+          type: char
+  purityrange:
+    description: 'Best fit per purity sorted by score.'
+    pattern: "\\.purple\\.purity\\.range\\.tsv$"
+    ftype: 'tsv'
+    schema:
+      latest:
+        - field: purity
+          type: float
+        - field: normFactor
+          type: float
+        - field: score
+          type: float
+        - field: diploidProportion
+          type: float
+        - field: ploidy
+          type: float
+        - field: somaticPenalty
+          type: float
+  puritytsv:
+    description: 'Purity/ploidy fit summary.'
+    pattern: "\\.purple\\.purity\\.tsv$"
+    ftype: 'tsv'
+    schema:
+      latest:
+        - field: purity
+          type: float
+        - field: normFactor
+          type: float
+        - field: score
+          type: float
+        - field: diploidProportion
+          type: float
+        - field: ploidy
+          type: float
+        - field: gender
+          type: char
+        - field: status
+          type: char
+        - field: polyclonalProportion
+          type: float
+        - field: minPurity
+          type: float
+        - field: maxPurity
+          type: float
+        - field: minPloidy
+          type: float
+        - field: maxPloidy
+          type: float
+        - field: minDiploidProportion
+          type: float
+        - field: maxDiploidProportion
+          type: float
+        - field: somaticPenalty
+          type: float
+        - field: wholeGenomeDuplication
+          type: char
+        - field: msIndelsPerMb
+          type: float
+        - field: msStatus
+          type: char
+        - field: tml
+          type: float
+        - field: tmlStatus
+          type: char
+        - field: tmbPerMb
+          type: float
+        - field: tmbStatus
+          type: char
+        - field: svTumorMutationalBurden
+          type: float
+        - field: runMode
+          type: char
+        - field: targeted
+          type: char
+  qc:
+    description: 'QC metrics.'
+    pattern: "\\.purple\\.qc$"
+    ftype: 'txt-nohead'
+    schema:
+      latest:
+        - field: 'variable'
+          type: 'char'
+        - field: 'value'
+          type: 'char'
+  somclonality:
+    description: 'Clonality peak model data.'
+    pattern: "\\.purple\\.somatic\\.clonality\\.tsv$"
+    ftype: 'tsv'
+    schema:
+      latest:
+        - field: peak
+          type: float
+        - field: bucket
+          type: float
+        - field: bucketWeight
+          type: float
+        - field: peakAvgWeight
+          type: float
+        - field: isValid
+          type: char
+        - field: isSubclonal
+          type: char
+  somhist:
+    description: 'Somatic variant histogram data.'
+    pattern: "\\.purple\\.somatic\\.hist\\.tsv$"
+    ftype: 'tsv'
+    schema:
+      latest:
+        - field: variantCopyNumberBucket
+          type: float
+        - field: copyNumberBucket
+          type: float
+        - field: count
+          type: float
