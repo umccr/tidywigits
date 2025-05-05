@@ -10,7 +10,7 @@ tidy:
         type: char
         description: 'NCBI taxonomy genus name'
       - field: reads_genus_tree
-        type: char
+        type: int
         description: 'Number of reads assigned to any virus in that genus by kraken2'
       - field: taxid_species
         type: char
@@ -19,7 +19,7 @@ tidy:
         type: char
         description: 'NCBI taxonomy species name'
       - field: reads_species_tree
-        type: char
+        type: int
         description: 'Number of reads assigned to that species (and any sub-species) by kraken2'
       - field: taxid_assigned
         type: char
@@ -28,10 +28,10 @@ tidy:
         type: char
         description: 'NCBI taxonomy name of viral reference'
       - field: reads_assigned_tree
-        type: char
+        type: int
         description: 'Number of reads assigned to the viral reference or taxonomic descendents by kraken2'
       - field: reads_assigned_direct
-        type: char
+        type: int
         description: 'Number of reads assigned to the viral reference taxid by kraken2'
       - field: reference
         type: char
@@ -40,10 +40,10 @@ tidy:
         type: char
         description: 'NCBI taxonomy ID of viral reference used. This can be a child taxid of taxid_assigned.'
       - field: reference_kmer_count
-        type: char
+        type: int
         description: 'count of read kmers matching reference used'
       - field: alternate_kmer_count
-        type: char
+        type: int
         description: 'count of read kmers matching next best reference candidate'
       - field: rname
         type: char

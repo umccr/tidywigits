@@ -12,29 +12,29 @@ raw:
         - field: name_genus
           type: char
         - field: reads_genus_tree
-          type: char
+          type: int
         - field: taxid_species
           type: char
         - field: name_species
           type: char
         - field: reads_species_tree
-          type: char
+          type: int
         - field: taxid_assigned
           type: char
         - field: name_assigned
           type: char
         - field: reads_assigned_tree
-          type: char
+          type: int
         - field: reads_assigned_direct
-          type: char
+          type: int
         - field: reference
           type: char
         - field: reference_taxid
           type: char
         - field: reference_kmer_count
-          type: char
+          type: int
         - field: alternate_kmer_count
-          type: char
+          type: int
         - field: rname
           type: char
         - field: startpos
