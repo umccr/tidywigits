@@ -9,9 +9,9 @@ Virusinterpreter file parsing and manipulation.
 \examples{
 \dontrun{
 path <- here::here(
-  "nogit/oncoanalyser-wgts-dna/20250407e2ff5344/L2500331_L2500332/Virusinterpreter"
+  "nogit/oncoanalyser-wgts-dna/20250407e2ff5344/L2500331_L2500332/virusinterpreter"
 )
-p <- Virusinterpreter$new(path)
+v <- Virusinterpreter$new(path)
 }
 }
 \section{Super class}{
