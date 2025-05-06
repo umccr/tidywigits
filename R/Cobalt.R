@@ -44,6 +44,7 @@ Cobalt <- R6::R6Class(
       schema <- self$config$.tidy_schema("gcmed")
       colnames(raw[["bucket_stats"]]) <- schema[["field"]]
       colnames(raw[["sample_stats"]]) <- c("mean", "median")
+      # TODO: what on earth is going on here?
       raw[["sample_stats"]] <- raw[["sample_stats"]]
       tibble::enframe(raw, name = "name", value = "data")
     },

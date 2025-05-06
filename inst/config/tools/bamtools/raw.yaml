@@ -1,0 +1,64 @@
+description:
+  'Various routines to run on a BAM file.'
+raw:
+  wgsmetrics:
+    description: 'Mostly coverage metrics.'
+    pattern: "\\.wgsmetrics$"
+    ftype: 'txt'
+    schema:
+      latest:
+        - field: GENOME_TERRITORY
+          type: 'float'
+        - field: MEAN_COVERAGE
+          type: 'float'
+        - field: SD_COVERAGE
+          type: 'float'
+        - field: MEDIAN_COVERAGE
+          type: 'float'
+        - field: MAD_COVERAGE
+          type: 'float'
+        - field: PCT_EXC_ADAPTER
+          type: 'float'
+        - field: PCT_EXC_MAPQ
+          type: 'float'
+        - field: PCT_EXC_DUPE
+          type: 'float'
+        - field: PCT_EXC_UNPAIRED
+          type: 'float'
+        - field: PCT_EXC_BASEQ
+          type: 'float'
+        - field: PCT_EXC_OVERLAP
+          type: 'float'
+        - field: PCT_EXC_CAPPED
+          type: 'float'
+        - field: PCT_EXC_TOTAL
+          type: 'float'
+        - field: PCT_1X
+          type: 'float'
+        - field: PCT_5X
+          type: 'float'
+        - field: PCT_10X
+          type: 'float'
+        - field: PCT_15X
+          type: 'float'
+        - field: PCT_20X
+          type: 'float'
+        - field: PCT_25X
+          type: 'float'
+        - field: PCT_30X
+          type: 'float'
+        - field: PCT_40X
+          type: 'float'
+        - field: PCT_50X
+          type: 'float'
+        - field: PCT_60X
+          type: 'float'
+        - field: PCT_70X
+          type: 'float'
+        - field: PCT_80X
+          type: 'float'
+        - field: PCT_90X
+          type: 'float'
+        - field: PCT_100X
+          type: 'float'
+
