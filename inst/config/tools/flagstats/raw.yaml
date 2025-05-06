@@ -1,0 +1,11 @@
+description:
+  'Counts of alignments for each FLAG type.'
+raw:
+  flagstat:
+    description: 'Counts of alignments for each FLAG type.'
+    pattern: "\\.flagstat$"
+    ftype: 'txt'
+    schema:
+      latest:
+        - field: 'dummy'
+          type: 'char'
