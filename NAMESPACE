@@ -2,6 +2,7 @@
 
 export(Alignments)
 export(Amber)
+export(Bamtools)
 export(Chord)
 export(Cobalt)
 export(Config)

@@ -41,7 +41,7 @@ parse_file <- function(fname, schema, type, ...) {
     tibble::is_tibble(schema),
     all(colnames(schema) == c("field", "type"))
   )
-  assertthat::assert_that(type %in% c("tsv", "csv", "vcf", "txt-nohead"))
+  assertthat::assert_that(type %in% c("tsv", "csv", "vcf", "txt-nohead", "txt"))
   # remap schema
   schema2 <- schema |>
     dplyr::mutate(
