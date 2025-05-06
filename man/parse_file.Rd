@@ -4,7 +4,7 @@
 \alias{parse_file}
 \title{Parse file}
 \usage{
-parse_file(fname, schema, type, ...)
+parse_file(fname, schema, type, cnames = TRUE, ...)
 }
 \arguments{
 \item{fname}{(\code{character(1)})\cr
