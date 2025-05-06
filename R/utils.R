@@ -35,7 +35,7 @@
 #' type <- "tsv-nohead"
 #'
 #' }
-parse_file <- function(fname, schema, type, ...) {
+parse_file <- function(fname, schema, type, cnames = TRUE, ...) {
   assertthat::assert_that(file.exists(fname))
   assertthat::assert_that(
     tibble::is_tibble(schema),
@@ -54,7 +54,7 @@ parse_file <- function(fname, schema, type, ...) {
     ) |>
     tibble::deframe()
   delim <- "\t"
-  col_names <- TRUE
+  col_names <- cnames
   col_types <- rlang::exec(readr::cols, !!!schema2)
   if (type == "csv") {
     delim <- ","

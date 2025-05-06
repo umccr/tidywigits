@@ -1,0 +1,25 @@
+description:
+  'Fits sample SNV counts to trinucleotide signature definitions.'
+raw:
+  allocation:
+    description: 'Signature allocation.'
+    pattern: "\\.sig\\.allocation\\.tsv$"
+    ftype: 'tsv'
+    schema:
+      latest:
+        - field: 'signature'
+          type: 'char'
+        - field: 'allocation'
+          type: 'float'
+        - field: 'percent'
+          type: 'float'
+  snvcounts:
+    description: 'SNV counts.'
+    pattern: "\\.sig\\.snv_counts\\.csv$"
+    ftype: 'csv'
+    schema:
+      latest:
+        - field: 'BucketName'
+          type: 'char'
+        - field: 'count'
+          type: 'int'

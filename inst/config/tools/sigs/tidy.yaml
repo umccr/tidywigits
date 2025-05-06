@@ -1,0 +1,23 @@
+version: "v0.0.1"
+tidy:
+  allocation:
+    description: 'Signature allocation.'
+    schema:
+      - field: 'signature'
+        type: 'char'
+        description: 'Signature name'
+      - field: 'allocation'
+        type: 'float'
+        description: 'Signature allocation'
+      - field: 'percent'
+        type: 'float'
+        description: 'Signature allocation percentage'
+  snvcounts:
+    description: 'SNV counts.'
+    schema:
+      - field: 'bucket_name'
+        type: 'char'
+        description: 'signature context bucket'
+      - field: 'count'
+        type: 'int'
+        description: 'SNV count in bucket'
