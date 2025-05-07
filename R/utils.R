@@ -9,6 +9,7 @@
 #' Tibble with field and type.
 #' @param type (`character(1)`)\cr
 #' File type (tsv, csv, vcf, tsv-nohead).
+#' @param cnames Column names (see `readr::read_delim`).
 #' @param ... Passed on to `readr::read_delim`.
 #'
 #' @examples

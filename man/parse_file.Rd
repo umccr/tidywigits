@@ -16,6 +16,8 @@ Tibble with field and type.}
 \item{type}{(\code{character(1)})\cr
 File type (tsv, csv, vcf, tsv-nohead).}
 
+\item{cnames}{Column names (see \code{readr::read_delim}).}
+
 \item{...}{Passed on to \code{readr::read_delim}.}
 }
 \description{
