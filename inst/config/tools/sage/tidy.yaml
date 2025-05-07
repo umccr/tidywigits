@@ -1,0 +1,269 @@
+version: "v0.0.1"
+tidy:
+  bqrtsv:
+    description: 'Base quality recalibration metrics.'
+    schema:
+      - field: alt
+        type: char
+        description: 'alternate allele'
+      - field: ref
+        type: char
+        description: 'reference allele'
+      - field: context
+        type: char
+        description: 'trinucleotide context'
+      - field: count
+        type: float
+        description: 'count'
+      - field: origq
+        type: float
+        description: 'original quality'
+      - field: recalq
+        type: float
+        description: 'recalibrated quality'
+  genecvg:
+    description: 'Gene coverage metrics.'
+    schema:
+      - field: gene
+        type: char
+        description: 'gene name'
+      - field: chromosome
+        type: char
+        description: 'chromosome'
+      - field: pos_start
+        type: float
+        description: 'start position'
+      - field: pos_end
+        type: float
+        description: 'end position'
+      - field: missed_var_likelihood
+        type: float
+        description: 'missed variant likelihood'
+      - field: dr_0
+        type: float
+        description: 'depth range 0'
+      - field: dr_1
+        type: float
+        description: 'depth range 1'
+      - field: dr_2
+        type: float
+        description: 'depth range 2'
+      - field: dr_3
+        type: float
+        description: 'depth range 3'
+      - field: dr_4
+        type: float
+        description: 'depth range 4'
+      - field: dr_5
+        type: float
+        description: 'depth range 5'
+      - field: dr_6
+        type: float
+        description: 'depth range 6'
+      - field: dr_7
+        type: float
+        description: 'depth range 7'
+      - field: dr_8
+        type: float
+        description: 'depth range 8'
+      - field: dr_9
+        type: float
+        description: 'depth range 9'
+      - field: dr_10
+        type: float
+        description: 'depth range 10'
+      - field: dr_11
+        type: float
+        description: 'depth range 11'
+      - field: dr_12
+        type: float
+        description: 'depth range 12'
+      - field: dr_13
+        type: float
+        description: 'depth range 13'
+      - field: dr_14
+        type: float
+        description: 'depth range 14'
+      - field: dr_15
+        type: float
+        description: 'depth range 15'
+      - field: dr_16
+        type: float
+        description: 'depth range 16'
+      - field: dr_17
+        type: float
+        description: 'depth range 17'
+      - field: dr_18
+        type: float
+        description: 'depth range 18'
+      - field: dr_19
+        type: float
+        description: 'depth range 19'
+      - field: dr_20
+        type: float
+        description: 'depth range 20'
+      - field: dr_21
+        type: float
+        description: 'depth range 21'
+      - field: dr_22
+        type: float
+        description: 'depth range 22'
+      - field: dr_23
+        type: float
+        description: 'depth range 23'
+      - field: dr_24
+        type: float
+        description: 'depth range 24'
+      - field: dr_25
+        type: float
+        description: 'depth range 25'
+      - field: dr_26
+        type: float
+        description: 'depth range 26'
+      - field: dr_27
+        type: float
+        description: 'depth range 27'
+      - field: dr_28
+        type: float
+        description: 'depth range 28'
+      - field: dr_29
+        type: float
+        description: 'depth range 29'
+      - field: dr_30_39
+        type: float
+        description: 'depth range 30-39'
+      - field: dr_40_49
+        type: float
+        description: 'depth range 40-49'
+      - field: dr_50_59
+        type: float
+        description: 'depth range 50-59'
+      - field: dr_60_69
+        type: float
+        description: 'depth range 60-69'
+      - field: dr_70_79
+        type: float
+        description: 'depth range 70-79'
+      - field: dr_80_89
+        type: float
+        description: 'depth range 80-89'
+      - field: dr_90_99
+        type: float
+        description: 'depth range 90-99'
+      - field: dr_100_149
+        type: float
+        description: 'depth range 100-149'
+      - field: dr_150_199
+        type: float
+        description: 'depth range 150-199'
+      - field: dr_200_249
+        type: float
+        description: 'depth range 200-249'
+      - field: dr_250_299
+        type: float
+        description: 'depth range 250-299'
+      - field: dr_300_349
+        type: float
+        description: 'depth range 300-349'
+      - field: dr_350_399
+        type: float
+        description: 'depth range 350-399'
+      - field: dr_400_449
+        type: float
+        description: 'depth range 400-449'
+      - field: dr_450_499
+        type: float
+        description: 'depth range 450-499'
+      - field: dr_500_599
+        type: float
+        description: 'depth range 500-599'
+      - field: dr_600_699
+        type: float
+        description: 'depth range 600-699'
+      - field: dr_700_799
+        type: float
+        description: 'depth range 700-799'
+      - field: dr_800_899
+        type: float
+        description: 'depth range 800-899'
+      - field: dr_900_999
+        type: float
+        description: 'depth range 900-999'
+      - field: dr_1000_1099
+        type: float
+        description: 'depth range 1000-1099'
+      - field: dr_1100_1199
+        type: float
+        description: 'depth range 1100-1199'
+      - field: dr_1200_1299
+        type: float
+        description: 'depth range 1200-1299'
+      - field: dr_1300_1399
+        type: float
+        description: 'depth range 1300-1399'
+      - field: dr_1400_1499
+        type: float
+        description: 'depth range 1400-1499'
+      - field: dr_1500_1599
+        type: float
+        description: 'depth range 1500-1599'
+      - field: dr_1600_1699
+        type: float
+        description: 'depth range 1600-1699'
+      - field: dr_1700_1799
+        type: float
+        description: 'depth range 1700-1799'
+      - field: dr_1800_1899
+        type: float
+        description: 'depth range 1800-1899'
+      - field: dr_1900_1999
+        type: float
+        description: 'depth range 1900-1999'
+      - field: dr_2000_2999
+        type: float
+        description: 'depth range 2000-2999'
+      - field: dr_3000_3999
+        type: float
+        description: 'depth range 3000-3999'
+      - field: dr_4000_4999
+        type: float
+        description: 'depth range 4000-4999'
+      - field: dr_5000_5999
+        type: float
+        description: 'depth range 5000-5999'
+      - field: dr_6000_6999
+        type: float
+        description: 'depth range 6000-6999'
+      - field: dr_7000_7999
+        type: float
+        description: 'depth range 7000-7999'
+      - field: dr_8000_8999
+        type: float
+        description: 'depth range 8000-8999'
+      - field: dr_9000_9999
+        type: float
+        description: 'depth range 9000-9999'
+      - field: dr_10000
+        type: float
+        description: 'depth range 10000+'
+  exoncvg:
+    description: 'Exon coverage metrics.'
+    schema:
+      - field: gene
+        type: char
+        description: 'gene name'
+      - field: chromosome
+        type: char
+        description: 'chromosome'
+      - field: start
+        type: float
+        description: 'start position'
+      - field: end
+        type: float
+        description: 'end position'
+      - field: exon
+        type: float
+        description: 'exon rank'
+      - field: dp_med
+        type: float
+        description: 'median depth'
