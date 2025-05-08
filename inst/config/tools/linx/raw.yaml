@@ -1,0 +1,257 @@
+description:
+  'Annotation, interpretation and visualisation tool for structural variants.'
+raw:
+  svs:
+    description: ''
+    pattern: foo
+    ftype: tsv
+    schema:
+      latest:
+      - field: vcfId
+        type: char
+      - field: svId
+        type: char
+      - field: clusterId
+        type: char
+      - field: clusterReason
+        type: char
+      - field: fragileSiteStart
+        type: char
+      - field: fragileSiteEnd
+        type: char
+      - field: isFoldback
+        type: char
+      - field: lineTypeStart
+        type: char
+      - field: lineTypeEnd
+        type: char
+      - field: junctionCopyNumberMin
+        type: float
+      - field: junctionCopyNumberMax
+        type: float
+      - field: geneStart
+        type: char
+      - field: geneEnd
+        type: char
+      - field: localTopologyIdStart
+        type: char
+      - field: localTopologyIdEnd
+        type: char
+      - field: localTopologyStart
+        type: char
+      - field: localTopologyEnd
+        type: char
+      - field: localTICountStart
+        type: float
+      - field: localTICountEnd
+        type: float
+  breakend:
+    description: ''
+    pattern: foo
+    ftype: tsv
+    schema:
+      latest:
+      - field: id
+        type: char
+      - field: svId
+        type: char
+      - field: isStart
+        type: char
+      - field: gene
+        type: char
+      - field: transcriptId
+        type: char
+      - field: canonical
+        type: char
+      - field: geneOrientation
+        type: char
+      - field: disruptive
+        type: char
+      - field: reportedDisruption
+        type: char
+      - field: undisruptedCopyNumber
+        type: float
+      - field: regionType
+        type: char
+      - field: codingType
+        type: char
+      - field: biotype
+        type: char
+      - field: exonicBasePhase
+        type: float
+      - field: nextSpliceExonRank
+        type: float
+      - field: nextSpliceExonPhase
+        type: float
+      - field: nextSpliceDistance
+        type: float
+      - field: totalExonCount
+        type: float
+      - field: exonUp
+        type: float
+      - field: exonDown
+        type: float
+  clusters:
+    description: ''
+    pattern: foo
+    ftype: tsv
+    schema:
+      latest:
+      - field: clusterId
+        type: char
+      - field: category
+        type: char
+      - field: synthetic
+        type: char
+      - field: resolvedType
+        type: char
+      - field: clusterCount
+        type: float
+      - field: clusterDesc
+        type: char
+  links:
+    description: ''
+    pattern: foo
+    ftype: tsv
+    schema:
+      latest:
+      - field: clusterId
+        type: char
+      - field: chainId
+        type: char
+      - field: chainIndex
+        type: char
+      - field: chainCount
+        type: float
+      - field: lowerSvId
+        type: char
+      - field: upperSvId
+        type: char
+      - field: lowerBreakendIsStart
+        type: char
+      - field: upperBreakendIsStart
+        type: char
+      - field: chromosome
+        type: char
+      - field: arm
+        type: char
+      - field: assembled
+        type: char
+      - field: traversedSVCount
+        type: float
+      - field: length
+        type: float
+      - field: junctionCopyNumber
+        type: float
+      - field: junctionCopyNumberUncertainty
+        type: float
+      - field: pseudogeneInfo
+        type: char
+      - field: ecDna
+        type: char
+  fusion:
+    description: ''
+    pattern: foo
+    ftype: tsv
+    schema:
+      latest:
+      - field: fivePrimeBreakendId
+        type: char
+      - field: threePrimeBreakendId
+        type: char
+      - field: name
+        type: char
+      - field: reported
+        type: char
+      - field: reportedType
+        type: char
+      - field: reportableReasons
+        type: char
+      - field: phased
+        type: char
+      - field: likelihood
+        type: char
+      - field: chainLength
+        type: float
+      - field: chainLinks
+        type: float
+      - field: chainTerminated
+        type: char
+      - field: domainsKept
+        type: char
+      - field: domainsLost
+        type: char
+      - field: skippedExonsUp
+        type: float
+      - field: skippedExonsDown
+        type: float
+      - field: fusedExonUp
+        type: float
+      - field: fusedExonDown
+        type: float
+      - field: geneStart
+        type: char
+      - field: geneContextStart
+        type: char
+      - field: transcriptStart
+        type: char
+      - field: geneEnd
+        type: char
+      - field: geneContextEnd
+        type: char
+      - field: transcriptEnd
+        type: char
+      - field: junctionCopyNumber
+        type: float
+  drivercatalog:
+    description: ''
+    pattern: foo
+    ftype: tsv
+    schema:
+      latest:
+      - field: chromosome
+        type: char
+      - field: chromosomeBand
+        type: char
+      - field: gene
+        type: char
+      - field: transcript
+        type: char
+      - field: isCanonical
+        type: char
+      - field: driver
+        type: char
+      - field: category
+        type: char
+      - field: likelihoodMethod
+        type: char
+      - field: driverLikelihood
+        type: float
+      - field: missense
+        type: float
+      - field: nonsense
+        type: float
+      - field: splice
+        type: float
+      - field: inframe
+        type: float
+      - field: frameshift
+        type: float
+      - field: biallelic
+        type: char
+      - field: minCopyNumber
+        type: float
+      - field: maxCopyNumber
+        type: float
+  drivers:
+    description: ''
+    pattern: foo
+    ftype: tsv
+    schema:
+      latest:
+      - field: clusterId
+        type: char
+      - field: gene
+        type: char
+      - field: eventType
+        type: char

@@ -1,0 +1,390 @@
+version: "v0.0.1"
+tidy:
+  svs:
+    description: ''
+    schema:
+      - field: vcf_id
+        type: char
+        description: ID of break junction for mapping to GRIDSS / PURPLE vcf
+      - field: sv_id
+        type: char
+        description: ID of break junction
+      - field: cluster_id
+        type: char
+        description: ID of cluster which break junction is assigned to
+      - field: cluster_reason
+        type: char
+        description: Reason for clustering and svId of clustered break junction for
+          other break junction(s) to which the variant has been clustered
+      - field: fragile_site_start
+        type: char
+        description: Start breakend of break junction is in a known fragile site (T/F)
+      - field: fragile_site_end
+        type: char
+        description: End breakend of break junction is in a known fragile site (T/F)
+      - field: is_foldback
+        type: char
+        description: Break junction is classified as a foldback (T/F)
+      - field: linetype_start
+        type: char
+        description: Start breakend of break junction is in a known or suspected line
+          source region
+      - field: linetype_end
+        type: char
+        description: End breakend of break junction is in a known or suspected line
+          source region
+      - field: junction_copynumber_min
+        type: float
+        description: Minimum bound JCN estimate for breakjunction
+      - field: junction_copynumber_max
+        type: float
+        description: Maximum bound JCN estimate for breakjunction
+      - field: gene_start
+        type: char
+        description: Gene(s) overlapping start breakend of SV
+      - field: gene_end
+        type: char
+        description: Gene(s) overlapping end breakend of SV
+      - field: local_topology_id_start
+        type: char
+        description: ID for group of proximate breakends to the start breakend of break
+          junction within an extending 5kb window
+      - field: local_topology_id_end
+        type: char
+        description: ID for group of proximate breakends to the end breakend of break
+          junction within an extending 5kb window
+      - field: local_topology_start
+        type: char
+        description: Local breakend topology type at site of start breakend. [ISOLATED_BE,
+          DSB, TI_ONLY, SIMPLE_DUP, FOLDBACK, FOLDBACK_DSB, SAME_ORIENT, COMPLEX_FOLDBACK,
+          COMPLEX_LINE, COMPLEX_OTHER]
+      - field: local_topology_end
+        type: char
+        description: Local breakend topology type at site of end breakend. [ISOLATED_BE,
+          DSB, TI_ONLY, SIMPLE_DUP, FOLDBACK, FOLDBACK_DSB, SAME_ORIENT, COMPLEX_FOLDBACK,
+          COMPLEX_LINE, COMPLEX_OTHER]
+      - field: local_ti_count_start
+        type: float
+        description: Number of chained templated insertions in local topology group
+          of start breakend
+      - field: local_ti_count_end
+        type: float
+        description: Number of chained templated insertions in local topology group
+          of end breakend
+  breakend:
+    description: ''
+    schema:
+      - field: id
+        type: char
+        description: Id of breakend annotation
+      - field: sv_id
+        type: char
+        description: Id of break junction
+      - field: is_start
+        type: char
+        description: Annotation relates to the start breakend of the break junction
+          (1 = true,0 = false)
+      - field: gene
+        type: char
+        description: Gene annotated
+      - field: transcript_id
+        type: char
+        description: Ensembl stable transcript id of annotation
+      - field: canonical
+        type: char
+        description: Transcript is the canonical transcript of the gene. LINX annotates
+          1 record for each canonical transcript overlapping the breakend + a record
+          for any non-canonical transcript that is annotated as part of a fusion
+      - field: gene_orientation
+        type: char
+        description: Orientation which breakend points relative to the gene taking into
+          account both gene strand and breakend orientation.
+      - field: disruptive
+        type: char
+        description: Breakend is part of a break junction which disrupts the exonic
+          sequence of the transcript
+      - field: reported_disruption
+        type: char
+        description: Breakend is disruptive and gene is flagged as reportable for disruption
+      - field: undisrupted_copynumber
+        type: float
+        description: Number of remaining wildtype alleles of the gene that are not disrupted
+          by the breakend.  If <0.5 then disruption is considered Homozygous
+      - field: region_type
+        type: char
+        description: Location of the breakend relative to the transcript. [UPSTREAM
+          (within 100kb upstream of the 1st base of the transcript), INTRONIC, EXONIC]
+      - field: coding_type
+        type: char
+        description: Location of the breakend relative to the coding context of the
+          transcript. [CODING, NON_CODING, UTR_5P, UTR_3P, ENHANCER (IG enhancer rearrangements
+          only)
+      - field: biotype
+        type: char
+        description: Ensembl biotype of the transcript
+      - field: exonic_basephase
+        type: float
+        description: If regionType = EXONIC, the exact base phase of the breakend, else -1
+      - field: next_splice_exon_rank
+        type: float
+        description: The exon rank of the next splice acceptor (if gene orientation
+          is 'DOWNSTREAM') or splice donor (if gene orientation is 'UPSTREAM')
+      - field: next_splice_exon_phase
+        type: float
+        description: The phase of the 1st base after the next splice acceptor (if gene
+          orientation is 'DOWNSTREAM') or splice donor (if gene orientation is 'UPSTREAM')
+      - field: next_splice_distance
+        type: float
+        description: The distance in bases to the next splice site identified in nextSpliceExonRank
+      - field: total_exon_count
+        type: float
+        description: Total number of exons in the transcript
+      - field: exon_up
+        type: float
+        description: '.'
+      - field: exon_down
+        type: float
+        description: '.'
+  clusters:
+    description: ''
+    schema:
+      - field: clusterid
+        type: char
+        description: Unique Id for the cluster
+      - field: category
+        type: char
+        description: High level categorisation of the cluster classification
+      - field: synthetic
+        type: char
+        description: Set to TRUE if the cluster is resolved to a non complex type by
+          simplification of a short templated insertion (<1kb)
+      - field: resolvedtype
+        type: char
+        description: Resolved classification of the cluster.
+      - field: clustercount
+        type: float
+        description: The number of break junctions in the cluster
+      - field: clusterdesc
+        type: char
+        description: String containing the types and counts of break junctions in the
+          cluster. eg. DEL=2_INV=2
+  links:
+    description: ''
+    schema:
+      - field: clusterid
+        type: char
+        description: Id of the cluster which contains the link
+      - field: chainid
+        type: char
+        description: Id of the chain to which the link belongs representing a multi-segment
+          prediction of the derivative chromosome
+      - field: chainindex
+        type: char
+        description: Position of the linked segment in the chain. The predicted chain
+          can be reconstructed by traversing each linked segment in order ie. 0,1,...,n
+      - field: chaincount
+        type: float
+        description: Total count of linked segments in the chan
+      - field: lowersvid
+        type: char
+        description: svId of the leftmost breakend of the linked segment
+      - field: uppersvid
+        type: char
+        description: svId of the rightmost breakend of the linked segment
+      - field: lowerbreakendisstart
+        type: char
+        description: True if the lower breakend is the start breakend of the break junction
+      - field: upperbreakendisstart
+        type: char
+        description: True if the right breakend is the start breakend of the break junction
+      - field: chromosome
+        type: char
+        description: Chromosome of the linked segment
+      - field: arm
+        type: char
+        description: Arm (P/Q) of the linked segment
+      - field: assembled
+        type: char
+        description: True if the segment is linked by a GRIDSS assembly
+      - field: traversedsvcount
+        type: float
+        description: The number of other breakends that are located on the linked segment
+      - field: length
+        type: float
+        description: Length of the linked segment
+      - field: junctioncopynumber
+        type: float
+        description: Predicted copy number of the chain
+      - field: junctioncopynumberuncertainty
+        type: float
+        description: Uncertainty in the copy number of the chain
+      - field: pseudogeneinfo
+        type: char
+        description: 'If the segment precisely matches an exon of an ensembl gene, then
+          contains details of the matching exon:  {geneName;TranscriptId,ExonRank,ExonLength}'
+      - field: ecdna
+        type: char
+        description: True if the link is predicted to be part of a DM / ecDNA chain
+  fusion:
+    description: ''
+    schema:
+      - field: fiveprimebreakendid
+        type: char
+        description: Id of the 5' breakend in the fusion
+      - field: threeprimebreakendid
+        type: char
+        description: Id of the 3' breakend in the fusion
+      - field: name
+        type: char
+        description: Name of the fusion in the form 5'GENE_3'GENE
+      - field: reported
+        type: char
+        description: True if the fusion meets all reportable fusion criteria for LINX
+      - field: reportedtype
+        type: char
+        description: 'If one or both of the genes matches  a promiscuous gene or known
+          rearrangement in the HMF fusion knowledgebase, then the type of reportable
+          gene pair: [KNOWN_PAIR, PROMISCUOUS_5, PROMISCUOUS_3, PROMISCUOUS_BOTH, EXON_DEL_DUP,
+          IG_PROMISCUOUS, IG_KNOWN_PAIR, KNOWN_PAIR_UNMMABLE_3 or NONE (if no match
+          is found)'
+      - field: reportablereasons
+        type: char
+        description: Reasons for given reportable status
+      - field: phased
+        type: char
+        description: Set to 1 if a phased fusion can be formed (after allowing for exon
+          skipping)
+      - field: likelihood
+        type: char
+        description: '.'
+      - field: chainlength
+        type: float
+        description: 0 for simple fusions.  If fusion is chained equal to the total
+          length of segments chained between 5' and 3' partners
+      - field: chainlinks
+        type: float
+        description: 0 for simple fusions.  If fusion is chained equal to the number
+          of segments chained between 5' and 3' partners
+      - field: chainterminated
+        type: char
+        description: True if the fusion is interrupted either on the 5' partner side
+          by a chained breakend prior to the start of the 5' gene or by a chained breakend
+          prior to the last coding base of the 3' gene
+      - field: domainskept
+        type: char
+        description: List of 3' partner domains retained in fusion product (as annotated
+          by PROSITE profiles)
+      - field: domainslost
+        type: char
+        description: List of 3' partner domains lost in fusion product (as annotated
+          by PROSITE profiles)
+      - field: skippedexonsup
+        type: float
+        description: Count of splice donors required to be skipped on 5' partner side
+          to form an inframe fusion.
+      - field: skippedexonsdown
+        type: float
+        description: Count of splice donors required to be skipped on 3' partner side
+          to form an inframe fusion
+      - field: fusedexonup
+        type: float
+        description: Last exon fused on 5' partner side
+      - field: fusedexondown
+        type: float
+        description: First exon fused on 3' partner side
+      - field: genestart
+        type: char
+        description: '.'
+      - field: genecontextstart
+        type: char
+        description: '.'
+      - field: transcriptstart
+        type: char
+        description: '.'
+      - field: geneend
+        type: char
+        description: '.'
+      - field: genecontextend
+        type: char
+        description: '.'
+      - field: transcriptend
+        type: char
+        description: '.'
+      - field: junctioncopynumber
+        type: float
+        description: '.'
+  drivercatalog:
+    description: ''
+    schema:
+      - field: chromosome
+        type: char
+        description: Chromosome of gene
+      - field: chromosomeband
+        type: char
+        description: Chromosome band of driver
+      - field: gene
+        type: char
+        description: Gene name
+      - field: transcript
+        type: char
+        description: Transcript name
+      - field: iscanonical
+        type: char
+        description: Is canonical
+      - field: driver
+        type: char
+        description: Driver type [AMP, DEL, MUTATION]
+      - field: category
+        type: char
+        description: Gene driver type [ONCO, TSG]
+      - field: likelihoodmethod
+        type: char
+        description: Method used to determine likelihood [AMP, DEL, BIALLELIC, DNDS,
+          HOTSPOT, INFRAME]
+      - field: driverlikelihood
+        type: float
+        description: Likelihood that gene is a driver
+      - field: missense
+        type: float
+        description: Number of missense variants in gene
+      - field: nonsense
+        type: float
+        description: Number of nonsense variants in gene
+      - field: splice
+        type: float
+        description: Number of splice variants in gene
+      - field: inframe
+        type: float
+        description: Number of inframe variants in gene
+      - field: frameshift
+        type: float
+        description: Number of frameshift variants in gene
+      - field: biallelic
+        type: char
+        description: True if any variants in the gene are biallelic
+      - field: mincopynumber
+        type: float
+        description: Minimum copy number found in the gene exons
+      - field: maxcopynumber
+        type: float
+        description: Maximum copy number found in the gene exons
+  drivers:
+    description: ''
+    schema:
+      - field: clusterid
+        type: char
+        description: Id of cluster which break junction associated with driver. Set
+          to -1 for ARM or CHR level events.
+      - field: gene
+        type: char
+        description: Gene of driver. Multiple clusters may be linked to a gene for a
+          sample
+      - field: eventtype
+        type: char
+        description: Type of driver. [GAIN (amplification by SV), GAIN_ARM (amplification
+          of whole arm), GAIN_CHR (amplification of whole chromosome), DEL (homozygous
+          deletion), LOH (focal LOH), LOH_ARM (arm level LOH), LOH_CHR (chromosome level
+          LOH), LOH_SV_TELO (LOH from SV to telomere), LOH_SV_CENTRO (LOH from SV to
+          centromere), HOM_DUP_DISRUPTION (homozygous disruption via cross exonic tandem
+          duplication), HOM_DEL_DISRUPTION (homozygous disruption without homozygous
+          copy number loss)]
