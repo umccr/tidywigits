@@ -39,10 +39,10 @@ tidy:
         description:
           'End breakend of break junction is in a known or suspected line source
           region'
-      - field: 'junction_copynumber_min'
+      - field: 'junction_cn_min'
         type: 'float'
         description: 'Minimum bound JCN estimate for breakjunction'
-      - field: 'junction_copynumber_max'
+      - field: 'junction_cn_max'
         type: 'float'
         description: 'Maximum bound JCN estimate for breakjunction'
       - field: 'gene_start'
@@ -79,7 +79,7 @@ tidy:
           breakend'
   breakends:
     description:
-      'Impact of each non PON filtered break junction on each overlapping gene.'
+      'Impact of each non PON filtered break junction on each overlapping gene'
     schema:
       - field: 'id'
         type: 'char'
@@ -99,12 +99,12 @@ tidy:
         description: 'Ensembl stable transcript id of annotation'
       - field: 'canonical'
         type: 'char'
-        description: 'Transcript is the canonical transcript of the gene.'
+        description: 'Transcript is the canonical transcript of the gene'
       - field: 'gene_orientation'
         type: 'char'
         description:
           'Orientation which breakend points relative to the gene taking into
-          account both gene strand and breakend orientation.'
+          account both gene strand and breakend orientation'
       - field: 'disruptive'
         type: 'char'
         description:
@@ -115,7 +115,7 @@ tidy:
         description:
           'Breakend is disruptive and gene is flagged as reportable for
           disruption'
-      - field: 'undisrupted_copynumber'
+      - field: 'undisrupted_cn'
         type: 'float'
         description:
           'Number of remaining wildtype alleles of the gene that are not
@@ -127,7 +127,7 @@ tidy:
         type: 'char'
         description:
           'Location of the breakend relative to the coding context of the
-          transcript.'
+          transcript'
       - field: 'biotype'
         type: 'char'
         description: 'Ensembl biotype of the transcript'
@@ -202,7 +202,7 @@ tidy:
           multi-segment prediction of the derivative chromosome'
       - field: 'chain_index'
         type: 'char'
-        description: 'Position of the linked segment in the chain.'
+        description: 'Position of the linked segment in the chain'
       - field: 'chain_count'
         type: 'float'
         description: 'Total count of linked segments in the chan'
@@ -236,10 +236,10 @@ tidy:
       - field: 'length'
         type: 'float'
         description: 'Length of the linked segment'
-      - field: 'junction_copynumber'
+      - field: 'junction_cn'
         type: 'float'
         description: 'Predicted copy number of the chain'
-      - field: 'junction_copynumber_uncertainty'
+      - field: 'junction_cn_uncertainty'
         type: 'float'
         description: 'Uncertainty in the copy number of the chain'
       - field: 'pseudogene_info'
@@ -316,7 +316,7 @@ tidy:
         type: 'float'
         description:
           'Count of splice donors required to be skipped on 5prime partner side
-          to form an inframe fusion.'
+          to form an inframe fusion'
       - field: 'skipped_exons_down'
         type: 'float'
         description:
@@ -346,7 +346,7 @@ tidy:
       - field: 'transcript_end'
         type: 'char'
         description: '.'
-      - field: 'junction_copynumber'
+      - field: 'junction_cn'
         type: 'float'
         description: '.'
   drivercatalog:
@@ -399,10 +399,10 @@ tidy:
       - field: 'biallelic'
         type: 'char'
         description: 'True if any variants in the gene are biallelic'
-      - field: 'min_copynumber'
+      - field: 'min_cn'
         type: 'float'
         description: 'Minimum copy number found in the gene exons'
-      - field: 'max_copynumber'
+      - field: 'max_cn'
         type: 'float'
         description: 'Maximum copy number found in the gene exons'
   drivers:
@@ -414,144 +414,202 @@ tidy:
       - field: 'cluster_id'
         type: 'char'
         description:
-          'Id of cluster which break junction associated with driver.'
+          'Id of cluster which break junction associated with driver'
       - field: 'gene'
         type: 'char'
-        description: 'Gene of driver.'
+        description: 'Gene of driver'
       - field: 'event_type'
         type: 'char'
-        description: 'Type of driver.'
+        description: 'Type of driver'
   viscn:
     description: ''
     schema:
-      - field: chromosome
-        type: char
-      - field: start
-        type: float
-      - field: end
-        type: float
-      - field: cn
-        type: float
-      - field: baf
-        type: float
+      - field: 'chromosome'
+        type: 'char'
+        description: ''
+      - field: 'start'
+        type: 'float'
+        description: ''
+      - field: 'end'
+        type: 'float'
+        description: ''
+      - field: 'cn'
+        type: 'float'
+        description: ''
+      - field: 'baf'
+        type: 'float'
+        description: ''
   visfusion:
     description: ''
     schema:
-      - field: cluster_id
-        type: char
-      - field: reportable
-        type: char
-      - field: gene_name_up
-        type: char
-      - field: transcript_up
-        type: char
-      - field: chr_up
-        type: char
-      - field: pos_up
-        type: char
-      - field: strand_up
-        type: char
-      - field: region_type_up
-        type: char
-      - field: fused_exon_up
-        type: char
-      - field: gene_name_down
-        type: char
-      - field: transcript_down
-        type: char
-      - field: chr_down
-        type: char
-      - field: pos_down
-        type: char
-      - field: strand_down
-        type: char
-      - field: region_type_down
-        type: char
-      - field: fused_exon_down
-        type: char
+      - field: 'cluster_id'
+        type: 'char'
+        description: ''
+      - field: 'reportable'
+        type: 'char'
+        description: ''
+      - field: 'gene_name_up'
+        type: 'char'
+        description: ''
+      - field: 'transcript_up'
+        type: 'char'
+        description: ''
+      - field: 'chr_up'
+        type: 'char'
+        description: ''
+      - field: 'pos_up'
+        type: 'char'
+        description: ''
+      - field: 'strand_up'
+        type: 'char'
+        description: ''
+      - field: 'region_type_up'
+        type: 'char'
+        description: ''
+      - field: 'fused_exon_up'
+        type: 'char'
+        description: ''
+      - field: 'gene_name_down'
+        type: 'char'
+        description: ''
+      - field: 'transcript_down'
+        type: 'char'
+        description: ''
+      - field: 'chr_down'
+        type: 'char'
+        description: ''
+      - field: 'pos_down'
+        type: 'char'
+        description: ''
+      - field: 'strand_down'
+        type: 'char'
+        description: ''
+      - field: 'region_type_down'
+        type: 'char'
+        description: ''
+      - field: 'fused_exon_down'
+        type: 'char'
+        description: ''
   visgeneexon:
     description: ''
     schema:
-      - field: cluster_id
-        type: char
-      - field: gene
-        type: char
-      - field: transcript
-        type: char
-      - field: chromosome
-        type: char
-      - field: annotation_type
-        type: char
-      - field: exon_rank
-        type: char
-      - field: exon_start
-        type: char
-      - field: exon_end
-        type: char
+      - field: 'cluster_id'
+        type: 'char'
+        description: ''
+      - field: 'gene'
+        type: 'char'
+        description: ''
+      - field: 'transcript'
+        type: 'char'
+        description: ''
+      - field: 'chromosome'
+        type: 'char'
+        description: ''
+      - field: 'annotation_type'
+        type: 'char'
+        description: ''
+      - field: 'exon_rank'
+        type: 'char'
+        description: ''
+      - field: 'exon_start'
+        type: 'char'
+        description: ''
+      - field: 'exon_end'
+        type: 'char'
+        description: ''
   visproteindomain:
     description: ''
     schema:
-      - field: cluster_id
-        type: char
-      - field: transcript
-        type: char
-      - field: chromosome
-        type: char
-      - field: start
-        type: char
-      - field: end
-        type: char
-      - field: info
-        type: char
+      - field: 'cluster_id'
+        type: 'char'
+        description: ''
+      - field: 'transcript'
+        type: 'char'
+        description: ''
+      - field: 'chromosome'
+        type: 'char'
+        description: ''
+      - field: 'start'
+        type: 'char'
+        description: ''
+      - field: 'end'
+        type: 'char'
+        description: ''
+      - field: 'info'
+        type: 'char'
+        description: ''
   vissegments:
     description: ''
     schema:
-      - field: cluster_id
-        type: char
-      - field: chain_id
-        type: char
-      - field: chromosome
-        type: char
-      - field: pos_start
-        type: char
-      - field: pos_end
-        type: char
-      - field: link_ploidy
-        type: float
-      - field: in_double_minute
-        type: char
+      - field: 'cluster_id'
+        type: 'char'
+        description: ''
+      - field: 'chain_id'
+        type: 'char'
+        description: ''
+      - field: 'chromosome'
+        type: 'char'
+        description: ''
+      - field: 'pos_start'
+        type: 'char'
+        description: ''
+      - field: 'pos_end'
+        type: 'char'
+        description: ''
+      - field: 'link_ploidy'
+        type: 'float'
+        description: ''
+      - field: 'in_double_minute'
+        type: 'char'
+        description: ''
   vissvdata:
     description: ''
     schema:
-      - field: cluster_id
+      - field: 'cluster_id'
+        type: 'char'
+        description: ''
+      - field: 'chain_id'
+        type: 'char'
+        description: ''
+      - field: 'sv_id'
+        type: 'char'
+        description: ''
+      - field: 'type'
+        type: 'char'
+        description: ''
+      - field: 'resolved_type'
+        type: 'char'
+        description: ''
+      - field: 'is_synthetic'
+        type: 'char'
+        description: ''
+      - field: 'chr_start'
+        type: 'char'
+        description: ''
+      - field: 'chr_end'
+        type: 'char'
+        description: ''
+      - field: 'pos_start'
+        type: 'float'
+        description: ''
+      - field: 'pos_end'
+        type: 'float'
+        description: ''
+      - field: 'orient_start'
+        type: 'float'
+        description: ''
+      - field: 'orient_end'
+        type: 'float'
+        description: ''
+      - field: 'info_start'
         type: char
-      - field: chain_id
-        type: char
-      - field: sv_id
-        type: char
-      - field: type
-        type: char
-      - field: resolved_type
-        type: char
-      - field: is_synthetic
-        type: char
-      - field: chr_start
-        type: char
-      - field: chr_end
-        type: char
-      - field: pos_start
-        type: float
-      - field: pos_end
-        type: float
-      - field: orient_start
-        type: float
-      - field: OrientEnd
-        type: float
-      - field: InfoStart
-        type: char
-      - field: InfoEnd
-        type: char
-      - field: JunctionCopyNumber
-        type: float
-      - field: InDoubleMinute
-        type: char
+        description: ''
+      - field: 'info_end'
+        type: 'char'
+        description: ''
+      - field: 'junction_cn'
+        type: 'float'
+        description: ''
+      - field: 'in_double_minute'
+        type: 'char'
+        description: ''
