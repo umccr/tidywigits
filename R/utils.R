@@ -42,7 +42,9 @@ parse_file <- function(fname, schema, type, cnames = TRUE, ...) {
     tibble::is_tibble(schema),
     all(colnames(schema) == c("field", "type"))
   )
-  assertthat::assert_that(type %in% c("tsv", "csv", "vcf", "txt-nohead", "txt"))
+  assertthat::assert_that(
+    type %in% c("tsv", "csv", "vcf", "txt-nohead", "txt", "tsv-onlycols")
+  )
   # remap schema
   schema2 <- schema |>
     dplyr::mutate(
@@ -70,6 +72,15 @@ parse_file <- function(fname, schema, type, cnames = TRUE, ...) {
       ...
     ) |>
       purrr::set_names(col_names_new)
+    return(d[])
+  }
+  if (type == "tsv-onlycols") {
+    ctypes <- rlang::exec(readr::cols_only, !!!schema2)
+    d <- readr::read_tsv(
+      file = fname,
+      col_names = TRUE,
+      col_types = ctypes
+    )
     return(d[])
   }
   d <- readr::read_delim(
