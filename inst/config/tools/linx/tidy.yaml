@@ -421,3 +421,137 @@ tidy:
       - field: 'event_type'
         type: 'char'
         description: 'Type of driver.'
+  viscn:
+    description: ''
+    schema:
+      - field: chromosome
+        type: char
+      - field: start
+        type: float
+      - field: end
+        type: float
+      - field: cn
+        type: float
+      - field: baf
+        type: float
+  visfusion:
+    description: ''
+    schema:
+      - field: cluster_id
+        type: char
+      - field: reportable
+        type: char
+      - field: gene_name_up
+        type: char
+      - field: transcript_up
+        type: char
+      - field: chr_up
+        type: char
+      - field: pos_up
+        type: char
+      - field: strand_up
+        type: char
+      - field: region_type_up
+        type: char
+      - field: fused_exon_up
+        type: char
+      - field: gene_name_down
+        type: char
+      - field: transcript_down
+        type: char
+      - field: chr_down
+        type: char
+      - field: pos_down
+        type: char
+      - field: strand_down
+        type: char
+      - field: region_type_down
+        type: char
+      - field: fused_exon_down
+        type: char
+  visgeneexon:
+    description: ''
+    schema:
+      - field: cluster_id
+        type: char
+      - field: gene
+        type: char
+      - field: transcript
+        type: char
+      - field: chromosome
+        type: char
+      - field: annotation_type
+        type: char
+      - field: exon_rank
+        type: char
+      - field: exon_start
+        type: char
+      - field: exon_end
+        type: char
+  visproteindomain:
+    description: ''
+    schema:
+      - field: cluster_id
+        type: char
+      - field: transcript
+        type: char
+      - field: chromosome
+        type: char
+      - field: start
+        type: char
+      - field: end
+        type: char
+      - field: info
+        type: char
+  vissegments:
+    description: ''
+    schema:
+      - field: cluster_id
+        type: char
+      - field: chain_id
+        type: char
+      - field: chromosome
+        type: char
+      - field: pos_start
+        type: char
+      - field: pos_end
+        type: char
+      - field: link_ploidy
+        type: float
+      - field: in_double_minute
+        type: char
+  vissvdata:
+    description: ''
+    schema:
+      - field: cluster_id
+        type: char
+      - field: chain_id
+        type: char
+      - field: sv_id
+        type: char
+      - field: type
+        type: char
+      - field: resolved_type
+        type: char
+      - field: is_synthetic
+        type: char
+      - field: chr_start
+        type: char
+      - field: chr_end
+        type: char
+      - field: pos_start
+        type: float
+      - field: pos_end
+        type: float
+      - field: orient_start
+        type: float
+      - field: OrientEnd
+        type: float
+      - field: InfoStart
+        type: char
+      - field: InfoEnd
+        type: char
+      - field: JunctionCopyNumber
+        type: float
+      - field: InDoubleMinute
+        type: char

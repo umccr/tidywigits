@@ -60,19 +60,7 @@ Linx <- R6::R6Class(
     #' Path to file.
     parse_breakends = function(x) {
       schema <- self$config$.raw_schema("breakends")
-      # breakend file dropped a few columns in latest linx version
-      schema2 <- schema |>
-        dplyr::mutate(
-          type = dplyr::case_match(
-            .data$type,
-            "char" ~ "c",
-            "int" ~ "i",
-            "float" ~ "d"
-          )
-        ) |>
-        tibble::deframe()
-      col_types <- rlang::exec(readr::cols_only, !!!schema2)
-      d <- readr::read_tsv(x, col_types = col_types)
+      d <- parse_file(x, schema, type = "tsv-onlycols")
       d[]
     },
     #' @description Tidy `breakend.tsv` file.
@@ -173,6 +161,114 @@ Linx <- R6::R6Class(
       schema <- self$config$.tidy_schema("drivercatalog")
       colnames(raw) <- schema[["field"]]
       list(linx_drivercatalog = raw[]) |>
+        tibble::enframe(value = "data")
+    },
+    #' @description Read `linx.vis_copy_number.tsv` file.
+    #' @param x (`character(1)`)\cr
+    #' Path to file.
+    parse_viscn = function(x) {
+      schema <- self$config$.raw_schema("viscn")
+      d <- parse_file(x, schema, type = "tsv-onlycols")
+      d[]
+    },
+    #' @description Tidy `linx.vis_copy_number.tsv` file.
+    #' @param x (`character(1)`)\cr
+    #' Path to file.
+    tidy_viscn = function(x) {
+      raw <- self$parse_viscn(x)
+      schema <- self$config$.tidy_schema("viscn")
+      colnames(raw) <- schema[["field"]]
+      list(linx_viscn = raw[]) |>
+        tibble::enframe(value = "data")
+    },
+    #' @description Read `linx.vis_fusion.tsv` file.
+    #' @param x (`character(1)`)\cr
+    #' Path to file.
+    parse_visfusion = function(x) {
+      schema <- self$config$.raw_schema("visfusion")
+      d <- parse_file(x, schema, type = "tsv-onlycols")
+      d[]
+    },
+    #' @description Tidy `linx.vis_fusion.tsv` file.
+    #' @param x (`character(1)`)\cr
+    #' Path to file.
+    tidy_visfusion = function(x) {
+      raw <- self$parse_visfusion(x)
+      schema <- self$config$.tidy_schema("visfusion")
+      colnames(raw) <- schema[["field"]]
+      list(linx_visfusion = raw[]) |>
+        tibble::enframe(value = "data")
+    },
+    #' @description Read `linx.vis_gene_exon.tsv` file.
+    #' @param x (`character(1)`)\cr
+    #' Path to file.
+    parse_visgeneexon = function(x) {
+      schema <- self$config$.raw_schema("visgeneexon")
+      d <- parse_file(x, schema, type = "tsv-onlycols")
+      d[]
+    },
+    #' @description Tidy `linx.vis_gene_exon.tsv` file.
+    #' @param x (`character(1)`)\cr
+    #' Path to file.
+    tidy_visgeneexon = function(x) {
+      raw <- self$parse_visgeneexon(x)
+      schema <- self$config$.tidy_schema("visgeneexon")
+      colnames(raw) <- schema[["field"]]
+      list(linx_visgeneexon = raw[]) |>
+        tibble::enframe(value = "data")
+    },
+    #' @description Read `linx.vis_protein_domain.tsv` file.
+    #' @param x (`character(1)`)\cr
+    #' Path to file.
+    parse_visproteindomain = function(x) {
+      schema <- self$config$.raw_schema("visproteindomain")
+      d <- parse_file(x, schema, type = "tsv-onlycols")
+      d[]
+    },
+    #' @description Tidy `linx.vis_protein_domain.tsv` file.
+    #' @param x (`character(1)`)\cr
+    #' Path to file.
+    tidy_visproteindomain = function(x) {
+      raw <- self$parse_visproteindomain(x)
+      schema <- self$config$.tidy_schema("visproteindomain")
+      colnames(raw) <- schema[["field"]]
+      list(linx_visproteindomain = raw[]) |>
+        tibble::enframe(value = "data")
+    },
+    #' @description Read `linx.vis_segments.tsv` file.
+    #' @param x (`character(1)`)\cr
+    #' Path to file.
+    parse_vissegments = function(x) {
+      schema <- self$config$.raw_schema("vissegments")
+      d <- parse_file(x, schema, type = "tsv-onlycols")
+      d[]
+    },
+    #' @description Tidy `linx.vis_segments.tsv` file.
+    #' @param x (`character(1)`)\cr
+    #' Path to file.
+    tidy_vissegments = function(x) {
+      raw <- self$parse_vissegments(x)
+      schema <- self$config$.tidy_schema("vissegments")
+      colnames(raw) <- schema[["field"]]
+      list(linx_vissegments = raw[]) |>
+        tibble::enframe(value = "data")
+    },
+    #' @description Read `linx.vis_sv_data.tsv` file.
+    #' @param x (`character(1)`)\cr
+    #' Path to file.
+    parse_vissvdata = function(x) {
+      schema <- self$config$.raw_schema("vissvdata")
+      d <- parse_file(x, schema, type = "tsv-onlycols")
+      d[]
+    },
+    #' @description Tidy `linx.vis_sv_data.tsv` file.
+    #' @param x (`character(1)`)\cr
+    #' Path to file.
+    tidy_vissvdata = function(x) {
+      raw <- self$parse_vissvdata(x)
+      schema <- self$config$.tidy_schema("vissvdata")
+      colnames(raw) <- schema[["field"]]
+      list(linx_vissvdata = raw[]) |>
         tibble::enframe(value = "data")
     }
   )

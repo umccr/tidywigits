@@ -268,3 +268,155 @@ raw:
           type: 'char'
         - field: 'eventType'
           type: 'char'
+  viscn:
+    description: ''
+    pattern: "\\.linx\\.vis_copy_number\\.tsv$"
+    ftype: 'tsv'
+    schema:
+      latest:
+        - field: Chromosome
+          type: char
+        - field: Start
+          type: float
+        - field: End
+          type: float
+        - field: CopyNumber
+          type: float
+        - field: BAF
+          type: float
+  visfusion:
+    description: ''
+    pattern: "\\.linx\\.vis_fusion\\.tsv$"
+    ftype: 'tsv'
+    schema:
+      latest:
+        - field: ClusterId
+          type: char
+        - field: Reportable
+          type: char
+        - field: GeneNameUp
+          type: char
+        - field: TranscriptUp
+          type: char
+        - field: ChrUp
+          type: char
+        - field: PosUp
+          type: char
+        - field: StrandUp
+          type: char
+        - field: RegionTypeUp
+          type: char
+        - field: FusedExonUp
+          type: char
+        - field: GeneNameDown
+          type: char
+        - field: TranscriptDown
+          type: char
+        - field: ChrDown
+          type: char
+        - field: PosDown
+          type: char
+        - field: StrandDown
+          type: char
+        - field: RegionTypeDown
+          type: char
+        - field: FusedExonDown
+          type: char
+  visgeneexon:
+    description: ''
+    pattern: "\\.linx\\.vis_gene_exon\\.tsv$"
+    ftype: 'tsv'
+    schema:
+      latest:
+        - field: ClusterId
+          type: char
+        - field: Gene
+          type: char
+        - field: Transcript
+          type: char
+        - field: Chromosome
+          type: char
+        - field: AnnotationType
+          type: char
+        - field: ExonRank
+          type: char
+        - field: ExonStart
+          type: char
+        - field: ExonEnd
+          type: char
+  visproteindomain:
+    description: ''
+    pattern: "\\.linx\\.vis_protein_domain\\.tsv$"
+    ftype: 'tsv'
+    schema:
+      latest:
+        - field: ClusterId
+          type: char
+        - field: Transcript
+          type: char
+        - field: Chromosome
+          type: char
+        - field: Start
+          type: char
+        - field: End
+          type: char
+        - field: Info
+          type: char
+  vissegments:
+    description: ''
+    pattern: "\\.linx\\.vis_segments\\.tsv$"
+    ftype: 'tsv'
+    schema:
+      latest:
+        - field: ClusterId
+          type: char
+        - field: ChainId
+          type: char
+        - field: Chromosome
+          type: char
+        - field: PosStart
+          type: char
+        - field: PosEnd
+          type: char
+        - field: LinkPloidy
+          type: float
+        - field: InDoubleMinute
+          type: char
+  vissvdata:
+    description: ''
+    pattern: "\\.linx\\.vis_sv_data\\.tsv$"
+    ftype: 'tsv'
+    schema:
+      latest:
+      - field: ClusterId
+        type: char
+      - field: ChainId
+        type: char
+      - field: SvId
+        type: char
+      - field: Type
+        type: char
+      - field: ResolvedType
+        type: char
+      - field: IsSynthetic
+        type: char
+      - field: ChrStart
+        type: char
+      - field: ChrEnd
+        type: char
+      - field: PosStart
+        type: float
+      - field: PosEnd
+        type: float
+      - field: OrientStart
+        type: float
+      - field: OrientEnd
+        type: float
+      - field: InfoStart
+        type: char
+      - field: InfoEnd
+        type: char
+      - field: JunctionCopyNumber
+        type: float
+      - field: InDoubleMinute
+        type: char

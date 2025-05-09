@@ -44,6 +44,18 @@ Tidy tibble.}
 \item \href{#method-Linx-tidy_drivers}{\code{Linx$tidy_drivers()}}
 \item \href{#method-Linx-parse_drivercatalog}{\code{Linx$parse_drivercatalog()}}
 \item \href{#method-Linx-tidy_drivercatalog}{\code{Linx$tidy_drivercatalog()}}
+\item \href{#method-Linx-parse_viscn}{\code{Linx$parse_viscn()}}
+\item \href{#method-Linx-tidy_viscn}{\code{Linx$tidy_viscn()}}
+\item \href{#method-Linx-parse_visfusion}{\code{Linx$parse_visfusion()}}
+\item \href{#method-Linx-tidy_visfusion}{\code{Linx$tidy_visfusion()}}
+\item \href{#method-Linx-parse_visgeneexon}{\code{Linx$parse_visgeneexon()}}
+\item \href{#method-Linx-tidy_visgeneexon}{\code{Linx$tidy_visgeneexon()}}
+\item \href{#method-Linx-parse_visproteindomain}{\code{Linx$parse_visproteindomain()}}
+\item \href{#method-Linx-tidy_visproteindomain}{\code{Linx$tidy_visproteindomain()}}
+\item \href{#method-Linx-parse_vissegments}{\code{Linx$parse_vissegments()}}
+\item \href{#method-Linx-tidy_vissegments}{\code{Linx$tidy_vissegments()}}
+\item \href{#method-Linx-parse_vissvdata}{\code{Linx$parse_vissvdata()}}
+\item \href{#method-Linx-tidy_vissvdata}{\code{Linx$tidy_vissvdata()}}
 \item \href{#method-Linx-clone}{\code{Linx$clone()}}
 }
 }
@@ -326,6 +338,222 @@ Path to file.}
 Tidy \code{linx.driver.catalog.tsv} file.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Linx$tidy_drivercatalog(x)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{x}}{(\code{character(1)})\cr
+Path to file.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Linx-parse_viscn"></a>}}
+\if{latex}{\out{\hypertarget{method-Linx-parse_viscn}{}}}
+\subsection{Method \code{parse_viscn()}}{
+Read \code{linx.vis_copy_number.tsv} file.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Linx$parse_viscn(x)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{x}}{(\code{character(1)})\cr
+Path to file.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Linx-tidy_viscn"></a>}}
+\if{latex}{\out{\hypertarget{method-Linx-tidy_viscn}{}}}
+\subsection{Method \code{tidy_viscn()}}{
+Tidy \code{linx.vis_copy_number.tsv} file.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Linx$tidy_viscn(x)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{x}}{(\code{character(1)})\cr
+Path to file.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Linx-parse_visfusion"></a>}}
+\if{latex}{\out{\hypertarget{method-Linx-parse_visfusion}{}}}
+\subsection{Method \code{parse_visfusion()}}{
+Read \code{linx.vis_fusion.tsv} file.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Linx$parse_visfusion(x)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{x}}{(\code{character(1)})\cr
+Path to file.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Linx-tidy_visfusion"></a>}}
+\if{latex}{\out{\hypertarget{method-Linx-tidy_visfusion}{}}}
+\subsection{Method \code{tidy_visfusion()}}{
+Tidy \code{linx.vis_fusion.tsv} file.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Linx$tidy_visfusion(x)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{x}}{(\code{character(1)})\cr
+Path to file.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Linx-parse_visgeneexon"></a>}}
+\if{latex}{\out{\hypertarget{method-Linx-parse_visgeneexon}{}}}
+\subsection{Method \code{parse_visgeneexon()}}{
+Read \code{linx.vis_gene_exon.tsv} file.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Linx$parse_visgeneexon(x)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{x}}{(\code{character(1)})\cr
+Path to file.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Linx-tidy_visgeneexon"></a>}}
+\if{latex}{\out{\hypertarget{method-Linx-tidy_visgeneexon}{}}}
+\subsection{Method \code{tidy_visgeneexon()}}{
+Tidy \code{linx.vis_gene_exon.tsv} file.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Linx$tidy_visgeneexon(x)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{x}}{(\code{character(1)})\cr
+Path to file.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Linx-parse_visproteindomain"></a>}}
+\if{latex}{\out{\hypertarget{method-Linx-parse_visproteindomain}{}}}
+\subsection{Method \code{parse_visproteindomain()}}{
+Read \code{linx.vis_protein_domain.tsv} file.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Linx$parse_visproteindomain(x)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{x}}{(\code{character(1)})\cr
+Path to file.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Linx-tidy_visproteindomain"></a>}}
+\if{latex}{\out{\hypertarget{method-Linx-tidy_visproteindomain}{}}}
+\subsection{Method \code{tidy_visproteindomain()}}{
+Tidy \code{linx.vis_protein_domain.tsv} file.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Linx$tidy_visproteindomain(x)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{x}}{(\code{character(1)})\cr
+Path to file.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Linx-parse_vissegments"></a>}}
+\if{latex}{\out{\hypertarget{method-Linx-parse_vissegments}{}}}
+\subsection{Method \code{parse_vissegments()}}{
+Read \code{linx.vis_segments.tsv} file.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Linx$parse_vissegments(x)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{x}}{(\code{character(1)})\cr
+Path to file.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Linx-tidy_vissegments"></a>}}
+\if{latex}{\out{\hypertarget{method-Linx-tidy_vissegments}{}}}
+\subsection{Method \code{tidy_vissegments()}}{
+Tidy \code{linx.vis_segments.tsv} file.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Linx$tidy_vissegments(x)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{x}}{(\code{character(1)})\cr
+Path to file.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Linx-parse_vissvdata"></a>}}
+\if{latex}{\out{\hypertarget{method-Linx-parse_vissvdata}{}}}
+\subsection{Method \code{parse_vissvdata()}}{
+Read \code{linx.vis_sv_data.tsv} file.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Linx$parse_vissvdata(x)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{x}}{(\code{character(1)})\cr
+Path to file.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Linx-tidy_vissvdata"></a>}}
+\if{latex}{\out{\hypertarget{method-Linx-tidy_vissvdata}{}}}
+\subsection{Method \code{tidy_vissvdata()}}{
+Tidy \code{linx.vis_sv_data.tsv} file.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Linx$tidy_vissvdata(x)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
