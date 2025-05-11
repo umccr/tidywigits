@@ -92,6 +92,7 @@ parse_file <- function(fname, schema, type, cnames = TRUE, ...) {
   )
   return(d[])
 }
+
 #' List Files
 #'
 #' Lists files in a given directory.

@@ -69,7 +69,7 @@ raw:
           type: 'float'
   version:
     description: 'Version of the tool.'
-    pattern: "cobalt\\.version$"
+    pattern: "^cobalt\\.version$"
     ftype: 'txt'
     schema:
       latest:

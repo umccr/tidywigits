@@ -420,3 +420,13 @@ raw:
         type: float
       - field: InDoubleMinute
         type: char
+  version:
+    description: 'Version of the tool.'
+    pattern: "^linx\\.version$"
+    ftype: 'txt'
+    schema:
+      latest:
+        - field: 'variable'
+          type: 'char'
+        - field: 'value'
+          type: 'char'
