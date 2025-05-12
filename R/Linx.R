@@ -300,7 +300,7 @@ Linx <- R6::R6Class(
         tidyr::pivot_wider(names_from = "variable", values_from = "value") |>
         purrr::set_names(names(col_types)) |>
         readr::type_convert(col_types = rlang::exec(readr::cols, !!!col_types))
-      list(version = d) |>
+      list(linx_version = d) |>
         tibble::enframe(name = "name", value = "data")
     }
   )
