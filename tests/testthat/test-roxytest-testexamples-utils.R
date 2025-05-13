@@ -2,7 +2,7 @@
 
 # File R/utils.R: @testexamples
 
-test_that("Function list_files_dir() @ L110", {
+test_that("Function list_files_dir() @ L111", {
   
   d <- system.file("R", package = "tidywigits")
   x <- list_files_dir(d)

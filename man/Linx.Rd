@@ -56,6 +56,8 @@ Tidy tibble.}
 \item \href{#method-Linx-tidy_vissegments}{\code{Linx$tidy_vissegments()}}
 \item \href{#method-Linx-parse_vissvdata}{\code{Linx$parse_vissvdata()}}
 \item \href{#method-Linx-tidy_vissvdata}{\code{Linx$tidy_vissvdata()}}
+\item \href{#method-Linx-parse_version}{\code{Linx$parse_version()}}
+\item \href{#method-Linx-tidy_version}{\code{Linx$tidy_version()}}
 \item \href{#method-Linx-clone}{\code{Linx$clone()}}
 }
 }
@@ -554,6 +556,42 @@ Path to file.}
 Tidy \code{linx.vis_sv_data.tsv} file.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Linx$tidy_vissvdata(x)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{x}}{(\code{character(1)})\cr
+Path to file.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Linx-parse_version"></a>}}
+\if{latex}{\out{\hypertarget{method-Linx-parse_version}{}}}
+\subsection{Method \code{parse_version()}}{
+Read \code{linx.version} file.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Linx$parse_version(x)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{x}}{(\code{character(1)})\cr
+Path to file.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Linx-tidy_version"></a>}}
+\if{latex}{\out{\hypertarget{method-Linx-tidy_version}{}}}
+\subsection{Method \code{tidy_version()}}{
+Tidy \code{linx.version} file.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Linx$tidy_version(x)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
