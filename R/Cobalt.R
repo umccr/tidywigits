@@ -31,8 +31,10 @@ Cobalt <- R6::R6Class(
     #' @param x (`character(1)`)\cr
     #' Path to file.
     parse_gcmed = function(x) {
+      # first two rows are mean/median + their values
       d1 <- readr::read_tsv(x, col_names = TRUE, col_types = "dd", n_max = 1)
       schema <- self$config$.raw_schema("gcmed")
+      # next rows are median per bucket
       d2 <- parse_file(x, schema, type = "tsv", skip = 2)
       list(sample_stats = d1[], bucket_stats = d2)
     },
@@ -47,8 +49,6 @@ Cobalt <- R6::R6Class(
       schema <- self$config$.tidy_schema("gcmed")
       colnames(raw[["bucket_stats"]]) <- schema[["field"]]
       colnames(raw[["sample_stats"]]) <- c("mean", "median")
-      # TODO: what on earth is going on here?
-      raw[["sample_stats"]] <- raw[["sample_stats"]]
       tibble::enframe(raw, value = "data")
     },
     #' @description Read `ratio.median.tsv` file.
