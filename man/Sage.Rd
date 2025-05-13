@@ -12,6 +12,10 @@ path <- here::here(
   "nogit/oncoanalyser-wgts-dna/20250407e2ff5344/L2500331_L2500332/sage"
 )
 s <- Sage$new(path)
+s$tidy
+s$tidy$tidy |>
+  purrr::set_names(s$tidy$parser) |>
+  purrr::map(\(x) str(x[["data"]][[1]]))
 
 }
 }

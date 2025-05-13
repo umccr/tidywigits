@@ -12,6 +12,9 @@ path <- here::here(
   "nogit/oncoanalyser-wgts-dna/20250407e2ff5344/L2500331_L2500332/purple"
 )
 p <- Purple$new(path)
+p$tidy$tidy |>
+  purrr::set_names(p$tidy$parser) |>
+  purrr::map(\(x) str(x[["data"]][[1]]))
 }
 }
 \section{Super class}{

@@ -12,6 +12,7 @@ path <- here::here(
   "nogit/oncoanalyser-wgts-dna/20250407e2ff5344/L2500331_L2500332/bamtools"
 )
 b <- Bamtools$new(path)
+b$tidy$tidy
 }
 }
 \section{Super class}{

@@ -29,8 +29,8 @@ Tidy tibble.}
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-Flagstats-new}{\code{Flagstats$new()}}
-\item \href{#method-Flagstats-parse_flagstat}{\code{Flagstats$parse_flagstat()}}
-\item \href{#method-Flagstats-tidy_flagstat}{\code{Flagstats$tidy_flagstat()}}
+\item \href{#method-Flagstats-parse_flagstats}{\code{Flagstats$parse_flagstats()}}
+\item \href{#method-Flagstats-tidy_flagstats}{\code{Flagstats$tidy_flagstats()}}
 \item \href{#method-Flagstats-clone}{\code{Flagstats$clone()}}
 }
 }
@@ -63,12 +63,12 @@ Output directory of tool.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Flagstats-parse_flagstat"></a>}}
-\if{latex}{\out{\hypertarget{method-Flagstats-parse_flagstat}{}}}
-\subsection{Method \code{parse_flagstat()}}{
+\if{html}{\out{<a id="method-Flagstats-parse_flagstats"></a>}}
+\if{latex}{\out{\hypertarget{method-Flagstats-parse_flagstats}{}}}
+\subsection{Method \code{parse_flagstats()}}{
 Read \code{flagstat} file.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Flagstats$parse_flagstat(x)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Flagstats$parse_flagstats(x)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -81,12 +81,12 @@ Path to file.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Flagstats-tidy_flagstat"></a>}}
-\if{latex}{\out{\hypertarget{method-Flagstats-tidy_flagstat}{}}}
-\subsection{Method \code{tidy_flagstat()}}{
+\if{html}{\out{<a id="method-Flagstats-tidy_flagstats"></a>}}
+\if{latex}{\out{\hypertarget{method-Flagstats-tidy_flagstats}{}}}
+\subsection{Method \code{tidy_flagstats()}}{
 Tidy \code{flagstat} file.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Flagstats$tidy_flagstat(x)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Flagstats$tidy_flagstats(x)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
