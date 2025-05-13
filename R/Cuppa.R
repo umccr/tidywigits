@@ -99,7 +99,8 @@ Cuppa <- R6::R6Class(
         )
       schema <- self$config$.tidy_schema("datacsv")
       colnames(d) <- schema[["field"]]
-      d
+      list(datacsv = d) |>
+        tibble::enframe(value = "data")
     }
   ) # end public
 )

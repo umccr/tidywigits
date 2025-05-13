@@ -30,7 +30,7 @@ Chord <- R6::R6Class(
     parse_prediction = function(x) {
       schema <- self$config$.raw_schema("prediction")
       d <- parse_file(x, schema, type = "tsv")
-      d[]
+      d
     },
     #' @description Tidy `prediction.txt` file.
     #' @param x (`character(1)`)\cr
@@ -41,7 +41,8 @@ Chord <- R6::R6Class(
       d <- raw |>
         dplyr::select(-c("sample"))
       colnames(d) <- schema[["field"]]
-      d
+      list(prediction = d) |>
+        tibble::enframe(value = "data")
     },
     #' @description Read `signatures.txt` file.
     #' @param x (`character(1)`)\cr
@@ -86,7 +87,8 @@ Chord <- R6::R6Class(
         dplyr::select("signature", "count")
       schema <- self$config$.tidy_schema("signatures")
       assertthat::assert_that(all(colnames(d) == schema[["field"]]))
-      d
+      list(signatures = d) |>
+        tibble::enframe(value = "data")
     }
   )
 )

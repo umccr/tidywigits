@@ -39,7 +39,8 @@ Alignments <- R6::R6Class(
       raw <- self$parse_dupfreq(x)
       schema <- self$config$.tidy_schema("dupfreq")
       colnames(raw) <- schema[["field"]]
-      raw
+      list(dupfreq = raw) |>
+        tibble::enframe(value = "data")
     }
   )
 )

@@ -41,7 +41,7 @@ Virusbreakend <- R6::R6Class(
       schema <- self$config$.tidy_schema("summary")
       colnames(raw) <- schema[["field"]]
       list(summary = raw) |>
-        tibble::enframe(name = "name", value = "data")
+        tibble::enframe(value = "data")
     }
   ) # end public
 )

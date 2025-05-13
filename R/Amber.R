@@ -8,6 +8,7 @@
 #'   "nogit/oncoanalyser-wgts-dna/20250407e2ff5344/L2500331_L2500332/amber"
 #' )
 #' a <- Amber$new(path)
+#' a$tidy
 #' }
 #' @export
 Amber <- R6::R6Class(
@@ -39,7 +40,8 @@ Amber <- R6::R6Class(
       raw <- self$parse_bafpcf(x)
       schema <- self$config$.tidy_schema("bafpcf")
       colnames(raw) <- schema[["field"]]
-      raw
+      list(bafpcf = raw) |>
+        tibble::enframe(value = "data")
     },
     #' @description Read `baf.tsv.gz` file.
     #' @param x (`character(1)`)\cr
@@ -56,7 +58,8 @@ Amber <- R6::R6Class(
       raw <- self$parse_baftsv(x)
       schema <- self$config$.tidy_schema("baftsv")
       colnames(raw) <- schema[["field"]]
-      raw
+      list(baftsv = raw) |>
+        tibble::enframe(value = "data")
     },
     #' @description Read `contamination.tsv` file.
     #' @param x (`character(1)`)\cr
@@ -73,7 +76,8 @@ Amber <- R6::R6Class(
       raw <- self$parse_contaminationtsv(x)
       schema <- self$config$.tidy_schema("contaminationtsv")
       colnames(raw) <- schema[["field"]]
-      raw
+      list(contaminationtsv = raw) |>
+        tibble::enframe(value = "data")
     },
     #' @description Read `homozygousregion.tsv` file.
     #' @param x (`character(1)`)\cr
@@ -90,7 +94,8 @@ Amber <- R6::R6Class(
       raw <- self$parse_homozygousregion(x)
       schema <- self$config$.tidy_schema("homozygousregion")
       colnames(raw) <- schema[["field"]]
-      raw
+      list(homozygousregion = raw) |>
+        tibble::enframe(value = "data")
     },
     #' @description Read `qc` file.
     #' @param x (`character(1)`)\cr
@@ -121,7 +126,8 @@ Amber <- R6::R6Class(
         tidyr::pivot_wider(names_from = "variable", values_from = "value") |>
         purrr::set_names(names(col_types)) |>
         readr::type_convert(col_types = rlang::exec(readr::cols, !!!col_types))
-      d
+      list(qc = d) |>
+        tibble::enframe(value = "data")
     }
   )
 )

@@ -39,7 +39,8 @@ Lilac <- R6::R6Class(
       raw <- self$parse_summary(x)
       schema <- self$config$.tidy_schema("summary")
       colnames(raw) <- schema[["field"]]
-      raw
+      list(summary = raw) |>
+        tibble::enframe(value = "data")
     },
     #' @description Read `lilac.qc.tsv` file.
     #' @param x (`character(1)`)\cr
@@ -56,7 +57,8 @@ Lilac <- R6::R6Class(
       raw <- self$parse_qc(x)
       schema <- self$config$.tidy_schema("qc")
       colnames(raw) <- schema[["field"]]
-      raw
+      list(qc = raw) |>
+        tibble::enframe(value = "data")
     }
   )
 )

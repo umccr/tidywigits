@@ -8,6 +8,9 @@
 #'   "nogit/oncoanalyser-wgts-dna/20250407e2ff5344/L2500331_L2500332/linx"
 #' )
 #' lx <- Linx$new(path)
+#' lx$tidy$tidy |>
+#'   purrr::set_names(lx$tidy$parser) |>
+#'   purrr::map(\(x) str(x[["data"]][[1]]))
 #' }
 #' @export
 Linx <- R6::R6Class(
@@ -43,7 +46,7 @@ Linx <- R6::R6Class(
     parse_svs = function(x) {
       schema <- self$config$.raw_schema("svs")
       d <- parse_file(x, schema, type = "tsv")
-      d[]
+      d
     },
     #' @description Tidy `svs.tsv` file.
     #' @param x (`character(1)`)\cr
@@ -52,7 +55,7 @@ Linx <- R6::R6Class(
       raw <- self$parse_svs(x)
       schema <- self$config$.tidy_schema("svs")
       colnames(raw) <- schema[["field"]]
-      list(linx_svs = raw[]) |>
+      list(svs = raw) |>
         tibble::enframe(value = "data")
     },
     #' @description Read `breakend.tsv` file.
@@ -61,7 +64,7 @@ Linx <- R6::R6Class(
     parse_breakends = function(x) {
       schema <- self$config$.raw_schema("breakends")
       d <- parse_file(x, schema, type = "tsv-onlycols")
-      d[]
+      d
     },
     #' @description Tidy `breakend.tsv` file.
     #' @param x (`character(1)`)\cr
@@ -70,7 +73,7 @@ Linx <- R6::R6Class(
       raw <- self$parse_breakends(x)
       schema <- self$config$.tidy_schema("breakends")
       colnames(raw) <- schema[["field"]]
-      list(linx_breakends = raw[]) |>
+      list(breakends = raw) |>
         tibble::enframe(value = "data")
     },
     #' @description Read `clusters.tsv` file.
@@ -79,7 +82,7 @@ Linx <- R6::R6Class(
     parse_clusters = function(x) {
       schema <- self$config$.raw_schema("clusters")
       d <- parse_file(x, schema, type = "tsv")
-      d[]
+      d
     },
     #' @description Tidy `clusters.tsv` file.
     #' @param x (`character(1)`)\cr
@@ -88,7 +91,7 @@ Linx <- R6::R6Class(
       raw <- self$parse_clusters(x)
       schema <- self$config$.tidy_schema("clusters")
       colnames(raw) <- schema[["field"]]
-      list(linx_clusters = raw[]) |>
+      list(clusters = raw) |>
         tibble::enframe(value = "data")
     },
     #' @description Read `links.tsv` file.
@@ -97,7 +100,7 @@ Linx <- R6::R6Class(
     parse_links = function(x) {
       schema <- self$config$.raw_schema("links")
       d <- parse_file(x, schema, type = "tsv")
-      d[]
+      d
     },
     #' @description Tidy `links.tsv` file.
     #' @param x (`character(1)`)\cr
@@ -106,7 +109,7 @@ Linx <- R6::R6Class(
       raw <- self$parse_links(x)
       schema <- self$config$.tidy_schema("links")
       colnames(raw) <- schema[["field"]]
-      list(linx_links = raw[]) |>
+      list(links = raw) |>
         tibble::enframe(value = "data")
     },
     #' @description Read `linx.fusion.tsv` file.
@@ -115,7 +118,7 @@ Linx <- R6::R6Class(
     parse_fusions = function(x) {
       schema <- self$config$.raw_schema("fusions")
       d <- parse_file(x, schema, type = "tsv")
-      d[]
+      d
     },
     #' @description Tidy `linx.fusion.tsv` file.
     #' @param x (`character(1)`)\cr
@@ -124,7 +127,7 @@ Linx <- R6::R6Class(
       raw <- self$parse_fusions(x)
       schema <- self$config$.tidy_schema("fusions")
       colnames(raw) <- schema[["field"]]
-      list(linx_fusions = raw[]) |>
+      list(fusions = raw) |>
         tibble::enframe(value = "data")
     },
     #' @description Read `linx.drivers.tsv` file.
@@ -133,7 +136,7 @@ Linx <- R6::R6Class(
     parse_drivers = function(x) {
       schema <- self$config$.raw_schema("drivers")
       d <- parse_file(x, schema, type = "tsv")
-      d[]
+      d
     },
     #' @description Tidy `linx.drivers.tsv` file.
     #' @param x (`character(1)`)\cr
@@ -142,7 +145,7 @@ Linx <- R6::R6Class(
       raw <- self$parse_drivers(x)
       schema <- self$config$.tidy_schema("drivers")
       colnames(raw) <- schema[["field"]]
-      list(linx_drivers = raw[]) |>
+      list(drivers = raw) |>
         tibble::enframe(value = "data")
     },
     #' @description Read `linx.driver.catalog.tsv` file.
@@ -151,7 +154,7 @@ Linx <- R6::R6Class(
     parse_drivercatalog = function(x) {
       schema <- self$config$.raw_schema("drivercatalog")
       d <- parse_file(x, schema, type = "tsv")
-      d[]
+      d
     },
     #' @description Tidy `linx.driver.catalog.tsv` file.
     #' @param x (`character(1)`)\cr
@@ -160,7 +163,7 @@ Linx <- R6::R6Class(
       raw <- self$parse_drivercatalog(x)
       schema <- self$config$.tidy_schema("drivercatalog")
       colnames(raw) <- schema[["field"]]
-      list(linx_drivercatalog = raw[]) |>
+      list(drivercatalog = raw) |>
         tibble::enframe(value = "data")
     },
     #' @description Read `linx.vis_copy_number.tsv` file.
@@ -169,7 +172,7 @@ Linx <- R6::R6Class(
     parse_viscn = function(x) {
       schema <- self$config$.raw_schema("viscn")
       d <- parse_file(x, schema, type = "tsv-onlycols")
-      d[]
+      d
     },
     #' @description Tidy `linx.vis_copy_number.tsv` file.
     #' @param x (`character(1)`)\cr
@@ -178,7 +181,7 @@ Linx <- R6::R6Class(
       raw <- self$parse_viscn(x)
       schema <- self$config$.tidy_schema("viscn")
       colnames(raw) <- schema[["field"]]
-      list(linx_viscn = raw[]) |>
+      list(viscn = raw) |>
         tibble::enframe(value = "data")
     },
     #' @description Read `linx.vis_fusion.tsv` file.
@@ -187,7 +190,7 @@ Linx <- R6::R6Class(
     parse_visfusion = function(x) {
       schema <- self$config$.raw_schema("visfusion")
       d <- parse_file(x, schema, type = "tsv-onlycols")
-      d[]
+      d
     },
     #' @description Tidy `linx.vis_fusion.tsv` file.
     #' @param x (`character(1)`)\cr
@@ -196,7 +199,7 @@ Linx <- R6::R6Class(
       raw <- self$parse_visfusion(x)
       schema <- self$config$.tidy_schema("visfusion")
       colnames(raw) <- schema[["field"]]
-      list(linx_visfusion = raw[]) |>
+      list(visfusion = raw) |>
         tibble::enframe(value = "data")
     },
     #' @description Read `linx.vis_gene_exon.tsv` file.
@@ -205,7 +208,7 @@ Linx <- R6::R6Class(
     parse_visgeneexon = function(x) {
       schema <- self$config$.raw_schema("visgeneexon")
       d <- parse_file(x, schema, type = "tsv-onlycols")
-      d[]
+      d
     },
     #' @description Tidy `linx.vis_gene_exon.tsv` file.
     #' @param x (`character(1)`)\cr
@@ -214,7 +217,7 @@ Linx <- R6::R6Class(
       raw <- self$parse_visgeneexon(x)
       schema <- self$config$.tidy_schema("visgeneexon")
       colnames(raw) <- schema[["field"]]
-      list(linx_visgeneexon = raw[]) |>
+      list(visgeneexon = raw) |>
         tibble::enframe(value = "data")
     },
     #' @description Read `linx.vis_protein_domain.tsv` file.
@@ -223,7 +226,7 @@ Linx <- R6::R6Class(
     parse_visproteindomain = function(x) {
       schema <- self$config$.raw_schema("visproteindomain")
       d <- parse_file(x, schema, type = "tsv-onlycols")
-      d[]
+      d
     },
     #' @description Tidy `linx.vis_protein_domain.tsv` file.
     #' @param x (`character(1)`)\cr
@@ -232,7 +235,7 @@ Linx <- R6::R6Class(
       raw <- self$parse_visproteindomain(x)
       schema <- self$config$.tidy_schema("visproteindomain")
       colnames(raw) <- schema[["field"]]
-      list(linx_visproteindomain = raw[]) |>
+      list(visproteindomain = raw) |>
         tibble::enframe(value = "data")
     },
     #' @description Read `linx.vis_segments.tsv` file.
@@ -241,7 +244,7 @@ Linx <- R6::R6Class(
     parse_vissegments = function(x) {
       schema <- self$config$.raw_schema("vissegments")
       d <- parse_file(x, schema, type = "tsv-onlycols")
-      d[]
+      d
     },
     #' @description Tidy `linx.vis_segments.tsv` file.
     #' @param x (`character(1)`)\cr
@@ -250,7 +253,7 @@ Linx <- R6::R6Class(
       raw <- self$parse_vissegments(x)
       schema <- self$config$.tidy_schema("vissegments")
       colnames(raw) <- schema[["field"]]
-      list(linx_vissegments = raw[]) |>
+      list(vissegments = raw) |>
         tibble::enframe(value = "data")
     },
     #' @description Read `linx.vis_sv_data.tsv` file.
@@ -259,7 +262,7 @@ Linx <- R6::R6Class(
     parse_vissvdata = function(x) {
       schema <- self$config$.raw_schema("vissvdata")
       d <- parse_file(x, schema, type = "tsv-onlycols")
-      d[]
+      d
     },
     #' @description Tidy `linx.vis_sv_data.tsv` file.
     #' @param x (`character(1)`)\cr
@@ -268,7 +271,7 @@ Linx <- R6::R6Class(
       raw <- self$parse_vissvdata(x)
       schema <- self$config$.tidy_schema("vissvdata")
       colnames(raw) <- schema[["field"]]
-      list(linx_vissvdata = raw[]) |>
+      list(vissvdata = raw) |>
         tibble::enframe(value = "data")
     },
     #' @description Read `linx.version` file.
@@ -300,8 +303,8 @@ Linx <- R6::R6Class(
         tidyr::pivot_wider(names_from = "variable", values_from = "value") |>
         purrr::set_names(names(col_types)) |>
         readr::type_convert(col_types = rlang::exec(readr::cols, !!!col_types))
-      list(linx_version = d) |>
-        tibble::enframe(name = "name", value = "data")
+      list(version = d) |>
+        tibble::enframe(value = "data")
     }
   )
 )

@@ -39,8 +39,8 @@ Sigs <- R6::R6Class(
       raw <- self$parse_allocation(x)
       schema <- self$config$.tidy_schema("allocation")
       assertthat::assert_that(all(colnames(raw) == schema[["field"]]))
-      list(sigs_allocation = raw) |>
-        tibble::enframe(name = "name", value = "data")
+      list(allocation = raw) |>
+        tibble::enframe(value = "data")
     },
     #' @description Read `snv_counts.csv` file.
     #' @param x (`character(1)`)\cr
@@ -63,8 +63,8 @@ Sigs <- R6::R6Class(
       raw <- self$parse_snvcounts(x)
       schema <- self$config$.tidy_schema("snvcounts")
       colnames(raw) <- schema[["field"]]
-      list(sigs_snvcounts = raw) |>
-        tibble::enframe(name = "name", value = "data")
+      list(snvcounts = raw) |>
+        tibble::enframe(value = "data")
     }
   )
 )
