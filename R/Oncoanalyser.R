@@ -8,6 +8,9 @@
 #'   "nogit/oncoanalyser-wgts-dna/20250407e2ff5344/L2500331_L2500332"
 #' )
 #' oa <- Oncoanalyser$new(path)
+#' oa$tbl |>
+#'   dplyr::select(tool, tidy) |>
+#'   tidyr::unnest(tidy)
 #' }
 #' @export
 Oncoanalyser <- R6::R6Class(
