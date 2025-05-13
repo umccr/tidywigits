@@ -613,3 +613,12 @@ tidy:
       - field: 'in_double_minute'
         type: 'char'
         description: ''
+  version:
+    description: 'Version of the tool'
+    schema:
+      - field: 'version'
+        type: 'char'
+        description: 'version of the tool'
+      - field: 'date_build'
+        type: 'char'
+        description: 'build date'

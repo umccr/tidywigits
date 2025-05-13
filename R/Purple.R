@@ -25,6 +25,20 @@ Purple <- R6::R6Class(
       self$tidy = super$.tidy(envir = self)
     },
 
+    #' @description List files in given purple directory. Overwrites parent class
+    #' to handle germline driver.catalog files.
+    list_files = function() {
+      res <- super$list_files()
+      res |>
+        dplyr::mutate(
+          prefix2 = ifelse(
+            grepl("purple\\.driver\\.catalog\\.germline\\.tsv$", .data$bname),
+            "germline",
+            ""
+          )
+        )
+    },
+
     #' @description Read `purple.version` file.
     #' @param x (`character(1)`)\cr
     #' Path to file.

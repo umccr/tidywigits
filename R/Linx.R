@@ -270,6 +270,38 @@ Linx <- R6::R6Class(
       colnames(raw) <- schema[["field"]]
       list(linx_vissvdata = raw[]) |>
         tibble::enframe(value = "data")
+    },
+    #' @description Read `linx.version` file.
+    #' @param x (`character(1)`)\cr
+    #' Path to file.
+    parse_version = function(x) {
+      schema <- self$config$.raw_schema("version")
+      d <- parse_file(x, schema, type = "txt-nohead", delim = "=")
+      d
+    },
+    #' @description Tidy `linx.version` file.
+    #' @param x (`character(1)`)\cr
+    #' Path to file.
+    tidy_version = function(x) {
+      raw <- self$parse_version(x)
+      col_types <- self$config$.tidy_schema("version") |>
+        dplyr::mutate(
+          type = dplyr::case_match(
+            .data$type,
+            "char" ~ "c",
+            "int" ~ "i",
+            "float" ~ "d"
+          )
+        ) |>
+        dplyr::select("field", "type") |>
+        tibble::deframe()
+
+      d <- raw |>
+        tidyr::pivot_wider(names_from = "variable", values_from = "value") |>
+        purrr::set_names(names(col_types)) |>
+        readr::type_convert(col_types = rlang::exec(readr::cols, !!!col_types))
+      list(linx_version = d) |>
+        tibble::enframe(name = "name", value = "data")
     }
   )
 )

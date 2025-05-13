@@ -66,6 +66,7 @@ Tool <- R6::R6Class(
               dplyr::select(parser = "name", pattern = "value")
           )
         ) |>
+        dplyr::ungroup() |>
         tidyr::unnest("matched_name") |>
         dplyr::select(
           "parser",
@@ -85,7 +86,8 @@ Tool <- R6::R6Class(
           ),
           prefix = FileObj$prefix,
           schema = list(self$config$.raw_schema(.data$parser))
-        )
+        ) |>
+        dplyr::ungroup()
       res
     },
     #' @description Evaluate function in the context of the Tool's
