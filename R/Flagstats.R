@@ -27,7 +27,7 @@ Flagstats <- R6::R6Class(
     #' @description Read `flagstat` file.
     #' @param x (`character(1)`)\cr
     #' Path to file.
-    parse_flagstat = function(x) {
+    parse_flagstats = function(x) {
       # this is a tricky one, need to grab the pct from within the parens
       pct_cols <- c("mapped", "primary mapped", "properly paired", "singletons")
       d0 <- readr::read_lines(x) |>
@@ -108,17 +108,17 @@ Flagstats <- R6::R6Class(
       # all together now, chuck pct at the end
       d_all <- dplyr::bind_rows(d1, d2) |>
         tidyr::pivot_wider(names_from = "metric", values_from = "value")
-      return(d_all)
+      return(d_all[])
     },
     #' @description Tidy `flagstat` file.
     #' @param x (`character(1)`)\cr
     #' Path to file.
-    tidy_flagstat = function(x) {
-      raw <- self$parse_flagstat(x)
-      schema <- self$config$.tidy_schema("flagstat")
+    tidy_flagstats = function(x) {
+      raw <- self$parse_flagstats(x)
+      schema <- self$config$.tidy_schema("flagstats")
       assertthat::assert_that(all(colnames(raw) == schema[["field"]]))
-      list(flagstats_flagstat = raw[]) |>
-        tibble::enframe(value = "data")
+      list(flagstats = raw) |>
+        tibble::enframe(nvalue = "data")
     }
   )
 )
