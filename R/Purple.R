@@ -8,6 +8,9 @@
 #'   "nogit/oncoanalyser-wgts-dna/20250407e2ff5344/L2500331_L2500332/purple"
 #' )
 #' p <- Purple$new(path)
+#' p$tidy$tidy |>
+#'   purrr::set_names(p$tidy$parser) |>
+#'   purrr::map(\(x) str(x[["data"]][[1]]))
 #' }
 #' @export
 Purple <- R6::R6Class(
@@ -69,7 +72,7 @@ Purple <- R6::R6Class(
         purrr::set_names(names(col_types)) |>
         readr::type_convert(col_types = rlang::exec(readr::cols, !!!col_types))
       list(version = d) |>
-        tibble::enframe(name = "name", value = "data")
+        tibble::enframe(value = "data")
     },
 
     #' @description Read `purple.qc` file.
@@ -102,7 +105,7 @@ Purple <- R6::R6Class(
         purrr::set_names(names(col_types)) |>
         readr::type_convert(col_types = rlang::exec(readr::cols, !!!col_types))
       list(qc = d) |>
-        tibble::enframe(name = "name", value = "data")
+        tibble::enframe(value = "data")
     },
 
     #' @description Read `purple.cnv.gene.tsv` file.
@@ -121,7 +124,7 @@ Purple <- R6::R6Class(
       schema <- self$config$.tidy_schema("cnvgenetsv")
       colnames(raw) <- schema[["field"]]
       list(cnvgenetsv = raw) |>
-        tibble::enframe(name = "name", value = "data")
+        tibble::enframe(value = "data")
     },
 
     #' @description Read `purple.cnv.somatic.tsv` file.
@@ -140,7 +143,7 @@ Purple <- R6::R6Class(
       schema <- self$config$.tidy_schema("cnvsomtsv")
       colnames(raw) <- schema[["field"]]
       list(cnvsomtsv = raw) |>
-        tibble::enframe(name = "name", value = "data")
+        tibble::enframe(value = "data")
     },
 
     #' @description Read `purple.driver.catalog.germline|somatic.tsv` file.
@@ -159,7 +162,7 @@ Purple <- R6::R6Class(
       schema <- self$config$.tidy_schema("drivercatalog")
       colnames(raw) <- schema[["field"]]
       list(drivercatalog = raw) |>
-        tibble::enframe(name = "name", value = "data")
+        tibble::enframe(value = "data")
     },
 
     #' @description Read `purple.germline.deletion.tsv` file.
@@ -178,7 +181,7 @@ Purple <- R6::R6Class(
       schema <- self$config$.tidy_schema("germdeltsv")
       colnames(raw) <- schema[["field"]]
       list(germdeltsv = raw) |>
-        tibble::enframe(name = "name", value = "data")
+        tibble::enframe(value = "data")
     },
 
     #' @description Read `purple.purity.range.tsv` file.
@@ -197,7 +200,7 @@ Purple <- R6::R6Class(
       schema <- self$config$.tidy_schema("purityrange")
       colnames(raw) <- schema[["field"]]
       list(purityrange = raw) |>
-        tibble::enframe(name = "name", value = "data")
+        tibble::enframe(value = "data")
     },
 
     #' @description Read `purple.purity.tsv` file.
@@ -216,7 +219,7 @@ Purple <- R6::R6Class(
       schema <- self$config$.tidy_schema("puritytsv")
       colnames(raw) <- schema[["field"]]
       list(puritytsv = raw) |>
-        tibble::enframe(name = "name", value = "data")
+        tibble::enframe(value = "data")
     },
 
     #' @description Read `purple.somatic.clonality.tsv` file.
@@ -235,7 +238,7 @@ Purple <- R6::R6Class(
       schema <- self$config$.tidy_schema("somclonality")
       colnames(raw) <- schema[["field"]]
       list(somclonality = raw) |>
-        tibble::enframe(name = "name", value = "data")
+        tibble::enframe(value = "data")
     },
 
     #' @description Read `purple.somatic.hist.tsv` file.
@@ -254,7 +257,7 @@ Purple <- R6::R6Class(
       schema <- self$config$.tidy_schema("somhist")
       colnames(raw) <- schema[["field"]]
       list(somhist = raw) |>
-        tibble::enframe(name = "name", value = "data")
+        tibble::enframe(value = "data")
     }
   ) # end public
 )

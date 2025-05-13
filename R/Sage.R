@@ -8,6 +8,10 @@
 #'   "nogit/oncoanalyser-wgts-dna/20250407e2ff5344/L2500331_L2500332/sage"
 #' )
 #' s <- Sage$new(path)
+#' s$tidy
+#' s$tidy$tidy |>
+#'   purrr::set_names(s$tidy$parser) |>
+#'   purrr::map(\(x) str(x[["data"]][[1]]))
 #'
 #' }
 #' @export
@@ -40,8 +44,8 @@ Sage <- R6::R6Class(
       raw <- self$parse_bqrtsv(x)
       schema <- self$config$.tidy_schema("bqrtsv")
       colnames(raw) <- schema[["field"]]
-      list(sage_bqrtsv = raw) |>
-        tibble::enframe(name = "name", value = "data")
+      list(bqrtsv = raw) |>
+        tibble::enframe(value = "data")
     },
     #' @description Read `gene.coverage.tsv` file.
     #' @param x (`character(1)`)\cr
@@ -58,8 +62,8 @@ Sage <- R6::R6Class(
       raw <- self$parse_genecvg(x)
       schema <- self$config$.tidy_schema("genecvg")
       colnames(raw) <- schema[["field"]]
-      list(sage_genecvg = raw) |>
-        tibble::enframe(name = "name", value = "data")
+      list(genecvg = raw) |>
+        tibble::enframe(value = "data")
     },
     #' @description Read `exon.medians.tsv` file.
     #' @param x (`character(1)`)\cr
@@ -76,8 +80,8 @@ Sage <- R6::R6Class(
       raw <- self$parse_exoncvg(x)
       schema <- self$config$.tidy_schema("exoncvg")
       colnames(raw) <- schema[["field"]]
-      list(sage_exoncvg = raw) |>
-        tibble::enframe(name = "name", value = "data")
+      list(exoncvg = raw) |>
+        tibble::enframe(value = "data")
     }
   )
 )

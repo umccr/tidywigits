@@ -1,7 +1,7 @@
 description:
   'Counts of alignments for each FLAG type.'
 raw:
-  flagstat:
+  flagstats:
     description: 'Counts of alignments for each FLAG type.'
     pattern: "\\.flagstat$"
     ftype: 'txt'

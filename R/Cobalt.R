@@ -8,6 +8,9 @@
 #'   "nogit/oncoanalyser-wgts-dna/20250407e2ff5344/L2500331_L2500332/cobalt"
 #' )
 #' cob <- Cobalt$new(path)
+#' cob$tidy$tidy |>
+#'   purrr::set_names(cob$tidy$parser) |>
+#'   purrr::map(\(x) str(x[["data"]]))
 #' }
 #' @export
 Cobalt <- R6::R6Class(
@@ -28,8 +31,10 @@ Cobalt <- R6::R6Class(
     #' @param x (`character(1)`)\cr
     #' Path to file.
     parse_gcmed = function(x) {
+      # first two rows are mean/median + their values
       d1 <- readr::read_tsv(x, col_names = TRUE, col_types = "dd", n_max = 1)
       schema <- self$config$.raw_schema("gcmed")
+      # next rows are median per bucket
       d2 <- parse_file(x, schema, type = "tsv", skip = 2)
       list(sample_stats = d1[], bucket_stats = d2)
     },
@@ -44,9 +49,7 @@ Cobalt <- R6::R6Class(
       schema <- self$config$.tidy_schema("gcmed")
       colnames(raw[["bucket_stats"]]) <- schema[["field"]]
       colnames(raw[["sample_stats"]]) <- c("mean", "median")
-      # TODO: what on earth is going on here?
-      raw[["sample_stats"]] <- raw[["sample_stats"]]
-      tibble::enframe(raw, name = "name", value = "data")
+      tibble::enframe(raw, value = "data")
     },
     #' @description Read `ratio.median.tsv` file.
     #' @param x (`character(1)`)\cr
@@ -64,7 +67,7 @@ Cobalt <- R6::R6Class(
       schema <- self$config$.tidy_schema("ratiomed")
       colnames(raw) <- schema[["field"]]
       list(ratiomed = raw) |>
-        tibble::enframe(name = "name", value = "data")
+        tibble::enframe(value = "data")
     },
     #' @description Read `ratio.tsv` file.
     #' @param x (`character(1)`)\cr
@@ -82,7 +85,7 @@ Cobalt <- R6::R6Class(
       schema <- self$config$.tidy_schema("ratiotsv")
       colnames(raw) <- schema[["field"]]
       list(ratiotsv = raw) |>
-        tibble::enframe(name = "name", value = "data")
+        tibble::enframe(value = "data")
     },
     #' @description Read `ratio.pcf` file.
     #' @param x (`character(1)`)\cr
@@ -100,7 +103,7 @@ Cobalt <- R6::R6Class(
       schema <- self$config$.tidy_schema("ratiopcf")
       colnames(raw) <- schema[["field"]]
       list(ratiopcf = raw) |>
-        tibble::enframe(name = "name", value = "data")
+        tibble::enframe(value = "data")
     },
     #' @description Read `cobalt.version` file.
     #' @param x (`character(1)`)\cr
@@ -132,7 +135,7 @@ Cobalt <- R6::R6Class(
         purrr::set_names(names(col_types)) |>
         readr::type_convert(col_types = rlang::exec(readr::cols, !!!col_types))
       list(version = d) |>
-        tibble::enframe(name = "name", value = "data")
+        tibble::enframe(value = "data")
     }
   ) # end public
 )

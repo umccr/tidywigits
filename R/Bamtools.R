@@ -8,6 +8,7 @@
 #'   "nogit/oncoanalyser-wgts-dna/20250407e2ff5344/L2500331_L2500332/bamtools"
 #' )
 #' b <- Bamtools$new(path)
+#' b$tidy$tidy
 #' }
 #' @export
 Bamtools <- R6::R6Class(
@@ -66,11 +67,11 @@ Bamtools <- R6::R6Class(
       raw <- self$parse_wgsmetrics(x)
       schema <- self$config$.tidy_schema("wgsmetrics")
       d <- list(
-        bamtools_wgsmetrics_metrics = raw[["metrics"]],
-        bamtools_wgsmetrics_histo = raw[["histo"]]
+        wgsmetrics_metrics = raw[["metrics"]],
+        wgsmetrics_histo = raw[["histo"]]
       )
-      colnames(d[["bamtools_wgsmetrics_metrics"]]) <- schema[["field"]]
-      tibble::enframe(d, name = "name", value = "data")
+      colnames(d[["wgsmetrics_metrics"]]) <- schema[["field"]]
+      tibble::enframe(d, value = "data")
     }
   )
 )

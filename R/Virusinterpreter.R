@@ -41,7 +41,7 @@ Virusinterpreter <- R6::R6Class(
       schema <- self$config$.tidy_schema("annotated")
       colnames(raw) <- schema[["field"]]
       list(annotated = raw) |>
-        tibble::enframe(name = "name", value = "data")
+        tibble::enframe(value = "data")
     }
   ) # end public
 )

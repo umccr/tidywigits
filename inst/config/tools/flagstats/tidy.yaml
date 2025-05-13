@@ -1,6 +1,6 @@
 version: "v0.0.1"
 tidy:
-  flagstat:
+  flagstats:
     description: 'Counts of alignments for each FLAG type.'
     schema:
       - field: 'passed_or_failed'
