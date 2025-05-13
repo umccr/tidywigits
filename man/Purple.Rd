@@ -29,6 +29,7 @@ Tidy tibble.}
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-Purple-new}{\code{Purple$new()}}
+\item \href{#method-Purple-list_files}{\code{Purple$list_files()}}
 \item \href{#method-Purple-parse_version}{\code{Purple$parse_version()}}
 \item \href{#method-Purple-tidy_version}{\code{Purple$tidy_version()}}
 \item \href{#method-Purple-parse_qc}{\code{Purple$parse_qc()}}
@@ -57,7 +58,6 @@ Tidy tibble.}
 <ul>
 <li><span class="pkg-link" data-pkg="tidywigits" data-topic="Tool" data-id=".eval_func"><a href='../../tidywigits/html/Tool.html#method-Tool-.eval_func'><code>tidywigits::Tool$.eval_func()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="tidywigits" data-topic="Tool" data-id=".tidy"><a href='../../tidywigits/html/Tool.html#method-Tool-.tidy'><code>tidywigits::Tool$.tidy()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="tidywigits" data-topic="Tool" data-id="list_files"><a href='../../tidywigits/html/Tool.html#method-Tool-list_files'><code>tidywigits::Tool$list_files()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="tidywigits" data-topic="Tool" data-id="print"><a href='../../tidywigits/html/Tool.html#method-Tool-print'><code>tidywigits::Tool$print()</code></a></span></li>
 </ul>
 </details>
@@ -79,6 +79,17 @@ Output directory of tool.}
 }
 \if{html}{\out{</div>}}
 }
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Purple-list_files"></a>}}
+\if{latex}{\out{\hypertarget{method-Purple-list_files}{}}}
+\subsection{Method \code{list_files()}}{
+List files in given purple directory. Overwrites parent class
+to handle germline driver.catalog files.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Purple$list_files()}\if{html}{\out{</div>}}
+}
+
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-Purple-parse_version"></a>}}
