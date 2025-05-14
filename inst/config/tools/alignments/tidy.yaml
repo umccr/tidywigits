@@ -3,9 +3,10 @@ tidy:
     description: 'Duplicate read count and frequency.'
     schema:
       latest:
-        - field: 'duplicate_read_count'
-          type: 'char'
-          description: 'Duplicate read count'
-        - field: 'frequency'
-          type: 'int'
-          description: 'Frequency of duplicate reads'
+        tbl1:
+          - field: 'duplicate_read_count'
+            type: 'char'
+            description: 'Duplicate read count'
+          - field: 'frequency'
+            type: 'int'
+            description: 'Frequency of duplicate reads'

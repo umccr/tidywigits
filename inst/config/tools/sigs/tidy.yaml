@@ -3,22 +3,24 @@ tidy:
     description: 'Signature allocation.'
     schema:
       latest:
-        - field: 'signature'
-          type: 'char'
-          description: 'Signature name'
-        - field: 'allocation'
-          type: 'float'
-          description: 'Signature allocation'
-        - field: 'percent'
-          type: 'float'
-          description: 'Signature allocation percentage'
+        tbl1:
+          - field: 'signature'
+            type: 'char'
+            description: 'Signature name'
+          - field: 'allocation'
+            type: 'float'
+            description: 'Signature allocation'
+          - field: 'percent'
+            type: 'float'
+            description: 'Signature allocation percentage'
   snvcounts:
     description: 'SNV counts.'
     schema:
       latest:
-        - field: 'bucket_name'
-          type: 'char'
-          description: 'signature context bucket'
-        - field: 'count'
-          type: 'int'
-          description: 'SNV count in bucket'
+        tbl1:
+          - field: 'bucket_name'
+            type: 'char'
+            description: 'signature context bucket'
+          - field: 'count'
+            type: 'int'
+            description: 'SNV count in bucket'
