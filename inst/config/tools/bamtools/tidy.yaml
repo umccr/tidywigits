@@ -1,85 +1,85 @@
-version: "v0.0.1"
 tidy:
   wgsmetrics:
     description: 'Mostly coverage metrics.'
     schema:
-      - field: genome_territory
-        type: 'int'
-        description: ''
-      - field: mean_coverage
-        type: 'float'
-        description: ''
-      - field: sd_coverage
-        type: 'float'
-        description: ''
-      - field: median_coverage
-        type: 'float'
-        description: ''
-      - field: mad_coverage
-        type: 'float'
-        description: ''
-      - field: pct_exc_adapter
-        type: 'float'
-        description: ''
-      - field: pct_exc_mapq
-        type: 'float'
-        description: ''
-      - field: pct_exc_dupe
-        type: 'float'
-        description: ''
-      - field: pct_exc_unpaired
-        type: 'float'
-        description: ''
-      - field: pct_exc_baseq
-        type: 'float'
-        description: ''
-      - field: pct_exc_overlap
-        type: 'float'
-        description: ''
-      - field: pct_exc_capped
-        type: 'float'
-        description: ''
-      - field: pct_exc_total
-        type: 'float'
-        description: ''
-      - field: pct_1x
-        type: 'float'
-        description: ''
-      - field: pct_5x
-        type: 'float'
-        description: ''
-      - field: pct_10x
-        type: 'float'
-        description: ''
-      - field: pct_15x
-        type: 'float'
-        description: ''
-      - field: pct_20x
-        type: 'float'
-        description: ''
-      - field: pct_25x
-        type: 'float'
-        description: ''
-      - field: pct_30x
-        type: 'float'
-        description: ''
-      - field: pct_40x
-        type: 'float'
-        description: ''
-      - field: pct_50x
-        type: 'float'
-        description: ''
-      - field: pct_60x
-        type: 'float'
-        description: ''
-      - field: pct_70x
-        type: 'float'
-        description: ''
-      - field: pct_80x
-        type: 'float'
-        description: ''
-      - field: pct_90x
-        type: 'float'
-        description: ''
-      - field: pct_100x
-        type: 'float'
+      latest:
+        - field: 'genome_territory'
+          type: 'int'
+          description: ''
+        - field: 'mean_coverage'
+          type: 'float'
+          description: ''
+        - field: 'sd_coverage'
+          type: 'float'
+          description: ''
+        - field: 'median_coverage'
+          type: 'float'
+          description: ''
+        - field: 'mad_coverage'
+          type: 'float'
+          description: ''
+        - field: 'pct_exc_adapter'
+          type: 'float'
+          description: ''
+        - field: 'pct_exc_mapq'
+          type: 'float'
+          description: ''
+        - field: 'pct_exc_dupe'
+          type: 'float'
+          description: ''
+        - field: 'pct_exc_unpaired'
+          type: 'float'
+          description: ''
+        - field: 'pct_exc_baseq'
+          type: 'float'
+          description: ''
+        - field: 'pct_exc_overlap'
+          type: 'float'
+          description: ''
+        - field: 'pct_exc_capped'
+          type: 'float'
+          description: ''
+        - field: 'pct_exc_total'
+          type: 'float'
+          description: ''
+        - field: 'pct_1x'
+          type: 'float'
+          description: ''
+        - field: 'pct_5x'
+          type: 'float'
+          description: ''
+        - field: 'pct_10x'
+          type: 'float'
+          description: ''
+        - field: 'pct_15x'
+          type: 'float'
+          description: ''
+        - field: 'pct_20x'
+          type: 'float'
+          description: ''
+        - field: 'pct_25x'
+          type: 'float'
+          description: ''
+        - field: 'pct_30x'
+          type: 'float'
+          description: ''
+        - field: 'pct_40x'
+          type: 'float'
+          description: ''
+        - field: 'pct_50x'
+          type: 'float'
+          description: ''
+        - field: 'pct_60x'
+          type: 'float'
+          description: ''
+        - field: 'pct_70x'
+          type: 'float'
+          description: ''
+        - field: 'pct_80x'
+          type: 'float'
+          description: ''
+        - field: 'pct_90x'
+          type: 'float'
+          description: ''
+        - field: 'pct_100x'
+          type: 'float'

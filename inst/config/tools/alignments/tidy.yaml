@@ -1,11 +1,11 @@
-version: "v0.0.1"
 tidy:
   dupfreq:
     description: 'Duplicate read count and frequency.'
     schema:
-      - field: 'duplicate_read_count'
-        type: 'char'
-        description: 'Duplicate read count'
-      - field: 'frequency'
-        type: 'int'
-        description: 'Frequency of duplicate reads'
+      latest:
+        - field: 'duplicate_read_count'
+          type: 'char'
+          description: 'Duplicate read count'
+        - field: 'frequency'
+          type: 'int'
+          description: 'Frequency of duplicate reads'
