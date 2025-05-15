@@ -46,7 +46,8 @@ Tool <- R6::R6Class(
       res <- tibble::tribble(
         ~var, ~value,
         "name", self$name,
-        "path", self$path
+        "path", self$path,
+        "files", as.character(nrow(self$files))
       ) |>
         tidyr::unnest("value")
       cat("#--- Tool ---#\n")
