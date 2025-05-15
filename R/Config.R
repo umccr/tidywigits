@@ -194,9 +194,9 @@ Config <- R6::R6Class(
     #' Tidy tbl name.
     #' @param v (`character(1)`)\cr
     #' Version of schema (def: latest).
-    #' @param tbl (`character(1)`)\cr
+    #' @param subtbl (`character(1)`)\cr
     #' Subtbl to use (def: tbl1).
-    .tidy_schema = function(x, v = "latest", tbl = "tbl1") {
+    .tidy_schema = function(x, v = "latest", subtbl = "tbl1") {
       s <- self$tidy_schemas_all
       assertthat::assert_that(
         x %in% s[["name"]],
@@ -206,7 +206,7 @@ Config <- R6::R6Class(
         dplyr::filter(
           .data$name == x,
           .data$version == v,
-          .data$tbl == tbl
+          .data$tbl == subtbl
         ) |>
         dplyr::select("schema") |>
         tidyr::unnest("schema")
