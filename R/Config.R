@@ -8,6 +8,7 @@
 #' conf <- Config$new(tool)
 #' conf$.raw_schemas_valid()
 #' conf$.raw_schemas_all()
+#' conf$.tidy_schemas_all()
 #' conf$.tidy_descriptions()
 #' }
 #' @export
@@ -191,6 +192,10 @@ Config <- R6::R6Class(
     #' @description Get tidy tbl schema.
     #' @param x (`character(1)`)\cr
     #' Tidy tbl name.
+    #' @param v (`character(1)`)\cr
+    #' Version of schema (def: latest).
+    #' @param tbl (`character(1)`)\cr
+    #' Subtbl to use (def: tbl1).
     .tidy_schema = function(x, v = "latest", tbl = "tbl1") {
       s <- self$tidy_schemas_all
       assertthat::assert_that(
@@ -198,7 +203,11 @@ Config <- R6::R6Class(
         msg = glue("{x} not found in schemas for {self$tool}.")
       )
       s |>
-        dplyr::filter(.data$name == x, .data$version == v, .data$tbl == tbl) |>
+        dplyr::filter(
+          .data$name == x,
+          .data$version == v,
+          .data$tbl == tbl
+        ) |>
         dplyr::select("schema") |>
         tidyr::unnest("schema")
     }
