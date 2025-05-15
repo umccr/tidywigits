@@ -13,8 +13,9 @@ path <- here::here(
 )
 oa <- Oncoanalyser$new(path)
 oa$tbl |>
-  dplyr::select(tool, tidy) |>
-  tidyr::unnest(tidy)
+  dplyr::select(tool, prefix, prefix2, tidy) |>
+  tidyr::unnest(tidy) |>
+  print(n = 100)
 }
 }
 \section{Public fields}{
