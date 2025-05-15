@@ -61,4 +61,117 @@ raw:
           type: 'float'
         - field: PCT_100X
           type: 'float'
-
+  coverage:
+    description: 'Mostly coverage metrics.'
+    pattern: "\\.bam_metric\\.coverage\\.tsv$"
+    ftype: 'tsv'
+    schema:
+      latest:
+        - field: 'Coverage'
+          type: 'char'
+        - field: 'Count'
+          type: 'float'
+  flagstats:
+    description: 'Counts of alignments for each FLAG type.'
+    pattern: "\\.bam_metric\\.flag_counts\\.tsv$"
+    ftype: 'txt'
+    schema:
+      latest:
+        - field: 'dummy'
+          type: 'char'
+  fraglength:
+    description: 'Fragment lengths.'
+    pattern: "\\.bam_metric\\.frag_length\\.tsv$"
+    ftype: 'tsv'
+    schema:
+      latest:
+        - field: 'FragmentLength'
+          type: 'char'
+        - field: 'Count'
+          type: 'float'
+  partitionstats:
+    description: 'Partition stats.'
+    pattern: "\\.bam_metric\\.partition_stats\\.tsv$"
+    ftype: 'tsv'
+    schema:
+      latest:
+        - field: 'Chromosome'
+          type: 'char'
+        - field: 'PositionStart'
+          type: 'float'
+        - field: 'PositionEnd'
+          type: 'float'
+        - field: 'TotalReads'
+          type: 'float'
+        - field: 'DuplicateReads'
+          type: 'float'
+        - field: 'ChimericReads'
+          type: 'float'
+        - field: 'InterPartition'
+          type: 'float'
+        - field: 'UnmappedReads'
+          type: 'float'
+        - field: 'ProcessTime'
+          type: 'float'
+  summary:
+    description: 'Coverage summary.'
+    pattern: "\\.bam_metric\\.summary\\.tsv$"
+    ftype: 'tsv'
+    schema:
+      latest:
+        - field: 'TotalRegionBases'
+          type: 'float'
+        - field: 'TotalReads'
+          type: 'float'
+        - field: 'DuplicateReads'
+          type: 'float'
+        - field: 'DualStrandReads'
+          type: 'float'
+        - field: 'MeanCoverage'
+          type: 'float'
+        - field: 'StdDevCoverage'
+          type: 'float'
+        - field: 'MedianCoverage'
+          type: 'float'
+        - field: 'MadCoverage'
+          type: 'float'
+        - field: 'LowMapQualPercent'
+          type: 'float'
+        - field: 'DuplicatePercent'
+          type: 'float'
+        - field: 'UnpairedPercent'
+          type: 'float'
+        - field: 'LowBaseQualPercent'
+          type: 'float'
+        - field: 'OverlappingReadPercent'
+          type: 'float'
+        - field: 'CappedCoverage'
+          type: 'float'
+        - field: 'DepthCoverage_1'
+          type: 'float'
+        - field: 'DepthCoverage_5'
+          type: 'float'
+        - field: 'DepthCoverage_10'
+          type: 'float'
+        - field: 'DepthCoverage_15'
+          type: 'float'
+        - field: 'DepthCoverage_20'
+          type: 'float'
+        - field: 'DepthCoverage_25'
+          type: 'float'
+        - field: 'DepthCoverage_30'
+          type: 'float'
+        - field: 'DepthCoverage_40'
+          type: 'float'
+        - field: 'DepthCoverage_50'
+          type: 'float'
+        - field: 'DepthCoverage_60'
+          type: 'float'
+        - field: 'DepthCoverage_70'
+          type: 'float'
+        - field: 'DepthCoverage_80'
+          type: 'float'
+        - field: 'DepthCoverage_90'
+          type: 'float'
+        - field: 'DepthCoverage_100'
+          type: 'float'

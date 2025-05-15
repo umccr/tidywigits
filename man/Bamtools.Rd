@@ -11,6 +11,7 @@ Bamtools file parsing and manipulation.
 path <- here::here(
   "nogit/oncoanalyser-wgts-dna/20250407e2ff5344/L2500331_L2500332/bamtools"
 )
+path <- here::here("nogit/oa_2.0.0_colo829_20250507/bamtools")
 b <- Bamtools$new(path)
 b$tidy$tidy
 }
@@ -30,8 +31,18 @@ Tidy tibble.}
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-Bamtools-new}{\code{Bamtools$new()}}
+\item \href{#method-Bamtools-parse_summary}{\code{Bamtools$parse_summary()}}
+\item \href{#method-Bamtools-tidy_summary}{\code{Bamtools$tidy_summary()}}
 \item \href{#method-Bamtools-parse_wgsmetrics}{\code{Bamtools$parse_wgsmetrics()}}
 \item \href{#method-Bamtools-tidy_wgsmetrics}{\code{Bamtools$tidy_wgsmetrics()}}
+\item \href{#method-Bamtools-parse_flagstats}{\code{Bamtools$parse_flagstats()}}
+\item \href{#method-Bamtools-tidy_flagstats}{\code{Bamtools$tidy_flagstats()}}
+\item \href{#method-Bamtools-parse_coverage}{\code{Bamtools$parse_coverage()}}
+\item \href{#method-Bamtools-tidy_coverage}{\code{Bamtools$tidy_coverage()}}
+\item \href{#method-Bamtools-parse_fraglength}{\code{Bamtools$parse_fraglength()}}
+\item \href{#method-Bamtools-tidy_fraglength}{\code{Bamtools$tidy_fraglength()}}
+\item \href{#method-Bamtools-parse_partitionstats}{\code{Bamtools$parse_partitionstats()}}
+\item \href{#method-Bamtools-tidy_partitionstats}{\code{Bamtools$tidy_partitionstats()}}
 \item \href{#method-Bamtools-clone}{\code{Bamtools$clone()}}
 }
 }
@@ -64,6 +75,42 @@ Output directory of tool.}
 }
 }
 \if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Bamtools-parse_summary"></a>}}
+\if{latex}{\out{\hypertarget{method-Bamtools-parse_summary}{}}}
+\subsection{Method \code{parse_summary()}}{
+Read \code{summary.tsv} file.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Bamtools$parse_summary(x)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{x}}{(\code{character(1)})\cr
+Path to file.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Bamtools-tidy_summary"></a>}}
+\if{latex}{\out{\hypertarget{method-Bamtools-tidy_summary}{}}}
+\subsection{Method \code{tidy_summary()}}{
+Tidy \code{summary.tsv} file.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Bamtools$tidy_summary(x)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{x}}{(\code{character(1)})\cr
+Path to file.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-Bamtools-parse_wgsmetrics"></a>}}
 \if{latex}{\out{\hypertarget{method-Bamtools-parse_wgsmetrics}{}}}
 \subsection{Method \code{parse_wgsmetrics()}}{
@@ -88,6 +135,150 @@ Path to file.}
 Tidy \code{wgsmetrics} file.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Bamtools$tidy_wgsmetrics(x)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{x}}{(\code{character(1)})\cr
+Path to file.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Bamtools-parse_flagstats"></a>}}
+\if{latex}{\out{\hypertarget{method-Bamtools-parse_flagstats}{}}}
+\subsection{Method \code{parse_flagstats()}}{
+Read \code{flag_counts.tsv} file.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Bamtools$parse_flagstats(x)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{x}}{(\code{character(1)})\cr
+Path to file.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Bamtools-tidy_flagstats"></a>}}
+\if{latex}{\out{\hypertarget{method-Bamtools-tidy_flagstats}{}}}
+\subsection{Method \code{tidy_flagstats()}}{
+Tidy \code{flag_counts.tsv} file.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Bamtools$tidy_flagstats(x)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{x}}{(\code{character(1)})\cr
+Path to file.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Bamtools-parse_coverage"></a>}}
+\if{latex}{\out{\hypertarget{method-Bamtools-parse_coverage}{}}}
+\subsection{Method \code{parse_coverage()}}{
+Read \code{coverage.tsv} file.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Bamtools$parse_coverage(x)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{x}}{(\code{character(1)})\cr
+Path to file.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Bamtools-tidy_coverage"></a>}}
+\if{latex}{\out{\hypertarget{method-Bamtools-tidy_coverage}{}}}
+\subsection{Method \code{tidy_coverage()}}{
+Tidy \code{coverage.tsv} file.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Bamtools$tidy_coverage(x)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{x}}{(\code{character(1)})\cr
+Path to file.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Bamtools-parse_fraglength"></a>}}
+\if{latex}{\out{\hypertarget{method-Bamtools-parse_fraglength}{}}}
+\subsection{Method \code{parse_fraglength()}}{
+Read \code{frag_length.tsv} file.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Bamtools$parse_fraglength(x)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{x}}{(\code{character(1)})\cr
+Path to file.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Bamtools-tidy_fraglength"></a>}}
+\if{latex}{\out{\hypertarget{method-Bamtools-tidy_fraglength}{}}}
+\subsection{Method \code{tidy_fraglength()}}{
+Tidy \code{frag_length.tsv} file.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Bamtools$tidy_fraglength(x)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{x}}{(\code{character(1)})\cr
+Path to file.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Bamtools-parse_partitionstats"></a>}}
+\if{latex}{\out{\hypertarget{method-Bamtools-parse_partitionstats}{}}}
+\subsection{Method \code{parse_partitionstats()}}{
+Read \code{partition_stats.tsv} file.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Bamtools$parse_partitionstats(x)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{x}}{(\code{character(1)})\cr
+Path to file.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Bamtools-tidy_partitionstats"></a>}}
+\if{latex}{\out{\hypertarget{method-Bamtools-tidy_partitionstats}{}}}
+\subsection{Method \code{tidy_partitionstats()}}{
+Tidy \code{partition_stats.tsv} file.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Bamtools$tidy_partitionstats(x)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
