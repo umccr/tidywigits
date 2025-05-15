@@ -11,6 +11,7 @@ repos:
         args: ['--maxkb=200']
     -   id: file-contents-sorter
         files: '^\.Rbuildignore$'
+    -   id: check-yaml
 -   repo: local
     hooks:
     -   id: forbid-to-commit

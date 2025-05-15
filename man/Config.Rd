@@ -12,6 +12,7 @@ tool <- "amber"
 conf <- Config$new(tool)
 conf$.raw_schemas_valid()
 conf$.raw_schemas_all()
+conf$.tidy_schemas_all()
 conf$.tidy_descriptions()
 }
 }
@@ -195,7 +196,7 @@ Return all tidy tibble schemas.
 \subsection{Method \code{.tidy_schema()}}{
 Get tidy tbl schema.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Config$.tidy_schema(x)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Config$.tidy_schema(x, v = "latest", tbl = "tbl1")}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -203,6 +204,12 @@ Get tidy tbl schema.
 \describe{
 \item{\code{x}}{(\code{character(1)})\cr
 Tidy tbl name.}
+
+\item{\code{v}}{(\code{character(1)})\cr
+Version of schema (def: latest).}
+
+\item{\code{tbl}}{(\code{character(1)})\cr
+Subtbl to use (def: tbl1).}
 }
 \if{html}{\out{</div>}}
 }

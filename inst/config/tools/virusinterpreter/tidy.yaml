@@ -1,36 +1,49 @@
-version: "v0.0.1"
 tidy:
   annotated:
     description: 'Processed oncoviral call/annotation data.'
     schema:
-      - field: taxid
-        type: char
-        description: 'reference taxid of the virus that is called with VIRUSBreakend'
-      - field: name
-        type: char
-        description: 'name of the virus, matching with the taxid'
-      - field: qc_status
-        type: char
-        description: 'QC status as reported by VIRUSBreakend'
-      - field: integrations
-        type: char
-        description: 'number of detected integrations of this virus into the sample genome as reported by VIRUSBreakend'
-      - field: interpretation
-        type: char
-        description: 'output of the interpretation step of Virus Interpreter'
-      - field: percentage_covered
-        type: char
-        description: 'percentage of the viral reference sequence that has been covered in the tumor sample as reported by VIRUSBreakend ("coverage")'
-      - field: mean_coverage
-        type: char
-        description: 'average coverage of the viral genome as reported by VIRUSBreakend ("meanDepth")'
-      - field: expected_clonal_coverage
-        type: char
-        description: 'expected coverage assuming the virus is clonally integrated once in the tumor DNA'
-      - field: reported
-        type: char
-        description: 'boolean indicating whether the detected viral presence is considered a driver'
-      - field: driver_likelihood
-        type: char
-        description: 'driver likelihood of the virus as annotated in the reporting db'
-
+      latest:
+        tbl1:
+          - field: 'taxid'
+            type: 'char'
+            description:
+              'reference taxid of the virus that is called with VIRUSBreakend'
+          - field: 'name'
+            type: 'char'
+            description: 'name of the virus, matching with the taxid'
+          - field: 'qc_status'
+            type: 'char'
+            description: 'QC status as reported by VIRUSBreakend'
+          - field: 'integrations'
+            type: 'char'
+            description:
+              'number of detected integrations of this virus into the sample
+              genome as reported by VIRUSBreakend'
+          - field: 'interpretation'
+            type: 'char'
+            description:
+              'output of the interpretation step of Virus Interpreter'
+          - field: 'percentage_covered'
+            type: 'char'
+            description:
+              'percentage of the viral reference sequence that has been covered
+              in the tumor sample as reported by VIRUSBreakend ("coverage")'
+          - field: 'mean_coverage'
+            type: 'char'
+            description:
+              'average coverage of the viral genome as reported by VIRUSBreakend
+              ("meanDepth")'
+          - field: 'expected_clonal_coverage'
+            type: 'char'
+            description:
+              'expected coverage assuming the virus is clonally integrated once
+              in the tumor DNA'
+          - field: 'reported'
+            type: 'char'
+            description:
+              'boolean indicating whether the detected viral presence is
+              considered a driver'
+          - field: 'driver_likelihood'
+            type: 'char'
+            description:
+              'driver likelihood of the virus as annotated in the reporting db'

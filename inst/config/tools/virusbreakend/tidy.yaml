@@ -1,81 +1,95 @@
-version: "v0.0.1"
 tidy:
   summary:
     description: 'VIRUSBreakend analysis summary.'
     schema:
-      - field: taxid_genus
-        type: char
-        description: 'NCBI taxonomy ID of genus of viral reference'
-      - field: name_genus
-        type: char
-        description: 'NCBI taxonomy genus name'
-      - field: reads_genus_tree
-        type: int
-        description: 'Number of reads assigned to any virus in that genus by kraken2'
-      - field: taxid_species
-        type: char
-        description: 'NCBI taxonomy ID of species of viral reference'
-      - field: name_species
-        type: char
-        description: 'NCBI taxonomy species name'
-      - field: reads_species_tree
-        type: int
-        description: 'Number of reads assigned to that species (and any sub-species) by kraken2'
-      - field: taxid_assigned
-        type: char
-        description: 'NCBI taxonomy ID of viral reference'
-      - field: name_assigned
-        type: char
-        description: 'NCBI taxonomy name of viral reference'
-      - field: reads_assigned_tree
-        type: int
-        description: 'Number of reads assigned to the viral reference or taxonomic descendents by kraken2'
-      - field: reads_assigned_direct
-        type: int
-        description: 'Number of reads assigned to the viral reference taxid by kraken2'
-      - field: reference
-        type: char
-        description: 'name of viral reference used.'
-      - field: reference_taxid
-        type: char
-        description: 'NCBI taxonomy ID of viral reference used. This can be a child taxid of taxid_assigned.'
-      - field: reference_kmer_count
-        type: int
-        description: 'count of read kmers matching reference used'
-      - field: alternate_kmer_count
-        type: int
-        description: 'count of read kmers matching next best reference candidate'
-      - field: rname
-        type: char
-        description: 'name of adjusted viral reference'
-      - field: startpos
-        type: int
-        description: 'start position of adjusted viral reference. Always 1'
-      - field: endpos
-        type: int
-        description: 'end position of adjusted viral reference. Always equal to the viral contig length'
-      - field: numreads
-        type: int
-        description: 'Number of reads mapped to adjusted viral reference'
-      - field: covbases
-        type: int
-        description: 'Number of bases with at least 1 read mapped'
-      - field: coverage
-        type: float
-        description: 'Percentage of viral sequence with at least one read mapped'
-      - field: meandepth
-        type: float
-        description: 'Mean alignment depth'
-      - field: meanbaseq
-        type: float
-        description: 'Mean base quality of bases mapped to adjusted viral reference'
-      - field: meanmapq
-        type: float
-        description: 'Mean mapping quality of reads mapped to adjusted viral reference'
-      - field: integrations
-        type: float
-        description: 'Number of integration breakpoints found.'
-      - field: qc_status
-        type: char
-        description: 'QC status of viral integration'
-
+      latest:
+        tbl1:
+          - field: 'taxid_genus'
+            type: 'char'
+            description: 'NCBI taxonomy ID of genus of viral reference'
+          - field: 'name_genus'
+            type: 'char'
+            description: 'NCBI taxonomy genus name'
+          - field: 'reads_genus_tree'
+            type: 'int'
+            description:
+              'Number of reads assigned to any virus in that genus by kraken2'
+          - field: 'taxid_species'
+            type: 'char'
+            description: 'NCBI taxonomy ID of species of viral reference'
+          - field: 'name_species'
+            type: 'char'
+            description: 'NCBI taxonomy species name'
+          - field: 'reads_species_tree'
+            type: 'int'
+            description:
+              'Number of reads assigned to that species (and any sub-species) by
+              kraken2'
+          - field: 'taxid_assigned'
+            type: 'char'
+            description: 'NCBI taxonomy ID of viral reference'
+          - field: 'name_assigned'
+            type: 'char'
+            description: 'NCBI taxonomy name of viral reference'
+          - field: 'reads_assigned_tree'
+            type: 'int'
+            description:
+              'Number of reads assigned to the viral reference or taxonomic
+              descendents by kraken2'
+          - field: 'reads_assigned_direct'
+            type: 'int'
+            description:
+              'Number of reads assigned to the viral reference taxid by kraken2'
+          - field: 'reference'
+            type: 'char'
+            description: 'name of viral reference used.'
+          - field: 'reference_taxid'
+            type: 'char'
+            description:
+              'NCBI taxonomy ID of viral reference used. This can be a child
+              taxid of taxid_assigned.'
+          - field: 'reference_kmer_count'
+            type: 'int'
+            description: 'count of read kmers matching reference used'
+          - field: 'alternate_kmer_count'
+            type: 'int'
+            description:
+              'count of read kmers matching next best reference candidate'
+          - field: 'rname'
+            type: 'char'
+            description: 'name of adjusted viral reference'
+          - field: 'startpos'
+            type: 'int'
+            description: 'start position of adjusted viral reference. Always 1'
+          - field: 'endpos'
+            type: 'int'
+            description:
+              'end position of adjusted viral reference. Always equal to the
+              viral contig length'
+          - field: 'numreads'
+            type: 'int'
+            description: 'Number of reads mapped to adjusted viral reference'
+          - field: 'covbases'
+            type: 'int'
+            description: 'Number of bases with at least 1 read mapped'
+          - field: 'coverage'
+            type: 'float'
+            description:
+              'Percentage of viral sequence with at least one read mapped'
+          - field: 'meandepth'
+            type: 'float'
+            description: 'Mean alignment depth'
+          - field: 'meanbaseq'
+            type: 'float'
+            description:
+              'Mean base quality of bases mapped to adjusted viral reference'
+          - field: 'meanmapq'
+            type: 'float'
+            description:
+              'Mean mapping quality of reads mapped to adjusted viral reference'
+          - field: 'integrations'
+            type: 'float'
+            description: 'Number of integration breakpoints found.'
+          - field: 'qc_status'
+            type: 'char'
+            description: 'QC status of viral integration'
