@@ -124,7 +124,7 @@ Config <- R6::R6Class(
         msg = glue("{x} not found in schemas for {self$tool}.")
       )
       s |>
-        dplyr::filter(.data$name == x) |>
+        dplyr::filter(.data$name == x, .data$version == v) |>
         dplyr::select("schema") |>
         tidyr::unnest("schema")
     },
@@ -170,30 +170,35 @@ Config <- R6::R6Class(
     },
     #' @description Return all tidy tibble schemas.
     .tidy_schemas_all = function() {
-      self$config[["tidy"]][["tidy"]] |>
-        purrr::map(
-          \(tt)
-            {
-              tt[["schema"]] |>
-                purrr::map(\(s) {
-                  tibble::as_tibble_row(s)
-                })
-            } |>
-              dplyr::bind_rows()
-        ) |>
-        tibble::enframe(value = "schema")
+      l1 <- self$config[["tidy"]][["tidy"]]
+      l1 |>
+        purrr::map(\(tt) {
+          tt[["schema"]] |>
+            purrr::map(\(v) {
+              v |>
+                purrr::map(
+                  \(y)
+                    y |> purrr::map(tibble::as_tibble_row) |> dplyr::bind_rows()
+                ) |>
+                tibble::enframe(name = "tbl", value = "schema")
+            }) |>
+            tibble::enframe(name = "version", value = "value2")
+        }) |>
+        tibble::enframe(name = "name", value = "value1") |>
+        tidyr::unnest("value1") |>
+        tidyr::unnest("value2")
     },
     #' @description Get tidy tbl schema.
     #' @param x (`character(1)`)\cr
     #' Tidy tbl name.
-    .tidy_schema = function(x) {
+    .tidy_schema = function(x, v = "latest", tbl = "tbl1") {
       s <- self$tidy_schemas_all
       assertthat::assert_that(
         x %in% s[["name"]],
         msg = glue("{x} not found in schemas for {self$tool}.")
       )
       s |>
-        dplyr::filter(.data$name == x) |>
+        dplyr::filter(.data$name == x, .data$version == v, .data$tbl == tbl) |>
         dplyr::select("schema") |>
         tidyr::unnest("schema")
     }
