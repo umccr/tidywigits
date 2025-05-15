@@ -9,8 +9,9 @@
 #' )
 #' oa <- Oncoanalyser$new(path)
 #' oa$tbl |>
-#'   dplyr::select(tool, tidy) |>
-#'   tidyr::unnest(tidy)
+#'   dplyr::select(tool, prefix, prefix2, tidy) |>
+#'   tidyr::unnest(tidy) |>
+#'   print(n = 100)
 #' }
 #' @export
 Oncoanalyser <- R6::R6Class(
