@@ -24,7 +24,7 @@ Bamtools <- R6::R6Class(
     #' Output directory of tool.
     initialize = function(path) {
       super$initialize(name = "bamtools", path = path)
-      # self$tidy = super$.tidy(envir = self)
+      self$tidy = super$.tidy(envir = self)
     },
     #' @description Read `summary.tsv` file.
     #' @param x (`character(1)`)\cr
@@ -38,11 +38,29 @@ Bamtools <- R6::R6Class(
     #' @param x (`character(1)`)\cr
     #' Path to file.
     tidy_summary = function(x) {
-      raw <- self$parse_summary(x)
+      d <- self$parse_summary(x)
       schema1 <- self$config$.tidy_schema("summary", subtbl = "tbl1")
       schema2 <- self$config$.tidy_schema("summary", subtbl = "tbl2")
-      colnames(raw) <- schema[["field"]]
-      list(summary = raw) |>
+      d1 <- d |>
+        dplyr::select(!dplyr::contains("DepthCoverage_"))
+      assertthat::assert_that(ncol(d1) == nrow(schema1))
+      colnames(d1) <- schema1[["field"]]
+      d2 <- d |>
+        dplyr::select(dplyr::contains("DepthCoverage_")) |>
+        tidyr::pivot_longer(
+          dplyr::everything(),
+          names_to = "covdp",
+          values_to = "value"
+        ) |>
+        tidyr::separate_wider_delim(
+          "covdp",
+          delim = "_",
+          names = c("dummy", "covx")
+        ) |>
+        dplyr::mutate(covx = as.numeric(.data$covx)) |>
+        dplyr::select(covx, value)
+      assertthat::assert_that(all(colnames(d2) == schema2[["field"]]))
+      list(summary = d1, covx = d2) |>
         tibble::enframe(value = "data")
     },
     #' @description Read `wgsmetrics` file.

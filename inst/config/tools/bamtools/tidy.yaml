@@ -248,8 +248,8 @@ tidy:
             type: 'float'
             description: 'Coverage capped'
         tbl2:
-          - field: 'coverage'
-            type: 'char'
+          - field: 'covx'
+            type: 'float'
             description: 'Coverage x'
           - field: 'value'
             type: 'float'

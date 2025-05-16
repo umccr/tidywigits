@@ -1,4 +1,4 @@
-x <- "~/projects/tidywigits/nogit/oncoanalyser-wgts-dna/20250407e2ff5344/L2500331_L2500332/virusbreakend/L2500331.virusbreakend.vcf.summary.tsv"
+x <- "~/projects/tidywigits/nogit/oa_2.0.0_colo829_20250507/bamtools/COLO829v003_WGTS_COLO829_tumor_bamtools/COLO829_tumor.bam_metric.summary.tsv"
 y <- readr::read_tsv(x)
 purrr::map_chr(y, class) |>
   tibble::enframe(name = "field", value = "type") |>
@@ -12,7 +12,7 @@ purrr::map_chr(y, class) |>
     ),
     n = dplyr::row_number()
   ) |>
-  tidyr::nest(.by = n, .key = "latest") |> 
+  tidyr::nest(.by = n, .key = "latest") |>
   dplyr::select(-"n") |>
   yaml::as.yaml() |>
   glue::glue()
