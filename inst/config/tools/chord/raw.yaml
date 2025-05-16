@@ -2,7 +2,7 @@ description: 'Classifier of HOmologous Recombination Deficiency.'
 raw:
   prediction:
     description: 'Predictions from the CHORD random forest.'
-    pattern: "_chord_prediction\\.txt$"
+    pattern: "_chord_prediction\\.txt$|\\.chord\\.prediction\\.tsv$"
     ftype: 'tsv'
     schema:
       latest:
@@ -24,11 +24,11 @@ raw:
           type: 'char'
   signatures:
     description: 'Counts of SNV, INDEL and SV contexts.'
-    pattern: "_chord_signatures\\.txt$"
+    pattern: "_chord_signatures\\.txt$|chord\\.mutation_contexts\\.tsv$"
     ftype: 'tsv'
     schema:
       latest:
-        - field: 'sample'
+        - field: 'sample_id'
           type: 'char'
         - field: 'A[C>A]A'
           type: 'int'
