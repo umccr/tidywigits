@@ -21,7 +21,7 @@ raw:
           type: 'float'
   feat:
     description: 'Input features.'
-    pattern: "cuppa_data\\.tsv\\.gz$"
+    pattern: "\\.cuppa_data\\.tsv\\.gz$"
     ftype: 'tsv'
     schema:
       latest:
@@ -35,7 +35,7 @@ raw:
           type: 'float'
   predsum:
     description: 'Prediction summary.'
-    pattern: "cuppa\\.pred_summ\\.tsv$"
+    pattern: "\\.cuppa\\.pred_summ\\.tsv$"
     ftype: 'tsv'
     schema:
       latest:
@@ -63,7 +63,7 @@ raw:
           type: 'char'
   datatsv:
     description: 'Visualisation data (CUPPA v2).'
-    pattern: "cuppa\\.vis_data\\.tsv$"
+    pattern: "\\.cuppa\\.vis_data\\.tsv$"
     ftype: 'tsv'
     schema:
       latest:
