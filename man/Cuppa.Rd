@@ -9,7 +9,7 @@ Cuppa file parsing and manipulation.
 \examples{
 \dontrun{
 path <- here::here(
-  "nogit/oncoanalyser-wgts-dna/20250407e2ff5344/L2500331_L2500332/cuppa"
+  "nogit/oa_v2/cuppa"
 )
 cup <- Cuppa$new(path)
 }
@@ -31,6 +31,12 @@ Tidy tibble.}
 \item \href{#method-Cuppa-new}{\code{Cuppa$new()}}
 \item \href{#method-Cuppa-parse_datacsv}{\code{Cuppa$parse_datacsv()}}
 \item \href{#method-Cuppa-tidy_datacsv}{\code{Cuppa$tidy_datacsv()}}
+\item \href{#method-Cuppa-parse_feat}{\code{Cuppa$parse_feat()}}
+\item \href{#method-Cuppa-tidy_feat}{\code{Cuppa$tidy_feat()}}
+\item \href{#method-Cuppa-parse_predsum}{\code{Cuppa$parse_predsum()}}
+\item \href{#method-Cuppa-tidy_predsum}{\code{Cuppa$tidy_predsum()}}
+\item \href{#method-Cuppa-parse_datatsv}{\code{Cuppa$parse_datatsv()}}
+\item \href{#method-Cuppa-tidy_datatsv}{\code{Cuppa$tidy_datatsv()}}
 \item \href{#method-Cuppa-clone}{\code{Cuppa$clone()}}
 }
 }
@@ -87,6 +93,114 @@ Path to file.}
 Tidy \code{cup.data.csv} file.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Cuppa$tidy_datacsv(x)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{x}}{(\code{character(1)})\cr
+Path to file.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Cuppa-parse_feat"></a>}}
+\if{latex}{\out{\hypertarget{method-Cuppa-parse_feat}{}}}
+\subsection{Method \code{parse_feat()}}{
+Read \code{cuppa_data.tsv.gz} file.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Cuppa$parse_feat(x)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{x}}{(\code{character(1)})\cr
+Path to file.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Cuppa-tidy_feat"></a>}}
+\if{latex}{\out{\hypertarget{method-Cuppa-tidy_feat}{}}}
+\subsection{Method \code{tidy_feat()}}{
+Tidy \code{cuppa_data.tsv.gz} file.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Cuppa$tidy_feat(x)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{x}}{(\code{character(1)})\cr
+Path to file.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Cuppa-parse_predsum"></a>}}
+\if{latex}{\out{\hypertarget{method-Cuppa-parse_predsum}{}}}
+\subsection{Method \code{parse_predsum()}}{
+Read \code{cuppa.pred_summ.tsv} file.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Cuppa$parse_predsum(x)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{x}}{(\code{character(1)})\cr
+Path to file.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Cuppa-tidy_predsum"></a>}}
+\if{latex}{\out{\hypertarget{method-Cuppa-tidy_predsum}{}}}
+\subsection{Method \code{tidy_predsum()}}{
+Tidy \code{cuppa.pred_summ.tsv} file.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Cuppa$tidy_predsum(x)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{x}}{(\code{character(1)})\cr
+Path to file.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Cuppa-parse_datatsv"></a>}}
+\if{latex}{\out{\hypertarget{method-Cuppa-parse_datatsv}{}}}
+\subsection{Method \code{parse_datatsv()}}{
+Read \code{cuppa.vis_data.tsv} file.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Cuppa$parse_datatsv(x)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{x}}{(\code{character(1)})\cr
+Path to file.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Cuppa-tidy_datatsv"></a>}}
+\if{latex}{\out{\hypertarget{method-Cuppa-tidy_datatsv}{}}}
+\subsection{Method \code{tidy_datatsv()}}{
+Tidy \code{cuppa.vis_data.tsv} file.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Cuppa$tidy_datatsv(x)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{

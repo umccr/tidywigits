@@ -1,6 +1,6 @@
 tidy:
   datacsv:
-    description: 'CUPPA visualisation data.'
+    description: 'Visualisation data (CUPPA v1).'
     schema:
       latest:
         tbl1:
@@ -25,3 +25,87 @@ tidy:
           - field: 'plot_section'
             type: 'char'
             description: 'section of cuppa plot'
+  feat:
+    description: 'Input features.'
+    schema:
+      latest:
+        tbl1:
+          - field: 'source'
+            type: 'char'
+            description: 'Source'
+          - field: 'category'
+            type: 'char'
+            description: 'Category'
+          - field: 'key'
+            type: 'char'
+            description: 'Key'
+          - field: 'value'
+            type: 'float'
+            description: 'Value'
+  predsum:
+    description: 'Prediction summary.'
+    schema:
+      latest:
+        tbl1:
+          - field: 'sample_id'
+            type: 'char'
+            description: 'sample ID'
+          - field: 'clf_group'
+            type: 'char'
+            description: 'classifer group'
+          - field: 'clf_name'
+            type: 'char'
+            description: 'classifier name'
+          - field: 'pred_class_rank'
+            type: 'int'
+            description: 'prediction class rank'
+          - field: 'pred_class'
+            type: 'char'
+            description: 'prediction class'
+          - field: 'pred_prob_rank'
+            type: 'int'
+            description: 'prediction probability rank'
+          - field: 'pred_prob'
+            type: 'float'
+            description: 'prediction probability'
+          - field: 'extra_info'
+            type: 'char'
+            description: 'extra info'
+          - field: 'extra_info_format'
+            type: 'char'
+            description: 'extra info format'
+  datatsv:
+    description: 'Visualisation data (CUPPA v2).'
+    schema:
+      latest:
+        tbl1:
+          - field: 'sample_id'
+            type: 'char'
+            description: 'sample ID'
+          - field: 'data_type'
+            type: 'char'
+            description: 'data type'
+          - field: 'clf_group'
+            type: 'char'
+            description: 'classifier group'
+          - field: 'clf_name'
+            type: 'char'
+            description: 'classifier name'
+          - field: 'feat_name'
+            type: 'char'
+            description: 'EVENT feature name'
+          - field: 'feat_value'
+            type: 'float'
+            description: 'EVENT feature value'
+          - field: 'cancer_type'
+            type: 'char'
+            description: 'cancer type'
+          - field: 'data_value'
+            type: 'float'
+            description: 'Value of data_type'
+          - field: 'rank'
+            type: 'float'
+            description: 'rank of data_value'
+          - field: 'rank_group'
+            type: 'float'
+            description: 'Grouping of [data_type, clf_name, feat_name] by which data_value is ranked'

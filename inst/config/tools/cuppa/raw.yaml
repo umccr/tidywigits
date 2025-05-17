@@ -2,7 +2,7 @@ description:
   'Cancer of Unknown Primary Prediction Algorithm.'
 raw:
   datacsv:
-    description: 'CUPPA visualisation data.'
+    description: 'Visualisation data (CUPPA v1).'
     pattern: "\\.cup\\.data\\.csv$"
     ftype: 'csv'
     schema:
@@ -18,4 +18,72 @@ raw:
         - field: 'RefCancerType'
           type: 'char'
         - field: 'RefValue'
+          type: 'float'
+  feat:
+    description: 'Input features.'
+    pattern: "cuppa_data\\.tsv\\.gz$"
+    ftype: 'tsv'
+    schema:
+      latest:
+        - field: 'Source'
+          type: 'char'
+        - field: 'Category'
+          type: 'char'
+        - field: 'Key'
+          type: 'char'
+        - field: 'Value'
+          type: 'float'
+  predsum:
+    description: 'Prediction summary.'
+    pattern: "cuppa\\.pred_summ\\.tsv$"
+    ftype: 'tsv'
+    schema:
+      latest:
+        - field: 'sample_id'
+          type: 'char'
+        - field: 'clf_group'
+          type: 'char'
+        - field: 'clf_name'
+          type: 'char'
+        - field: 'pred_class_1'
+          type: 'char'
+        - field: 'pred_class_2'
+          type: 'char'
+        - field: 'pred_class_3'
+          type: 'char'
+        - field: 'pred_prob_1'
+          type: 'float'
+        - field: 'pred_prob_2'
+          type: 'float'
+        - field: 'pred_prob_3'
+          type: 'float'
+        - field: 'extra_info'
+          type: 'char'
+        - field: 'extra_info_format'
+          type: 'char'
+  datatsv:
+    description: 'Visualisation data (CUPPA v2).'
+    pattern: "cuppa\\.vis_data\\.tsv$"
+    ftype: 'tsv'
+    schema:
+      latest:
+        - field: 'sample_id'
+          type: 'char'
+        - field: 'data_type'
+          type: 'char'
+        - field: 'clf_group'
+          type: 'char'
+        - field: 'clf_name'
+          type: 'char'
+        - field: 'feat_name'
+          type: 'char'
+        - field: 'feat_value'
+          type: 'float'
+        - field: 'cancer_type'
+          type: 'char'
+        - field: 'data_value'
+          type: 'float'
+        - field: 'rank'
+          type: 'float'
+        - field: 'rank_group'
           type: 'float'

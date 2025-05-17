@@ -5,7 +5,7 @@
 #' @examples
 #' \dontrun{
 #' path <- here::here(
-#'   "nogit/oncoanalyser-wgts-dna/20250407e2ff5344/L2500331_L2500332/cuppa"
+#'   "nogit/oa_v2/cuppa"
 #' )
 #' cup <- Cuppa$new(path)
 #' }
@@ -100,6 +100,76 @@ Cuppa <- R6::R6Class(
       schema <- self$config$.tidy_schema("datacsv")
       colnames(d) <- schema[["field"]]
       list(datacsv = d) |>
+        tibble::enframe(value = "data")
+    },
+    #' @description Read `cuppa_data.tsv.gz` file.
+    #' @param x (`character(1)`)\cr
+    #' Path to file.
+    parse_feat = function(x) {
+      schema <- self$config$.raw_schema("feat")
+      d <- parse_file(x, schema, type = "tsv")
+      d
+    },
+    #' @description Tidy `cuppa_data.tsv.gz` file.
+    #' @param x (`character(1)`)\cr
+    #' Path to file.
+    tidy_feat = function(x) {
+      raw <- self$parse_feat(x)
+      schema <- self$config$.tidy_schema("feat")
+      colnames(raw) <- schema[["field"]]
+      list(feat = raw) |>
+        tibble::enframe(value = "data")
+    },
+    #' @description Read `cuppa.pred_summ.tsv` file.
+    #' @param x (`character(1)`)\cr
+    #' Path to file.
+    parse_predsum = function(x) {
+      schema <- self$config$.raw_schema("predsum")
+      d <- parse_file(x, schema, type = "tsv")
+      d
+    },
+    #' @description Tidy `cuppa.pred_summ.tsv` file.
+    #' @param x (`character(1)`)\cr
+    #' Path to file.
+    tidy_predsum = function(x) {
+      d <- self$parse_predsum(x) |>
+        tidyr::pivot_longer(
+          contains("pred_class_"),
+          names_prefix = "pred_class_",
+          names_to = "pred_class_rank",
+          values_to = "pred_class",
+          names_transform = list(pred_class_rank = as.integer)
+        ) |>
+        tidyr::pivot_longer(
+          dplyr::contains("pred_prob_"),
+          names_prefix = "pred_prob_",
+          names_to = "pred_prob_rank",
+          values_to = "pred_prob",
+          names_transform = list(pred_prob_rank = as.integer)
+        ) |>
+        dplyr::relocate("extra_info", .after = dplyr::last_col()) |>
+        dplyr::relocate("extra_info_format", .after = dplyr::last_col())
+      schema <- self$config$.tidy_schema("predsum")
+      assertthat::assert_that(all(colnames(d) == schema[["field"]]))
+      list(predsum = d) |>
+        tibble::enframe(value = "data")
+    },
+    #' @description Read `cuppa.vis_data.tsv` file.
+    #' @param x (`character(1)`)\cr
+    #' Path to file.
+    parse_datatsv = function(x) {
+      schema <- self$config$.raw_schema("datatsv")
+      d <- parse_file(x, schema, type = "tsv")
+      d
+    },
+    #' @description Tidy `cuppa.vis_data.tsv` file.
+    #' @param x (`character(1)`)\cr
+    #' Path to file.
+    tidy_datatsv = function(x) {
+      raw <- self$parse_datatsv(x)
+      schema <- self$config$.tidy_schema("datatsv")
+      colnames(raw) <- schema[["field"]]
+      list(datatsv = raw) |>
         tibble::enframe(value = "data")
     }
   ) # end public
