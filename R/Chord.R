@@ -5,7 +5,7 @@
 #' @examples
 #' \dontrun{
 #' path <- here::here(
-#'   "nogit/oncoanalyser-wgts-dna/20250407e2ff5344/L2500331_L2500332/chord"
+#'   "nogit/oa_v2/chord"
 #' )
 #' ch <- Chord$new(path)
 #' }
@@ -48,7 +48,6 @@ Chord <- R6::R6Class(
     #' @param x (`character(1)`)\cr
     #' Path to file.
     parse_signatures = function(x) {
-      # header does not contain sample column
       n_max <- 0
       hdr <- readr::read_tsv(
         x,
@@ -67,9 +66,14 @@ Chord <- R6::R6Class(
         ) |>
         tibble::deframe()
 
-      assertthat::assert_that(all(colnames(hdr) == names(schema)[-1]))
-      # add sample column
-      cnames <- c("sample", colnames(hdr))
+      # header contains sample column in latest version
+      if (colnames(hdr)[1] != "sample_id") {
+        assertthat::assert_that(all(colnames(hdr) == names(schema)[-1]))
+        cnames <- c("sample_id", colnames(hdr))
+      } else {
+        assertthat::assert_that(all(colnames(hdr) == names(schema)))
+        cnames <- colnames(hdr)
+      }
       d <- readr::read_tsv(x, col_names = cnames, col_types = schema, skip = 1)
       d[]
     },
@@ -80,7 +84,7 @@ Chord <- R6::R6Class(
       raw <- self$parse_signatures(x)
       d <- raw |>
         tidyr::pivot_longer(
-          cols = -c("sample"),
+          cols = -c("sample_id"),
           names_to = "signature",
           values_to = "count"
         ) |>
