@@ -67,7 +67,7 @@ Chord <- R6::R6Class(
         tibble::deframe()
 
       # header contains sample column in latest version
-      if (!"sample_id" == colnames(hdr)[1]) {
+      if (colnames(hdr)[1] != "sample_id") {
         assertthat::assert_that(all(colnames(hdr) == names(schema)[-1]))
         cnames <- c("sample_id", colnames(hdr))
       } else {

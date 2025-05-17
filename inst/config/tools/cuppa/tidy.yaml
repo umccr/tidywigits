@@ -52,7 +52,7 @@ tidy:
             description: 'sample ID'
           - field: 'clf_group'
             type: 'char'
-            description: 'classifer group'
+            description: 'classifier group'
           - field: 'clf_name'
             type: 'char'
             description: 'classifier name'
