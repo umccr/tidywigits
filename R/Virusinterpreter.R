@@ -4,9 +4,7 @@
 #' Virusinterpreter file parsing and manipulation.
 #' @examples
 #' \dontrun{
-#' path <- here::here(
-#'   "nogit/oncoanalyser-wgts-dna/20250407e2ff5344/L2500331_L2500332/virusinterpreter"
-#' )
+#' path <- here::here("nogit")
 #' v <- Virusinterpreter$new(path)
 #' }
 #' @export
@@ -22,7 +20,7 @@ Virusinterpreter <- R6::R6Class(
     #' Output directory of tool.
     initialize = function(path) {
       super$initialize(name = "virusinterpreter", path = path)
-      # self$tidy = super$.tidy(envir = self)
+      self$tidy = super$.tidy(envir = self)
     },
 
     #' @description Read `virus.annotated.tsv` file.
@@ -30,34 +28,12 @@ Virusinterpreter <- R6::R6Class(
     #' Path to file.
     parse_annotated = function(x) {
       # TODO: refactor into separate func
-      hdr <- readr::read_tsv(
-        x,
-        col_types = readr::cols(.default = "c"),
-        n_max = 0
-      ) |>
-        colnames()
+      cnames <- file_hdr(x, delim = "\t")
       schemas_all <- self$config$.raw_schemas_all() |>
-        dplyr::filter(name == "annotated")
-      schema <- schemas_all |>
-        dplyr::select(version, schema) |>
-        dplyr::rowwise() |>
-        dplyr::mutate(
-          length_match = length(hdr) == nrow(.data$schema),
-          all_match = if (length_match) {
-            all(hdr == .data$schema[["field"]])
-          } else {
-            FALSE
-          }
-        ) |>
-        dplyr::filter(.data$all_match) |>
-        dplyr::ungroup()
-      assertthat::assert_that(nrow(schema) == 1)
-      version <- schema$version
-      schema <- schema |>
-        dplyr::select("schema") |>
-        tidyr::unnest("schema")
-      d <- parse_file(x, schema, type = "tsv")
-      attr(d, "file_version") <- version
+        dplyr::filter(.data$name == "annotated")
+      schema1 <- schema_guess(cnames = cnames, schemas_all = schemas_all)
+      d <- parse_file(x, schema1$schema, type = "tsv")
+      attr(d, "file_version") <- schema1$version
       d
     },
     #' @description Tidy `virus.annotated.tsv` file.

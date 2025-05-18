@@ -93,6 +93,43 @@ parse_file <- function(fname, schema, type, cnames = TRUE, ...) {
   return(d[])
 }
 
+file_hdr <- function(x, delim = "\t") {
+  readr::read_delim(
+    x,
+    delim = delim,
+    col_types = readr::cols(.default = "c"),
+    n_max = 0
+  ) |>
+    colnames()
+}
+
+schema_guess <- function(cnames, schemas_all) {
+  assertthat::assert_that(rlang::is_bare_character(cnames))
+  assertthat::assert_that(tibble::is_tibble(schemas_all))
+  assertthat::assert_that(all(
+    c("schema", "version") %in% colnames(schemas_all)
+  ))
+  schema1 <- schemas_all |>
+    dplyr::select("version", "schema") |>
+    dplyr::rowwise() |>
+    dplyr::mutate(
+      length_match = length(cnames) == nrow(.data$schema),
+      all_match = if (.data$length_match) {
+        all(cnames == .data$schema[["field"]])
+      } else {
+        FALSE
+      }
+    ) |>
+    dplyr::filter(.data$all_match) |>
+    dplyr::ungroup()
+  assertthat::assert_that(nrow(schema1) == 1)
+  version <- schema1$version
+  schema2 <- schema1 |>
+    dplyr::select("schema") |>
+    tidyr::unnest("schema")
+  list(schema = schema2, version = version)
+}
+
 #' List Files
 #'
 #' Lists files in a given directory.
