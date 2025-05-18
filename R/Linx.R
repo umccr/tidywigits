@@ -4,9 +4,7 @@
 #' Linx file parsing and manipulation.
 #' @examples
 #' \dontrun{
-#' path <- here::here(
-#'   "nogit/oncoanalyser-wgts-dna/20250407e2ff5344/L2500331_L2500332/linx"
-#' )
+#' path <- here::here("nogit")
 #' lx <- Linx$new(path)
 #' lx$tidy$tidy |>
 #'   purrr::set_names(lx$tidy$parser) |>
@@ -62,8 +60,12 @@ Linx <- R6::R6Class(
     #' @param x (`character(1)`)\cr
     #' Path to file.
     parse_breakends = function(x) {
-      schema <- self$config$.raw_schema("breakends")
-      d <- parse_file(x, schema, type = "tsv-onlycols")
+      cnames <- file_hdr(x, delim = "\t")
+      schemas_all <- self$config$.raw_schemas_all() |>
+        dplyr::filter(.data$name == "breakends")
+      schema1 <- schema_guess(cnames = cnames, schemas_all = schemas_all)
+      d <- parse_file(x, schema1$schema, type = "tsv")
+      attr(d, "file_version") <- schema1$version
       d
     },
     #' @description Tidy `breakend.tsv` file.
@@ -71,7 +73,8 @@ Linx <- R6::R6Class(
     #' Path to file.
     tidy_breakends = function(x) {
       raw <- self$parse_breakends(x)
-      schema <- self$config$.tidy_schema("breakends")
+      version <- attr(raw, "file_version")
+      schema <- self$config$.tidy_schema("breakends", v = version)
       colnames(raw) <- schema[["field"]]
       list(breakends = raw) |>
         tibble::enframe(value = "data")

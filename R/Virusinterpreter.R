@@ -27,7 +27,6 @@ Virusinterpreter <- R6::R6Class(
     #' @param x (`character(1)`)\cr
     #' Path to file.
     parse_annotated = function(x) {
-      # TODO: refactor into separate func
       cnames <- file_hdr(x, delim = "\t")
       schemas_all <- self$config$.raw_schemas_all() |>
         dplyr::filter(.data$name == "annotated")

@@ -84,46 +84,46 @@ tidy:
     description:
       'Impact of each non PON filtered break junction on each overlapping gene'
     schema:
-      latest:
+      v1.25:
         tbl1:
-          - field: 'id'
+          - field: 'bnd_id'
             type: 'char'
-            description: 'Id of breakend annotation'
+            description: 'ID of breakend annotation'
           - field: 'sv_id'
             type: 'char'
-            description: 'Id of break junction'
+            description: 'ID of break junction'
           - field: 'is_start'
             type: 'char'
             description:
-              'Annotation relates to the start breakend of the break junction'
+              'annotation relates to the start breakend of the break junction'
           - field: 'gene'
             type: 'char'
-            description: 'Gene annotated'
+            description: 'gene annotated'
           - field: 'transcript_id'
             type: 'char'
-            description: 'Ensembl stable transcript id of annotation'
+            description: 'Ensembl stable transcript ID of annotation'
           - field: 'canonical'
             type: 'char'
-            description: 'Transcript is the canonical transcript of the gene'
+            description: 'transcript is the canonical transcript of the gene'
           - field: 'gene_orientation'
             type: 'char'
             description:
-              'Orientation which breakend points relative to the gene taking
+              'orientation which breakend points relative to the gene taking
               into account both gene strand and breakend orientation'
           - field: 'disruptive'
             type: 'char'
             description:
-              'Breakend is part of a break junction which disrupts the exonic
+              'breakend is part of a break junction which disrupts the exonic
               sequence of the transcript'
           - field: 'reported_disruption'
             type: 'char'
             description:
-              'Breakend is disruptive and gene is flagged as reportable for
+              'breakend is disruptive and gene is flagged as reportable for
               disruption'
           - field: 'undisrupted_cn'
             type: 'float'
             description:
-              'Number of remaining wildtype alleles of the gene that are not
+              'number of remaining wildtype alleles of the gene that are not
               disrupted by the breakend'
           - field: 'region_type'
             type: 'char'
@@ -131,7 +131,7 @@ tidy:
           - field: 'coding_type'
             type: 'char'
             description:
-              'Location of the breakend relative to the coding context of the
+              'location of the breakend relative to the coding context of the
               transcript'
           - field: 'biotype'
             type: 'char'
@@ -139,27 +139,127 @@ tidy:
           - field: 'exonic_basephase'
             type: 'float'
             description:
-              'If regionType = EXONIC, the exact base phase of the breakend,
+              'if regionType = EXONIC, the exact base phase of the breakend,
               else -1'
           - field: 'next_splice_exon_rank'
             type: 'float'
             description:
-              'The exon rank of the next splice acceptor (if gene orientation is
+              'exon rank of the next splice acceptor (if gene orientation is
               "DOWNSTREAM") or splice donor (if gene orientation is "UPSTREAM")'
           - field: 'next_splice_exon_phase'
             type: 'float'
             description:
-              'The phase of the 1st base after the next splice acceptor (if gene
+              'phase of the 1st base after the next splice acceptor (if gene
               orientation is "DOWNSTREAM") or splice donor (if gene orientation
               is "UPSTREAM")'
           - field: 'next_splice_distance'
             type: 'float'
             description:
-              'The distance in bases to the next splice site identified in
+              'distance in bases to the next splice site identified in
               nextSpliceExonRank'
           - field: 'total_exon_count'
             type: 'float'
-            description: 'Total number of exons in the transcript'
+            description: 'total number of exons in the transcript'
+          - field: 'type'
+            type: 'char'
+            description: 'type of breakend'
+          - field: 'chromosome'
+            type: 'char'
+            description: 'chromosome'
+          - field: 'orientation'
+            type: 'char'
+            description: 'orientation'
+          - field: 'strand'
+            type: 'char'
+            description: 'strand'
+          - field: 'chr_band'
+            type: 'char'
+            description: 'chromosome band'
+          - field: 'exon_up'
+            type: 'float'
+            description: '.'
+          - field: 'exon_down'
+            type: 'float'
+            description: '.'
+          - field: 'junction_cn'
+            type: 'float'
+            description: 'junction cn'
+      latest:
+        tbl1:
+          - field: 'bnd_id'
+            type: 'char'
+            description: 'ID of breakend annotation'
+          - field: 'sv_id'
+            type: 'char'
+            description: 'ID of break junction'
+          - field: 'is_start'
+            type: 'char'
+            description:
+              'annotation relates to the start breakend of the break junction'
+          - field: 'gene'
+            type: 'char'
+            description: 'gene annotated'
+          - field: 'transcript_id'
+            type: 'char'
+            description: 'Ensembl stable transcript id of annotation'
+          - field: 'canonical'
+            type: 'char'
+            description: 'transcript is the canonical transcript of the gene'
+          - field: 'gene_orientation'
+            type: 'char'
+            description:
+              'orientation which breakend points relative to the gene taking
+              into account both gene strand and breakend orientation'
+          - field: 'disruptive'
+            type: 'char'
+            description:
+              'breakend is part of a break junction which disrupts the exonic
+              sequence of the transcript'
+          - field: 'reported_disruption'
+            type: 'char'
+            description:
+              'breakend is disruptive and gene is flagged as reportable for
+              disruption'
+          - field: 'undisrupted_cn'
+            type: 'float'
+            description:
+              'number of remaining wildtype alleles of the gene that are not
+              disrupted by the breakend'
+          - field: 'region_type'
+            type: 'char'
+            description: 'Location of the breakend relative to the transcript'
+          - field: 'coding_type'
+            type: 'char'
+            description:
+              'location of the breakend relative to the coding context of the
+              transcript'
+          - field: 'biotype'
+            type: 'char'
+            description: 'Ensembl biotype of the transcript'
+          - field: 'exonic_basephase'
+            type: 'float'
+            description:
+              'if regionType = EXONIC, the exact base phase of the breakend,
+              else -1'
+          - field: 'next_splice_exon_rank'
+            type: 'float'
+            description:
+              'exon rank of the next splice acceptor (if gene orientation is
+              "DOWNSTREAM") or splice donor (if gene orientation is "UPSTREAM")'
+          - field: 'next_splice_exon_phase'
+            type: 'float'
+            description:
+              'phase of the 1st base after the next splice acceptor (if gene
+              orientation is "DOWNSTREAM") or splice donor (if gene orientation
+              is "UPSTREAM")'
+          - field: 'next_splice_distance'
+            type: 'float'
+            description:
+              'distance in bases to the next splice site identified in
+              nextSpliceExonRank'
+          - field: 'total_exon_count'
+            type: 'float'
+            description: 'total number of exons in the transcript'
           - field: 'exon_up'
             type: 'float'
             description: '.'
@@ -179,22 +279,22 @@ tidy:
           - field: 'category'
             type: 'char'
             description:
-              'High level categorisation of the cluster classification'
+              'high level categorisation of the cluster classification'
           - field: 'synthetic'
             type: 'char'
             description:
-              'Set to TRUE if the cluster is resolved to a non complex type by
+              'set to TRUE if the cluster is resolved to a non complex type by
               simplification of a short templated insertion (<1kb)'
           - field: 'resolved_type'
             type: 'char'
-            description: 'Resolved classification of the cluster.'
+            description: 'resolved classification of the cluster.'
           - field: 'cluster_count'
             type: 'float'
-            description: 'The number of break junctions in the cluster'
+            description: 'number of break junctions in the cluster'
           - field: 'cluster_desc'
             type: 'char'
             description:
-              'String containing the types and counts of break junctions in the
+              'types and counts of break junctions in the
               cluster. eg. DEL=2_INV=2'
   links:
     description:
@@ -205,18 +305,18 @@ tidy:
         tbl1:
           - field: 'cluster_id'
             type: 'char'
-            description: 'Id of the cluster which contains the link'
+            description: 'cluster ID which contains the link'
           - field: 'chain_id'
             type: 'char'
             description:
-              'Id of the chain to which the link belongs representing a
+              'chain ID to which the link belongs representing a
               multi-segment prediction of the derivative chromosome'
           - field: 'chain_index'
             type: 'char'
-            description: 'Position of the linked segment in the chain'
+            description: 'position of the linked segment in the chain'
           - field: 'chain_count'
             type: 'float'
-            description: 'Total count of linked segments in the chan'
+            description: 'total count of linked segments in the chan'
           - field: 'lower_sv_id'
             type: 'char'
             description: 'svId of the leftmost breakend of the linked segment'
@@ -233,36 +333,36 @@ tidy:
               'right breakend is the start breakend of the break junction'
           - field: 'chromosome'
             type: 'char'
-            description: 'Chromosome of the linked segment'
+            description: 'chromosome of the linked segment'
           - field: 'arm'
             type: 'char'
-            description: 'Arm (P/Q) of the linked segment'
+            description: 'arm (P/Q) of the linked segment'
           - field: 'assembled'
             type: 'char'
             description: 'segment is linked by a GRIDSS assembly'
           - field: 'traversed_sv_count'
             type: 'float'
             description:
-              'The number of other breakends that are located on the linked
+              'number of other breakends that are located on the linked
               segment'
           - field: 'length'
             type: 'float'
-            description: 'Length of the linked segment'
+            description: 'length of the linked segment'
           - field: 'junction_cn'
             type: 'float'
-            description: 'Predicted copy number of the chain'
+            description: 'predicted CN of the chain'
           - field: 'junction_cn_uncertainty'
             type: 'float'
-            description: 'Uncertainty in the copy number of the chain'
+            description: 'uncertainty in the CN of the chain'
           - field: 'pseudogene_info'
             type: 'char'
             description:
-              'If the segment precisely matches an exon of an ensembl gene, then
+              'if the segment precisely matches an exon of an ensembl gene, then
               contains details of the matching exon'
           - field: 'ecdna'
             type: 'char'
             description:
-              'True if the link is predicted to be part of a DM / ecDNA chain'
+              'link is predicted to be part of a DM / ecDNA chain'
   fusions:
     description:
       'All inframe and out of frame fusions predicted in the sample including
@@ -272,34 +372,34 @@ tidy:
         tbl1:
           - field: 'breakendid5'
             type: 'char'
-            description: 'Id of the 5prime breakend in the fusion'
+            description: '5prime breakend ID in the fusion'
           - field: 'breakendid3'
             type: 'char'
-            description: 'Id of the 3prime breakend in the fusion'
+            description: '3prime breakend ID in the fusion'
           - field: 'name'
             type: 'char'
-            description: 'Name of the fusion in the form 5primeGENE_3primeGENE'
+            description: 'fusion name in the form 5primeGENE_3primeGENE'
           - field: 'reported'
             type: 'char'
             description:
-              'True if the fusion meets all reportable fusion criteria for LINX'
+              'fusion meets all reportable fusion criteria for LINX'
           - field: 'reported_type'
             type: 'char'
             description:
-              'If one or both of the genes matches a promiscuous gene or known
+              'if one or both of the genes matches a promiscuous gene or known
               rearrangement in the HMF fusion knowledgebase, then the type of
               reportable gene pair'
           - field: 'reportable_reasons'
             type: 'char'
-            description: 'Reasons for given reportable status'
+            description: 'reasons for given reportable status'
           - field: 'phased'
             type: 'char'
             description:
-              'Set to 1 if a phased fusion can be formed (after allowing for
+              'set to 1 if a phased fusion can be formed (after allowing for
               exon skipping)'
           - field: 'likelihood'
             type: 'char'
-            description: '.'
+            description: 'likelihood'
           - field: 'chain_length'
             type: 'float'
             description:
@@ -418,10 +518,10 @@ tidy:
             description: 'True if any variants in the gene are biallelic'
           - field: 'min_cn'
             type: 'float'
-            description: 'Minimum copy number found in the gene exons'
+            description: 'Minimum CN found in the gene exons'
           - field: 'max_cn'
             type: 'float'
-            description: 'Maximum copy number found in the gene exons'
+            description: 'Maximum CN found in the gene exons'
   drivers:
     description:
       'Linkage of drivers from driver catalog to SV cluster which contributed to
