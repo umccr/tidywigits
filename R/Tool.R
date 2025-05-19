@@ -120,6 +120,16 @@ Tool <- R6::R6Class(
         ...
       )
     },
+    .tidy_file = function(x, name) {
+      parser <- self$.eval_func(glue("tidy_{name}"), envir = self)
+      d <- parser(x)
+      version <- get_tbl_version_attr(d)
+      schema <- self$tidy_schema(name, v = version)
+      colnames(d) <- schema[["field"]]
+      list(d) |>
+        setNames(name) |>
+        tibble::enframe(value = "data")
+    },
     #' @description Evaluate function in the context of the Tool's
     #' environment.
     #' @param fun (`character(1)`)\cr

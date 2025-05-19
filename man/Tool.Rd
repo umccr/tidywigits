@@ -49,6 +49,7 @@ Get specific tidy schema.}
 \item \href{#method-Tool-print}{\code{Tool$print()}}
 \item \href{#method-Tool-list_files}{\code{Tool$list_files()}}
 \item \href{#method-Tool-.parse_file}{\code{Tool$.parse_file()}}
+\item \href{#method-Tool-.tidy_file}{\code{Tool$.tidy_file()}}
 \item \href{#method-Tool-.eval_func}{\code{Tool$.eval_func()}}
 \item \href{#method-Tool-.tidy}{\code{Tool$.tidy()}}
 \item \href{#method-Tool-clone}{\code{Tool$clone()}}
@@ -127,6 +128,15 @@ File delimiter.}
 }
 \if{html}{\out{</div>}}
 }
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Tool-.tidy_file"></a>}}
+\if{latex}{\out{\hypertarget{method-Tool-.tidy_file}{}}}
+\subsection{Method \code{.tidy_file()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Tool$.tidy_file(x, name)}\if{html}{\out{</div>}}
+}
+
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-Tool-.eval_func"></a>}}
