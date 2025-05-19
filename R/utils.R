@@ -5,48 +5,44 @@
 #'
 #' @param fname (`character(1)`)\cr
 #' File name.
-#' @param schema (`tibble()`)\cr
-#' Tibble with field and type.
-#' @param type (`character(1)`)\cr
-#' File type (tsv, csv, vcf, tsv-nohead).
-#' @param cnames Column names (see `readr::read_delim`).
+#' @param pname (`character(1)`)\cr
+#' Parser name (e.g. "breakends" - see docs).
+#' @param schemas_all (`tibble()`)\cr
+#' Tibble with name, version and schema list-col.
+#' @param delim (`character(1)`)\cr
+#' File delimiter.
 #' @param ... Passed on to `readr::read_delim`.
 #'
 #' @examples
 #' \dontrun{
-#' name <- "amber"
-#' outdir <- here::here(
-#'   "nogit/oncoanalyser-wgts-dna/20250407e2ff5344/L2500331_L2500332/amber"
+#' path <- here::here(
+#'   "nogit/oncoanalyser-wgts-dna/20250407e2ff5344/L2500331_L2500332/linx"
 #' )
-#' prefix <- NULL
-#' x <- Tool$new(name, outdir, prefix)
+#' x <- Tool$new("linx", path)
 #' schemas_all <- x$config$raw_schemas_all
-#' files_all <- x$files
-#' ftype <- "baftsv"
-#' fname <-
-#'   files_all |>
-#'   dplyr::filter(.data$parser == ftype) |>
-#'   dplyr::pull("path")
-#' schema <-
-#'   schemas_all |>
-#'   dplyr::filter(.data$file == ftype) |>
-#'   dplyr::select("schema") |>
-#'   tidyr::unnest("schema")
-#' type <- "tsv"
-#' type <- "tsv-nohead"
-#'
+#' pname <- "breakends"
+#' fname <- file.path(path, "somatic_annotations/L2500331.linx.breakend.tsv")
+#' parse_file(fname, pname, schemas_all)
 #' }
-parse_file <- function(fname, schema, type, cnames = TRUE, ...) {
-  assertthat::assert_that(file.exists(fname))
+parse_file <- function(
+  fname,
+  pname,
+  schemas_all,
+  delim = "\t",
+  ...
+) {
   assertthat::assert_that(
-    tibble::is_tibble(schema),
-    all(colnames(schema) == c("field", "type"))
+    file.exists(fname),
+    msg = glue("The file {fname} does not exist.")
   )
-  assertthat::assert_that(
-    type %in% c("tsv", "csv", "vcf", "txt-nohead", "txt", "tsv-onlycols")
+  cnames <- file_hdr(fname, delim = delim)
+  schema <- schema_guess(
+    pname = pname,
+    cnames = cnames,
+    schemas_all = schemas_all
   )
   # remap schema
-  schema2 <- schema |>
+  schema[["schema"]] <- schema[["schema"]] |>
     dplyr::mutate(
       type = dplyr::case_match(
         .data$type,
@@ -56,41 +52,27 @@ parse_file <- function(fname, schema, type, cnames = TRUE, ...) {
       )
     ) |>
     tibble::deframe()
-  delim <- "\t"
-  col_names <- cnames
-  col_types <- rlang::exec(readr::cols, !!!schema2)
-  if (type == "csv") {
-    delim <- ","
-  }
-  if (type == "txt-nohead") {
-    col_names_new <- names(schema2)
-    col_types <- unname(schema2)
-    d <- readr::read_delim(
-      file = fname,
-      col_names = FALSE,
-      col_types = col_types,
-      ...
-    ) |>
-      purrr::set_names(col_names_new)
-    return(d[])
-  }
-  if (type == "tsv-onlycols") {
-    ctypes <- rlang::exec(readr::cols_only, !!!schema2)
-    d <- readr::read_tsv(
-      file = fname,
-      col_names = TRUE,
-      col_types = ctypes
-    )
-    return(d[])
-  }
+  ctypes <- rlang::exec(readr::cols, !!!schema[["schema"]])
   d <- readr::read_delim(
     file = fname,
     delim = delim,
-    col_names = col_names,
-    col_types = col_types,
+    col_types = ctypes,
     ...
   )
-  return(d[])
+  attr(d, "file_version") <- schema[["version"]]
+  d[]
+}
+
+parse_file_nohead <- function(fname, ctypes, cnames_new, ...) {
+  d <- readr::read_delim(
+    file = fname,
+    col_names = FALSE,
+    col_types = ctypes,
+    ...
+  )
+  assertthat::assert_that(length(cnames_new) == ncol(d))
+  colnames(d) <- cnames_new
+  d[]
 }
 
 file_hdr <- function(x, delim = "\t") {
@@ -103,13 +85,39 @@ file_hdr <- function(x, delim = "\t") {
     colnames()
 }
 
-schema_guess <- function(cnames, schemas_all) {
-  assertthat::assert_that(rlang::is_bare_character(cnames))
-  assertthat::assert_that(tibble::is_tibble(schemas_all))
-  assertthat::assert_that(all(
-    c("schema", "version") %in% colnames(schemas_all)
-  ))
-  schema1 <- schemas_all |>
+#' Guess Schema
+#'
+#' @description
+#' Given a tibble of available schemas, filters to the one
+#' matching the given column names. Errors out if unsuccessful.
+#'
+#' @param pname (`character(1)`)\cr
+#' Parser name.
+#' @param cnames (`character(n)`)\cr
+#' Column names.
+#' @param schemas_all (`tibble()`)\cr
+#' Tibble with name, version and schema list-col.
+#'
+#' @examples
+#' \dontrun{
+#' x <- here::here(
+#'   "nogit/oa_v1/linx/somatic_annotations/L2500331.linx.vis_copy_number.tsv"
+#' )
+#' pname <- "viscn"
+#' cnames <- file_hdr(x)
+#' conf <- Config$new("linx")
+#' schemas_all <- conf$.raw_schemas_all()
+#' schema_guess(pname, cnames, schemas_all)
+#' }
+schema_guess <- function(pname, cnames, schemas_all) {
+  assertthat::assert_that(
+    rlang::is_bare_character(cnames),
+    tibble::is_tibble(schemas_all),
+    all(c("name", "version", "schema") %in% colnames(schemas_all)),
+    pname %in% schemas_all[["name"]]
+  )
+  s <- schemas_all |>
+    dplyr::filter(.data$name == pname) |>
     dplyr::select("version", "schema") |>
     dplyr::rowwise() |>
     dplyr::mutate(
@@ -122,12 +130,13 @@ schema_guess <- function(cnames, schemas_all) {
     ) |>
     dplyr::filter(.data$all_match) |>
     dplyr::ungroup()
-  assertthat::assert_that(nrow(schema1) == 1)
-  version <- schema1$version
-  schema2 <- schema1 |>
+  msg <- glue("There were {nrow(s)} matching schemas.")
+  assertthat::assert_that(nrow(s) == 1, msg = msg)
+  version <- s$version
+  schema <- s |>
     dplyr::select("schema") |>
     tidyr::unnest("schema")
-  list(schema = schema2, version = version)
+  list(schema = schema, version = version)
 }
 
 #' List Files

@@ -4,19 +4,20 @@
 \alias{parse_file}
 \title{Parse file}
 \usage{
-parse_file(fname, schema, type, cnames = TRUE, ...)
+parse_file(fname, pname, schemas_all, delim = "\\t", ...)
 }
 \arguments{
 \item{fname}{(\code{character(1)})\cr
 File name.}
 
-\item{schema}{(\code{tibble()})\cr
-Tibble with field and type.}
+\item{pname}{(\code{character(1)})\cr
+Parser name (e.g. "breakends" - see docs).}
 
-\item{type}{(\code{character(1)})\cr
-File type (tsv, csv, vcf, tsv-nohead).}
+\item{schemas_all}{(\code{tibble()})\cr
+Tibble with name, version and schema list-col.}
 
-\item{cnames}{Column names (see \code{readr::read_delim}).}
+\item{delim}{(\code{character(1)})\cr
+File delimiter.}
 
 \item{...}{Passed on to \code{readr::read_delim}.}
 }
@@ -25,26 +26,13 @@ Parses files.
 }
 \examples{
 \dontrun{
-name <- "amber"
-outdir <- here::here(
-  "nogit/oncoanalyser-wgts-dna/20250407e2ff5344/L2500331_L2500332/amber"
+path <- here::here(
+  "nogit/oncoanalyser-wgts-dna/20250407e2ff5344/L2500331_L2500332/linx"
 )
-prefix <- NULL
-x <- Tool$new(name, outdir, prefix)
+x <- Tool$new("linx", path)
 schemas_all <- x$config$raw_schemas_all
-files_all <- x$files
-ftype <- "baftsv"
-fname <-
-  files_all |>
-  dplyr::filter(.data$parser == ftype) |>
-  dplyr::pull("path")
-schema <-
-  schemas_all |>
-  dplyr::filter(.data$file == ftype) |>
-  dplyr::select("schema") |>
-  tidyr::unnest("schema")
-type <- "tsv"
-type <- "tsv-nohead"
-
+pname <- "breakends"
+fname <- file.path(path, "somatic_annotations/L2500331.linx.breakend.tsv")
+parse_file(fname, pname, schemas_all)
 }
 }
