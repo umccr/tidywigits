@@ -30,6 +30,15 @@ Config of tool.}
 
 \item{\code{files}}{(\code{tibble()})\cr
 Tibble of files matching available Tool patterns.}
+
+\item{\code{raw_schemas_all}}{(\code{tibble()})\cr
+All raw schemas for tool.}
+
+\item{\code{tidy_schemas_all}}{(\code{tibble()})\cr
+All tidy schemas for tool.}
+
+\item{\code{tidy_schema}}{(\verb{function()})\cr
+Get specific tidy schema.}
 }
 \if{html}{\out{</div>}}
 }
@@ -39,6 +48,7 @@ Tibble of files matching available Tool patterns.}
 \item \href{#method-Tool-new}{\code{Tool$new()}}
 \item \href{#method-Tool-print}{\code{Tool$print()}}
 \item \href{#method-Tool-list_files}{\code{Tool$list_files()}}
+\item \href{#method-Tool-.parse_file}{\code{Tool$.parse_file()}}
 \item \href{#method-Tool-.eval_func}{\code{Tool$.eval_func()}}
 \item \href{#method-Tool-.tidy}{\code{Tool$.tidy()}}
 \item \href{#method-Tool-clone}{\code{Tool$clone()}}
@@ -91,6 +101,32 @@ List files in given tool directory.
 \if{html}{\out{<div class="r">}}\preformatted{Tool$list_files()}\if{html}{\out{</div>}}
 }
 
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Tool-.parse_file"></a>}}
+\if{latex}{\out{\hypertarget{method-Tool-.parse_file}{}}}
+\subsection{Method \code{.parse_file()}}{
+Parse file.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Tool$.parse_file(x, name, delim = "\\t", ...)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{x}}{(\code{character(1)})\cr
+File path.}
+
+\item{\code{name}}{(\code{character(1)})\cr
+Parser name (e.g. "breakends" - see docs).}
+
+\item{\code{delim}}{(\code{character(1)})\cr
+File delimiter.}
+
+\item{\code{...}}{Passed on to \code{readr::read_delim}.}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-Tool-.eval_func"></a>}}

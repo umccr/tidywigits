@@ -8,9 +8,7 @@ Linx file parsing and manipulation.
 }
 \examples{
 \dontrun{
-path <- here::here(
-  "nogit/oncoanalyser-wgts-dna/20250407e2ff5344/L2500331_L2500332/linx"
-)
+path <- here::here("nogit")
 lx <- Linx$new(path)
 lx$tidy$tidy |>
   purrr::set_names(lx$tidy$parser) |>
@@ -68,6 +66,7 @@ Tidy tibble.}
 <details open><summary>Inherited methods</summary>
 <ul>
 <li><span class="pkg-link" data-pkg="tidywigits" data-topic="Tool" data-id=".eval_func"><a href='../../tidywigits/html/Tool.html#method-Tool-.eval_func'><code>tidywigits::Tool$.eval_func()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="tidywigits" data-topic="Tool" data-id=".parse_file"><a href='../../tidywigits/html/Tool.html#method-Tool-.parse_file'><code>tidywigits::Tool$.parse_file()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="tidywigits" data-topic="Tool" data-id=".tidy"><a href='../../tidywigits/html/Tool.html#method-Tool-.tidy'><code>tidywigits::Tool$.tidy()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="tidywigits" data-topic="Tool" data-id="print"><a href='../../tidywigits/html/Tool.html#method-Tool-print'><code>tidywigits::Tool$print()</code></a></span></li>
 </ul>

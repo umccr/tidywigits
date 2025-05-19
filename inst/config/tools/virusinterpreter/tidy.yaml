@@ -15,7 +15,7 @@ tidy:
             type: 'char'
             description: 'QC status as reported by VIRUSBreakend'
           - field: 'integrations'
-            type: 'char'
+            type: 'float'
             description:
               'number of detected integrations of this virus into the sample
               genome as reported by VIRUSBreakend'
@@ -24,17 +24,17 @@ tidy:
             description:
               'output of the interpretation step of Virus Interpreter'
           - field: 'percentage_covered'
-            type: 'char'
+            type: 'float'
             description:
               'percentage of the viral reference sequence that has been covered
               in the tumor sample as reported by VIRUSBreakend ("coverage")'
           - field: 'mean_coverage'
-            type: 'char'
+            type: 'float'
             description:
               'average coverage of the viral genome as reported by VIRUSBreakend
               ("meanDepth")'
           - field: 'expected_clonal_coverage'
-            type: 'char'
+            type: 'float'
             description:
               'expected coverage assuming the virus is clonally integrated once
               in the tumor DNA'
@@ -60,7 +60,7 @@ tidy:
             type: 'char'
             description: 'QC status as reported by VIRUSBreakend'
           - field: 'integrations'
-            type: 'char'
+            type: 'float'
             description:
               'number of detected integrations of this virus into the sample
               genome as reported by VIRUSBreakend'
@@ -69,17 +69,17 @@ tidy:
             description:
               'output of the interpretation step of Virus Interpreter'
           - field: 'percentage_covered'
-            type: 'char'
+            type: 'float'
             description:
               'percentage of the viral reference sequence that has been covered
               in the tumor sample as reported by VIRUSBreakend ("coverage")'
           - field: 'mean_coverage'
-            type: 'char'
+            type: 'float'
             description:
               'average coverage of the viral genome as reported by VIRUSBreakend
               ("meanDepth")'
           - field: 'expected_clonal_coverage'
-            type: 'char'
+            type: 'float'
             description:
               'expected coverage assuming the virus is clonally integrated once
               in the tumor DNA'

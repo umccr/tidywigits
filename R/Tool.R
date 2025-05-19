@@ -27,6 +27,15 @@ Tool <- R6::R6Class(
     #' @field files (`tibble()`)\cr
     #' Tibble of files matching available Tool patterns.
     files = NULL,
+    #' @field raw_schemas_all (`tibble()`)\cr
+    #' All raw schemas for tool.
+    raw_schemas_all = NULL,
+    #' @field tidy_schemas_all (`tibble()`)\cr
+    #' All tidy schemas for tool.
+    tidy_schemas_all = NULL,
+    #' @field tidy_schema (`function()`)\cr
+    #' Get specific tidy schema.
+    tidy_schema = NULL,
 
     #' @description Create a new Tool object.
     #' @param name (`character(1)`)\cr
@@ -38,6 +47,9 @@ Tool <- R6::R6Class(
       self$path <- path
       self$config <- Config$new(self$name)
       self$files <- self$list_files()
+      self$raw_schemas_all <- self$config$raw_schemas_all
+      self$tidy_schemas_all <- self$config$tidy_schemas_all
+      self$tidy_schema <- self$config$.tidy_schema
     },
     #' @description Print details about the Tool.
     #' @param ... (ignored).
@@ -90,6 +102,23 @@ Tool <- R6::R6Class(
         ) |>
         dplyr::ungroup()
       res
+    },
+    #' @description Parse file.
+    #' @param x (`character(1)`)\cr
+    #' File path.
+    #' @param name (`character(1)`)\cr
+    #' Parser name (e.g. "breakends" - see docs).
+    #' @param delim (`character(1)`)\cr
+    #' File delimiter.
+    #' @param ... Passed on to `readr::read_delim`.
+    .parse_file = function(x, name, delim = "\t", ...) {
+      parse_file(
+        fpath = x,
+        pname = name,
+        schemas_all = self$raw_schemas_all,
+        delim = delim,
+        ...
+      )
     },
     #' @description Evaluate function in the context of the Tool's
     #' environment.
