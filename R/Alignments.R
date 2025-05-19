@@ -28,19 +28,13 @@ Alignments <- R6::R6Class(
     #' @param x (`character(1)`)\cr
     #' Path to file.
     parse_dupfreq = function(x) {
-      schema <- self$config$.raw_schema("dupfreq")
-      d <- parse_file(x, schema, type = "tsv")
-      d
+      self$.parse_file(x, "dupfreq")
     },
     #' @description Tidy `duplicate_freq.tsv` file.
     #' @param x (`character(1)`)\cr
     #' Path to file.
     tidy_dupfreq = function(x) {
-      raw <- self$parse_dupfreq(x)
-      schema <- self$config$.tidy_schema("dupfreq")
-      colnames(raw) <- schema[["field"]]
-      list(dupfreq = raw) |>
-        tibble::enframe(value = "data")
+      self$.tidy_file(x, "dupfreq")
     }
   )
 )
