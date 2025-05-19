@@ -171,3 +171,20 @@ list_files_dir <- function(d, max_files = NULL) {
 get_tbl_version_attr <- function(tbl, x = "file_version") {
   attr(tbl, x)
 }
+
+parse_wigits_version_file <- function(x) {
+  parse_file_nohead(
+    x,
+    ctypes = "cc",
+    cnames_new = c("name", "value"),
+    delim = "="
+  )
+}
+
+tidy_wigits_version_file <- function(x) {
+  d <- parse_wigits_version_file(x) |>
+    tidyr::pivot_wider(names_from = "name", values_from = "value") |>
+    purrr::set_names(c("version", "build_date"))
+  list(version = d) |>
+    tibble::enframe(value = "data")
+}

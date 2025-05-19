@@ -37,8 +37,11 @@ All raw schemas for tool.}
 \item{\code{tidy_schemas_all}}{(\code{tibble()})\cr
 All tidy schemas for tool.}
 
-\item{\code{tidy_schema}}{(\verb{function()})\cr
+\item{\code{.tidy_schema}}{(\verb{function()})\cr
 Get specific tidy schema.}
+
+\item{\code{.raw_schema}}{(\verb{function()})\cr
+Get specific raw schema.}
 }
 \if{html}{\out{</div>}}
 }
@@ -133,10 +136,22 @@ File delimiter.}
 \if{html}{\out{<a id="method-Tool-.tidy_file"></a>}}
 \if{latex}{\out{\hypertarget{method-Tool-.tidy_file}{}}}
 \subsection{Method \code{.tidy_file()}}{
+Tidy file.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Tool$.tidy_file(x, name)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{x}}{(\code{character(1)})\cr
+File path.}
+
+\item{\code{name}}{(\code{character(1)})\cr
+Parser name (e.g. "breakends" - see docs).}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-Tool-.eval_func"></a>}}
