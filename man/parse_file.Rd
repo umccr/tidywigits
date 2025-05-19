@@ -4,11 +4,11 @@
 \alias{parse_file}
 \title{Parse file}
 \usage{
-parse_file(fname, pname, schemas_all, delim = "\\t", ...)
+parse_file(fpath, pname, schemas_all, delim = "\\t", ...)
 }
 \arguments{
-\item{fname}{(\code{character(1)})\cr
-File name.}
+\item{fpath}{(\code{character(1)})\cr
+File path.}
 
 \item{pname}{(\code{character(1)})\cr
 Parser name (e.g. "breakends" - see docs).}
@@ -32,7 +32,7 @@ path <- here::here(
 x <- Tool$new("linx", path)
 schemas_all <- x$config$raw_schemas_all
 pname <- "breakends"
-fname <- file.path(path, "somatic_annotations/L2500331.linx.breakend.tsv")
-parse_file(fname, pname, schemas_all)
+fpath <- file.path(path, "somatic_annotations/L2500331.linx.breakend.tsv")
+parse_file(fpath, pname, schemas_all)
 }
 }

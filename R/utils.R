@@ -3,8 +3,8 @@
 #' @description
 #' Parses files.
 #'
-#' @param fname (`character(1)`)\cr
-#' File name.
+#' @param fpath (`character(1)`)\cr
+#' File path.
 #' @param pname (`character(1)`)\cr
 #' Parser name (e.g. "breakends" - see docs).
 #' @param schemas_all (`tibble()`)\cr
@@ -21,21 +21,21 @@
 #' x <- Tool$new("linx", path)
 #' schemas_all <- x$config$raw_schemas_all
 #' pname <- "breakends"
-#' fname <- file.path(path, "somatic_annotations/L2500331.linx.breakend.tsv")
-#' parse_file(fname, pname, schemas_all)
+#' fpath <- file.path(path, "somatic_annotations/L2500331.linx.breakend.tsv")
+#' parse_file(fpath, pname, schemas_all)
 #' }
 parse_file <- function(
-  fname,
+  fpath,
   pname,
   schemas_all,
   delim = "\t",
   ...
 ) {
   assertthat::assert_that(
-    file.exists(fname),
-    msg = glue("The file {fname} does not exist.")
+    file.exists(fpath),
+    msg = glue("The file {fpath} does not exist.")
   )
-  cnames <- file_hdr(fname, delim = delim)
+  cnames <- file_hdr(fpath, delim = delim)
   schema <- schema_guess(
     pname = pname,
     cnames = cnames,
@@ -54,7 +54,7 @@ parse_file <- function(
     tibble::deframe()
   ctypes <- rlang::exec(readr::cols, !!!schema[["schema"]])
   d <- readr::read_delim(
-    file = fname,
+    file = fpath,
     delim = delim,
     col_types = ctypes,
     ...
@@ -63,9 +63,9 @@ parse_file <- function(
   d[]
 }
 
-parse_file_nohead <- function(fname, ctypes, cnames_new, ...) {
+parse_file_nohead <- function(fpath, ctypes, cnames_new, ...) {
   d <- readr::read_delim(
-    file = fname,
+    file = fpath,
     col_names = FALSE,
     col_types = ctypes,
     ...
@@ -166,4 +166,8 @@ list_files_dir <- function(d, max_files = NULL) {
       dplyr::slice_head(n = max_files)
   }
   d
+}
+
+get_tbl_version_attr <- function(tbl, x = "file_version") {
+  attr(tbl, x)
 }
