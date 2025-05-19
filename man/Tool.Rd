@@ -30,6 +30,15 @@ Config of tool.}
 
 \item{\code{files}}{(\code{tibble()})\cr
 Tibble of files matching available Tool patterns.}
+
+\item{\code{raw_schemas_all}}{(\code{tibble()})\cr
+All raw schemas for tool.}
+
+\item{\code{tidy_schemas_all}}{(\code{tibble()})\cr
+All tidy schemas for tool.}
+
+\item{\code{tidy_schema}}{(\verb{function()})\cr
+Get specific tidy schema.}
 }
 \if{html}{\out{</div>}}
 }
