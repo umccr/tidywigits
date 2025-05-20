@@ -5,7 +5,7 @@
 #' @examples
 #' \dontrun{
 #' path <- here::here(
-#'   "nogit/oa_v2/cuppa"
+#'   "nogit"
 #' )
 #' cup <- Cuppa$new(path)
 #' }
@@ -28,8 +28,7 @@ Cuppa <- R6::R6Class(
     #' @param x (`character(1)`)\cr
     #' Path to file.
     parse_datacsv = function(x) {
-      schema <- self$config$.raw_schema("datacsv")
-      d <- parse_file(x, schema, type = "csv")
+      self$.parse_file(x, "datacsv", delim = ",")
     },
     #' @description Tidy `cup.data.csv` file.
     #' @param x (`character(1)`)\cr
@@ -52,52 +51,7 @@ Cuppa <- R6::R6Class(
             .default = "other"
           )
         )
-      # clean up cancer types
-      d <- d |>
-        dplyr::mutate(
-          RefCancerType = dplyr::case_match(
-            .data$RefCancerType,
-            "Acute myeloid leukemia" ~ "acute_myeloid_leukemia",
-            "Anogenital" ~ "anogenital",
-            "Bile duct/Gallbladder" ~ "bile_duct_gallbladder",
-            "Bone/Soft tissue: Other" ~ "bone_soft_tissue_other",
-            "Breast" ~ "breast",
-            "Cartilaginous neoplasm" ~ "cartilaginous_neoplasm",
-            "Colorectum/Appendix/SmallIntestine" ~
-              "colorectum_appendix_small_intestine",
-            "Esophagus/Stomach" ~ "esophagus_stomach",
-            "GIST" ~ "gist",
-            "Glioma" ~ "glioma",
-            "Head and neck: other" ~ "head_and_neck_other",
-            "Kidney" ~ "kidney",
-            "Kidney-ChRCC" ~ "kidney_chrcc",
-            "Leiomyosarcoma" ~ "leiomyosarcoma",
-            "Liposarcoma" ~ "liposarcoma",
-            "Liver" ~ "liver",
-            "Lung: NET" ~ "lung_net",
-            "Lung: Non-small Cell" ~ "lung_nonsmallcell",
-            "Lung: Small Cell" ~ "lung_smallcell",
-            "Lymphoid tissue" ~ "lymphoid_tissue",
-            "Medulloblastoma" ~ "medulloblastoma",
-            "Melanoma" ~ "melanoma",
-            "Mesothelium" ~ "mesothelium",
-            "Myeloproliferative neoplasm" ~ "myeloproliferative_neoplasm",
-            "Osteosarcoma" ~ "osteosarcoma",
-            "Ovary/Fallopian tube" ~ "ovary_fallopian_tube",
-            "Pancreas" ~ "pancreas",
-            "Pancreas: NET" ~ "pancreas_net",
-            "Pilocytic astrocytoma" ~ "pilocytic_astrocytoma",
-            "Prostate" ~ "prostate",
-            "Salivary gland/Adenoid cystic" ~ "salivary_gland_adenoid_cystic",
-            "Skin: Other" ~ "skin_other",
-            "Small intestine/Colorectum: NET" ~
-              "small_intestine_colorectum_net",
-            "Thyroid gland" ~ "thyroid_gland",
-            "Urothelial tract" ~ "urothelial_tract",
-            "Uterus: Endometrium" ~ "uterus_endometrium"
-          )
-        )
-      schema <- self$config$.tidy_schema("datacsv")
+      schema <- self$.tidy_schema("datacsv")
       colnames(d) <- schema[["field"]]
       list(datacsv = d) |>
         tibble::enframe(value = "data")
@@ -106,27 +60,19 @@ Cuppa <- R6::R6Class(
     #' @param x (`character(1)`)\cr
     #' Path to file.
     parse_feat = function(x) {
-      schema <- self$config$.raw_schema("feat")
-      d <- parse_file(x, schema, type = "tsv")
-      d
+      self$.parse_file(x, "feat")
     },
     #' @description Tidy `cuppa_data.tsv.gz` file.
     #' @param x (`character(1)`)\cr
     #' Path to file.
     tidy_feat = function(x) {
-      raw <- self$parse_feat(x)
-      schema <- self$config$.tidy_schema("feat")
-      colnames(raw) <- schema[["field"]]
-      list(feat = raw) |>
-        tibble::enframe(value = "data")
+      self$.tidy_file(x, "feat")
     },
     #' @description Read `cuppa.pred_summ.tsv` file.
     #' @param x (`character(1)`)\cr
     #' Path to file.
     parse_predsum = function(x) {
-      schema <- self$config$.raw_schema("predsum")
-      d <- parse_file(x, schema, type = "tsv")
-      d
+      self$.parse_file(x, "predsum")
     },
     #' @description Tidy `cuppa.pred_summ.tsv` file.
     #' @param x (`character(1)`)\cr
@@ -149,7 +95,7 @@ Cuppa <- R6::R6Class(
         ) |>
         dplyr::relocate("extra_info", .after = dplyr::last_col()) |>
         dplyr::relocate("extra_info_format", .after = dplyr::last_col())
-      schema <- self$config$.tidy_schema("predsum")
+      schema <- self$.tidy_schema("predsum")
       assertthat::assert_that(all(colnames(d) == schema[["field"]]))
       list(predsum = d) |>
         tibble::enframe(value = "data")
@@ -158,19 +104,13 @@ Cuppa <- R6::R6Class(
     #' @param x (`character(1)`)\cr
     #' Path to file.
     parse_datatsv = function(x) {
-      schema <- self$config$.raw_schema("datatsv")
-      d <- parse_file(x, schema, type = "tsv")
-      d
+      self$.parse_file(x, "datatsv")
     },
     #' @description Tidy `cuppa.vis_data.tsv` file.
     #' @param x (`character(1)`)\cr
     #' Path to file.
     tidy_datatsv = function(x) {
-      raw <- self$parse_datatsv(x)
-      schema <- self$config$.tidy_schema("datatsv")
-      colnames(raw) <- schema[["field"]]
-      list(datatsv = raw) |>
-        tibble::enframe(value = "data")
+      self$.tidy_file(x, "datatsv")
     }
   ) # end public
 )

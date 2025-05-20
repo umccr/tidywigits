@@ -9,7 +9,7 @@ Cuppa file parsing and manipulation.
 \examples{
 \dontrun{
 path <- here::here(
-  "nogit/oa_v2/cuppa"
+  "nogit"
 )
 cup <- Cuppa$new(path)
 }
