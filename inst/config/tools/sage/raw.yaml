@@ -5,12 +5,27 @@ raw:
     pattern: "\\.sage\\.bqr\\.tsv$"
     ftype: 'tsv'
     schema:
+      v3.4.4:
+        - field: 'alt'
+          type: 'char'
+        - field: 'ref'
+          type: 'char'
+        - field: 'trinucleotideContext'
+          type: 'char'
+        - field: 'count'
+          type: 'float'
+        - field: 'originalQual'
+          type: 'float'
+        - field: 'recalibratedQual'
+          type: 'float'
       latest:
         - field: 'alt'
           type: 'char'
         - field: 'ref'
           type: 'char'
         - field: 'trinucleotideContext'
+          type: 'char'
+        - field: 'readType'
           type: 'char'
         - field: 'count'
           type: 'float'
