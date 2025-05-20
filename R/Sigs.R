@@ -5,7 +5,7 @@
 #' @examples
 #' \dontrun{
 #' path <- here::here(
-#'   "nogit/oncoanalyser-wgts-dna/20250407e2ff5344/L2500331_L2500332/sigs"
+#'   "nogit"
 #' )
 #' s <- Sigs$new(path)
 #' }
@@ -28,43 +28,45 @@ Sigs <- R6::R6Class(
     #' @param x (`character(1)`)\cr
     #' Path to file.
     parse_allocation = function(x) {
-      schema <- self$config$.raw_schema("allocation")
-      d <- parse_file(x, schema, type = "tsv")
-      d
+      self$.parse_file(x, "allocation")
     },
     #' @description Tidy `allocation.tsv` file.
     #' @param x (`character(1)`)\cr
     #' Path to file.
     tidy_allocation = function(x) {
-      raw <- self$parse_allocation(x)
-      schema <- self$config$.tidy_schema("allocation")
-      assertthat::assert_that(all(colnames(raw) == schema[["field"]]))
-      list(allocation = raw) |>
-        tibble::enframe(value = "data")
+      self$.tidy_file(x, "allocation")
     },
     #' @description Read `snv_counts.csv` file.
     #' @param x (`character(1)`)\cr
     #' Path to file.
     parse_snvcounts = function(x) {
-      schema <- self$config$.raw_schema("snvcounts")
-      d <- parse_file(
-        x,
-        schema,
-        type = "csv",
-        skip = 1,
-        cnames = schema[["field"]]
+      schema <- self$.raw_schema("snvcounts")
+      col_types <- schema |>
+        dplyr::mutate(
+          type = dplyr::case_match(
+            .data$type,
+            "char" ~ "c",
+            "int" ~ "i",
+            "float" ~ "d"
+          )
+        ) |>
+        dplyr::select("field", "type") |>
+        tibble::deframe()
+      d <- parse_file_nohead(
+        fpath = x,
+        ctypes = paste0(col_types, collapse = ""),
+        cnames_new = names(col_types),
+        delim = ",",
+        skip = 1
       )
+      attr(d, "file_version") <- "latest"
       d
     },
     #' @description Tidy `snv_counts.csv` file.
     #' @param x (`character(1)`)\cr
     #' Path to file.
     tidy_snvcounts = function(x) {
-      raw <- self$parse_snvcounts(x)
-      schema <- self$config$.tidy_schema("snvcounts")
-      colnames(raw) <- schema[["field"]]
-      list(snvcounts = raw) |>
-        tibble::enframe(value = "data")
+      self$.tidy_file(x, "snvcounts")
     }
   )
 )
