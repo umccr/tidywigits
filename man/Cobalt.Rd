@@ -9,12 +9,12 @@ Cobalt file parsing and manipulation.
 \examples{
 \dontrun{
 path <- here::here(
-  "nogit/oncoanalyser-wgts-dna/20250407e2ff5344/L2500331_L2500332/cobalt"
+  "nogit"
 )
 cob <- Cobalt$new(path)
 cob$tidy$tidy |>
   purrr::set_names(cob$tidy$parser) |>
-  purrr::map(\(x) str(x[["data"]]))
+  purrr::map(\(x) x[["data"]][[1]])
 }
 }
 \section{Super class}{

@@ -5,12 +5,12 @@
 #' @examples
 #' \dontrun{
 #' path <- here::here(
-#'   "nogit/oncoanalyser-wgts-dna/20250407e2ff5344/L2500331_L2500332/cobalt"
+#'   "nogit"
 #' )
 #' cob <- Cobalt$new(path)
 #' cob$tidy$tidy |>
 #'   purrr::set_names(cob$tidy$parser) |>
-#'   purrr::map(\(x) str(x[["data"]]))
+#'   purrr::map(\(x) x[["data"]][[1]])
 #' }
 #' @export
 Cobalt <- R6::R6Class(
@@ -33,9 +33,9 @@ Cobalt <- R6::R6Class(
     parse_gcmed = function(x) {
       # first two rows are mean/median + their values
       d1 <- readr::read_tsv(x, col_names = TRUE, col_types = "dd", n_max = 1)
-      schema <- self$config$.raw_schema("gcmed")
+      schema <- self$.raw_schema("gcmed")
       # next rows are median per bucket
-      d2 <- parse_file(x, schema, type = "tsv", skip = 2)
+      d2 <- self$.parse_file(x, "gcmed", skip = 2)
       list(sample_stats = d1[], bucket_stats = d2)
     },
     #' @description Tidy `gc.median.tsv` file.
@@ -46,7 +46,7 @@ Cobalt <- R6::R6Class(
       assertthat::assert_that(all(
         names(raw) == c("sample_stats", "bucket_stats")
       ))
-      schema <- self$config$.tidy_schema("gcmed")
+      schema <- self$.tidy_schema("gcmed")
       colnames(raw[["bucket_stats"]]) <- schema[["field"]]
       colnames(raw[["sample_stats"]]) <- c("mean", "median")
       tibble::enframe(raw, value = "data")
@@ -55,87 +55,49 @@ Cobalt <- R6::R6Class(
     #' @param x (`character(1)`)\cr
     #' Path to file.
     parse_ratiomed = function(x) {
-      schema <- self$config$.raw_schema("ratiomed")
-      d <- parse_file(x, schema, type = "tsv")
-      d
+      self$.parse_file(x, "ratiomed")
     },
     #' @description Tidy `ratio.median.tsv` file.
     #' @param x (`character(1)`)\cr
     #' Path to file.
     tidy_ratiomed = function(x) {
-      raw <- self$parse_ratiomed(x)
-      schema <- self$config$.tidy_schema("ratiomed")
-      colnames(raw) <- schema[["field"]]
-      list(ratiomed = raw) |>
-        tibble::enframe(value = "data")
+      self$.tidy_file(x, "ratiomed")
     },
     #' @description Read `ratio.tsv` file.
     #' @param x (`character(1)`)\cr
     #' Path to file.
     parse_ratiotsv = function(x) {
-      schema <- self$config$.raw_schema("ratiotsv")
-      d <- parse_file(x, schema, type = "tsv")
-      d
+      self$.parse_file(x, "ratiotsv")
     },
     #' @description Tidy `ratio.tsv` file.
     #' @param x (`character(1)`)\cr
     #' Path to file.
     tidy_ratiotsv = function(x) {
-      raw <- self$parse_ratiotsv(x)
-      schema <- self$config$.tidy_schema("ratiotsv")
-      colnames(raw) <- schema[["field"]]
-      list(ratiotsv = raw) |>
-        tibble::enframe(value = "data")
+      self$.tidy_file(x, "ratiotsv")
     },
     #' @description Read `ratio.pcf` file.
     #' @param x (`character(1)`)\cr
     #' Path to file.
     parse_ratiopcf = function(x) {
-      schema <- self$config$.raw_schema("ratiopcf")
-      d <- parse_file(x, schema, type = "tsv")
-      d
+      self$.parse_file(x, "ratiopcf")
     },
     #' @description Tidy `ratio.pcf` file.
     #' @param x (`character(1)`)\cr
     #' Path to file.
     tidy_ratiopcf = function(x) {
-      raw <- self$parse_ratiopcf(x)
-      schema <- self$config$.tidy_schema("ratiopcf")
-      colnames(raw) <- schema[["field"]]
-      list(ratiopcf = raw) |>
-        tibble::enframe(value = "data")
+      self$.tidy_file(x, "ratiopcf")
     },
     #' @description Read `cobalt.version` file.
     #' @param x (`character(1)`)\cr
     #' Path to file.
     parse_version = function(x) {
-      schema <- self$config$.raw_schema("version")
-      d <- parse_file(x, schema, type = "txt-nohead", delim = "=")
-      d
+      parse_wigits_version_file(x)
     },
     #' @description Tidy `cobalt.version` file.
     #' @param x (`character(1)`)\cr
     #' Path to file.
     tidy_version = function(x) {
-      raw <- self$parse_version(x)
-      col_types <- self$config$.tidy_schema("version") |>
-        dplyr::mutate(
-          type = dplyr::case_match(
-            .data$type,
-            "char" ~ "c",
-            "int" ~ "i",
-            "float" ~ "d"
-          )
-        ) |>
-        dplyr::select("field", "type") |>
-        tibble::deframe()
-
-      d <- raw |>
-        tidyr::pivot_wider(names_from = "variable", values_from = "value") |>
-        purrr::set_names(names(col_types)) |>
-        readr::type_convert(col_types = rlang::exec(readr::cols, !!!col_types))
-      list(version = d) |>
-        tibble::enframe(value = "data")
+      tidy_wigits_version_file(x)
     }
   ) # end public
 )
