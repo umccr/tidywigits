@@ -1,15 +1,4 @@
 tidy:
-  version:
-    description: 'Version of the tool.'
-    schema:
-      latest:
-        tbl1:
-          - field: 'version'
-            type: 'char'
-            description: 'version of the tool'
-          - field: 'date_build'
-            type: 'char'
-            description: 'build date'
   cnvgenetsv:
     description: 'Copy number alterations of each gene in the HMF gene panel.'
     schema:
@@ -472,3 +461,14 @@ tidy:
           - field: 'count'
             type: 'float'
             description: 'count'
+  version:
+    description: 'Version of the tool.'
+    schema:
+      latest:
+        tbl1:
+          - field: 'version'
+            type: 'char'
+            description: 'version of the tool'
+          - field: 'date_build'
+            type: 'char'
+            description: 'build date'

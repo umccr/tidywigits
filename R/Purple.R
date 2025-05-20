@@ -5,12 +5,12 @@
 #' @examples
 #' \dontrun{
 #' path <- here::here(
-#'   "nogit/oncoanalyser-wgts-dna/20250407e2ff5344/L2500331_L2500332/purple"
+#'   "nogit"
 #' )
 #' p <- Purple$new(path)
 #' p$tidy$tidy |>
 #'   purrr::set_names(p$tidy$parser) |>
-#'   purrr::map(\(x) str(x[["data"]][[1]]))
+#'   purrr::map(\(x) x[["data"]][[1]])
 #' }
 #' @export
 Purple <- R6::R6Class(
@@ -42,20 +42,12 @@ Purple <- R6::R6Class(
         )
     },
 
-    #' @description Read `purple.version` file.
+    #' @description Read `purple.qc` file.
     #' @param x (`character(1)`)\cr
     #' Path to file.
-    parse_version = function(x) {
-      schema <- self$config$.raw_schema("version")
-      d <- parse_file(x, schema, type = "txt-nohead", delim = "=")
-      d
-    },
-    #' @description Tidy `purple.version` file.
-    #' @param x (`character(1)`)\cr
-    #' Path to file.
-    tidy_version = function(x) {
-      raw <- self$parse_version(x)
-      col_types <- self$config$.tidy_schema("version") |>
+    parse_qc = function(x) {
+      schema <- self$.raw_schema("qc")
+      col_types <- schema |>
         dplyr::mutate(
           type = dplyr::case_match(
             .data$type,
@@ -66,29 +58,20 @@ Purple <- R6::R6Class(
         ) |>
         dplyr::select("field", "type") |>
         tibble::deframe()
-
-      d <- raw |>
-        tidyr::pivot_wider(names_from = "variable", values_from = "value") |>
-        purrr::set_names(names(col_types)) |>
-        readr::type_convert(col_types = rlang::exec(readr::cols, !!!col_types))
-      list(version = d) |>
-        tibble::enframe(value = "data")
-    },
-
-    #' @description Read `purple.qc` file.
-    #' @param x (`character(1)`)\cr
-    #' Path to file.
-    parse_qc = function(x) {
-      schema <- self$config$.raw_schema("qc")
-      d <- parse_file(x, schema, type = "txt-nohead", delim = "\t")
-      d
+      parse_file_nohead(
+        fpath = x,
+        ctypes = paste0(col_types, collapse = ""),
+        cnames_new = names(col_types),
+        delim = "\t"
+      )
     },
     #' @description Tidy `purple.qc` file.
     #' @param x (`character(1)`)\cr
     #' Path to file.
     tidy_qc = function(x) {
       raw <- self$parse_qc(x)
-      col_types <- self$config$.tidy_schema("qc") |>
+      schema <- self$.tidy_schema("qc")
+      col_types <- self$.tidy_schema("qc") |>
         dplyr::mutate(
           type = dplyr::case_match(
             .data$type,
@@ -99,7 +82,6 @@ Purple <- R6::R6Class(
         ) |>
         dplyr::select("field", "type") |>
         tibble::deframe()
-
       d <- raw |>
         tidyr::pivot_wider(names_from = "variable", values_from = "value") |>
         purrr::set_names(names(col_types)) |>
@@ -112,152 +94,116 @@ Purple <- R6::R6Class(
     #' @param x (`character(1)`)\cr
     #' Path to file.
     parse_cnvgenetsv = function(x) {
-      schema <- self$config$.raw_schema("cnvgenetsv")
-      d <- parse_file(x, schema, type = "tsv")
-      d
+      self$.parse_file(x, "cnvgenetsv")
     },
     #' @description Tidy `purple.cnv.gene.tsv` file.
     #' @param x (`character(1)`)\cr
     #' Path to file.
     tidy_cnvgenetsv = function(x) {
-      raw <- self$parse_cnvgenetsv(x)
-      schema <- self$config$.tidy_schema("cnvgenetsv")
-      colnames(raw) <- schema[["field"]]
-      list(cnvgenetsv = raw) |>
-        tibble::enframe(value = "data")
+      self$.tidy_file(x, "cnvgenetsv")
     },
 
     #' @description Read `purple.cnv.somatic.tsv` file.
     #' @param x (`character(1)`)\cr
     #' Path to file.
     parse_cnvsomtsv = function(x) {
-      schema <- self$config$.raw_schema("cnvsomtsv")
-      d <- parse_file(x, schema, type = "tsv")
-      d
+      self$.parse_file(x, "cnvsomtsv")
     },
     #' @description Tidy `purple.cnv.somatic.tsv` file.
     #' @param x (`character(1)`)\cr
     #' Path to file.
     tidy_cnvsomtsv = function(x) {
-      raw <- self$parse_cnvsomtsv(x)
-      schema <- self$config$.tidy_schema("cnvsomtsv")
-      colnames(raw) <- schema[["field"]]
-      list(cnvsomtsv = raw) |>
-        tibble::enframe(value = "data")
+      self$.tidy_file(x, "cnvsomtsv")
     },
 
     #' @description Read `purple.driver.catalog.germline|somatic.tsv` file.
     #' @param x (`character(1)`)\cr
     #' Path to file.
     parse_drivercatalog = function(x) {
-      schema <- self$config$.raw_schema("drivercatalog")
-      d <- parse_file(x, schema, type = "tsv")
-      d
+      self$.parse_file(x, "drivercatalog")
     },
     #' @description Tidy `purple.driver.catalog.germline|somatic.tsv` file.
     #' @param x (`character(1)`)\cr
     #' Path to file.
     tidy_drivercatalog = function(x) {
-      raw <- self$parse_drivercatalog(x)
-      schema <- self$config$.tidy_schema("drivercatalog")
-      colnames(raw) <- schema[["field"]]
-      list(drivercatalog = raw) |>
-        tibble::enframe(value = "data")
+      self$.tidy_file(x, "drivercatalog")
     },
 
     #' @description Read `purple.germline.deletion.tsv` file.
     #' @param x (`character(1)`)\cr
     #' Path to file.
     parse_germdeltsv = function(x) {
-      schema <- self$config$.raw_schema("germdeltsv")
-      d <- parse_file(x, schema, type = "tsv")
-      d
+      self$.parse_file(x, "germdeltsv")
     },
     #' @description Tidy `purple.germline.deletion.tsv` file.
     #' @param x (`character(1)`)\cr
     #' Path to file.
     tidy_germdeltsv = function(x) {
-      raw <- self$parse_germdeltsv(x)
-      schema <- self$config$.tidy_schema("germdeltsv")
-      colnames(raw) <- schema[["field"]]
-      list(germdeltsv = raw) |>
-        tibble::enframe(value = "data")
+      self$.tidy_file(x, "germdeltsv")
     },
 
     #' @description Read `purple.purity.range.tsv` file.
     #' @param x (`character(1)`)\cr
     #' Path to file.
     parse_purityrange = function(x) {
-      schema <- self$config$.raw_schema("purityrange")
-      d <- parse_file(x, schema, type = "tsv")
-      d
+      self$.parse_file(x, "purityrange")
     },
     #' @description Tidy `purple.purity.range.tsv` file.
     #' @param x (`character(1)`)\cr
     #' Path to file.
     tidy_purityrange = function(x) {
-      raw <- self$parse_purityrange(x)
-      schema <- self$config$.tidy_schema("purityrange")
-      colnames(raw) <- schema[["field"]]
-      list(purityrange = raw) |>
-        tibble::enframe(value = "data")
+      self$.tidy_file(x, "purityrange")
     },
 
     #' @description Read `purple.purity.tsv` file.
     #' @param x (`character(1)`)\cr
     #' Path to file.
     parse_puritytsv = function(x) {
-      schema <- self$config$.raw_schema("puritytsv")
-      d <- parse_file(x, schema, type = "tsv")
-      d
+      self$.parse_file(x, "puritytsv")
     },
     #' @description Tidy `purple.purity.tsv` file.
     #' @param x (`character(1)`)\cr
     #' Path to file.
     tidy_puritytsv = function(x) {
-      raw <- self$parse_puritytsv(x)
-      schema <- self$config$.tidy_schema("puritytsv")
-      colnames(raw) <- schema[["field"]]
-      list(puritytsv = raw) |>
-        tibble::enframe(value = "data")
+      self$.tidy_file(x, "puritytsv")
     },
 
     #' @description Read `purple.somatic.clonality.tsv` file.
     #' @param x (`character(1)`)\cr
     #' Path to file.
     parse_somclonality = function(x) {
-      schema <- self$config$.raw_schema("somclonality")
-      d <- parse_file(x, schema, type = "tsv")
-      d
+      self$.parse_file(x, "somclonality")
     },
     #' @description Tidy `purple.somatic.clonality.tsv` file.
     #' @param x (`character(1)`)\cr
     #' Path to file.
     tidy_somclonality = function(x) {
-      raw <- self$parse_somclonality(x)
-      schema <- self$config$.tidy_schema("somclonality")
-      colnames(raw) <- schema[["field"]]
-      list(somclonality = raw) |>
-        tibble::enframe(value = "data")
+      self$.tidy_file(x, "somclonality")
     },
 
     #' @description Read `purple.somatic.hist.tsv` file.
     #' @param x (`character(1)`)\cr
     #' Path to file.
     parse_somhist = function(x) {
-      schema <- self$config$.raw_schema("somhist")
-      d <- parse_file(x, schema, type = "tsv")
-      d
+      self$.parse_file(x, "somhist")
     },
     #' @description Tidy `purple.somatic.hist.tsv` file.
     #' @param x (`character(1)`)\cr
     #' Path to file.
     tidy_somhist = function(x) {
-      raw <- self$parse_somhist(x)
-      schema <- self$config$.tidy_schema("somhist")
-      colnames(raw) <- schema[["field"]]
-      list(somhist = raw) |>
-        tibble::enframe(value = "data")
+      self$.tidy_file(x, "somhist")
+    },
+    #' @description Read `purple.version` file.
+    #' @param x (`character(1)`)\cr
+    #' Path to file.
+    parse_version = function(x) {
+      parse_wigits_version_file(x)
+    },
+    #' @description Tidy `purple.version` file.
+    #' @param x (`character(1)`)\cr
+    #' Path to file.
+    tidy_version = function(x) {
+      tidy_wigits_version_file(x)
     }
   ) # end public
 )
