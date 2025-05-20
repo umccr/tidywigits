@@ -5,13 +5,13 @@
 #' @examples
 #' \dontrun{
 #' path <- here::here(
-#'   "nogit/oncoanalyser-wgts-dna/20250407e2ff5344/L2500331_L2500332/sage"
+#'   "nogit/oa_v1"
 #' )
 #' s <- Sage$new(path)
 #' s$tidy
 #' s$tidy$tidy |>
 #'   purrr::set_names(s$tidy$parser) |>
-#'   purrr::map(\(x) str(x[["data"]][[1]]))
+#'   purrr::map(\(x) x[["data"]][[1]])
 #'
 #' }
 #' @export
@@ -33,55 +33,37 @@ Sage <- R6::R6Class(
     #' @param x (`character(1)`)\cr
     #' Path to file.
     parse_bqrtsv = function(x) {
-      schema <- self$config$.raw_schema("bqrtsv")
-      d <- parse_file(x, schema, type = "tsv")
-      d
+      self$.parse_file(x, "bqrtsv")
     },
     #' @description Tidy `bqr.tsv` file.
     #' @param x (`character(1)`)\cr
     #' Path to file.
     tidy_bqrtsv = function(x) {
-      raw <- self$parse_bqrtsv(x)
-      schema <- self$config$.tidy_schema("bqrtsv")
-      colnames(raw) <- schema[["field"]]
-      list(bqrtsv = raw) |>
-        tibble::enframe(value = "data")
+      self$.tidy_file(x, "bqrtsv")
     },
     #' @description Read `gene.coverage.tsv` file.
     #' @param x (`character(1)`)\cr
     #' Path to file.
     parse_genecvg = function(x) {
-      schema <- self$config$.raw_schema("genecvg")
-      d <- parse_file(x, schema, type = "tsv")
-      d
+      self$.parse_file(x, "genecvg")
     },
     #' @description Tidy `gene.coverage.tsv` file.
     #' @param x (`character(1)`)\cr
     #' Path to file.
     tidy_genecvg = function(x) {
-      raw <- self$parse_genecvg(x)
-      schema <- self$config$.tidy_schema("genecvg")
-      colnames(raw) <- schema[["field"]]
-      list(genecvg = raw) |>
-        tibble::enframe(value = "data")
+      self$.tidy_file(x, "genecvg")
     },
     #' @description Read `exon.medians.tsv` file.
     #' @param x (`character(1)`)\cr
     #' Path to file.
     parse_exoncvg = function(x) {
-      schema <- self$config$.raw_schema("exoncvg")
-      d <- parse_file(x, schema, type = "tsv")
-      d
+      self$.parse_file(x, "exoncvg")
     },
     #' @description Tidy `exon.medians.tsv` file.
     #' @param x (`character(1)`)\cr
     #' Path to file.
     tidy_exoncvg = function(x) {
-      raw <- self$parse_exoncvg(x)
-      schema <- self$config$.tidy_schema("exoncvg")
-      colnames(raw) <- schema[["field"]]
-      list(exoncvg = raw) |>
-        tibble::enframe(value = "data")
+      self$.tidy_file(x, "exoncvg")
     }
   )
 )

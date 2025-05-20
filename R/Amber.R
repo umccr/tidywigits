@@ -29,88 +29,56 @@ Amber <- R6::R6Class(
     #' @param x (`character(1)`)\cr
     #' Path to file.
     parse_bafpcf = function(x) {
-      schema <- self$config$.raw_schema("bafpcf")
-      d <- parse_file(x, schema, type = "tsv")
-      d
+      self$.parse_file(x, "bafpcf")
     },
     #' @description Tidy `baf.pcf` file.
     #' @param x (`character(1)`)\cr
     #' Path to file.
     tidy_bafpcf = function(x) {
-      raw <- self$parse_bafpcf(x)
-      schema <- self$config$.tidy_schema("bafpcf")
-      colnames(raw) <- schema[["field"]]
-      list(bafpcf = raw) |>
-        tibble::enframe(value = "data")
+      self$.tidy_file(x, "bafpcf")
     },
     #' @description Read `baf.tsv.gz` file.
     #' @param x (`character(1)`)\cr
     #' Path to file.
     parse_baftsv = function(x) {
-      schema <- self$config$.raw_schema("baftsv")
-      d <- parse_file(x, schema, type = "tsv")
-      d
+      self$.parse_file(x, "baftsv")
     },
     #' @description Tidy `baf.tsv.gz` file.
     #' @param x (`character(1)`)\cr
     #' Path to file.
     tidy_baftsv = function(x) {
-      raw <- self$parse_baftsv(x)
-      schema <- self$config$.tidy_schema("baftsv")
-      colnames(raw) <- schema[["field"]]
-      list(baftsv = raw) |>
-        tibble::enframe(value = "data")
+      self$.tidy_file(x, "baftsv")
     },
     #' @description Read `contamination.tsv` file.
     #' @param x (`character(1)`)\cr
     #' Path to file.
     parse_contaminationtsv = function(x) {
-      schema <- self$config$.raw_schema("contaminationtsv")
-      d <- parse_file(x, schema, type = "tsv")
-      d
+      self$.parse_file(x, "contaminationtsv")
     },
     #' @description Tidy `contamination.tsv` file.
     #' @param x (`character(1)`)\cr
     #' Path to file.
     tidy_contaminationtsv = function(x) {
-      raw <- self$parse_contaminationtsv(x)
-      schema <- self$config$.tidy_schema("contaminationtsv")
-      colnames(raw) <- schema[["field"]]
-      list(contaminationtsv = raw) |>
-        tibble::enframe(value = "data")
+      self$.tidy_file(x, "contaminationtsv")
     },
     #' @description Read `homozygousregion.tsv` file.
     #' @param x (`character(1)`)\cr
     #' Path to file.
     parse_homozygousregion = function(x) {
-      schema <- self$config$.raw_schema("homozygousregion")
-      d <- parse_file(x, schema, type = "tsv")
-      d
+      self$.parse_file(x, "homozygousregion")
     },
     #' @description Tidy `homozygousregion.tsv` file.
     #' @param x (`character(1)`)\cr
     #' Path to file.
     tidy_homozygousregion = function(x) {
-      raw <- self$parse_homozygousregion(x)
-      schema <- self$config$.tidy_schema("homozygousregion")
-      colnames(raw) <- schema[["field"]]
-      list(homozygousregion = raw) |>
-        tibble::enframe(value = "data")
+      self$.tidy_file(x, "homozygousregion")
     },
     #' @description Read `qc` file.
     #' @param x (`character(1)`)\cr
     #' Path to file.
     parse_qc = function(x) {
-      schema <- self$config$.raw_schema("qc")
-      d <- parse_file(x, schema, type = "txt-nohead", delim = "\t")
-      d
-    },
-    #' @description Tidy `qc` file.
-    #' @param x (`character(1)`)\cr
-    #' Path to file.
-    tidy_qc = function(x) {
-      raw <- self$parse_qc(x)
-      col_types <- self$config$.tidy_schema("qc") |>
+      schema <- self$.raw_schema("qc")
+      col_types <- schema |>
         dplyr::mutate(
           type = dplyr::case_match(
             .data$type,
@@ -121,7 +89,30 @@ Amber <- R6::R6Class(
         ) |>
         dplyr::select("field", "type") |>
         tibble::deframe()
-
+      parse_file_nohead(
+        fpath = x,
+        ctypes = paste0(col_types, collapse = ""),
+        cnames_new = names(col_types),
+        delim = "\t"
+      )
+    },
+    #' @description Tidy `qc` file.
+    #' @param x (`character(1)`)\cr
+    #' Path to file.
+    tidy_qc = function(x) {
+      raw <- self$parse_qc(x)
+      schema <- self$.tidy_schema("qc")
+      col_types <- schema |>
+        dplyr::mutate(
+          type = dplyr::case_match(
+            .data$type,
+            "char" ~ "c",
+            "int" ~ "i",
+            "float" ~ "d"
+          )
+        ) |>
+        dplyr::select("field", "type") |>
+        tibble::deframe()
       d <- raw |>
         tidyr::pivot_wider(names_from = "variable", values_from = "value") |>
         purrr::set_names(names(col_types)) |>

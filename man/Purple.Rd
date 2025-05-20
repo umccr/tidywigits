@@ -9,12 +9,12 @@ Purple file parsing and manipulation.
 \examples{
 \dontrun{
 path <- here::here(
-  "nogit/oncoanalyser-wgts-dna/20250407e2ff5344/L2500331_L2500332/purple"
+  "nogit"
 )
 p <- Purple$new(path)
 p$tidy$tidy |>
   purrr::set_names(p$tidy$parser) |>
-  purrr::map(\(x) str(x[["data"]][[1]]))
+  purrr::map(\(x) x[["data"]][[1]])
 }
 }
 \section{Super class}{
@@ -33,8 +33,6 @@ Tidy tibble.}
 \itemize{
 \item \href{#method-Purple-new}{\code{Purple$new()}}
 \item \href{#method-Purple-list_files}{\code{Purple$list_files()}}
-\item \href{#method-Purple-parse_version}{\code{Purple$parse_version()}}
-\item \href{#method-Purple-tidy_version}{\code{Purple$tidy_version()}}
 \item \href{#method-Purple-parse_qc}{\code{Purple$parse_qc()}}
 \item \href{#method-Purple-tidy_qc}{\code{Purple$tidy_qc()}}
 \item \href{#method-Purple-parse_cnvgenetsv}{\code{Purple$parse_cnvgenetsv()}}
@@ -53,6 +51,8 @@ Tidy tibble.}
 \item \href{#method-Purple-tidy_somclonality}{\code{Purple$tidy_somclonality()}}
 \item \href{#method-Purple-parse_somhist}{\code{Purple$parse_somhist()}}
 \item \href{#method-Purple-tidy_somhist}{\code{Purple$tidy_somhist()}}
+\item \href{#method-Purple-parse_version}{\code{Purple$parse_version()}}
+\item \href{#method-Purple-tidy_version}{\code{Purple$tidy_version()}}
 \item \href{#method-Purple-clone}{\code{Purple$clone()}}
 }
 }
@@ -62,6 +62,7 @@ Tidy tibble.}
 <li><span class="pkg-link" data-pkg="tidywigits" data-topic="Tool" data-id=".eval_func"><a href='../../tidywigits/html/Tool.html#method-Tool-.eval_func'><code>tidywigits::Tool$.eval_func()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="tidywigits" data-topic="Tool" data-id=".parse_file"><a href='../../tidywigits/html/Tool.html#method-Tool-.parse_file'><code>tidywigits::Tool$.parse_file()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="tidywigits" data-topic="Tool" data-id=".tidy"><a href='../../tidywigits/html/Tool.html#method-Tool-.tidy'><code>tidywigits::Tool$.tidy()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="tidywigits" data-topic="Tool" data-id=".tidy_file"><a href='../../tidywigits/html/Tool.html#method-Tool-.tidy_file'><code>tidywigits::Tool$.tidy_file()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="tidywigits" data-topic="Tool" data-id="print"><a href='../../tidywigits/html/Tool.html#method-Tool-print'><code>tidywigits::Tool$print()</code></a></span></li>
 </ul>
 </details>
@@ -94,42 +95,6 @@ to handle germline driver.catalog files.
 \if{html}{\out{<div class="r">}}\preformatted{Purple$list_files()}\if{html}{\out{</div>}}
 }
 
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Purple-parse_version"></a>}}
-\if{latex}{\out{\hypertarget{method-Purple-parse_version}{}}}
-\subsection{Method \code{parse_version()}}{
-Read \code{purple.version} file.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Purple$parse_version(x)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{x}}{(\code{character(1)})\cr
-Path to file.}
-}
-\if{html}{\out{</div>}}
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Purple-tidy_version"></a>}}
-\if{latex}{\out{\hypertarget{method-Purple-tidy_version}{}}}
-\subsection{Method \code{tidy_version()}}{
-Tidy \code{purple.version} file.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Purple$tidy_version(x)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{x}}{(\code{character(1)})\cr
-Path to file.}
-}
-\if{html}{\out{</div>}}
-}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-Purple-parse_qc"></a>}}
@@ -444,6 +409,42 @@ Path to file.}
 Tidy \code{purple.somatic.hist.tsv} file.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Purple$tidy_somhist(x)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{x}}{(\code{character(1)})\cr
+Path to file.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Purple-parse_version"></a>}}
+\if{latex}{\out{\hypertarget{method-Purple-parse_version}{}}}
+\subsection{Method \code{parse_version()}}{
+Read \code{purple.version} file.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Purple$parse_version(x)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{x}}{(\code{character(1)})\cr
+Path to file.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Purple-tidy_version"></a>}}
+\if{latex}{\out{\hypertarget{method-Purple-tidy_version}{}}}
+\subsection{Method \code{tidy_version()}}{
+Tidy \code{purple.version} file.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Purple$tidy_version(x)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{

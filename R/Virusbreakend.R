@@ -5,7 +5,7 @@
 #' @examples
 #' \dontrun{
 #' path <- here::here(
-#'   "nogit/oncoanalyser-wgts-dna/20250407e2ff5344/L2500331_L2500332/virusbreakend"
+#'   "nogit"
 #' )
 #' v <- Virusbreakend$new(path)
 #' }
@@ -29,19 +29,32 @@ Virusbreakend <- R6::R6Class(
     #' @param x (`character(1)`)\cr
     #' Path to file.
     parse_summary = function(x) {
-      schema <- self$config$.raw_schema("summary")
-      d <- parse_file(x, schema, type = "tsv")
+      schema <- self$.raw_schema("summary") |>
+        dplyr::mutate(
+          type = dplyr::case_match(
+            .data$type,
+            "char" ~ "c",
+            "int" ~ "i",
+            "float" ~ "d"
+          )
+        )
+      # file is either completely empty, or with colnames + data
+      hdr <- file_hdr(x)
+      if (length(hdr) == 0) {
+        ctypes <- paste(schema[["type"]], collapse = "")
+        etbl <- empty_tbl(cnames = schema[["field"]], ctypes = ctypes)
+        attr(etbl, "file_version") <- "latest"
+        return(etbl)
+      }
+      d <- self$.parse_file(x, "summary")
+      attr(d, "file_version") <- "latest"
       d
     },
     #' @description Tidy `vcf.summary.tsv` file.
     #' @param x (`character(1)`)\cr
     #' Path to file.
     tidy_summary = function(x) {
-      raw <- self$parse_summary(x)
-      schema <- self$config$.tidy_schema("summary")
-      colnames(raw) <- schema[["field"]]
-      list(summary = raw) |>
-        tibble::enframe(value = "data")
+      self$.tidy_file(x, "summary")
     }
   ) # end public
 )

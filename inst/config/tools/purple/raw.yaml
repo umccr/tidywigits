@@ -1,16 +1,6 @@
 description:
   'Purity Ploidy Estimator.'
 raw:
-  version:
-    description: 'Version of the tool.'
-    pattern: "^purple\\.version$"
-    ftype: 'txt'
-    schema:
-      latest:
-        - field: 'variable'
-          type: 'char'
-        - field: 'value'
-          type: 'char'
   cnvgenetsv:
     description: 'Copy number alterations of each gene in the HMF gene panel.'
     pattern: "\\.purple\\.cnv\\.gene\\.tsv$"
@@ -283,3 +273,13 @@ raw:
           type: 'float'
         - field: 'count'
           type: 'float'
+  version:
+    description: 'Version of the tool.'
+    pattern: "^purple\\.version$"
+    ftype: 'txt'
+    schema:
+      latest:
+        - field: 'variable'
+          type: 'char'
+        - field: 'value'
+          type: 'char'

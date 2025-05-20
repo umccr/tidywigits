@@ -5,7 +5,7 @@
 #' @examples
 #' \dontrun{
 #' path <- here::here(
-#'   "nogit/oncoanalyser-wgts-dna/20250407e2ff5344/L2500331_L2500332/lilac"
+#'   "nogit"
 #' )
 #' l <- Lilac$new(path)
 #' }
@@ -28,37 +28,25 @@ Lilac <- R6::R6Class(
     #' @param x (`character(1)`)\cr
     #' Path to file.
     parse_summary = function(x) {
-      schema <- self$config$.raw_schema("summary")
-      d <- parse_file(x, schema, type = "tsv")
-      d
+      self$.parse_file(x, "summary")
     },
     #' @description Tidy `lilac.tsv` file.
     #' @param x (`character(1)`)\cr
     #' Path to file.
     tidy_summary = function(x) {
-      raw <- self$parse_summary(x)
-      schema <- self$config$.tidy_schema("summary")
-      colnames(raw) <- schema[["field"]]
-      list(summary = raw) |>
-        tibble::enframe(value = "data")
+      self$.tidy_file(x, "summary")
     },
     #' @description Read `lilac.qc.tsv` file.
     #' @param x (`character(1)`)\cr
     #' Path to file.
     parse_qc = function(x) {
-      schema <- self$config$.raw_schema("qc")
-      d <- parse_file(x, schema, type = "tsv")
-      d
+      self$.parse_file(x, "qc")
     },
     #' @description Tidy `lilac.qc.tsv` file.
     #' @param x (`character(1)`)\cr
     #' Path to file.
     tidy_qc = function(x) {
-      raw <- self$parse_qc(x)
-      schema <- self$config$.tidy_schema("qc")
-      colnames(raw) <- schema[["field"]]
-      list(qc = raw) |>
-        tibble::enframe(value = "data")
+      self$.tidy_file(x, "qc")
     }
   )
 )

@@ -8,5 +8,5 @@ tidy:
             type: 'char'
             description: 'Duplicate read count'
           - field: 'frequency'
-            type: 'int'
+            type: 'float'
             description: 'Frequency of duplicate reads'

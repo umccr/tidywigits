@@ -8,11 +8,11 @@ Linx file parsing and manipulation.
 }
 \examples{
 \dontrun{
-path <- here::here("nogit")
+path <- here::here("nogit/oa_v2")
 lx <- Linx$new(path)
 lx$tidy$tidy |>
   purrr::set_names(lx$tidy$parser) |>
-  purrr::map(\(x) str(x[["data"]][[1]]))
+  purrr::map(\(x) x[["data"]][[1]])
 }
 }
 \section{Super class}{
@@ -68,6 +68,7 @@ Tidy tibble.}
 <li><span class="pkg-link" data-pkg="tidywigits" data-topic="Tool" data-id=".eval_func"><a href='../../tidywigits/html/Tool.html#method-Tool-.eval_func'><code>tidywigits::Tool$.eval_func()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="tidywigits" data-topic="Tool" data-id=".parse_file"><a href='../../tidywigits/html/Tool.html#method-Tool-.parse_file'><code>tidywigits::Tool$.parse_file()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="tidywigits" data-topic="Tool" data-id=".tidy"><a href='../../tidywigits/html/Tool.html#method-Tool-.tidy'><code>tidywigits::Tool$.tidy()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="tidywigits" data-topic="Tool" data-id=".tidy_file"><a href='../../tidywigits/html/Tool.html#method-Tool-.tidy_file'><code>tidywigits::Tool$.tidy_file()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="tidywigits" data-topic="Tool" data-id="print"><a href='../../tidywigits/html/Tool.html#method-Tool-print'><code>tidywigits::Tool$print()</code></a></span></li>
 </ul>
 </details>

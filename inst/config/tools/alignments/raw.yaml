@@ -10,4 +10,4 @@ raw:
         - field: 'DuplicateReadCount'
           type: 'char'
         - field: 'Frequency'
-          type: 'int'
+          type: 'float'

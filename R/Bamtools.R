@@ -4,10 +4,7 @@
 #' Bamtools file parsing and manipulation.
 #' @examples
 #' \dontrun{
-#' path <- here::here(
-#'   "nogit/oncoanalyser-wgts-dna/20250407e2ff5344/L2500331_L2500332/bamtools"
-#' )
-#' path <- here::here("nogit/oa_2.0.0_colo829_20250507/bamtools")
+#' path <- here::here("nogit")
 #' b <- Bamtools$new(path)
 #' b$tidy$tidy
 #' }
@@ -30,17 +27,15 @@ Bamtools <- R6::R6Class(
     #' @param x (`character(1)`)\cr
     #' Path to file.
     parse_summary = function(x) {
-      schema <- self$config$.raw_schema("summary")
-      d <- parse_file(x, schema, type = "tsv")
-      d
+      self$.parse_file(x, "summary")
     },
     #' @description Tidy `summary.tsv` file.
     #' @param x (`character(1)`)\cr
     #' Path to file.
     tidy_summary = function(x) {
       d <- self$parse_summary(x)
-      schema1 <- self$config$.tidy_schema("summary", subtbl = "tbl1")
-      schema2 <- self$config$.tidy_schema("summary", subtbl = "tbl2")
+      schema1 <- self$.tidy_schema("summary", subtbl = "tbl1")
+      schema2 <- self$.tidy_schema("summary", subtbl = "tbl2")
       d1 <- d |>
         dplyr::select(!dplyr::contains("DepthCoverage_"))
       assertthat::assert_that(ncol(d1) == nrow(schema1))
@@ -50,15 +45,11 @@ Bamtools <- R6::R6Class(
         tidyr::pivot_longer(
           dplyr::everything(),
           names_to = "covdp",
-          values_to = "value"
+          values_to = "value",
+          names_prefix = "DepthCoverage_"
         ) |>
-        tidyr::separate_wider_delim(
-          "covdp",
-          delim = "_",
-          names = c("dummy", "covx")
-        ) |>
-        dplyr::mutate(covx = as.numeric(.data$covx)) |>
-        dplyr::select(covx, value)
+        dplyr::mutate(covx = as.numeric(.data$covdp)) |>
+        dplyr::select("covx", "value")
       assertthat::assert_that(all(colnames(d2) == schema2[["field"]]))
       list(summary = d1, covx = d2) |>
         tibble::enframe(value = "data")
@@ -68,7 +59,7 @@ Bamtools <- R6::R6Class(
     #' Path to file.
     parse_wgsmetrics = function(x) {
       # handle two different sections
-      schema <- self$config$.raw_schema("wgsmetrics")
+      schema <- self$.raw_schema("wgsmetrics")
       # first make sure colnames are as expected
       hdr1 <- readr::read_tsv(
         file = x,
@@ -88,14 +79,14 @@ Bamtools <- R6::R6Class(
         colnames(hdr2) == c("coverage", "high_quality_coverage_count")
       ))
       # now parse with proper classes
-      d1 <- parse_file(
-        x,
-        schema = schema,
-        type = "tsv",
-        comment = "#",
-        n_max = 1
+      d1 <- self$.parse_file(
+        x = x,
+        name = "wgsmetrics",
+        n_max = 1,
+        comment = "#"
       )
       d2 <- readr::read_tsv(x, col_types = "ci", comment = "#", skip = 3)
+      attr(d2, "file_version") <- attr(d1, "file_version")
       list(metrics = d1[], histo = d2[])
     },
     #' @description Tidy `wgsmetrics` file.
@@ -103,7 +94,7 @@ Bamtools <- R6::R6Class(
     #' Path to file.
     tidy_wgsmetrics = function(x) {
       raw <- self$parse_wgsmetrics(x)
-      schema <- self$config$.tidy_schema("wgsmetrics")
+      schema <- self$.tidy_schema("wgsmetrics")
       d <- list(
         wgsmetrics_metrics = raw[["metrics"]],
         wgsmetrics_histo = raw[["histo"]]
@@ -203,7 +194,7 @@ Bamtools <- R6::R6Class(
     #' Path to file.
     tidy_flagstats = function(x) {
       raw <- self$parse_flagstats(x)
-      schema <- self$config$.tidy_schema("flagstats")
+      schema <- self$.tidy_schema("flagstats")
       assertthat::assert_that(all(colnames(raw) == schema[["field"]]))
       list(flagstats = raw) |>
         tibble::enframe(value = "data")
@@ -212,55 +203,37 @@ Bamtools <- R6::R6Class(
     #' @param x (`character(1)`)\cr
     #' Path to file.
     parse_coverage = function(x) {
-      schema <- self$config$.raw_schema("coverage")
-      d <- parse_file(x, schema, type = "tsv")
-      d
+      self$.parse_file(x, "coverage")
     },
     #' @description Tidy `coverage.tsv` file.
     #' @param x (`character(1)`)\cr
     #' Path to file.
     tidy_coverage = function(x) {
-      raw <- self$parse_coverage(x)
-      schema <- self$config$.tidy_schema("coverage")
-      colnames(raw) <- schema[["field"]]
-      list(coverage = raw) |>
-        tibble::enframe(value = "data")
+      self$.tidy_file(x, "coverage")
     },
     #' @description Read `frag_length.tsv` file.
     #' @param x (`character(1)`)\cr
     #' Path to file.
     parse_fraglength = function(x) {
-      schema <- self$config$.raw_schema("fraglength")
-      d <- parse_file(x, schema, type = "tsv")
-      d
+      self$.parse_file(x, "fraglength")
     },
     #' @description Tidy `frag_length.tsv` file.
     #' @param x (`character(1)`)\cr
     #' Path to file.
     tidy_fraglength = function(x) {
-      raw <- self$parse_fraglength(x)
-      schema <- self$config$.tidy_schema("fraglength")
-      colnames(raw) <- schema[["field"]]
-      list(fraglength = raw) |>
-        tibble::enframe(value = "data")
+      self$.tidy_file(x, "fraglength")
     },
     #' @description Read `partition_stats.tsv` file.
     #' @param x (`character(1)`)\cr
     #' Path to file.
     parse_partitionstats = function(x) {
-      schema <- self$config$.raw_schema("partitionstats")
-      d <- parse_file(x, schema, type = "tsv")
-      d
+      self$.parse_file(x, "partitionstats")
     },
     #' @description Tidy `partition_stats.tsv` file.
     #' @param x (`character(1)`)\cr
     #' Path to file.
     tidy_partitionstats = function(x) {
-      raw <- self$parse_partitionstats(x)
-      schema <- self$config$.tidy_schema("partitionstats")
-      colnames(raw) <- schema[["field"]]
-      list(partitionstats = raw) |>
-        tibble::enframe(value = "data")
+      self$.tidy_file(x, "partitionstats")
     }
   )
 )

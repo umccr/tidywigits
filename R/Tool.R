@@ -8,7 +8,7 @@
 #' path <- here::here(
 #'   "nogit/oncoanalyser-wgts-dna/20250407e2ff5344/L2500331_L2500332/amber"
 #' )
-#' x <- Tool$new(name, path)
+#' tool <- Tool$new(name, path)
 #' }
 #'
 #' @export
@@ -33,9 +33,12 @@ Tool <- R6::R6Class(
     #' @field tidy_schemas_all (`tibble()`)\cr
     #' All tidy schemas for tool.
     tidy_schemas_all = NULL,
-    #' @field tidy_schema (`function()`)\cr
+    #' @field .tidy_schema (`function()`)\cr
     #' Get specific tidy schema.
-    tidy_schema = NULL,
+    .tidy_schema = NULL,
+    #' @field .raw_schema (`function()`)\cr
+    #' Get specific raw schema.
+    .raw_schema = NULL,
 
     #' @description Create a new Tool object.
     #' @param name (`character(1)`)\cr
@@ -49,7 +52,8 @@ Tool <- R6::R6Class(
       self$files <- self$list_files()
       self$raw_schemas_all <- self$config$raw_schemas_all
       self$tidy_schemas_all <- self$config$tidy_schemas_all
-      self$tidy_schema <- self$config$.tidy_schema
+      self$.tidy_schema <- self$config$.tidy_schema
+      self$.raw_schema <- self$config$.raw_schema
     },
     #' @description Print details about the Tool.
     #' @param ... (ignored).
@@ -120,6 +124,21 @@ Tool <- R6::R6Class(
         ...
       )
     },
+    #' @description Tidy file.
+    #' @param x (`character(1)`)\cr
+    #' File path.
+    #' @param name (`character(1)`)\cr
+    #' Parser name (e.g. "breakends" - see docs).
+    .tidy_file = function(x, name) {
+      .parser <- self$.eval_func(glue("parse_{name}"))
+      d <- .parser(x)
+      version <- get_tbl_version_attr(d)
+      schema <- self$.tidy_schema(name, v = version)
+      colnames(d) <- schema[["field"]]
+      list(d) |>
+        setNames(name) |>
+        tibble::enframe(value = "data")
+    },
     #' @description Evaluate function in the context of the Tool's
     #' environment.
     #' @param fun (`character(1)`)\cr
@@ -134,6 +153,7 @@ Tool <- R6::R6Class(
     #' @param envir (`environment()`)\cr
     #' Environment to evaluate the function within.
     .tidy = function(envir = NULL) {
+      # TODO: see if we can utilise self$.tidy_file
       assertthat::assert_that(!is.null(envir))
       self$files |>
         dplyr::mutate(parser = glue("tidy_{parser}")) |>

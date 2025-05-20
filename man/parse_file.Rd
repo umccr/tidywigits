@@ -27,12 +27,12 @@ Parses files.
 \examples{
 \dontrun{
 path <- here::here(
-  "nogit/oncoanalyser-wgts-dna/20250407e2ff5344/L2500331_L2500332/linx"
+  "nogit/oncoanalyser-wgts-dna/20250407e2ff5344/L2500331_L2500332/bamtools"
 )
-x <- Tool$new("linx", path)
-schemas_all <- x$config$raw_schemas_all
-pname <- "breakends"
-fpath <- file.path(path, "somatic_annotations/L2500331.linx.breakend.tsv")
+x <- Tool$new("bamtools", path)
+schemas_all <- x$raw_schemas_all
+pname <- "wgsmetrics"
+fpath <- file.path(path, "L2500331.wgsmetrics")
 parse_file(fpath, pname, schemas_all)
 }
 }
