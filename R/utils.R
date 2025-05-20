@@ -16,12 +16,12 @@
 #' @examples
 #' \dontrun{
 #' path <- here::here(
-#'   "nogit/oncoanalyser-wgts-dna/20250407e2ff5344/L2500331_L2500332/linx"
+#'   "nogit/oncoanalyser-wgts-dna/20250407e2ff5344/L2500331_L2500332/bamtools"
 #' )
-#' x <- Tool$new("linx", path)
-#' schemas_all <- x$config$raw_schemas_all
-#' pname <- "breakends"
-#' fpath <- file.path(path, "somatic_annotations/L2500331.linx.breakend.tsv")
+#' x <- Tool$new("bamtools", path)
+#' schemas_all <- x$raw_schemas_all
+#' pname <- "wgsmetrics"
+#' fpath <- file.path(path, "L2500331.wgsmetrics")
 #' parse_file(fpath, pname, schemas_all)
 #' }
 parse_file <- function(
@@ -35,7 +35,7 @@ parse_file <- function(
     file.exists(fpath),
     msg = glue("The file {fpath} does not exist.")
   )
-  cnames <- file_hdr(fpath, delim = delim)
+  cnames <- file_hdr(fpath, delim = delim, ...)
   schema <- schema_guess(
     pname = pname,
     cnames = cnames,
@@ -75,12 +75,13 @@ parse_file_nohead <- function(fpath, ctypes, cnames_new, ...) {
   d[]
 }
 
-file_hdr <- function(x, delim = "\t") {
+file_hdr <- function(x, delim = "\t", n_max = 0, ...) {
   readr::read_delim(
     x,
     delim = delim,
     col_types = readr::cols(.default = "c"),
-    n_max = 0
+    n_max = n_max,
+    ...
   ) |>
     colnames()
 }
