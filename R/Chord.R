@@ -5,7 +5,7 @@
 #' @examples
 #' \dontrun{
 #' path <- here::here(
-#'   "nogit/oa_v2/chord"
+#'   "nogit"
 #' )
 #' ch <- Chord$new(path)
 #' }
@@ -28,21 +28,13 @@ Chord <- R6::R6Class(
     #' @param x (`character(1)`)\cr
     #' Path to file.
     parse_prediction = function(x) {
-      schema <- self$config$.raw_schema("prediction")
-      d <- parse_file(x, schema, type = "tsv")
-      d
+      self$.parse_file(x, "prediction")
     },
     #' @description Tidy `prediction.txt` file.
     #' @param x (`character(1)`)\cr
     #' Path to file.
     tidy_prediction = function(x) {
-      schema <- self$config$.tidy_schema("prediction")
-      raw <- self$parse_prediction(x)
-      d <- raw |>
-        dplyr::select(-c("sample"))
-      colnames(d) <- schema[["field"]]
-      list(prediction = d) |>
-        tibble::enframe(value = "data")
+      self$.tidy_file(x, "prediction")
     },
     #' @description Read `signatures.txt` file.
     #' @param x (`character(1)`)\cr
@@ -55,7 +47,7 @@ Chord <- R6::R6Class(
         col_types = readr::cols(.default = "c"),
         n_max = n_max
       )
-      schema <- self$config$.raw_schema("signatures") |>
+      schema <- self$.raw_schema("signatures") |>
         dplyr::mutate(
           type = dplyr::case_match(
             .data$type,
@@ -89,7 +81,7 @@ Chord <- R6::R6Class(
           values_to = "count"
         ) |>
         dplyr::select("signature", "count")
-      schema <- self$config$.tidy_schema("signatures")
+      schema <- self$.tidy_schema("signatures")
       assertthat::assert_that(all(colnames(d) == schema[["field"]]))
       list(signatures = d) |>
         tibble::enframe(value = "data")

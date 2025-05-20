@@ -4,6 +4,9 @@ tidy:
     schema:
       latest:
         tbl1:
+          - field: 'sample_id'
+            type: 'char'
+            description: 'sample ID'
           - field: 'p_brca1'
             type: 'float'
             description: 'probability of BRCA1-type HRD'

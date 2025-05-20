@@ -24,7 +24,7 @@ raw:
           type: 'char'
   signatures:
     description: 'Counts of SNV, INDEL and SV contexts.'
-    pattern: "_chord_signatures\\.txt$|chord\\.mutation_contexts\\.tsv$"
+    pattern: "_chord_signatures\\.txt$|\\.chord\\.mutation_contexts\\.tsv$"
     ftype: 'tsv'
     schema:
       latest:

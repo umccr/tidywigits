@@ -9,7 +9,7 @@ Chord file parsing and manipulation.
 \examples{
 \dontrun{
 path <- here::here(
-  "nogit/oa_v2/chord"
+  "nogit"
 )
 ch <- Chord$new(path)
 }
