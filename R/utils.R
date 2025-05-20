@@ -189,3 +189,18 @@ tidy_wigits_version_file <- function(x) {
   list(version = d) |>
     tibble::enframe(value = "data")
 }
+
+#' Create Empty Tibble
+#'
+#' From https://stackoverflow.com/a/62535671/2169986. Useful for handling
+#' edge cases with empty data. e.g. virusbreakend.vcf.summary.tsv
+#'
+#' @param ctypes Character vector of column types corresponding to `cnames`.
+#' @param cnames Character vector of column names to use.
+#'
+#' @return A tibble with 0 rows and the given column names.
+#' @export
+empty_tbl <- function(cnames, ctypes = readr::cols(.default = "c")) {
+  d <- readr::read_csv("\n", col_names = cnames, col_types = ctypes)
+  d[]
+}
