@@ -2,6 +2,26 @@ tidy:
   bqrtsv:
     description: 'Base quality recalibration metrics.'
     schema:
+      v3.4.4:
+        tbl1:
+          - field: 'alt'
+            type: 'char'
+            description: 'alternate allele'
+          - field: 'ref'
+            type: 'char'
+            description: 'reference allele'
+          - field: 'context'
+            type: 'char'
+            description: 'trinucleotide context'
+          - field: 'count'
+            type: 'float'
+            description: 'count'
+          - field: 'origq'
+            type: 'float'
+            description: 'original quality'
+          - field: 'recalq'
+            type: 'float'
+            description: 'recalibrated quality'
       latest:
         tbl1:
           - field: 'alt'
@@ -13,6 +33,9 @@ tidy:
           - field: 'context'
             type: 'char'
             description: 'trinucleotide context'
+          - field: 'read_type'
+            type: 'char'
+            description: 'read type'
           - field: 'count'
             type: 'float'
             description: 'count'
