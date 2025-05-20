@@ -887,7 +887,7 @@ tidy:
             type: 'float'
             description: ''
           - field: 'info_start'
-            type: char
+            type: 'char'
             description: ''
           - field: 'info_end'
             type: 'char'
@@ -937,7 +937,7 @@ tidy:
             type: 'float'
             description: ''
           - field: 'info_start'
-            type: char
+            type: 'char'
             description: ''
           - field: 'info_end'
             type: 'char'
