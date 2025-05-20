@@ -114,10 +114,10 @@ Flagstats <- R6::R6Class(
     #' @param x (`character(1)`)\cr
     #' Path to file.
     tidy_flagstats = function(x) {
-      raw <- self$parse_flagstats(x)
-      schema <- self$config$.tidy_schema("flagstats")
-      assertthat::assert_that(all(colnames(raw) == schema[["field"]]))
-      list(flagstats = raw) |>
+      d <- self$parse_flagstats(x)
+      schema <- self$.tidy_schema("flagstats")
+      assertthat::assert_that(all(colnames(d) == schema[["field"]]))
+      list(flagstats = d) |>
         tibble::enframe(value = "data")
     }
   )
