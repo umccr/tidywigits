@@ -8,10 +8,7 @@ Bamtools file parsing and manipulation.
 }
 \examples{
 \dontrun{
-path <- here::here(
-  "nogit/oncoanalyser-wgts-dna/20250407e2ff5344/L2500331_L2500332/bamtools"
-)
-path <- here::here("nogit/oa_2.0.0_colo829_20250507/bamtools")
+path <- here::here("nogit")
 b <- Bamtools$new(path)
 b$tidy$tidy
 }
