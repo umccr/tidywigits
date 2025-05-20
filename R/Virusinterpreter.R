@@ -27,24 +27,13 @@ Virusinterpreter <- R6::R6Class(
     #' @param x (`character(1)`)\cr
     #' Path to file.
     parse_annotated = function(x) {
-      cnames <- file_hdr(x, delim = "\t")
-      schemas_all <- self$config$.raw_schemas_all() |>
-        dplyr::filter(.data$name == "annotated")
-      schema1 <- schema_guess(cnames = cnames, schemas_all = schemas_all)
-      d <- parse_file(x, schema1$schema, type = "tsv")
-      attr(d, "file_version") <- schema1$version
-      d
+      self$.parse_file(x, "annotated")
     },
     #' @description Tidy `virus.annotated.tsv` file.
     #' @param x (`character(1)`)\cr
     #' Path to file.
     tidy_annotated = function(x) {
-      raw <- self$parse_annotated(x)
-      version <- attr(raw, "file_version")
-      schema <- self$config$.tidy_schema("annotated", v = version)
-      colnames(raw) <- schema[["field"]]
-      list(annotated = raw) |>
-        tibble::enframe(value = "data")
+      self$.tidy_file(x, "annotated")
     }
   ) # end public
 )
