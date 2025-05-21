@@ -9,7 +9,7 @@ Alignments file parsing and manipulation.
 \examples{
 \dontrun{
 path <- here::here(
-  "nogit/oncoanalyser-wgts-dna/20250407e2ff5344/L2500331_L2500332/alignments"
+  "nogit/oa_v1/alignments"
 )
 a <- Alignments$new(path)
 }
@@ -52,14 +52,18 @@ Tidy tibble.}
 \subsection{Method \code{new()}}{
 Create a new Alignments object.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Alignments$new(path)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Alignments$new(path = NULL, files_tbl = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{path}}{(\code{character(1)})\cr
-Output directory of tool.}
+Output directory of tool. If \code{files_tbl} is supplied, this basically gets
+ignored.}
+
+\item{\code{files_tbl}}{(\code{tibble(n)})\cr
+Tibble of files from \code{list_files_dir}.}
 }
 \if{html}{\out{</div>}}
 }

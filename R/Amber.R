@@ -20,9 +20,12 @@ Amber <- R6::R6Class(
     tidy = NULL,
     #' @description Create a new Amber object.
     #' @param path (`character(1)`)\cr
-    #' Output directory of tool.
-    initialize = function(path) {
-      super$initialize(name = "amber", path = path)
+    #' Output directory of tool. If `files_tbl` is supplied, this basically gets
+    #' ignored.
+    #' @param files_tbl (`tibble(n)`)\cr
+    #' Tibble of files from `list_files_dir`.
+    initialize = function(path = NULL, files_tbl = NULL) {
+      super$initialize(name = "amber", path = path, files_tbl = files_tbl)
       self$tidy = super$.tidy(envir = self)
     },
     #' @description Read `baf.pcf` file.

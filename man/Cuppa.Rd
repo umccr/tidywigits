@@ -58,14 +58,18 @@ Tidy tibble.}
 \subsection{Method \code{new()}}{
 Create a new Cuppa object.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Cuppa$new(path)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Cuppa$new(path = NULL, files_tbl = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{path}}{(\code{character(1)})\cr
-Output directory of tool.}
+Output directory of tool. If \code{files_tbl} is supplied, this basically gets
+ignored.}
+
+\item{\code{files_tbl}}{(\code{tibble(n)})\cr
+Tibble of files from \code{list_files_dir}.}
 }
 \if{html}{\out{</div>}}
 }

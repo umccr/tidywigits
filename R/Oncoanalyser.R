@@ -59,7 +59,10 @@ Oncoanalyser <- R6::R6Class(
       # fmt: skip
       res <- tibble::tribble(
         ~var, ~value,
-        "path", self$path
+        "path", self$path,
+        "ntools", as.character(dplyr::distinct(self$tbl, .data$tool) |> nrow()),
+        "nfiles_raw", as.character(nrow(self$tbl)),
+        "ntbls_tidy", as.character(tidyr::unnest(self$tbl, "tidy") |> nrow())
       )
       cat("#--- Oncoanalyser ---#\n")
       print(res)
