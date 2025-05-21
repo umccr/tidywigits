@@ -4,10 +4,7 @@
 #' Oncoanalyser file parsing and manipulation.
 #' @examples
 #' \dontrun{
-#' path <- here::here(
-#'   "nogit/oa_v1"
-#' )
-#' # TODO: handle missing directories e.g. alignments, flagstats for v2
+#' path <- here::here("nogit")
 #' oa <- Oncoanalyser$new(path)
 #' oa$tbl |>
 #'   dplyr::select(tool, prefix, prefix2, tidy) |>
@@ -29,24 +26,22 @@ Oncoanalyser <- R6::R6Class(
     #' Output directory of tool.
     initialize = function(path = NULL) {
       self$path <- normalizePath(path)
+      ft <- list_files_dir(self$path)
       res <- list(
-        alignments = Alignments$new(file.path(path, "alignments")),
-        amber = Amber$new(file.path(path, "amber")),
-        bamtools = Bamtools$new(file.path(path, "bamtools")),
-        chord = Chord$new(file.path(path, "chord")),
-        cobalt = Cobalt$new(file.path(path, "cobalt")),
-        cuppa = Cuppa$new(file.path(path, "cuppa")),
-        flagstats = Flagstats$new(file.path(path, "flagstats")),
-        lilac = Lilac$new(file.path(path, "lilac")),
-        linx = Linx$new(file.path(path, "linx")),
-        purple = Purple$new(file.path(path, "purple")),
-        sage = Sage$new(file.path(path, "sage")),
-        sigs = Sigs$new(file.path(path, "sigs")),
-        virusbreakend = Virusbreakend$new(file.path(path, "virusbreakend")),
-        virusinterpreter = Virusinterpreter$new(file.path(
-          path,
-          "virusinterpreter"
-        ))
+        alignments = Alignments$new(files_tbl = ft),
+        amber = Amber$new(files_tbl = ft),
+        bamtools = Bamtools$new(files_tbl = ft),
+        chord = Chord$new(files_tbl = ft),
+        cobalt = Cobalt$new(files_tbl = ft),
+        cuppa = Cuppa$new(files_tbl = ft),
+        flagstats = Flagstats$new(files_tbl = ft),
+        lilac = Lilac$new(files_tbl = ft),
+        linx = Linx$new(files_tbl = ft),
+        purple = Purple$new(files_tbl = ft),
+        sage = Sage$new(files_tbl = ft),
+        sigs = Sigs$new(files_tbl = ft),
+        virusbreakend = Virusbreakend$new(files_tbl = ft),
+        virusinterpreter = Virusinterpreter$new(files_tbl = ft)
       )
       d <- res |>
         purrr::map(\(x) x[["tidy"]]) |>
@@ -59,7 +54,10 @@ Oncoanalyser <- R6::R6Class(
       # fmt: skip
       res <- tibble::tribble(
         ~var, ~value,
-        "path", self$path
+        "path", self$path,
+        "ntools", as.character(dplyr::distinct(self$tbl, .data$tool) |> nrow()),
+        "nraw", as.character(nrow(self$tbl)),
+        "ntidy", as.character(tidyr::unnest(self$tbl, "tidy") |> nrow())
       )
       cat("#--- Oncoanalyser ---#\n")
       print(res)

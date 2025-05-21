@@ -8,10 +8,7 @@ Oncoanalyser file parsing and manipulation.
 }
 \examples{
 \dontrun{
-path <- here::here(
-  "nogit/oa_v1"
-)
-# TODO: handle missing directories e.g. alignments, flagstats for v2
+path <- here::here("nogit")
 oa <- Oncoanalyser$new(path)
 oa$tbl |>
   dplyr::select(tool, prefix, prefix2, tidy) |>

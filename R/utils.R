@@ -142,10 +142,12 @@ schema_guess <- function(pname, cnames, schemas_all) {
 
 #' List Files
 #'
-#' Lists files in a given directory.
+#' Lists files inside a given directory.
 #'
-#' @param d Path to directory.
+#' @param d Directory path.
 #' @param max_files Max files returned.
+#' @param type File type(s) to return (e.g. any, file, directory, symlink). See
+#' `fs::dir_info`.
 #'
 #' @return A tibble with file basename, size, last modification timestamp
 #' and full path.
@@ -155,8 +157,8 @@ schema_guess <- function(pname, cnames, schemas_all) {
 #' @testexamples
 #' expect_equal(names(x), c("bname", "size", "lastmodified", "path"))
 #' @export
-list_files_dir <- function(d, max_files = NULL) {
-  d <- fs::dir_info(path = d, recurse = TRUE, type = "file") |>
+list_files_dir <- function(d, max_files = NULL, type = "file") {
+  d <- fs::dir_info(path = d, recurse = TRUE, type = type) |>
     dplyr::mutate(
       bname = basename(.data$path),
       lastmodified = .data$modification_time
@@ -203,4 +205,11 @@ tidy_wigits_version_file <- function(x) {
 empty_tbl <- function(cnames, ctypes = readr::cols(.default = "c")) {
   d <- readr::read_csv("\n", col_names = cnames, col_types = ctypes)
   d[]
+}
+
+is_files_tbl <- function(x) {
+  assertthat::assert_that(
+    tibble::is_tibble(x),
+    all(colnames(x) == c("bname", "size", "lastmodified", "path"))
+  )
 }
