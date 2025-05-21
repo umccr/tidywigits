@@ -9,7 +9,7 @@ Sage file parsing and manipulation.
 \examples{
 \dontrun{
 path <- here::here(
-  "nogit/oa_v1"
+  "nogit"
 )
 s <- Sage$new(path)
 s$tidy

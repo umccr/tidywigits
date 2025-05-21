@@ -5,7 +5,7 @@
 #' @examples
 #' \dontrun{
 #' path <- here::here(
-#'   "nogit/oa_v1"
+#'   "nogit"
 #' )
 #' s <- Sage$new(path)
 #' s$tidy
@@ -50,7 +50,9 @@ Sage <- R6::R6Class(
     #' @param x (`character(1)`)\cr
     #' Path to file.
     tidy_genecvg = function(x) {
-      d <- self$parse_genecvg(x)
+      d <- self$.tidy_file(x, "genecvg") |>
+        dplyr::select("data") |>
+        tidyr::unnest("data")
       # make sure genes are unique
       assertthat::assert_that(nrow(d) == nrow(dplyr::distinct(d, .data$gene)))
       genes <- d |>
