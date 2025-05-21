@@ -4,19 +4,22 @@
 \alias{list_files_dir}
 \title{List Files}
 \usage{
-list_files_dir(d, max_files = NULL)
+list_files_dir(d, max_files = NULL, type = "file")
 }
 \arguments{
-\item{d}{Path to directory.}
+\item{d}{Directory path.}
 
 \item{max_files}{Max files returned.}
+
+\item{type}{File type(s) to return (e.g. any, file, directory, symlink). See
+\code{fs::dir_info}.}
 }
 \value{
 A tibble with file basename, size, last modification timestamp
 and full path.
 }
 \description{
-Lists files in a given directory.
+Lists files inside a given directory.
 }
 \examples{
 d <- system.file("R", package = "tidywigits")

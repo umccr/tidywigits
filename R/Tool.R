@@ -6,9 +6,11 @@
 #' \dontrun{
 #' name <- "amber"
 #' path <- here::here(
-#'   "nogit/oncoanalyser-wgts-dna/20250407e2ff5344/L2500331_L2500332/amber"
+#'   "nogit/oa_v1"
 #' )
-#' tool <- Tool$new(name, path)
+#' tool <- Tool$new(name = name, path = path)
+#' files_tbl <- list_files_dir("nogit/oa_v1")
+#' Tool$new(name = "amber", path = "foo", files_tbl = files_tbl)
 #' }
 #'
 #' @export
@@ -19,7 +21,7 @@ Tool <- R6::R6Class(
     #' Name of tool.
     name = NULL,
     #' @field path  (`character(1)`)\cr
-    #' Output directory of tool
+    #' Output directory of tool.
     path = NULL,
     #' @field config (`Config()`)\cr
     #' Config of tool.
@@ -44,12 +46,23 @@ Tool <- R6::R6Class(
     #' @param name (`character(1)`)\cr
     #' Name of tool.
     #' @param path (`character(1)`)\cr
-    #' Output directory of tool.
-    initialize = function(name, path) {
+    #' Output directory of tool. If `files_tbl` is supplied, this basically gets
+    #' ignored.
+    #' @param files_tbl (`tibble(n)`)\cr
+    #' Tibble of files from `list_files_dir`.
+    initialize = function(name, path = NULL, files_tbl = NULL) {
+      assertthat::assert_that(!is.null(path) || !is.null(files_tbl))
+      if (!is.null(files_tbl)) {
+        assertthat::assert_that(is_files_tbl(files_tbl))
+        if (!is.null(path)) {
+          # gets ignored if files_tbl is specified
+          path <- NULL
+        }
+      }
       self$name <- name
       self$path <- path
       self$config <- Config$new(self$name)
-      self$files <- self$list_files()
+      self$files <- self$list_files(files_tbl = files_tbl)
       self$raw_schemas_all <- self$config$raw_schemas_all
       self$tidy_schemas_all <- self$config$tidy_schemas_all
       self$.tidy_schema <- self$config$.tidy_schema
@@ -62,7 +75,7 @@ Tool <- R6::R6Class(
       res <- tibble::tribble(
         ~var, ~value,
         "name", self$name,
-        "path", self$path,
+        "path", self$path %||% "<ignored>",
         "files", as.character(nrow(self$files))
       ) |>
         tidyr::unnest("value")
@@ -71,9 +84,18 @@ Tool <- R6::R6Class(
       invisible(self)
     },
     #' @description List files in given tool directory.
-    list_files = function() {
+    #' @param type (`character(1)`)\cr
+    #' File types(s) to return (e.g. any, file, directory, symlink).
+    #' See `fs::dir_info`.
+    #' @param files_tbl (`tibble(n)`)\cr
+    #' Tibble of files from `list_files_dir`.
+    list_files = function(type = "file", files_tbl = NULL) {
+      assertthat::assert_that(!is.null(self$path) || !is.null(files_tbl))
+      if (!is.null(files_tbl)) {
+        assertthat::assert_that(is_files_tbl(files_tbl))
+      }
       patterns <- self$config$.raw_patterns()
-      files <- list_files_dir(self$path)
+      files <- files_tbl %||% list_files_dir(self$path, type = type)
       res <- files |>
         dplyr::rowwise() |>
         dplyr::mutate(

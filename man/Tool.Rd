@@ -10,9 +10,11 @@ Base class for all wigits tools.
 \dontrun{
 name <- "amber"
 path <- here::here(
-  "nogit/oncoanalyser-wgts-dna/20250407e2ff5344/L2500331_L2500332/amber"
+  "nogit/oa_v1"
 )
-tool <- Tool$new(name, path)
+tool <- Tool$new(name = name, path = path)
+files_tbl <- list_files_dir("nogit/oa_v1")
+Tool$new(name = "amber", path = "foo", files_tbl = files_tbl)
 }
 
 }
@@ -23,7 +25,7 @@ tool <- Tool$new(name, path)
 Name of tool.}
 
 \item{\code{path}}{(\code{character(1)})\cr
-Output directory of tool}
+Output directory of tool.}
 
 \item{\code{config}}{(\code{Config()})\cr
 Config of tool.}
@@ -64,7 +66,7 @@ Get specific raw schema.}
 \subsection{Method \code{new()}}{
 Create a new Tool object.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Tool$new(name, path)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Tool$new(name, path = NULL, files_tbl = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -74,7 +76,11 @@ Create a new Tool object.
 Name of tool.}
 
 \item{\code{path}}{(\code{character(1)})\cr
-Output directory of tool.}
+Output directory of tool. If \code{files_tbl} is supplied, this basically gets
+ignored.}
+
+\item{\code{files_tbl}}{(\code{tibble(n)})\cr
+Tibble of files from \code{list_files_dir}.}
 }
 \if{html}{\out{</div>}}
 }
@@ -102,9 +108,21 @@ Print details about the Tool.
 \subsection{Method \code{list_files()}}{
 List files in given tool directory.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Tool$list_files()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Tool$list_files(type = "file", files_tbl = NULL)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{type}}{(\code{character(1)})\cr
+File types(s) to return (e.g. any, file, directory, symlink).
+See \code{fs::dir_info}.}
+
+\item{\code{files_tbl}}{(\code{tibble(n)})\cr
+Tibble of files from \code{list_files_dir}.}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-Tool-.parse_file"></a>}}
