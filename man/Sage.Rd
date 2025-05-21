@@ -16,7 +16,6 @@ s$tidy
 s$tidy$tidy |>
   purrr::set_names(s$tidy$parser) |>
   purrr::map(\(x) x[["data"]][[1]])
-
 }
 }
 \section{Super class}{
