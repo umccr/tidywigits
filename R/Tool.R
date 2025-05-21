@@ -4,9 +4,9 @@
 #' Base class for all wigits tools.
 #' @examples
 #' \dontrun{
-#' name <- "amber"
+#' name <- "alignments"
 #' path <- here::here(
-#'   "nogit/oa_v1"
+#'   "nogit/oa_v2"
 #' )
 #' tool <- Tool$new(name = name, path = path)
 #' files_tbl <- list_files_dir("nogit/oa_v1")
@@ -41,6 +41,9 @@ Tool <- R6::R6Class(
     #' @field .raw_schema (`function()`)\cr
     #' Get specific raw schema.
     .raw_schema = NULL,
+    #' @field .files_tbl (`tibble(n)`)\cr
+    #' Tibble of files from `list_files_dir`.
+    .files_tbl = NULL,
 
     #' @description Create a new Tool object.
     #' @param name (`character(1)`)\cr
@@ -62,11 +65,12 @@ Tool <- R6::R6Class(
       self$name <- name
       self$path <- path
       self$config <- Config$new(self$name)
-      self$files <- self$list_files(files_tbl = files_tbl)
       self$raw_schemas_all <- self$config$raw_schemas_all
       self$tidy_schemas_all <- self$config$tidy_schemas_all
       self$.tidy_schema <- self$config$.tidy_schema
       self$.raw_schema <- self$config$.raw_schema
+      self$.files_tbl <- files_tbl
+      self$files <- self$list_files()
     },
     #' @description Print details about the Tool.
     #' @param ... (ignored).
@@ -87,9 +91,8 @@ Tool <- R6::R6Class(
     #' @param type (`character(1)`)\cr
     #' File types(s) to return (e.g. any, file, directory, symlink).
     #' See `fs::dir_info`.
-    #' @param files_tbl (`tibble(n)`)\cr
-    #' Tibble of files from `list_files_dir`.
-    list_files = function(type = "file", files_tbl = NULL) {
+    list_files = function(type = "file") {
+      files_tbl <- self$.files_tbl
       assertthat::assert_that(!is.null(self$path) || !is.null(files_tbl))
       if (!is.null(files_tbl)) {
         assertthat::assert_that(is_files_tbl(files_tbl))
@@ -114,7 +117,11 @@ Tool <- R6::R6Class(
           "lastmodified",
           "path",
           "pattern"
-        ) |>
+        )
+      if (nrow(res) == 0) {
+        return(res)
+      }
+      res |>
         dplyr::rowwise() |>
         dplyr::mutate(
           FileObj = list(
@@ -127,7 +134,6 @@ Tool <- R6::R6Class(
           schema = list(self$config$.raw_schema(.data$parser))
         ) |>
         dplyr::ungroup()
-      res
     },
     #' @description Parse file.
     #' @param x (`character(1)`)\cr
@@ -171,12 +177,15 @@ Tool <- R6::R6Class(
       assertthat::assert_that(rlang::is_scalar_character(fun))
       get(fun, envir)
     },
-    #' @description Tidy a list of files
+    #' @description Tidy a list of files.
     #' @param envir (`environment()`)\cr
     #' Environment to evaluate the function within.
     .tidy = function(envir = NULL) {
       # TODO: see if we can utilise self$.tidy_file
       assertthat::assert_that(!is.null(envir))
+      if (nrow(self$files) == 0) {
+        return(NULL)
+      }
       self$files |>
         dplyr::mutate(parser = glue("tidy_{parser}")) |>
         dplyr::rowwise() |>

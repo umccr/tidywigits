@@ -8,9 +8,9 @@ Base class for all wigits tools.
 }
 \examples{
 \dontrun{
-name <- "amber"
+name <- "alignments"
 path <- here::here(
-  "nogit/oa_v1"
+  "nogit/oa_v2"
 )
 tool <- Tool$new(name = name, path = path)
 files_tbl <- list_files_dir("nogit/oa_v1")
@@ -44,6 +44,9 @@ Get specific tidy schema.}
 
 \item{\code{.raw_schema}}{(\verb{function()})\cr
 Get specific raw schema.}
+
+\item{\code{.files_tbl}}{(\code{tibble(n)})\cr
+Tibble of files from \code{list_files_dir}.}
 }
 \if{html}{\out{</div>}}
 }
@@ -108,7 +111,7 @@ Print details about the Tool.
 \subsection{Method \code{list_files()}}{
 List files in given tool directory.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Tool$list_files(type = "file", files_tbl = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Tool$list_files(type = "file")}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -117,9 +120,6 @@ List files in given tool directory.
 \item{\code{type}}{(\code{character(1)})\cr
 File types(s) to return (e.g. any, file, directory, symlink).
 See \code{fs::dir_info}.}
-
-\item{\code{files_tbl}}{(\code{tibble(n)})\cr
-Tibble of files from \code{list_files_dir}.}
 }
 \if{html}{\out{</div>}}
 }
@@ -197,7 +197,7 @@ Environment to evaluate the function within.}
 \if{html}{\out{<a id="method-Tool-.tidy"></a>}}
 \if{latex}{\out{\hypertarget{method-Tool-.tidy}{}}}
 \subsection{Method \code{.tidy()}}{
-Tidy a list of files
+Tidy a list of files.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Tool$.tidy(envir = NULL)}\if{html}{\out{</div>}}
 }
