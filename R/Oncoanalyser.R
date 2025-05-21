@@ -5,8 +5,9 @@
 #' @examples
 #' \dontrun{
 #' path <- here::here(
-#'   "nogit/oncoanalyser-wgts-dna/20250407e2ff5344/L2500331_L2500332"
+#'   "nogit/oa_v1"
 #' )
+#' # TODO: handle missing directories e.g. alignments, flagstats for v2
 #' oa <- Oncoanalyser$new(path)
 #' oa$tbl |>
 #'   dplyr::select(tool, prefix, prefix2, tidy) |>

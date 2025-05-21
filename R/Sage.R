@@ -5,14 +5,13 @@
 #' @examples
 #' \dontrun{
 #' path <- here::here(
-#'   "nogit/oa_v1"
+#'   "nogit"
 #' )
 #' s <- Sage$new(path)
 #' s$tidy
 #' s$tidy$tidy |>
 #'   purrr::set_names(s$tidy$parser) |>
 #'   purrr::map(\(x) x[["data"]][[1]])
-#'
 #' }
 #' @export
 Sage <- R6::R6Class(
@@ -51,7 +50,22 @@ Sage <- R6::R6Class(
     #' @param x (`character(1)`)\cr
     #' Path to file.
     tidy_genecvg = function(x) {
-      self$.tidy_file(x, "genecvg")
+      d <- self$.tidy_file(x, "genecvg") |>
+        dplyr::select("data") |>
+        tidyr::unnest("data")
+      # make sure genes are unique
+      assertthat::assert_that(nrow(d) == nrow(dplyr::distinct(d, .data$gene)))
+      genes <- d |>
+        dplyr::select(!dplyr::starts_with("dr_"))
+      cvg <- d |>
+        tidyr::pivot_longer(
+          dplyr::starts_with("dr_"),
+          names_to = "dr",
+          values_to = "value"
+        ) |>
+        dplyr::select("gene", "dr", "value")
+      list(genes = genes, cvg = cvg) |>
+        tibble::enframe(value = "data")
     },
     #' @description Read `exon.medians.tsv` file.
     #' @param x (`character(1)`)\cr

@@ -9,14 +9,13 @@ Sage file parsing and manipulation.
 \examples{
 \dontrun{
 path <- here::here(
-  "nogit/oa_v1"
+  "nogit"
 )
 s <- Sage$new(path)
 s$tidy
 s$tidy$tidy |>
   purrr::set_names(s$tidy$parser) |>
   purrr::map(\(x) x[["data"]][[1]])
-
 }
 }
 \section{Super class}{
