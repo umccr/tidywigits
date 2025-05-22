@@ -85,13 +85,9 @@ Bamtools <- R6::R6Class(
     #' @param x (`character(1)`)\cr
     #' Path to file.
     tidy_wgsmetrics = function(x) {
-      raw <- self$parse_wgsmetrics(x)
+      d <- self$parse_wgsmetrics(x)
       schema <- self$.tidy_schema("wgsmetrics")
-      d <- list(
-        wgsmetrics_metrics = raw[["metrics"]],
-        wgsmetrics_histo = raw[["histo"]]
-      )
-      colnames(d[["wgsmetrics_metrics"]]) <- schema[["field"]]
+      colnames(d[["metrics"]]) <- schema[["field"]]
       tibble::enframe(d, value = "data")
     },
 

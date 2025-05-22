@@ -5,7 +5,7 @@
 #' @examples
 #' \dontrun{
 #' path <- here::here(
-#'   "nogit/oa_v2"
+#'   "nogit"
 #' )
 #' a <- Alignments$new(path)
 #' }
@@ -75,17 +75,13 @@ Alignments <- R6::R6Class(
     #' @param x (`character(1)`)\cr
     #' Path to file.
     tidy_markdup = function(x) {
-      raw <- self$parse_markdup(x)
+      d <- self$parse_markdup(x)
       schema <- self$.tidy_schema("markdup")
       schema_splitter <- which(schema$field == "SPLIT_HERE")
       s1 <- dplyr::slice(schema, 1:(schema_splitter - 1))
       s2 <- dplyr::slice(schema, (schema_splitter + 1):nrow(schema))
-      d <- list(
-        markdup_metrics = raw[["metrics"]],
-        markdup_histo = raw[["histo"]]
-      )
-      colnames(d[["markdup_metrics"]]) <- s1[["field"]]
-      colnames(d[["markdup_histo"]]) <- s2[["field"]]
+      colnames(d[["metrics"]]) <- s1[["field"]]
+      colnames(d[["histo"]]) <- s2[["field"]]
       tibble::enframe(d, value = "data")
     }
   )
