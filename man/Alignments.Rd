@@ -9,7 +9,7 @@ Alignments file parsing and manipulation.
 \examples{
 \dontrun{
 path <- here::here(
-  "nogit/oa_v1/alignments"
+  "nogit/oa_v2"
 )
 a <- Alignments$new(path)
 }
@@ -31,6 +31,8 @@ Tidy tibble.}
 \item \href{#method-Alignments-new}{\code{Alignments$new()}}
 \item \href{#method-Alignments-parse_dupfreq}{\code{Alignments$parse_dupfreq()}}
 \item \href{#method-Alignments-tidy_dupfreq}{\code{Alignments$tidy_dupfreq()}}
+\item \href{#method-Alignments-parse_markdup}{\code{Alignments$parse_markdup()}}
+\item \href{#method-Alignments-tidy_markdup}{\code{Alignments$tidy_markdup()}}
 \item \href{#method-Alignments-clone}{\code{Alignments$clone()}}
 }
 }
@@ -93,6 +95,42 @@ Path to file.}
 Tidy \code{duplicate_freq.tsv} file.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Alignments$tidy_dupfreq(x)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{x}}{(\code{character(1)})\cr
+Path to file.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Alignments-parse_markdup"></a>}}
+\if{latex}{\out{\hypertarget{method-Alignments-parse_markdup}{}}}
+\subsection{Method \code{parse_markdup()}}{
+Read \code{md.metrics} file.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Alignments$parse_markdup(x)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{x}}{(\code{character(1)})\cr
+Path to file.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Alignments-tidy_markdup"></a>}}
+\if{latex}{\out{\hypertarget{method-Alignments-tidy_markdup}{}}}
+\subsection{Method \code{tidy_markdup()}}{
+Tidy \code{md.metrics} file.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Alignments$tidy_markdup(x)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{

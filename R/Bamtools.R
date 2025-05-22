@@ -64,20 +64,9 @@ Bamtools <- R6::R6Class(
       # handle two different sections
       schema <- self$.raw_schema("wgsmetrics")
       # first make sure colnames are as expected
-      hdr1 <- readr::read_tsv(
-        file = x,
-        col_types = readr::cols(.default = "c"),
-        comment = "#",
-        n_max = 0
-      )
+      hdr1 <- file_hdr(x, comment = "#")
       assertthat::assert_that(all(colnames(hdr1) == schema[["field"]]))
-      hdr2 <- readr::read_tsv(
-        file = x,
-        col_types = readr::cols(.default = "c"),
-        comment = "#",
-        skip = 3,
-        n_max = 0
-      )
+      hdr2 <- file_hdr(x, comment = "#", skip = 3)
       assertthat::assert_that(all(
         colnames(hdr2) == c("coverage", "high_quality_coverage_count")
       ))

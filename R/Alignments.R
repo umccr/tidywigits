@@ -5,7 +5,7 @@
 #' @examples
 #' \dontrun{
 #' path <- here::here(
-#'   "nogit/oa_v1/alignments"
+#'   "nogit/oa_v2"
 #' )
 #' a <- Alignments$new(path)
 #' }
@@ -38,6 +38,55 @@ Alignments <- R6::R6Class(
     #' Path to file.
     tidy_dupfreq = function(x) {
       self$.tidy_file(x, "dupfreq")
+    },
+    #' @description Read `md.metrics` file.
+    #' @param x (`character(1)`)\cr
+    #' Path to file.
+    parse_markdup = function(x) {
+      # handle two different sections
+      schema <- self$.raw_schema("markdup")
+      # first make sure colnames are as expected
+      hdr1 <- file_hdr(x, comment = "#")
+      hdr2 <- file_hdr(x, comment = "#", skip = 10)
+      schema_splitter <- which(schema$field == "SPLIT_HERE")
+      assertthat::assert_that(schema_splitter == 11)
+      s1 <- dplyr::slice(schema, 1:(schema_splitter - 1))
+      s2 <- dplyr::slice(schema, (schema_splitter + 1):nrow(schema))
+      assertthat::assert_that(all(colnames(hdr1) == s1[["field"]]))
+      assertthat::assert_that(all(colnames(hdr2) == s2[["field"]]))
+      # just hard-code the classes in this case, pretty straightforward
+      d1 <- readr::read_tsv(
+        x,
+        comment = "#",
+        n_max = 1,
+        col_types = readr::cols(.default = "d", LIBRARY = "c")
+      )
+      d2 <- readr::read_tsv(
+        x,
+        col_types = readr::cols(.default = "d"),
+        comment = "#",
+        skip = 10
+      )
+      attr(d1, "file_version") <- "latest"
+      attr(d2, "file_version") <- "latest"
+      list(metrics = d1[], histo = d2[])
+    },
+    #' @description Tidy `md.metrics` file.
+    #' @param x (`character(1)`)\cr
+    #' Path to file.
+    tidy_markdup = function(x) {
+      raw <- self$parse_markdup(x)
+      schema <- self$.tidy_schema("markdup")
+      schema_splitter <- which(schema$field == "SPLIT_HERE")
+      s1 <- dplyr::slice(schema, 1:(schema_splitter - 1))
+      s2 <- dplyr::slice(schema, (schema_splitter + 1):nrow(schema))
+      d <- list(
+        markdup_metrics = raw[["metrics"]],
+        markdup_histo = raw[["histo"]]
+      )
+      colnames(d[["markdup_metrics"]]) <- s1[["field"]]
+      colnames(d[["markdup_histo"]]) <- s2[["field"]]
+      tibble::enframe(d, value = "data")
     }
   )
 )
