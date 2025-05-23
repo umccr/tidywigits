@@ -213,3 +213,9 @@ is_files_tbl <- function(x) {
     all(colnames(x) == c("bname", "size", "lastmodified", "path"))
   )
 }
+
+schema_type_remap <- function(x) {
+  type_map <- c(char = "c", float = "d", int = "i")
+  assertthat::assert_that(x %in% names(type_map))
+  unname(type_map[x])
+}

@@ -106,7 +106,11 @@ Config <- R6::R6Class(
             purrr::map(
               \(s)
                 {
-                  s |> purrr::map(\(v) tibble::as_tibble_row(v))
+                  s |>
+                    purrr::map(\(v) {
+                      v[["type"]] <- schema_type_remap(v[["type"]])
+                      tibble::as_tibble_row(v)
+                    })
                 } |>
                   dplyr::bind_rows()
             ) |>
@@ -179,8 +183,14 @@ Config <- R6::R6Class(
             purrr::map(\(v) {
               v |>
                 purrr::map(
-                  \(y)
-                    y |> purrr::map(tibble::as_tibble_row) |> dplyr::bind_rows()
+                  \(y) {
+                    y |>
+                      purrr::map(\(z) {
+                        z[["type"]] <- schema_type_remap(z[["type"]])
+                        tibble::as_tibble_row(z)
+                      }) |>
+                      dplyr::bind_rows()
+                  }
                 ) |>
                 tibble::enframe(name = "tbl", value = "schema")
             }) |>
