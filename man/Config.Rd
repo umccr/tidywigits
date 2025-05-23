@@ -8,7 +8,7 @@ Config YAML file parsing.
 }
 \examples{
 \dontrun{
-tool <- "amber"
+tool <- "isofox"
 conf <- Config$new(tool)
 conf$.raw_schemas_valid()
 conf$.raw_schemas_all()
