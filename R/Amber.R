@@ -80,32 +80,16 @@ Amber <- R6::R6Class(
     #' @param x (`character(1)`)\cr
     #' Path to file.
     parse_qc = function(x) {
-      schema <- self$.raw_schema("qc")
-      col_types <- schema |>
-        dplyr::select("field", "type") |>
-        tibble::deframe()
-      parse_file_nohead(
-        fpath = x,
-        ctypes = paste0(col_types, collapse = ""),
-        cnames_new = names(col_types),
-        delim = "\t"
-      )
+      d0 <- self$.parse_file_nohead(x, "qc")
+      d0 |>
+        tidyr::pivot_wider(names_from = "variable", values_from = "value") |>
+        set_tbl_version_attr(get_tbl_version_attr(d0))
     },
     #' @description Tidy `qc` file.
     #' @param x (`character(1)`)\cr
     #' Path to file.
     tidy_qc = function(x) {
-      raw <- self$parse_qc(x)
-      schema <- self$.tidy_schema("qc")
-      col_types <- schema |>
-        dplyr::select("field", "type") |>
-        tibble::deframe()
-      d <- raw |>
-        tidyr::pivot_wider(names_from = "variable", values_from = "value") |>
-        purrr::set_names(names(col_types)) |>
-        readr::type_convert(col_types = rlang::exec(readr::cols, !!!col_types))
-      list(qc = d) |>
-        tibble::enframe(value = "data")
+      self$.tidy_file(x, "qc", convert_types = TRUE)
     }
   )
 )
