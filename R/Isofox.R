@@ -54,13 +54,13 @@ Isofox <- R6::R6Class(
     tidy_genedata = function(x) {
       self$.tidy_file(x, "genedata")
     },
-    #' @description Read `transcipt_data.csv` file.
+    #' @description Read `transcript_data.csv` file.
     #' @param x (`character(1)`)\cr
     #' Path to file.
     parse_transdata = function(x) {
       self$.parse_file(x, "transdata", delim = ",")
     },
-    #' @description Tidy `transcipt_data.csv` file.
+    #' @description Tidy `transcript_data.csv` file.
     #' @param x (`character(1)`)\cr
     #' Path to file.
     tidy_transdata = function(x) {

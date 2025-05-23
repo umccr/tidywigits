@@ -161,7 +161,7 @@ Path to file.}
 \if{html}{\out{<a id="method-Isofox-parse_transdata"></a>}}
 \if{latex}{\out{\hypertarget{method-Isofox-parse_transdata}{}}}
 \subsection{Method \code{parse_transdata()}}{
-Read \code{transcipt_data.csv} file.
+Read \code{transcript_data.csv} file.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Isofox$parse_transdata(x)}\if{html}{\out{</div>}}
 }
@@ -179,7 +179,7 @@ Path to file.}
 \if{html}{\out{<a id="method-Isofox-tidy_transdata"></a>}}
 \if{latex}{\out{\hypertarget{method-Isofox-tidy_transdata}{}}}
 \subsection{Method \code{tidy_transdata()}}{
-Tidy \code{transcipt_data.csv} file.
+Tidy \code{transcript_data.csv} file.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Isofox$tidy_transdata(x)}\if{html}{\out{</div>}}
 }
