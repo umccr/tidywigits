@@ -35,6 +35,7 @@ Oncoanalyser <- R6::R6Class(
         cobalt = Cobalt$new(files_tbl = ft),
         cuppa = Cuppa$new(files_tbl = ft),
         flagstats = Flagstats$new(files_tbl = ft),
+        isofox = Isofox$new(files_tbl = ft),
         lilac = Lilac$new(files_tbl = ft),
         linx = Linx$new(files_tbl = ft),
         purple = Purple$new(files_tbl = ft),

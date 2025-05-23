@@ -51,14 +51,6 @@ Chord <- R6::R6Class(
         n_max = n_max
       )
       schema <- self$.raw_schema("signatures") |>
-        dplyr::mutate(
-          type = dplyr::case_match(
-            .data$type,
-            "char" ~ "c",
-            "int" ~ "i",
-            "float" ~ "d"
-          )
-        ) |>
         tibble::deframe()
 
       # header contains sample column in latest version

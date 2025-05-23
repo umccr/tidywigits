@@ -24,7 +24,11 @@ Virusbreakend <- R6::R6Class(
     #' @param files_tbl (`tibble(n)`)\cr
     #' Tibble of files from `list_files_dir`.
     initialize = function(path = NULL, files_tbl = NULL) {
-      super$initialize(name = "virusbreakend", path = path, files_tbl = files_tbl)
+      super$initialize(
+        name = "virusbreakend",
+        path = path,
+        files_tbl = files_tbl
+      )
       self$tidy = super$.tidy(envir = self)
     },
 
@@ -32,15 +36,7 @@ Virusbreakend <- R6::R6Class(
     #' @param x (`character(1)`)\cr
     #' Path to file.
     parse_summary = function(x) {
-      schema <- self$.raw_schema("summary") |>
-        dplyr::mutate(
-          type = dplyr::case_match(
-            .data$type,
-            "char" ~ "c",
-            "int" ~ "i",
-            "float" ~ "d"
-          )
-        )
+      schema <- self$.raw_schema("summary")
       # file is either completely empty, or with colnames + data
       hdr <- file_hdr(x)
       if (length(hdr) == 0) {

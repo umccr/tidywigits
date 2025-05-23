@@ -43,14 +43,6 @@ parse_file <- function(
   )
   # remap schema
   schema[["schema"]] <- schema[["schema"]] |>
-    dplyr::mutate(
-      type = dplyr::case_match(
-        .data$type,
-        "char" ~ "c",
-        "int" ~ "i",
-        "float" ~ "d"
-      )
-    ) |>
     tibble::deframe()
   ctypes <- rlang::exec(readr::cols, !!!schema[["schema"]])
   d <- readr::read_delim(
@@ -212,4 +204,10 @@ is_files_tbl <- function(x) {
     tibble::is_tibble(x),
     all(colnames(x) == c("bname", "size", "lastmodified", "path"))
   )
+}
+
+schema_type_remap <- function(x) {
+  type_map <- c(char = "c", float = "d", int = "i")
+  assertthat::assert_that(x %in% names(type_map))
+  unname(type_map[x])
 }

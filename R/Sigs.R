@@ -45,14 +45,6 @@ Sigs <- R6::R6Class(
     parse_snvcounts = function(x) {
       schema <- self$.raw_schema("snvcounts")
       col_types <- schema |>
-        dplyr::mutate(
-          type = dplyr::case_match(
-            .data$type,
-            "char" ~ "c",
-            "int" ~ "i",
-            "float" ~ "d"
-          )
-        ) |>
         dplyr::select("field", "type") |>
         tibble::deframe()
       d <- parse_file_nohead(
