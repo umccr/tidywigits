@@ -51,14 +51,6 @@ Purple <- R6::R6Class(
     parse_qc = function(x) {
       schema <- self$.raw_schema("qc")
       col_types <- schema |>
-        dplyr::mutate(
-          type = dplyr::case_match(
-            .data$type,
-            "char" ~ "c",
-            "int" ~ "i",
-            "float" ~ "d"
-          )
-        ) |>
         dplyr::select("field", "type") |>
         tibble::deframe()
       parse_file_nohead(
@@ -75,14 +67,6 @@ Purple <- R6::R6Class(
       raw <- self$parse_qc(x)
       schema <- self$.tidy_schema("qc")
       col_types <- self$.tidy_schema("qc") |>
-        dplyr::mutate(
-          type = dplyr::case_match(
-            .data$type,
-            "char" ~ "c",
-            "int" ~ "i",
-            "float" ~ "d"
-          )
-        ) |>
         dplyr::select("field", "type") |>
         tibble::deframe()
       d <- raw |>

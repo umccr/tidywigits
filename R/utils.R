@@ -43,14 +43,6 @@ parse_file <- function(
   )
   # remap schema
   schema[["schema"]] <- schema[["schema"]] |>
-    dplyr::mutate(
-      type = dplyr::case_match(
-        .data$type,
-        "char" ~ "c",
-        "int" ~ "i",
-        "float" ~ "d"
-      )
-    ) |>
     tibble::deframe()
   ctypes <- rlang::exec(readr::cols, !!!schema[["schema"]])
   d <- readr::read_delim(
