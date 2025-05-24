@@ -176,7 +176,7 @@ Tool <- R6::R6Class(
       }
       list(d) |>
         setNames(name) |>
-        tibble::enframe(value = "data")
+        enframe_data()
     },
     #' @description Parse headless file.
     #' @param x (`character(1)`)\cr

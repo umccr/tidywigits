@@ -73,7 +73,7 @@ Chord <- R6::R6Class(
       schema <- self$.tidy_schema("signatures")
       assertthat::assert_that(all(colnames(d) == schema[["field"]]))
       list(signatures = d) |>
-        tibble::enframe(value = "data")
+        enframe_data()
     }
   )
 )

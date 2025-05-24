@@ -121,7 +121,7 @@ Flagstats <- R6::R6Class(
       schema <- self$.tidy_schema("flagstats")
       assertthat::assert_that(all(colnames(d) == schema[["field"]]))
       list(flagstats = d) |>
-        tibble::enframe(value = "data")
+        enframe_data()
     }
   )
 )

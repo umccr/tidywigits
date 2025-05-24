@@ -207,3 +207,7 @@ schema_type_remap <- function(x) {
   assertthat::assert_that(x %in% names(type_map))
   unname(type_map[x])
 }
+
+enframe_data <- function(x) {
+  tibble::enframe(x, value = "data")
+}

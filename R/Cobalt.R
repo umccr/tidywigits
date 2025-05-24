@@ -51,7 +51,7 @@ Cobalt <- R6::R6Class(
       schema <- self$.tidy_schema("gcmed")
       colnames(raw[["bucket_stats"]]) <- schema[["field"]]
       colnames(raw[["sample_stats"]]) <- c("mean", "median")
-      tibble::enframe(raw, value = "data")
+      enframe_data(raw)
     },
     #' @description Read `ratio.median.tsv` file.
     #' @param x (`character(1)`)\cr

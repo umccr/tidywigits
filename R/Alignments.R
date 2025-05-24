@@ -82,7 +82,7 @@ Alignments <- R6::R6Class(
       s2 <- dplyr::slice(schema, (schema_splitter + 1):nrow(schema))
       colnames(d[["metrics"]]) <- s1[["field"]]
       colnames(d[["histo"]]) <- s2[["field"]]
-      tibble::enframe(d, value = "data")
+      enframe_data(d)
     }
   )
 )

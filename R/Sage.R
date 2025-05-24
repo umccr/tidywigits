@@ -68,7 +68,7 @@ Sage <- R6::R6Class(
         ) |>
         dplyr::select("gene", "dr", "value")
       list(genes = genes, cvg = cvg) |>
-        tibble::enframe(value = "data")
+        enframe_data()
     },
     #' @description Read `exon.medians.tsv` file.
     #' @param x (`character(1)`)\cr

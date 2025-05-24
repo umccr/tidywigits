@@ -55,7 +55,7 @@ Bamtools <- R6::R6Class(
         dplyr::select("covx", "value")
       assertthat::assert_that(all(colnames(d2) == schema2[["field"]]))
       list(summary = d1, covx = d2) |>
-        tibble::enframe(value = "data")
+        enframe_data()
     },
     #' @description Read `wgsmetrics` file.
     #' @param x (`character(1)`)\cr
@@ -88,7 +88,7 @@ Bamtools <- R6::R6Class(
       d <- self$parse_wgsmetrics(x)
       schema <- self$.tidy_schema("wgsmetrics")
       colnames(d[["metrics"]]) <- schema[["field"]]
-      tibble::enframe(d, value = "data")
+      enframe_data(d)
     },
 
     #' @description Read `flag_counts.tsv` file.
@@ -185,7 +185,7 @@ Bamtools <- R6::R6Class(
       schema <- self$.tidy_schema("flagstats")
       assertthat::assert_that(all(colnames(raw) == schema[["field"]]))
       list(flagstats = raw) |>
-        tibble::enframe(value = "data")
+        enframe_data()
     },
     #' @description Read `coverage.tsv` file.
     #' @param x (`character(1)`)\cr
