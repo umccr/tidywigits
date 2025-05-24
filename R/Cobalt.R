@@ -36,7 +36,6 @@ Cobalt <- R6::R6Class(
     parse_gcmed = function(x) {
       # first two rows are mean/median + their values
       d1 <- readr::read_tsv(x, col_names = TRUE, col_types = "dd", n_max = 1)
-      schema <- self$.raw_schema("gcmed")
       # next rows are median per bucket
       d2 <- self$.parse_file(x, "gcmed", skip = 2)
       list(sample_stats = d1[], bucket_stats = d2)

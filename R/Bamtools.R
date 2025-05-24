@@ -77,8 +77,8 @@ Bamtools <- R6::R6Class(
         n_max = 1,
         comment = "#"
       )
-      d2 <- readr::read_tsv(x, col_types = "ci", comment = "#", skip = 3)
-      attr(d2, "file_version") <- attr(d1, "file_version")
+      d2 <- readr::read_tsv(x, col_types = "ci", comment = "#", skip = 3) |>
+        set_tbl_version_attr(get_tbl_version_attr(d1))
       list(metrics = d1[], histo = d2[])
     },
     #' @description Tidy `wgsmetrics` file.

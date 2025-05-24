@@ -58,6 +58,7 @@ Tibble of files from \code{list_files_dir}.}
 \item \href{#method-Tool-list_files}{\code{Tool$list_files()}}
 \item \href{#method-Tool-.parse_file}{\code{Tool$.parse_file()}}
 \item \href{#method-Tool-.tidy_file}{\code{Tool$.tidy_file()}}
+\item \href{#method-Tool-.parse_file_nohead}{\code{Tool$.parse_file_nohead()}}
 \item \href{#method-Tool-.eval_func}{\code{Tool$.eval_func()}}
 \item \href{#method-Tool-.tidy}{\code{Tool$.tidy()}}
 \item \href{#method-Tool-clone}{\code{Tool$clone()}}
@@ -156,7 +157,7 @@ File delimiter.}
 \subsection{Method \code{.tidy_file()}}{
 Tidy file.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Tool$.tidy_file(x, name)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Tool$.tidy_file(x, name, convert_types = FALSE)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -167,6 +168,35 @@ File path.}
 
 \item{\code{name}}{(\code{character(1)})\cr
 Parser name (e.g. "breakends" - see docs).}
+
+\item{\code{convert_types}}{(\code{logical(1)})\cr
+Convert field types based on schema.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Tool-.parse_file_nohead"></a>}}
+\if{latex}{\out{\hypertarget{method-Tool-.parse_file_nohead}{}}}
+\subsection{Method \code{.parse_file_nohead()}}{
+Parse headless file.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Tool$.parse_file_nohead(x, pname, delim = "\\t", ...)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{x}}{(\code{character(1)})\cr
+File path.}
+
+\item{\code{pname}}{(\code{character(1)})\cr
+Parser name (e.g. "breakends" - see docs).}
+
+\item{\code{delim}}{(\code{character(1)})\cr
+File delimiter.}
+
+\item{\code{...}}{Passed on to \code{readr::read_delim}.}
 }
 \if{html}{\out{</div>}}
 }

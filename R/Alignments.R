@@ -60,15 +60,15 @@ Alignments <- R6::R6Class(
         comment = "#",
         n_max = 1,
         col_types = readr::cols(.default = "d", LIBRARY = "c")
-      )
+      ) |>
+        set_tbl_version_attr("latest")
       d2 <- readr::read_tsv(
         x,
         col_types = readr::cols(.default = "d"),
         comment = "#",
         skip = 10
-      )
-      attr(d1, "file_version") <- "latest"
-      attr(d2, "file_version") <- "latest"
+      ) |>
+        set_tbl_version_attr("latest")
       list(metrics = d1[], histo = d2[])
     },
     #' @description Tidy `md.metrics` file.

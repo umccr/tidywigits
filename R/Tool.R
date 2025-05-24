@@ -157,6 +157,8 @@ Tool <- R6::R6Class(
     #' File path.
     #' @param name (`character(1)`)\cr
     #' Parser name (e.g. "breakends" - see docs).
+    #' @param convert_types (`logical(1)`)\cr
+    #' Convert field types based on schema.
     .tidy_file = function(x, name, convert_types = FALSE) {
       .parser <- self$.eval_func(glue("parse_{name}"))
       d <- .parser(x)
@@ -179,7 +181,7 @@ Tool <- R6::R6Class(
     #' @description Parse headless file.
     #' @param x (`character(1)`)\cr
     #' File path.
-    #' @param name (`character(1)`)\cr
+    #' @param pname (`character(1)`)\cr
     #' Parser name (e.g. "breakends" - see docs).
     #' @param delim (`character(1)`)\cr
     #' File delimiter.
