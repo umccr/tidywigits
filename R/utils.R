@@ -53,8 +53,7 @@ parse_file <- function(
 parse_file_nohead <- function(fpath, schema, delim = "\t", ...) {
   assertthat::assert_that(
     nrow(schema) == 1,
-    all(colnames(schema) == c("version", "schema")),
-    all(sapply(schema, class) == c("character", "list"))
+    identical(sapply(schema, class), c(version = "character", schema = "list"))
   )
   version <- schema[["version"]]
   schema <- schema[["schema"]][[1]] |>
@@ -124,7 +123,7 @@ schema_guess <- function(pname, cnames, schemas_all) {
     dplyr::mutate(
       length_match = length(cnames) == nrow(.data$schema),
       all_match = if (.data$length_match) {
-        all(cnames == .data$schema[["field"]])
+        identical(cnames, .data$schema[["field"]])
       } else {
         FALSE
       }
@@ -198,7 +197,7 @@ empty_tbl <- function(cnames, ctypes = readr::cols(.default = "c")) {
 is_files_tbl <- function(x) {
   assertthat::assert_that(
     tibble::is_tibble(x),
-    all(colnames(x) == c("bname", "size", "lastmodified", "path"))
+    identical(colnames(x), c("bname", "size", "lastmodified", "path"))
   )
 }
 

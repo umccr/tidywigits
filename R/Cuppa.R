@@ -99,7 +99,7 @@ Cuppa <- R6::R6Class(
         dplyr::relocate("extra_info", .after = dplyr::last_col()) |>
         dplyr::relocate("extra_info_format", .after = dplyr::last_col())
       schema <- self$.tidy_schema("predsum")
-      assertthat::assert_that(all(colnames(d) == schema[["field"]]))
+      assertthat::assert_that(identical(colnames(d), schema[["field"]]))
       list(predsum = d) |>
         enframe_data()
     },

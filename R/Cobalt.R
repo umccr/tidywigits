@@ -45,9 +45,9 @@ Cobalt <- R6::R6Class(
     #' Path to file.
     tidy_gcmed = function(x) {
       raw <- self$parse_gcmed(x)
-      assertthat::assert_that(all(
-        names(raw) == c("sample_stats", "bucket_stats")
-      ))
+      assertthat::assert_that(
+        identical(names(raw), c("sample_stats", "bucket_stats"))
+      )
       schema <- self$.tidy_schema("gcmed")
       colnames(raw[["bucket_stats"]]) <- schema[["field"]]
       colnames(raw[["sample_stats"]]) <- c("mean", "median")

@@ -53,7 +53,7 @@ Bamtools <- R6::R6Class(
         ) |>
         dplyr::mutate(covx = as.numeric(.data$covdp)) |>
         dplyr::select("covx", "value")
-      assertthat::assert_that(all(colnames(d2) == schema2[["field"]]))
+      assertthat::assert_that(identical(colnames(d2), schema2[["field"]]))
       list(summary = d1, covx = d2) |>
         enframe_data()
     },
@@ -65,11 +65,11 @@ Bamtools <- R6::R6Class(
       schema <- self$.raw_schema("wgsmetrics")
       # first make sure colnames are as expected
       hdr1 <- file_hdr(x, comment = "#")
-      assertthat::assert_that(all(colnames(hdr1) == schema[["field"]]))
+      assertthat::assert_that(identical(hdr1, schema[["field"]]))
       hdr2 <- file_hdr(x, comment = "#", skip = 3)
-      assertthat::assert_that(all(
-        colnames(hdr2) == c("coverage", "high_quality_coverage_count")
-      ))
+      assertthat::assert_that(
+        identical(hdr2, c("coverage", "high_quality_coverage_count"))
+      )
       # now parse with proper classes
       d1 <- self$.parse_file(
         x = x,
@@ -183,7 +183,7 @@ Bamtools <- R6::R6Class(
     tidy_flagstats = function(x) {
       raw <- self$parse_flagstats(x)
       schema <- self$.tidy_schema("flagstats")
-      assertthat::assert_that(all(colnames(raw) == schema[["field"]]))
+      assertthat::assert_that(identical(colnames(raw), schema[["field"]]))
       list(flagstats = raw) |>
         enframe_data()
     },
