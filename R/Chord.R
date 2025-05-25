@@ -43,23 +43,17 @@ Chord <- R6::R6Class(
     #' @param x (`character(1)`)\cr
     #' Path to file.
     parse_signatures = function(x) {
-      n_max <- 0
-      hdr <- readr::read_tsv(
-        x,
-        col_names = TRUE,
-        col_types = readr::cols(.default = "c"),
-        n_max = n_max
-      )
+      hdr <- file_hdr(x)
       schema <- self$.raw_schema("signatures") |>
         tibble::deframe()
 
       # header contains sample column in latest version
-      if (colnames(hdr)[1] != "sample_id") {
-        assertthat::assert_that(all(colnames(hdr) == names(schema)[-1]))
-        cnames <- c("sample_id", colnames(hdr))
+      if (hdr[1] != "sample_id") {
+        assertthat::assert_that(identical(hdr, names(schema)[-1]))
+        cnames <- c("sample_id", hdr)
       } else {
-        assertthat::assert_that(all(colnames(hdr) == names(schema)))
-        cnames <- colnames(hdr)
+        assertthat::assert_that(identical(hdr, names(schema)))
+        cnames <- hdr
       }
       d <- readr::read_tsv(x, col_names = cnames, col_types = schema, skip = 1)
       d[]
@@ -77,9 +71,9 @@ Chord <- R6::R6Class(
         ) |>
         dplyr::select("signature", "count")
       schema <- self$.tidy_schema("signatures")
-      assertthat::assert_that(all(colnames(d) == schema[["field"]]))
+      assertthat::assert_that(identical(colnames(d), schema[["field"]]))
       list(signatures = d) |>
-        tibble::enframe(value = "data")
+        enframe_data()
     }
   )
 )

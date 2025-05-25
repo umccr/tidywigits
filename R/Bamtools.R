@@ -53,9 +53,9 @@ Bamtools <- R6::R6Class(
         ) |>
         dplyr::mutate(covx = as.numeric(.data$covdp)) |>
         dplyr::select("covx", "value")
-      assertthat::assert_that(all(colnames(d2) == schema2[["field"]]))
+      assertthat::assert_that(identical(colnames(d2), schema2[["field"]]))
       list(summary = d1, covx = d2) |>
-        tibble::enframe(value = "data")
+        enframe_data()
     },
     #' @description Read `wgsmetrics` file.
     #' @param x (`character(1)`)\cr
@@ -65,11 +65,11 @@ Bamtools <- R6::R6Class(
       schema <- self$.raw_schema("wgsmetrics")
       # first make sure colnames are as expected
       hdr1 <- file_hdr(x, comment = "#")
-      assertthat::assert_that(all(colnames(hdr1) == schema[["field"]]))
+      assertthat::assert_that(identical(hdr1, schema[["field"]]))
       hdr2 <- file_hdr(x, comment = "#", skip = 3)
-      assertthat::assert_that(all(
-        colnames(hdr2) == c("coverage", "high_quality_coverage_count")
-      ))
+      assertthat::assert_that(
+        identical(hdr2, c("coverage", "high_quality_coverage_count"))
+      )
       # now parse with proper classes
       d1 <- self$.parse_file(
         x = x,
@@ -77,8 +77,8 @@ Bamtools <- R6::R6Class(
         n_max = 1,
         comment = "#"
       )
-      d2 <- readr::read_tsv(x, col_types = "ci", comment = "#", skip = 3)
-      attr(d2, "file_version") <- attr(d1, "file_version")
+      d2 <- readr::read_tsv(x, col_types = "ci", comment = "#", skip = 3) |>
+        set_tbl_version_attr(get_tbl_version_attr(d1))
       list(metrics = d1[], histo = d2[])
     },
     #' @description Tidy `wgsmetrics` file.
@@ -88,7 +88,7 @@ Bamtools <- R6::R6Class(
       d <- self$parse_wgsmetrics(x)
       schema <- self$.tidy_schema("wgsmetrics")
       colnames(d[["metrics"]]) <- schema[["field"]]
-      tibble::enframe(d, value = "data")
+      enframe_data(d)
     },
 
     #' @description Read `flag_counts.tsv` file.
@@ -183,9 +183,9 @@ Bamtools <- R6::R6Class(
     tidy_flagstats = function(x) {
       raw <- self$parse_flagstats(x)
       schema <- self$.tidy_schema("flagstats")
-      assertthat::assert_that(all(colnames(raw) == schema[["field"]]))
+      assertthat::assert_that(identical(colnames(raw), schema[["field"]]))
       list(flagstats = raw) |>
-        tibble::enframe(value = "data")
+        enframe_data()
     },
     #' @description Read `coverage.tsv` file.
     #' @param x (`character(1)`)\cr

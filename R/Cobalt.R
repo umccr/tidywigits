@@ -36,7 +36,6 @@ Cobalt <- R6::R6Class(
     parse_gcmed = function(x) {
       # first two rows are mean/median + their values
       d1 <- readr::read_tsv(x, col_names = TRUE, col_types = "dd", n_max = 1)
-      schema <- self$.raw_schema("gcmed")
       # next rows are median per bucket
       d2 <- self$.parse_file(x, "gcmed", skip = 2)
       list(sample_stats = d1[], bucket_stats = d2)
@@ -46,13 +45,13 @@ Cobalt <- R6::R6Class(
     #' Path to file.
     tidy_gcmed = function(x) {
       raw <- self$parse_gcmed(x)
-      assertthat::assert_that(all(
-        names(raw) == c("sample_stats", "bucket_stats")
-      ))
+      assertthat::assert_that(
+        identical(names(raw), c("sample_stats", "bucket_stats"))
+      )
       schema <- self$.tidy_schema("gcmed")
       colnames(raw[["bucket_stats"]]) <- schema[["field"]]
       colnames(raw[["sample_stats"]]) <- c("mean", "median")
-      tibble::enframe(raw, value = "data")
+      enframe_data(raw)
     },
     #' @description Read `ratio.median.tsv` file.
     #' @param x (`character(1)`)\cr
@@ -94,13 +93,16 @@ Cobalt <- R6::R6Class(
     #' @param x (`character(1)`)\cr
     #' Path to file.
     parse_version = function(x) {
-      parse_wigits_version_file(x)
+      d0 <- self$.parse_file_nohead(x, "version", delim = "=")
+      d0 |>
+        tidyr::pivot_wider(names_from = "variable", values_from = "value") |>
+        set_tbl_version_attr(get_tbl_version_attr(d0))
     },
     #' @description Tidy `cobalt.version` file.
     #' @param x (`character(1)`)\cr
     #' Path to file.
     tidy_version = function(x) {
-      tidy_wigits_version_file(x)
+      self$.tidy_file(x, "version")
     }
   ) # end public
 )

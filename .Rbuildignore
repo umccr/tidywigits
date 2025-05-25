@@ -3,6 +3,7 @@
 ^LICENSE\.md$
 ^Makefile$
 ^README\.qmd$
+^TODO\.md$
 ^\.DS_Store$
 ^\.Rproj\.user$
 ^\.bumpversion\.toml$

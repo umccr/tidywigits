@@ -50,6 +50,7 @@ Tidy tibble.}
 <ul>
 <li><span class="pkg-link" data-pkg="tidywigits" data-topic="Tool" data-id=".eval_func"><a href='../../tidywigits/html/Tool.html#method-Tool-.eval_func'><code>tidywigits::Tool$.eval_func()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="tidywigits" data-topic="Tool" data-id=".parse_file"><a href='../../tidywigits/html/Tool.html#method-Tool-.parse_file'><code>tidywigits::Tool$.parse_file()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="tidywigits" data-topic="Tool" data-id=".parse_file_nohead"><a href='../../tidywigits/html/Tool.html#method-Tool-.parse_file_nohead'><code>tidywigits::Tool$.parse_file_nohead()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="tidywigits" data-topic="Tool" data-id=".tidy"><a href='../../tidywigits/html/Tool.html#method-Tool-.tidy'><code>tidywigits::Tool$.tidy()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="tidywigits" data-topic="Tool" data-id=".tidy_file"><a href='../../tidywigits/html/Tool.html#method-Tool-.tidy_file'><code>tidywigits::Tool$.tidy_file()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="tidywigits" data-topic="Tool" data-id="list_files"><a href='../../tidywigits/html/Tool.html#method-Tool-list_files'><code>tidywigits::Tool$list_files()</code></a></span></li>

@@ -43,19 +43,7 @@ Sigs <- R6::R6Class(
     #' @param x (`character(1)`)\cr
     #' Path to file.
     parse_snvcounts = function(x) {
-      schema <- self$.raw_schema("snvcounts")
-      col_types <- schema |>
-        dplyr::select("field", "type") |>
-        tibble::deframe()
-      d <- parse_file_nohead(
-        fpath = x,
-        ctypes = paste0(col_types, collapse = ""),
-        cnames_new = names(col_types),
-        delim = ",",
-        skip = 1
-      )
-      attr(d, "file_version") <- "latest"
-      d
+      self$.parse_file_nohead(x, "snvcounts", delim = ",", skip = 1)
     },
     #' @description Tidy `snv_counts.csv` file.
     #' @param x (`character(1)`)\cr

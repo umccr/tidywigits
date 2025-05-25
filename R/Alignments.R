@@ -52,23 +52,23 @@ Alignments <- R6::R6Class(
       assertthat::assert_that(schema_splitter == 11)
       s1 <- dplyr::slice(schema, 1:(schema_splitter - 1))
       s2 <- dplyr::slice(schema, (schema_splitter + 1):nrow(schema))
-      assertthat::assert_that(all(colnames(hdr1) == s1[["field"]]))
-      assertthat::assert_that(all(colnames(hdr2) == s2[["field"]]))
+      assertthat::assert_that(identical(hdr1, s1[["field"]]))
+      assertthat::assert_that(identical(hdr2, s2[["field"]]))
       # just hard-code the classes in this case, pretty straightforward
       d1 <- readr::read_tsv(
         x,
         comment = "#",
         n_max = 1,
         col_types = readr::cols(.default = "d", LIBRARY = "c")
-      )
+      ) |>
+        set_tbl_version_attr("latest")
       d2 <- readr::read_tsv(
         x,
         col_types = readr::cols(.default = "d"),
         comment = "#",
         skip = 10
-      )
-      attr(d1, "file_version") <- "latest"
-      attr(d2, "file_version") <- "latest"
+      ) |>
+        set_tbl_version_attr("latest")
       list(metrics = d1[], histo = d2[])
     },
     #' @description Tidy `md.metrics` file.
@@ -82,7 +82,7 @@ Alignments <- R6::R6Class(
       s2 <- dplyr::slice(schema, (schema_splitter + 1):nrow(schema))
       colnames(d[["metrics"]]) <- s1[["field"]]
       colnames(d[["histo"]]) <- s2[["field"]]
-      tibble::enframe(d, value = "data")
+      enframe_data(d)
     }
   )
 )

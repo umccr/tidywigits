@@ -57,7 +57,7 @@ Cuppa <- R6::R6Class(
       schema <- self$.tidy_schema("datacsv")
       colnames(d) <- schema[["field"]]
       list(datacsv = d) |>
-        tibble::enframe(value = "data")
+        enframe_data()
     },
     #' @description Read `cuppa_data.tsv.gz` file.
     #' @param x (`character(1)`)\cr
@@ -99,9 +99,9 @@ Cuppa <- R6::R6Class(
         dplyr::relocate("extra_info", .after = dplyr::last_col()) |>
         dplyr::relocate("extra_info_format", .after = dplyr::last_col())
       schema <- self$.tidy_schema("predsum")
-      assertthat::assert_that(all(colnames(d) == schema[["field"]]))
+      assertthat::assert_that(identical(colnames(d), schema[["field"]]))
       list(predsum = d) |>
-        tibble::enframe(value = "data")
+        enframe_data()
     },
     #' @description Read `cuppa.vis_data.tsv` file.
     #' @param x (`character(1)`)\cr

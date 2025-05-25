@@ -157,15 +157,45 @@ Tool <- R6::R6Class(
     #' File path.
     #' @param name (`character(1)`)\cr
     #' Parser name (e.g. "breakends" - see docs).
-    .tidy_file = function(x, name) {
+    #' @param convert_types (`logical(1)`)\cr
+    #' Convert field types based on schema.
+    .tidy_file = function(x, name, convert_types = FALSE) {
       .parser <- self$.eval_func(glue("parse_{name}"))
       d <- .parser(x)
       version <- get_tbl_version_attr(d)
       schema <- self$.tidy_schema(name, v = version)
       colnames(d) <- schema[["field"]]
+      if (convert_types) {
+        ctypes <- schema |>
+          dplyr::select("field", "type") |>
+          tibble::deframe()
+        d <- readr::type_convert(
+          d,
+          col_types = rlang::exec(readr::cols, !!!ctypes)
+        )
+      }
       list(d) |>
         setNames(name) |>
-        tibble::enframe(value = "data")
+        enframe_data()
+    },
+    #' @description Parse headless file.
+    #' @param x (`character(1)`)\cr
+    #' File path.
+    #' @param pname (`character(1)`)\cr
+    #' Parser name (e.g. "breakends" - see docs).
+    #' @param delim (`character(1)`)\cr
+    #' File delimiter.
+    #' @param ... Passed on to `readr::read_delim`.
+    .parse_file_nohead = function(x, pname, delim = "\t", ...) {
+      schema <- self$raw_schemas_all |>
+        dplyr::filter(.data$name == pname) |>
+        dplyr::select("version", "schema")
+      parse_file_nohead(
+        fpath = x,
+        schema = schema,
+        delim = delim,
+        ...
+      )
     },
     #' @description Evaluate function in the context of the Tool's
     #' environment.

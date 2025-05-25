@@ -41,13 +41,12 @@ Virusbreakend <- R6::R6Class(
       hdr <- file_hdr(x)
       if (length(hdr) == 0) {
         ctypes <- paste(schema[["type"]], collapse = "")
-        etbl <- empty_tbl(cnames = schema[["field"]], ctypes = ctypes)
-        attr(etbl, "file_version") <- "latest"
+        etbl <- empty_tbl(cnames = schema[["field"]], ctypes = ctypes) |>
+          set_tbl_version_attr("latest")
         return(etbl)
       }
-      d <- self$.parse_file(x, "summary")
-      attr(d, "file_version") <- "latest"
-      d
+      self$.parse_file(x, "summary") |>
+        set_tbl_version_attr("latest")
     },
     #' @description Tidy `vcf.summary.tsv` file.
     #' @param x (`character(1)`)\cr

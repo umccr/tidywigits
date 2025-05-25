@@ -31,17 +31,12 @@ parse_file <- function(
   delim = "\t",
   ...
 ) {
-  assertthat::assert_that(
-    file.exists(fpath),
-    msg = glue("The file {fpath} does not exist.")
-  )
   cnames <- file_hdr(fpath, delim = delim, ...)
   schema <- schema_guess(
     pname = pname,
     cnames = cnames,
     schemas_all = schemas_all
   )
-  # remap schema
   schema[["schema"]] <- schema[["schema"]] |>
     tibble::deframe()
   ctypes <- rlang::exec(readr::cols, !!!schema[["schema"]])
@@ -55,15 +50,27 @@ parse_file <- function(
   d[]
 }
 
-parse_file_nohead <- function(fpath, ctypes, cnames_new, ...) {
+parse_file_nohead <- function(fpath, schema, delim = "\t", ...) {
+  assertthat::assert_that(
+    nrow(schema) == 1,
+    identical(sapply(schema, class), c(version = "character", schema = "list"))
+  )
+  version <- schema[["version"]]
+  schema <- schema[["schema"]][[1]] |>
+    tibble::deframe()
+  # check if number of cols is as expected
+  ncols <- file_hdr(fpath, delim = delim, ...) |> length()
+  assertthat::assert_that(length(schema) == ncols)
+  ctypes <- paste0(schema, collapse = "")
   d <- readr::read_delim(
     file = fpath,
     col_names = FALSE,
     col_types = ctypes,
+    delim = delim,
     ...
   )
-  assertthat::assert_that(length(cnames_new) == ncol(d))
-  colnames(d) <- cnames_new
+  colnames(d) <- names(schema)
+  attr(d, "file_version") <- version
   d[]
 }
 
@@ -116,7 +123,7 @@ schema_guess <- function(pname, cnames, schemas_all) {
     dplyr::mutate(
       length_match = length(cnames) == nrow(.data$schema),
       all_match = if (.data$length_match) {
-        all(cnames == .data$schema[["field"]])
+        identical(cnames, .data$schema[["field"]])
       } else {
         FALSE
       }
@@ -167,21 +174,9 @@ get_tbl_version_attr <- function(tbl, x = "file_version") {
   attr(tbl, x)
 }
 
-parse_wigits_version_file <- function(x) {
-  parse_file_nohead(
-    x,
-    ctypes = "cc",
-    cnames_new = c("name", "value"),
-    delim = "="
-  )
-}
-
-tidy_wigits_version_file <- function(x) {
-  d <- parse_wigits_version_file(x) |>
-    tidyr::pivot_wider(names_from = "name", values_from = "value") |>
-    purrr::set_names(c("version", "build_date"))
-  list(version = d) |>
-    tibble::enframe(value = "data")
+set_tbl_version_attr <- function(tbl, v, x = "file_version") {
+  attr(tbl, x) <- v
+  tbl
 }
 
 #' Create Empty Tibble
@@ -202,7 +197,7 @@ empty_tbl <- function(cnames, ctypes = readr::cols(.default = "c")) {
 is_files_tbl <- function(x) {
   assertthat::assert_that(
     tibble::is_tibble(x),
-    all(colnames(x) == c("bname", "size", "lastmodified", "path"))
+    identical(colnames(x), c("bname", "size", "lastmodified", "path"))
   )
 }
 
@@ -210,4 +205,8 @@ schema_type_remap <- function(x) {
   type_map <- c(char = "c", float = "d", int = "i")
   assertthat::assert_that(x %in% names(type_map))
   unname(type_map[x])
+}
+
+enframe_data <- function(x) {
+  tibble::enframe(x, value = "data")
 }
