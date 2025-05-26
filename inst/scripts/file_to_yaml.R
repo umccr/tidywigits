@@ -1,19 +1,11 @@
-"~/projects/tidywigits/nogit/oa_v1/isofox/L2500527.isf.gene_collection.csv" |>
-  readr::read_csv() |>
-  purrr::map_chr(class) |>
-  tibble::enframe(name = "field", value = "type") |>
-  dplyr::mutate(
-    type = dplyr::case_match(
-      .data$type,
-      "character" ~ "'char'",
-      "integer" ~ "'int'",
-      "numeric" ~ "'float'",
-      "logical" ~ "'char'"
-    ),
-    n = dplyr::row_number(),
-    field = paste0("'", .data$field, "'")
-  ) |>
-  tidyr::nest(.by = n, .key = "latest") |>
-  dplyr::select(-"n") |>
-  yaml::as.yaml() |>
-  glue::glue()
+fpath <- "~/projects/tidywigits/nogit/oa_v2/esvee/prep/COLO829_tumor.esvee.prep.fragment_length.tsv"
+name <- "prepfraglen"
+description <- "Fragment length stats."
+pattern <- "\\.esvee\\.prep\\.fragment_length\\.tsv$"
+ftype <- "tsv"
+version <- "latest"
+delim <- "\t"
+l <- file2config(
+)
+
+yaml::write_yaml(l, here(glue("inst/config/tools/{tool}/raw.yaml")))
