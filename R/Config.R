@@ -40,6 +40,7 @@ Config <- R6::R6Class(
         "chord",
         "cobalt",
         "cuppa",
+        "esvee",
         "flagstats",
         "gridss",
         "isofox",
