@@ -1,19 +1,18 @@
-"~/projects/tidywigits/nogit/oa_v1/isofox/L2500527.isf.gene_collection.csv" |>
-  readr::read_csv() |>
-  purrr::map_chr(class) |>
-  tibble::enframe(name = "field", value = "type") |>
-  dplyr::mutate(
-    type = dplyr::case_match(
-      .data$type,
-      "character" ~ "'char'",
-      "integer" ~ "'int'",
-      "numeric" ~ "'float'",
-      "logical" ~ "'char'"
-    ),
-    n = dplyr::row_number(),
-    field = paste0("'", .data$field, "'")
+d1 <- here::here("nogit/oa_v2/esvee")
+pref <- "COLO829_tumor.esvee"
+tool <- "esvee"
+descr <- "Structural variant caller optimised for short read sequencing."
+# fmt: skip
+d <- tibble::tribble(
+    ~name,               ~descr,                   ~pat,                                       ~path,
+    "prepfraglen",       "Fragment length stats.", "\\.esvee\\.prep\\.fragment_length\\.tsv$", glue("prep/{pref}.prep.fragment_length.tsv"),
+    "prepdiscstats",     "Discordant read stats.", "\\.esvee\\.prep\\.disc_stats\\.tsv$",      glue("prep/{pref}.prep.disc_stats.tsv"),
+    "prepjunction",      "Candidate junctions.",   "\\.esvee\\.prep\\.junction\\.tsv$",        glue("prep/{pref}.prep.junction.tsv"),
+    "assemblephased",    "Phased assemblies.",     "\\.esvee\\.phased_assembly\\.tsv$",        glue("assemble/{pref}.phased_assembly.tsv"),
+    "assembleassembly",  "Breakend assemblies.",   "\\.esvee\\.assembly\\.tsv$",               glue("assemble/{pref}.assembly.tsv"),
+    "assemblebreakend",  "Breakends.",             "\\.esvee\\.breakend\\.tsv$",               glue("assemble/{pref}.breakend.tsv"),
+    "assemblealignment", "Realigned assemblies.",  "\\.esvee\\.alignment\\.tsv$",              glue("assemble/{pref}.alignment.tsv")
   ) |>
-  tidyr::nest(.by = n, .key = "latest") |>
-  dplyr::select(-"n") |>
-  yaml::as.yaml() |>
-  glue::glue()
+  dplyr::mutate(type = "tsv", path = file.path(d1, .data$path))
+config_prep_multi(d, tool_descr = descr) |>
+  config_prep_write(here::here(glue::glue("inst/config/tools/{tool}/raw.yaml")))

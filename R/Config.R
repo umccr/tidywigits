@@ -224,3 +224,109 @@ Config <- R6::R6Class(
     }
   ) # end public
 )
+
+#' Prepare config schema from raw file
+#'
+#' @description
+#' Prepares config schema from raw file.
+#'
+#' @param path (`character(1)`)\cr
+#' File path.
+#' @param ... Passed on to `readr::read_delim`.
+#' @examples
+#' \dontrun{
+#' path <- "~/projects/tidywigits/nogit/oa_v2/esvee/prep/COLO829_tumor.esvee.prep.fragment_length.tsv"
+#' config_prep_raw_schema(path = path, delim = "\t")
+#' }
+config_prep_raw_schema <- function(path, ...) {
+  path |>
+    readr::read_delim(n_max = 100, show_col_types = FALSE, ...) |>
+    purrr::map_chr(class) |>
+    tibble::enframe(name = "field", value = "type") |>
+    dplyr::mutate(
+      type = dplyr::case_match(
+        .data$type,
+        "character" ~ "'char'",
+        "integer" ~ "'int'",
+        "numeric" ~ "'float'",
+        "logical" ~ "'char'"
+      ),
+      field = paste0("'", .data$field, "'")
+    )
+}
+
+#' Prepare config from raw file
+#'
+#' @description
+#' Prepares config from raw file.
+#'
+#' @param path (`character(1)`)\cr
+#' File path.
+#' @param name (`character(1)`)\cr
+#' File nickname.
+#' @param descr (`character(1)`)\cr
+#' File description.
+#' @param pat (`character(1)`)\cr
+#' File pattern.
+#' @param type (`character(1)`)\cr
+#' File type.
+#' @param v (`character(1)`)\cr
+#' File version.
+#' @param ... Passed on to `readr::read_delim`.
+#' @examples
+#' \dontrun{
+#' path <- here::here("nogit/oa_v2/esvee/prep/COLO829_tumor.esvee.prep.fragment_length.tsv")
+#' name <- "prepfraglen"
+#' descr <- "Fragment length stats."
+#' pat <- "\\.esvee\\.prep\\.fragment_length\\.tsv$"
+#' type <- "tsv"
+#' v <- "latest"
+#' l <- config_prep_raw(path = path, name = name, descr = descr, pat = pat, type = type, v = v)
+#' }
+config_prep_raw <- function(
+  path,
+  name,
+  descr,
+  pat,
+  type = "tsv",
+  v = "latest",
+  ...
+) {
+  schema <- config_prep_raw_schema(path = path, ...)
+  attr(pat, "quoted") <- TRUE
+  list(
+    list(
+      description = glue("'{descr}'"),
+      pattern = pat,
+      ftype = glue("'{type}'"),
+      schema = list(schema) |> purrr::set_names(v)
+    )
+  ) |>
+    purrr::set_names(name)
+}
+
+config_prep_multi <- function(x, tool_descr = NULL) {
+  assertthat::assert_that(
+    tibble::is_tibble(x),
+    all(c("name", "descr", "pat", "type", "path") %in% colnames(x)),
+    !is.null(tool_descr)
+  )
+  l <- x |>
+    dplyr::rowwise() |>
+    dplyr::mutate(
+      config = config_prep_raw(
+        path = .data$path,
+        name = .data$name,
+        descr = .data$descr,
+        pat = .data$pat,
+        type = .data$type
+      )
+    ) |>
+    dplyr::ungroup() |>
+    dplyr::pull("config")
+  list(description = glue::glue("'{tool_descr}'"), raw = l)
+}
+
+config_prep_write <- function(x, out) {
+  yaml::write_yaml(x, out, column.major = FALSE)
+}
