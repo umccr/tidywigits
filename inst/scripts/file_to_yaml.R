@@ -9,7 +9,7 @@ d <- tibble::tribble(
     "prepdiscstats",     "Discordant read stats.", "\\.esvee\\.prep\\.disc_stats\\.tsv$",      glue("prep/{pref}.prep.disc_stats.tsv"),
     "prepjunction",      "Candidate junctions.",   "\\.esvee\\.prep\\.junction\\.tsv$",        glue("prep/{pref}.prep.junction.tsv"),
     "assemblephased",    "Phased assemblies.",     "\\.esvee\\.phased_assembly\\.tsv$",        glue("assemble/{pref}.phased_assembly.tsv"),
-    "assembleassembly",  "Breakend assemblies.",   "\\.esvee\\.assembly\\.tsv$",               glue("assemble/{pref}.phased_assembly.tsv"),
+    "assembleassembly",  "Breakend assemblies.",   "\\.esvee\\.assembly\\.tsv$",               glue("assemble/{pref}.assembly.tsv"),
     "assemblebreakend",  "Breakends.",             "\\.esvee\\.breakend\\.tsv$",               glue("assemble/{pref}.breakend.tsv"),
     "assemblealignment", "Realigned assemblies.",  "\\.esvee\\.alignment\\.tsv$",              glue("assemble/{pref}.alignment.tsv")
   ) |>
