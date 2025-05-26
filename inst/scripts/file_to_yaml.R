@@ -15,4 +15,6 @@ d <- tibble::tribble(
   ) |>
   dplyr::mutate(type = "tsv", path = file.path(d1, .data$path))
 config_prep_multi(d, tool_descr = descr) |>
-  config_prep_write(here::here(glue::glue("inst/config/tools/{tool}/raw.yaml")))
+  config_prep_write(
+    here::here(glue::glue("inst/config/tools/{tool}/raw.yaml"))
+  )

@@ -329,4 +329,6 @@ config_prep_multi <- function(x, tool_descr = NULL) {
 
 config_prep_write <- function(x, out) {
   yaml::write_yaml(x, out, column.major = FALSE)
+  cmd <- glue("sed -i '' \"s/'''/'/g\" {out}")
+  system(cmd)
 }
