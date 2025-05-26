@@ -19,13 +19,13 @@ File description.}
 \item{pat}{(\code{character(1)})\cr
 File pattern.}
 
+\item{type}{(\code{character(1)})\cr
+File type.}
+
 \item{v}{(\code{character(1)})\cr
 File version.}
 
 \item{...}{Passed on to \code{readr::read_delim}.}
-
-\item{ftype}{(\code{character(1)})\cr
-File type.}
 }
 \description{
 Prepares config from raw file.

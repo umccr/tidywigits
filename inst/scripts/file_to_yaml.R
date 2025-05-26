@@ -1,13 +1,7 @@
-fpath <- "~/projects/tidywigits/nogit/oa_v2/esvee/prep/COLO829_tumor.esvee.prep.fragment_length.tsv"
-name <- "prepfraglen"
-description <- "Fragment length stats."
-pattern <- "\\.esvee\\.prep\\.fragment_length\\.tsv$"
-ftype <- "tsv"
-version <- "latest"
-delim <- "\t"
-
 d1 <- here::here("nogit/oa_v2/esvee")
 pref <- "COLO829_tumor.esvee"
+tool <- "esvee"
+descr <- "Structural variant caller optimised for short read sequencing."
 # fmt: skip
 d <- tibble::tribble(
     ~name,               ~descr,                   ~pat,                                       ~path,
@@ -20,5 +14,5 @@ d <- tibble::tribble(
     "assemblealignment", "Realigned assemblies.",  "\\.esvee\\.alignment\\.tsv$",              glue("assemble/{pref}.alignment.tsv")
   ) |>
   dplyr::mutate(type = "tsv", path = file.path(d1, .data$path))
-config_prep_multi(d) |>
-  config_prep_write(here::here(glue::glue("inst/config/tools/esvee/raw.yaml")))
+config_prep_multi(d, tool_descr = descr) |>
+  config_prep_write(here::here(glue::glue("inst/config/tools/{tool}/raw.yaml")))

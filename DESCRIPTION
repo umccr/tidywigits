@@ -33,7 +33,8 @@ Imports:
     rlang,
     scales,
     tibble,
-    tidyr
+    tidyr,
+    yaml
 Suggests:
     knitr,
     rmarkdown,

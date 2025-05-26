@@ -268,7 +268,7 @@ config_prep_raw_schema <- function(path, ...) {
 #' File description.
 #' @param pat (`character(1)`)\cr
 #' File pattern.
-#' @param ftype (`character(1)`)\cr
+#' @param type (`character(1)`)\cr
 #' File type.
 #' @param v (`character(1)`)\cr
 #' File version.
@@ -299,16 +299,17 @@ config_prep_raw <- function(
       description = glue("'{descr}'"),
       pattern = pat,
       ftype = glue("'{type}'"),
-      schema = list(schema) |> setNames(v)
+      schema = list(schema) |> purrr::set_names(v)
     )
   ) |>
-    setNames(name)
+    purrr::set_names(name)
 }
 
-config_prep_multi <- function(x) {
+config_prep_multi <- function(x, tool_descr = NULL) {
   assertthat::assert_that(
     tibble::is_tibble(x),
-    all(c("name", "descr", "pat", "type", "path") %in% colnames(x))
+    all(c("name", "descr", "pat", "type", "path") %in% colnames(x)),
+    !is.null(tool_descr)
   )
   l <- x |>
     dplyr::rowwise() |>
@@ -317,12 +318,13 @@ config_prep_multi <- function(x) {
         path = .data$path,
         name = .data$name,
         descr = .data$descr,
-        pat = .data$pat
+        pat = .data$pat,
+        type = .data$type
       )
     ) |>
     dplyr::ungroup() |>
     dplyr::pull("config")
-  list(raw = l)
+  list(description = glue::glue("'{tool_descr}'"), raw = l)
 }
 
 config_prep_write <- function(x, out) {
