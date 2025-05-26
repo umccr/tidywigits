@@ -7,6 +7,9 @@
 config_prep_raw(path, name, descr, pat, type = "tsv", v = "latest", ...)
 }
 \arguments{
+\item{path}{(\code{character(1)})\cr
+File path.}
+
 \item{name}{(\code{character(1)})\cr
 File nickname.}
 
@@ -21,9 +24,6 @@ File version.}
 
 \item{...}{Passed on to \code{readr::read_delim}.}
 
-\item{fpath}{(\code{character(1)})\cr
-File path.}
-
 \item{ftype}{(\code{character(1)})\cr
 File type.}
 }
@@ -32,14 +32,12 @@ Prepares config from raw file.
 }
 \examples{
 \dontrun{
-fpath <- "~/projects/tidywigits/nogit/oa_v2/esvee/prep/COLO829_tumor.esvee.prep.fragment_length.tsv"
+path <- here::here("nogit/oa_v2/esvee/prep/COLO829_tumor.esvee.prep.fragment_length.tsv")
 name <- "prepfraglen"
 descr <- "Fragment length stats."
 pat <- "\\\\.esvee\\\\.prep\\\\.fragment_length\\\\.tsv$"
-ftype <- "tsv"
+type <- "tsv"
 v <- "latest"
-l <- config_prep_raw(fpath, name = name, descr = descr, pat = pat, v = v)
-tool <- "esvee"
-config_prep_write(l, here::here(glue("inst/config/tools/{tool}/raw.yaml"))))
+l <- config_prep_raw(path = path, name = name, descr = descr, pat = pat, type = type, v = v)
 }
 }

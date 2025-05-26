@@ -4,10 +4,10 @@
 \alias{config_prep_raw_schema}
 \title{Prepare config schema from raw file}
 \usage{
-config_prep_raw_schema(fpath, ...)
+config_prep_raw_schema(path, ...)
 }
 \arguments{
-\item{fpath}{(\code{character(1)})\cr
+\item{path}{(\code{character(1)})\cr
 File path.}
 
 \item{...}{Passed on to \code{readr::read_delim}.}
@@ -17,7 +17,7 @@ Prepares config schema from raw file.
 }
 \examples{
 \dontrun{
-fpath <- "~/projects/tidywigits/nogit/oa_v2/esvee/prep/COLO829_tumor.esvee.prep.fragment_length.tsv"
-config_prep_raw_schema(fpath = fpath)
+path <- "~/projects/tidywigits/nogit/oa_v2/esvee/prep/COLO829_tumor.esvee.prep.fragment_length.tsv"
+config_prep_raw_schema(path = path, delim = "\t")
 }
 }

@@ -230,16 +230,16 @@ Config <- R6::R6Class(
 #' @description
 #' Prepares config schema from raw file.
 #'
-#' @param fpath (`character(1)`)\cr
+#' @param path (`character(1)`)\cr
 #' File path.
 #' @param ... Passed on to `readr::read_delim`.
 #' @examples
 #' \dontrun{
-#' fpath <- "~/projects/tidywigits/nogit/oa_v2/esvee/prep/COLO829_tumor.esvee.prep.fragment_length.tsv"
-#' config_prep_raw_schema(fpath = fpath)
+#' path <- "~/projects/tidywigits/nogit/oa_v2/esvee/prep/COLO829_tumor.esvee.prep.fragment_length.tsv"
+#' config_prep_raw_schema(path = path, delim = "\t")
 #' }
-config_prep_raw_schema <- function(fpath, ...) {
-  fpath |>
+config_prep_raw_schema <- function(path, ...) {
+  path |>
     readr::read_delim(n_max = 100, show_col_types = FALSE, ...) |>
     purrr::map_chr(class) |>
     tibble::enframe(name = "field", value = "type") |>
@@ -260,7 +260,7 @@ config_prep_raw_schema <- function(fpath, ...) {
 #' @description
 #' Prepares config from raw file.
 #'
-#' @param fpath (`character(1)`)\cr
+#' @param path (`character(1)`)\cr
 #' File path.
 #' @param name (`character(1)`)\cr
 #' File nickname.
@@ -275,15 +275,13 @@ config_prep_raw_schema <- function(fpath, ...) {
 #' @param ... Passed on to `readr::read_delim`.
 #' @examples
 #' \dontrun{
-#' fpath <- "~/projects/tidywigits/nogit/oa_v2/esvee/prep/COLO829_tumor.esvee.prep.fragment_length.tsv"
+#' path <- here::here("nogit/oa_v2/esvee/prep/COLO829_tumor.esvee.prep.fragment_length.tsv")
 #' name <- "prepfraglen"
 #' descr <- "Fragment length stats."
 #' pat <- "\\.esvee\\.prep\\.fragment_length\\.tsv$"
-#' ftype <- "tsv"
+#' type <- "tsv"
 #' v <- "latest"
-#' l <- config_prep_raw(fpath, name = name, descr = descr, pat = pat, v = v)
-#' tool <- "esvee"
-#' config_prep_write(l, here::here(glue("inst/config/tools/{tool}/raw.yaml"))))
+#' l <- config_prep_raw(path = path, name = name, descr = descr, pat = pat, type = type, v = v)
 #' }
 config_prep_raw <- function(
   path,
@@ -294,7 +292,7 @@ config_prep_raw <- function(
   v = "latest",
   ...
 ) {
-  schema <- config_prep_raw_schema(fpath = path, ...)
+  schema <- config_prep_raw_schema(path = path, ...)
   attr(pat, "quoted") <- TRUE
   list(
     list(
@@ -307,27 +305,26 @@ config_prep_raw <- function(
     setNames(name)
 }
 
-config_prep_write <- function(x, out) {
-  yaml::write_yaml(x, out, column.major = FALSE)
-}
-
-config_multi <- function() {
-  d1 <- here::here("nogit/oa_v2/esvee")
-  # fmt: skip
-  d <- tibble::tribble(
-    ~name, ~descr, ~pat, ~type, ~fpath,
-    "prepfraglen", "Fragment length stats.", "\\.esvee\\.prep\\.fragment_length\\.tsv$", "tsv", file.path(d1, "prep/COLO829_tumor.esvee.prep.fragment_length.tsv"),
-    "discstats", "Discordant read stats.", "\\.esvee\\.prep\\.disc_stats\\.tsv$", "tsv", file.path(d1, "prep/COLO829_tumor.esvee.prep.disc_stats.tsv")
+config_prep_multi <- function(x) {
+  assertthat::assert_that(
+    tibble::is_tibble(x),
+    all(c("name", "descr", "pat", "type", "path") %in% colnames(x))
   )
-  x <- d |>
+  l <- x |>
     dplyr::rowwise() |>
     dplyr::mutate(
       config = config_prep_raw(
-        path = .data$fpath,
+        path = .data$path,
         name = .data$name,
         descr = .data$descr,
         pat = .data$pat
       )
     ) |>
-    dplyr::ungroup()
+    dplyr::ungroup() |>
+    dplyr::pull("config")
+  list(raw = l)
+}
+
+config_prep_write <- function(x, out) {
+  yaml::write_yaml(x, out, column.major = FALSE)
 }
