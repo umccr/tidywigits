@@ -41,18 +41,6 @@ Linx <- R6::R6Class(
           )
         )
     },
-    #' @description Read `svs.tsv` file.
-    #' @param x (`character(1)`)\cr
-    #' Path to file.
-    parse_svs = function(x) {
-      self$.parse_file(x, "svs")
-    },
-    #' @description Tidy `svs.tsv` file.
-    #' @param x (`character(1)`)\cr
-    #' Path to file.
-    tidy_svs = function(x) {
-      self$.tidy_file(x, "svs")
-    },
     #' @description Read `breakend.tsv` file.
     #' @param x (`character(1)`)\cr
     #' Path to file.
@@ -77,29 +65,17 @@ Linx <- R6::R6Class(
     tidy_clusters = function(x) {
       self$.tidy_file(x, "clusters")
     },
-    #' @description Read `links.tsv` file.
+    #' @description Read `linx.driver.catalog.tsv` file.
     #' @param x (`character(1)`)\cr
     #' Path to file.
-    parse_links = function(x) {
-      self$.parse_file(x, "links")
+    parse_drivercatalog = function(x) {
+      self$.parse_file(x, "drivercatalog")
     },
-    #' @description Tidy `links.tsv` file.
+    #' @description Tidy `linx.driver.catalog.tsv` file.
     #' @param x (`character(1)`)\cr
     #' Path to file.
-    tidy_links = function(x) {
-      self$.tidy_file(x, "links")
-    },
-    #' @description Read `linx.fusion.tsv` file.
-    #' @param x (`character(1)`)\cr
-    #' Path to file.
-    parse_fusions = function(x) {
-      self$.parse_file(x, "fusions")
-    },
-    #' @description Tidy `linx.fusion.tsv` file.
-    #' @param x (`character(1)`)\cr
-    #' Path to file.
-    tidy_fusions = function(x) {
-      self$.tidy_file(x, "fusions")
+    tidy_drivercatalog = function(x) {
+      self$.tidy_file(x, "drivercatalog")
     },
     #' @description Read `linx.drivers.tsv` file.
     #' @param x (`character(1)`)\cr
@@ -113,17 +89,53 @@ Linx <- R6::R6Class(
     tidy_drivers = function(x) {
       self$.tidy_file(x, "drivers")
     },
-    #' @description Read `linx.driver.catalog.tsv` file.
+    #' @description Read `linx.fusion.tsv` file.
     #' @param x (`character(1)`)\cr
     #' Path to file.
-    parse_drivercatalog = function(x) {
-      self$.parse_file(x, "drivercatalog")
+    parse_fusions = function(x) {
+      self$.parse_file(x, "fusions")
     },
-    #' @description Tidy `linx.driver.catalog.tsv` file.
+    #' @description Tidy `linx.fusion.tsv` file.
     #' @param x (`character(1)`)\cr
     #' Path to file.
-    tidy_drivercatalog = function(x) {
-      self$.tidy_file(x, "drivercatalog")
+    tidy_fusions = function(x) {
+      self$.tidy_file(x, "fusions")
+    },
+    #' @description Read `links.tsv` file.
+    #' @param x (`character(1)`)\cr
+    #' Path to file.
+    parse_links = function(x) {
+      self$.parse_file(x, "links")
+    },
+    #' @description Tidy `links.tsv` file.
+    #' @param x (`character(1)`)\cr
+    #' Path to file.
+    tidy_links = function(x) {
+      self$.tidy_file(x, "links")
+    },
+    #' @description Read `neoepitope.tsv` file.
+    #' @param x (`character(1)`)\cr
+    #' Path to file.
+    parse_neoepitope = function(x) {
+      self$.parse_file(x, "neoepitope")
+    },
+    #' @description Tidy `neoepitope.tsv` file.
+    #' @param x (`character(1)`)\cr
+    #' Path to file.
+    tidy_neoepitope = function(x) {
+      self$.tidy_file(x, "neoepitope")
+    },
+    #' @description Read `svs.tsv` file.
+    #' @param x (`character(1)`)\cr
+    #' Path to file.
+    parse_svs = function(x) {
+      self$.parse_file(x, "svs")
+    },
+    #' @description Tidy `svs.tsv` file.
+    #' @param x (`character(1)`)\cr
+    #' Path to file.
+    tidy_svs = function(x) {
+      self$.tidy_file(x, "svs")
     },
     #' @description Read `linx.vis_copy_number.tsv` file.
     #' @param x (`character(1)`)\cr

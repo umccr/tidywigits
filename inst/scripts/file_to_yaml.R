@@ -18,3 +18,12 @@ config_prep_multi(d, tool_descr = descr) |>
   config_prep_write(
     here::here(glue::glue("inst/config/tools/{tool}/raw.yaml"))
   )
+
+# fmt: skip
+d <- tibble::tribble(
+    ~name, ~descr, ~pat, ~path, ~type,
+    "neoepitope", "Gene fusion neoepitopes.", "\\.linx\\.neoepitope\\.tsv$", here::here("nogit/oa_v2/linx/somatic_annotations/COLO829_tumor.linx.neoepitope.tsv"), "tsv",
+)
+config_prep_multi(d, tool_descr = "linx") |>
+  yaml::as.yaml(column.major = F) |>
+  cat()
