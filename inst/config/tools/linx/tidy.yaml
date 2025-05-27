@@ -1,85 +1,4 @@
 tidy:
-  svs:
-    description:
-      'Additional annotations of each non PON filtered breakjunction.'
-    schema:
-      latest:
-        tbl1:
-          - field: 'vcf_id'
-            type: 'char'
-            description:
-              'ID of break junction for mapping to GRIDSS / PURPLE vcf'
-          - field: 'sv_id'
-            type: 'char'
-            description: 'ID of break junction'
-          - field: 'cluster_id'
-            type: 'char'
-            description: 'ID of cluster which break junction is assigned to'
-          - field: 'cluster_reason'
-            type: 'char'
-            description:
-              'Reason for clustering and svId of clustered break junction for
-              other break junction(s) to which the variant has been clustered'
-          - field: 'fragile_site_start'
-            type: 'char'
-            description:
-              'Start breakend of break junction is in a known fragile site (T/F)'
-          - field: 'fragile_site_end'
-            type: 'char'
-            description:
-              'End breakend of break junction is in a known fragile site (T/F)'
-          - field: 'is_foldback'
-            type: 'char'
-            description: 'Break junction is classified as a foldback (T/F)'
-          - field: 'linetype_start'
-            type: 'char'
-            description:
-              'Start breakend of break junction is in a known or suspected line
-              source region'
-          - field: 'linetype_end'
-            type: 'char'
-            description:
-              'End breakend of break junction is in a known or suspected line
-              source region'
-          - field: 'junction_cn_min'
-            type: 'float'
-            description: 'Minimum bound JCN estimate for breakjunction'
-          - field: 'junction_cn_max'
-            type: 'float'
-            description: 'Maximum bound JCN estimate for breakjunction'
-          - field: 'gene_start'
-            type: 'char'
-            description: 'Gene(s) overlapping start breakend of SV'
-          - field: 'gene_end'
-            type: 'char'
-            description: 'Gene(s) overlapping end breakend of SV'
-          - field: 'local_topology_id_start'
-            type: 'char'
-            description:
-              'ID for group of proximate breakends to the start breakend of
-              break junction within an extending 5kb window'
-          - field: 'local_topology_id_end'
-            type: 'char'
-            description:
-              'ID for group of proximate breakends to the end breakend of break
-              junction within an extending 5kb window'
-          - field: 'local_topology_start'
-            type: 'char'
-            description:
-              'Local breakend topology type at site of start breakend'
-          - field: 'local_topology_end'
-            type: 'char'
-            description: 'Local breakend topology type at site of end breakend.'
-          - field: 'local_ti_count_start'
-            type: 'float'
-            description:
-              'Number of chained templated insertions in local topology group of
-              start breakend'
-          - field: 'local_ti_count_end'
-            type: 'float'
-            description:
-              'Number of chained templated insertions in local topology group of
-              end breakend'
   breakends:
     description:
       'Impact of each non PON filtered break junction on each overlapping gene'
@@ -294,75 +213,84 @@ tidy:
           - field: 'cluster_desc'
             type: 'char'
             description:
-              'types and counts of break junctions in the
-              cluster. eg. DEL=2_INV=2'
-  links:
+              'types and counts of break junctions in the cluster. eg.
+              DEL=2_INV=2'
+  drivercatalog:
     description:
-      'Chromosomal segments joining break junction pairs predicted to be linked
-      and phased in cis on the derivative chromosome.'
+      'Reproduction of the driver catalog produced by PURPLE with homozygous
+      disruptions events appended.'
+    schema:
+      latest:
+        tbl1:
+          - field: 'chromosome'
+            type: 'char'
+            description: 'Chromosome of gene'
+          - field: 'chromosome_band'
+            type: 'char'
+            description: 'Chromosome band of driver'
+          - field: 'gene'
+            type: 'char'
+            description: 'Gene name'
+          - field: 'transcript'
+            type: 'char'
+            description: 'Transcript name'
+          - field: 'is_canonical'
+            type: 'char'
+            description: 'Is canonical'
+          - field: 'driver'
+            type: 'char'
+            description: 'Driver type [AMP, DEL, MUTATION]'
+          - field: 'category'
+            type: 'char'
+            description: 'Gene driver type [ONCO, TSG]'
+          - field: 'likelihood_method'
+            type: 'char'
+            description: 'Method used to determine likelihood'
+          - field: 'driver_likelihood'
+            type: 'float'
+            description: 'Likelihood that gene is a driver'
+          - field: 'missense'
+            type: 'float'
+            description: 'Number of missense variants in gene'
+          - field: 'nonsense'
+            type: 'float'
+            description: 'Number of nonsense variants in gene'
+          - field: 'splice'
+            type: 'float'
+            description: 'Number of splice variants in gene'
+          - field: 'inframe'
+            type: 'float'
+            description: 'Number of inframe variants in gene'
+          - field: 'frameshift'
+            type: 'float'
+            description: 'Number of frameshift variants in gene'
+          - field: 'biallelic'
+            type: 'char'
+            description: 'True if any variants in the gene are biallelic'
+          - field: 'min_cn'
+            type: 'float'
+            description: 'Minimum CN found in the gene exons'
+          - field: 'max_cn'
+            type: 'float'
+            description: 'Maximum CN found in the gene exons'
+  drivers:
+    description:
+      'Linkage of drivers from driver catalog to SV cluster which contributed to
+      those drivers including LOH, deletion, disruption and amplification
+      events.'
     schema:
       latest:
         tbl1:
           - field: 'cluster_id'
             type: 'char'
-            description: 'cluster ID which contains the link'
-          - field: 'chain_id'
-            type: 'char'
             description:
-              'chain ID to which the link belongs representing a
-              multi-segment prediction of the derivative chromosome'
-          - field: 'chain_index'
+              'Id of cluster which break junction associated with driver'
+          - field: 'gene'
             type: 'char'
-            description: 'position of the linked segment in the chain'
-          - field: 'chain_count'
-            type: 'float'
-            description: 'total count of linked segments in the chan'
-          - field: 'lower_sv_id'
+            description: 'Gene of driver'
+          - field: 'event_type'
             type: 'char'
-            description: 'svId of the leftmost breakend of the linked segment'
-          - field: 'upper_sv_id'
-            type: 'char'
-            description: 'svId of the rightmost breakend of the linked segment'
-          - field: 'lower_breakend_is_start'
-            type: 'char'
-            description:
-              'lower breakend is the start breakend of the break junction'
-          - field: 'upper_breakend_is_start'
-            type: 'char'
-            description:
-              'right breakend is the start breakend of the break junction'
-          - field: 'chromosome'
-            type: 'char'
-            description: 'chromosome of the linked segment'
-          - field: 'arm'
-            type: 'char'
-            description: 'arm (P/Q) of the linked segment'
-          - field: 'assembled'
-            type: 'char'
-            description: 'segment is linked by a GRIDSS assembly'
-          - field: 'traversed_sv_count'
-            type: 'float'
-            description:
-              'number of other breakends that are located on the linked
-              segment'
-          - field: 'length'
-            type: 'float'
-            description: 'length of the linked segment'
-          - field: 'junction_cn'
-            type: 'float'
-            description: 'predicted CN of the chain'
-          - field: 'junction_cn_uncertainty'
-            type: 'float'
-            description: 'uncertainty in the CN of the chain'
-          - field: 'pseudogene_info'
-            type: 'char'
-            description:
-              'if the segment precisely matches an exon of an ensembl gene, then
-              contains details of the matching exon'
-          - field: 'ecdna'
-            type: 'char'
-            description:
-              'link is predicted to be part of a DM / ecDNA chain'
+            description: 'Type of driver'
   fusions:
     description:
       'All inframe and out of frame fusions predicted in the sample including
@@ -381,8 +309,7 @@ tidy:
             description: 'fusion name in the form 5primeGENE_3primeGENE'
           - field: 'reported'
             type: 'char'
-            description:
-              'fusion meets all reportable fusion criteria for LINX'
+            description: 'fusion meets all reportable fusion criteria for LINX'
           - field: 'reported_type'
             type: 'char'
             description:
@@ -464,82 +391,193 @@ tidy:
           - field: 'junction_cn'
             type: 'float'
             description: '.'
-  drivercatalog:
+  links:
     description:
-      'Reproduction of the driver catalog produced by PURPLE with homozygous
-      disruptions events appended.'
-    schema:
-      latest:
-        tbl1:
-          - field: 'chromosome'
-            type: 'char'
-            description: 'Chromosome of gene'
-          - field: 'chromosome_band'
-            type: 'char'
-            description: 'Chromosome band of driver'
-          - field: 'gene'
-            type: 'char'
-            description: 'Gene name'
-          - field: 'transcript'
-            type: 'char'
-            description: 'Transcript name'
-          - field: 'is_canonical'
-            type: 'char'
-            description: 'Is canonical'
-          - field: 'driver'
-            type: 'char'
-            description: 'Driver type [AMP, DEL, MUTATION]'
-          - field: 'category'
-            type: 'char'
-            description: 'Gene driver type [ONCO, TSG]'
-          - field: 'likelihood_method'
-            type: 'char'
-            description: 'Method used to determine likelihood'
-          - field: 'driver_likelihood'
-            type: 'float'
-            description: 'Likelihood that gene is a driver'
-          - field: 'missense'
-            type: 'float'
-            description: 'Number of missense variants in gene'
-          - field: 'nonsense'
-            type: 'float'
-            description: 'Number of nonsense variants in gene'
-          - field: 'splice'
-            type: 'float'
-            description: 'Number of splice variants in gene'
-          - field: 'inframe'
-            type: 'float'
-            description: 'Number of inframe variants in gene'
-          - field: 'frameshift'
-            type: 'float'
-            description: 'Number of frameshift variants in gene'
-          - field: 'biallelic'
-            type: 'char'
-            description: 'True if any variants in the gene are biallelic'
-          - field: 'min_cn'
-            type: 'float'
-            description: 'Minimum CN found in the gene exons'
-          - field: 'max_cn'
-            type: 'float'
-            description: 'Maximum CN found in the gene exons'
-  drivers:
-    description:
-      'Linkage of drivers from driver catalog to SV cluster which contributed to
-      those drivers including LOH, deletion, disruption and amplification
-      events.'
+      'Chromosomal segments joining break junction pairs predicted to be linked
+      and phased in cis on the derivative chromosome.'
     schema:
       latest:
         tbl1:
           - field: 'cluster_id'
             type: 'char'
+            description: 'cluster ID which contains the link'
+          - field: 'chain_id'
+            type: 'char'
             description:
-              'Id of cluster which break junction associated with driver'
-          - field: 'gene'
+              'chain ID to which the link belongs representing a multi-segment
+              prediction of the derivative chromosome'
+          - field: 'chain_index'
             type: 'char'
-            description: 'Gene of driver'
-          - field: 'event_type'
+            description: 'position of the linked segment in the chain'
+          - field: 'chain_count'
+            type: 'float'
+            description: 'total count of linked segments in the chan'
+          - field: 'lower_sv_id'
             type: 'char'
-            description: 'Type of driver'
+            description: 'svId of the leftmost breakend of the linked segment'
+          - field: 'upper_sv_id'
+            type: 'char'
+            description: 'svId of the rightmost breakend of the linked segment'
+          - field: 'lower_breakend_is_start'
+            type: 'char'
+            description:
+              'lower breakend is the start breakend of the break junction'
+          - field: 'upper_breakend_is_start'
+            type: 'char'
+            description:
+              'right breakend is the start breakend of the break junction'
+          - field: 'chromosome'
+            type: 'char'
+            description: 'chromosome of the linked segment'
+          - field: 'arm'
+            type: 'char'
+            description: 'arm (P/Q) of the linked segment'
+          - field: 'assembled'
+            type: 'char'
+            description: 'segment is linked by a GRIDSS assembly'
+          - field: 'traversed_sv_count'
+            type: 'float'
+            description:
+              'number of other breakends that are located on the linked segment'
+          - field: 'length'
+            type: 'float'
+            description: 'length of the linked segment'
+          - field: 'junction_cn'
+            type: 'float'
+            description: 'predicted CN of the chain'
+          - field: 'junction_cn_uncertainty'
+            type: 'float'
+            description: 'uncertainty in the CN of the chain'
+          - field: 'pseudogene_info'
+            type: 'char'
+            description:
+              'if the segment precisely matches an exon of an ensembl gene, then
+              contains details of the matching exon'
+          - field: 'ecdna'
+            type: 'char'
+            description: 'link is predicted to be part of a DM / ecDNA chain'
+  neoepitope:
+    description: 'Gene fusion neoepitopes.'
+    schema:
+      latest:
+        tbl1:
+          - field: 'gene_id_up'
+            type: 'char'
+          - field: 'gene_name_up'
+            type: 'char'
+          - field: 'chrom_up'
+            type: 'char'
+          - field: 'pos_up'
+            type: 'float'
+          - field: 'orientation_up'
+            type: 'float'
+          - field: 'sv_id_up'
+            type: 'char'
+          - field: 'gene_id_down'
+            type: 'char'
+          - field: 'gene_name_down'
+            type: 'char'
+          - field: 'chrom_down'
+            type: 'char'
+          - field: 'pos_down'
+            type: 'float'
+          - field: 'orientation_down'
+            type: 'float'
+          - field: 'char'
+            type: 'float'
+          - field: 'junc_cn'
+            type: 'float'
+          - field: 'cn'
+            type: 'float'
+          - field: 'insert_seq'
+            type: 'char'
+          - field: 'chain_length'
+            type: 'float'
+          - field: 'transcripts_up'
+            type: 'char'
+          - field: 'transcripts_down'
+            type: 'char'
+  svs:
+    description:
+      'Additional annotations of each non PON filtered breakjunction.'
+    schema:
+      latest:
+        tbl1:
+          - field: 'vcf_id'
+            type: 'char'
+            description:
+              'ID of break junction for mapping to GRIDSS / PURPLE vcf'
+          - field: 'sv_id'
+            type: 'char'
+            description: 'ID of break junction'
+          - field: 'cluster_id'
+            type: 'char'
+            description: 'ID of cluster which break junction is assigned to'
+          - field: 'cluster_reason'
+            type: 'char'
+            description:
+              'Reason for clustering and svId of clustered break junction for
+              other break junction(s) to which the variant has been clustered'
+          - field: 'fragile_site_start'
+            type: 'char'
+            description:
+              'Start breakend of break junction is in a known fragile site (T/F)'
+          - field: 'fragile_site_end'
+            type: 'char'
+            description:
+              'End breakend of break junction is in a known fragile site (T/F)'
+          - field: 'is_foldback'
+            type: 'char'
+            description: 'Break junction is classified as a foldback (T/F)'
+          - field: 'linetype_start'
+            type: 'char'
+            description:
+              'Start breakend of break junction is in a known or suspected line
+              source region'
+          - field: 'linetype_end'
+            type: 'char'
+            description:
+              'End breakend of break junction is in a known or suspected line
+              source region'
+          - field: 'junction_cn_min'
+            type: 'float'
+            description: 'Minimum bound JCN estimate for breakjunction'
+          - field: 'junction_cn_max'
+            type: 'float'
+            description: 'Maximum bound JCN estimate for breakjunction'
+          - field: 'gene_start'
+            type: 'char'
+            description: 'Gene(s) overlapping start breakend of SV'
+          - field: 'gene_end'
+            type: 'char'
+            description: 'Gene(s) overlapping end breakend of SV'
+          - field: 'local_topology_id_start'
+            type: 'char'
+            description:
+              'ID for group of proximate breakends to the start breakend of
+              break junction within an extending 5kb window'
+          - field: 'local_topology_id_end'
+            type: 'char'
+            description:
+              'ID for group of proximate breakends to the end breakend of break
+              junction within an extending 5kb window'
+          - field: 'local_topology_start'
+            type: 'char'
+            description:
+              'Local breakend topology type at site of start breakend'
+          - field: 'local_topology_end'
+            type: 'char'
+            description: 'Local breakend topology type at site of end breakend.'
+          - field: 'local_ti_count_start'
+            type: 'float'
+            description:
+              'Number of chained templated insertions in local topology group of
+              start breakend'
+          - field: 'local_ti_count_end'
+            type: 'float'
+            description:
+              'Number of chained templated insertions in local topology group of
+              end breakend'
   viscn:
     description: ''
     schema:
