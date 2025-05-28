@@ -28,6 +28,9 @@ Basename of file.}
 \item{\code{suffix_pattern}}{(\code{character(1)})\cr
 Suffix pattern.}
 
+\item{\code{size}}{(\code{character(1)})\cr
+Size of file.}
+
 \item{\code{prefix}}{(\code{character(1)})\cr
 Prefix of file.}
 }

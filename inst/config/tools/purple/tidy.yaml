@@ -376,7 +376,7 @@ tidy:
             type: 'char'
             description: 'true if purple was run with target-region files'
   qc:
-    description: 'PURPLE QC.'
+    description: 'QC metrics.'
     schema:
       latest:
         tbl1:

@@ -44,21 +44,21 @@ raw:
           type: 'float'
         - field: 'totalExonCount'
           type: 'float'
-        - field: 'type'
+        - field: 'type' # old
           type: 'char'
-        - field: 'chromosome'
+        - field: 'chromosome' # old
           type: 'char'
-        - field: 'orientation'
+        - field: 'orientation' # old
           type: 'char'
-        - field: 'strand'
+        - field: 'strand' # old
           type: 'char'
-        - field: 'chrBand'
+        - field: 'chrBand' # old
           type: 'char'
         - field: 'exonUp'
           type: 'float'
         - field: 'exonDown'
           type: 'float'
-        - field: 'junctionCopyNumber'
+        - field: 'junctionCopyNumber' # old
           type: 'float'
       latest:
         - field: 'id'

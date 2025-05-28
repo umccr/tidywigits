@@ -1,0 +1,219 @@
+---
+title: "Structure"
+vignette: >
+  %\VignetteIndexEntry{Structure}
+  %\VignetteEngine{quarto::html}
+  %\VignetteEncoding{UTF-8}
+knitr:
+  opts_chunk:
+    collapse: true
+    comment: '#>'
+---
+
+```{r}
+#| label: pkgs
+#| message: false
+#| warning: false
+#| echo: false
+
+{
+  require(tidywigits)
+  require(dplyr)
+  require(glue, include.only = "glue")
+  require(here, include.only = "here")
+  require(purrr, include.only = "map")
+  require(readr, include.only = "read_tsv")
+  require(tibble, include.only = "tibble")
+  require(tidyr, include.only = "unnest")
+}
+```
+
+{tidywigits} is an R package that parses and tidies outputs from the [WiGiTS]
+suite of genome and transcriptome analysis tools for cancer research and diagnostics,
+created by the Hartwig Medical Foundation.
+
+In short, it traverses through a directory containing results from one or more
+runs of WiGiTS tools, parses any files it recognises (in-memory, yes), tidies
+them up (which includes data reshaping, normalisation, column name cleanup etc.),
+and writes them to the output format of choice e.g. Apache Parquet, PostgreSQL,
+Delta table.
+
+[WiGiTS]: <https://github.com/hartwigmedical/hmftools> "WiGiTS suite"
+
+{tidywigits} is built on top of R's [R6] encapsulated object-oriented programming
+implementation. This helps quite a bit with code organisation and avoiding code
+duplication. It consists of several base classes like `File`, `Config` and `Tool`
+which we describe below.
+
+[R6]: <https://github.com/r-lib/R6> "R6 package repo"
+
+
+## `File`
+
+A `File` object represents... a file. It has an absolute path, a basename, and
+a size. Given a suffix pattern, it can spit out its prefix.
+
+```{r}
+#| label: file_example1
+(f1 <- readr::readr_example("mtcars.csv"))
+(f1_obj <- File$new(path = f1, suffix_pattern = "\\.csv"))
+```
+
+You can access the individual fields in the classic R list-like manner, using
+the `$` sign:
+
+```{r}
+#| label: file_example2
+f1_obj$suffix_pattern
+f1_obj$prefix
+```
+
+## `Config`
+
+A `Config` object contains functionality for interacting with YAML 
+configuration files that are part of {tidywigits}. These configuration files
+(under `inst/config`) specify the schemas, types, patterns and field descriptions
+for the _raw_ input files and _tidy_ output _tbls_.
+
+### raw
+
+Let's look at some of the information for the raw PURPLE config, for instance:
+
+```{r}
+#| label: purple_config1
+tool <- "purple"
+toolu <- toupper(tool)
+conf <- Config$new(tool)
+```
+
+::: {.panel-tabset}
+
+#### descriptions
+
+File descriptions based on the Hartwig documentation.
+
+```{r}
+#| label: purple_config_raw_descriptions
+conf$.raw_descriptions() |>
+  knitr::kable(caption = glue("{toolu} raw file descriptions."))
+```
+
+#### patterns
+
+Patterns are used to fish out the relevant files from a directory listing.
+Note that the `\` needs to be doubled in the R code since it's an escaped
+character.
+
+```{r}
+#| label: purple_config_raw_patterns
+conf$.raw_patterns() |>
+  knitr::kable(caption = glue("{toolu} raw file patterns."))
+```
+
+#### versions
+
+Versions are used to distinguish changes in schema between individual tool
+versions. For example, after LINX v1.25, several columns were
+dropped from the `breakends` table, which is reflected in the available LINX
+schemas. For now we are using `latest` as a default version based on the most
+recent schema tests, and any discrepancies we see are labelled accordingly by the
+version of the tool that generated a file with a different schema.
+
+```{r}
+#| label: purple_config_raw_versions
+conf$.raw_versions() |>
+  knitr::kable(caption = glue("{toolu} raw file versions."))
+```
+
+:::
+
+#### schemas
+
+The raw schemas specify the column name and type (e.g. character (`c`), 
+integer (`i`), float/double (`d`))
+for each input file (just showing top few below):
+
+::: {.panel-tabset}
+
+```{r}
+#| label: purple_config_raw_schemas1
+#| results: asis
+s <- conf$.raw_schemas_all()
+for (nm in s[["name"]]) {
+  cat(glue("##### {nm}  \n\n"))
+  cat("\n\n")
+  # TODO: account for non-latest versions
+  s |>
+    dplyr::filter(.data$name == nm) |>
+    dplyr::select("schema") |>
+    tidyr::unnest("schema") |>
+    dplyr::slice_head(n = 5) |>
+    knitr::kable() |>
+    print()
+  cat('\n\n')
+}
+```
+
+:::
+
+### tidy
+
+Now let's look at some of the information in the tidy PURPLE config. The
+difference between raw and tidy configs is mostly in the column names (they get
+standardised to lowercase separated by underscores, i.e. snake_case), and some
+raw files get split into multiple tidy tables (e.g. for normalisation purposes).
+
+::: {.panel-tabset}
+
+#### descriptions
+
+Tidy descriptions are the same as the raw descriptions for now.
+
+```{r}
+#| label: purple_config_tidy_descriptions
+conf$.tidy_descriptions() |>
+  knitr::kable(caption = glue("{toolu} tidy file descriptions."))
+```
+
+:::
+
+#### schemas
+
+::: {.panel-tabset}
+
+```{r}
+#| label: purple_config_tidy_schemas1
+#| results: asis
+s <- conf$.tidy_schemas_all()
+for (nm in s[["name"]]) {
+  cat(glue("##### {nm}  \n\n"))
+  cat("\n\n")
+  # TODO: account for non-latest versions + diff tbl
+  s |>
+    dplyr::filter(.data$name == nm) |>
+    dplyr::select("schema") |>
+    tidyr::unnest("schema") |>
+    dplyr::slice_head(n = 5) |>
+    knitr::kable() |>
+    print()
+  cat('\n\n')
+}
+```
+
+:::
+
+## `Tool`
+
+`Tool` is the main organisation class for all file parsers and tidiers.
+It contains functions for parsing and tidying typical CSV/TSV files (with
+column names), and TXT files where the column names are missing. Currently it
+utilises the very simple `readr::read_delim` function from the {[readr]} package
+that reads all the data into memory.
+These simple parsers are used in 80-90% of cases, so in the future we can
+optimise the parsing if needed with faster packages such as {[data.table]},
+{[duckdb-r]}, {[neo-r-polars]} etc..
+
+[readr]: <https://github.com/tidyverse/readr> "readr"
+[duckdb-r]: <https://github.com/duckdb/duckdb-r> "duckdb-r"
+[data.table]: <https://github.com/Rdatatable/data.table> "data.table"
+[neo-r-polars]: <https://github.com/eitsupi/neo-r-polars> "neo-r-polars"

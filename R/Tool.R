@@ -6,7 +6,7 @@
 #' \dontrun{
 #' name <- "alignments"
 #' path <- here::here(
-#'   "nogit/oa_v2"
+#'   "nogit/oa_v1"
 #' )
 #' tool <- Tool$new(name = name, path = path)
 #' files_tbl <- list_files_dir("nogit/oa_v1")
@@ -84,7 +84,7 @@ Tool <- R6::R6Class(
       ) |>
         tidyr::unnest("value")
       cat("#--- Tool ---#\n")
-      print(res)
+      print(knitr::kable(res))
       invisible(self)
     },
     #' @description List files in given tool directory.

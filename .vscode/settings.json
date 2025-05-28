@@ -1,4 +1,7 @@
 {
+    "[quarto]": {
+        "editor.formatOnSave": true
+    },
     "[r]": {
         "editor.formatOnSave": true
     }

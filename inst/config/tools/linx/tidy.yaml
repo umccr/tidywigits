@@ -79,19 +79,19 @@ tidy:
           - field: 'total_exon_count'
             type: 'float'
             description: 'total number of exons in the transcript'
-          - field: 'type'
+          - field: 'type' # old
             type: 'char'
             description: 'type of breakend'
-          - field: 'chromosome'
+          - field: 'chromosome' # old
             type: 'char'
             description: 'chromosome'
-          - field: 'orientation'
+          - field: 'orientation' # old
             type: 'char'
             description: 'orientation'
-          - field: 'strand'
+          - field: 'strand' # old
             type: 'char'
             description: 'strand'
-          - field: 'chr_band'
+          - field: 'chr_band' # old
             type: 'char'
             description: 'chromosome band'
           - field: 'exon_up'
@@ -100,7 +100,7 @@ tidy:
           - field: 'exon_down'
             type: 'float'
             description: '.'
-          - field: 'junction_cn'
+          - field: 'junction_cn' # old
             type: 'float'
             description: 'junction cn'
       latest:
