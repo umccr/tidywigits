@@ -22,3 +22,5 @@
 ^nogit$
 ^pkgdown$
 ^vignettes$
+^vignettes/*_files$
+^vignettes/\.quarto$
