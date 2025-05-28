@@ -31,6 +31,9 @@ File <- R6::R6Class(
     #' @field suffix_pattern (`character(1)`)\cr
     #' Suffix pattern.
     suffix_pattern = NULL,
+    #' @field size (`character(1)`)\cr
+    #' Size of file.
+    size = NULL,
     #' @field prefix (`character(1)`)\cr
     #' Prefix of file.
     prefix = NULL,
@@ -45,6 +48,7 @@ File <- R6::R6Class(
       self$path <- normalizePath(path)
       self$bname <- basename(self$path)
       self$suffix_pattern <- suffix_pattern
+      self$size <- fs::file_size(self$path)
       if (!rlang::is_null(suffix_pattern)) {
         self$prefix = sub(glue("(.*){suffix_pattern}"), "\\1", self$bname)
       }
@@ -57,12 +61,13 @@ File <- R6::R6Class(
       res <- tibble::tribble(
         ~var, ~value,
         "path", self$path,
-        "basename", self$bname,
-        "suffixpat", self$suffix_pattern,
-        "prefix", self$prefix
+        "bname", self$bname,
+        "suffix_pattern", self$suffix_pattern,
+        "prefix", self$prefix,
+        "size", as.character(self$size)
       )
       cat("#--- File ---#\n")
-      print(res)
+      print(knitr::kable(res))
       invisible(self)
     }
   )
