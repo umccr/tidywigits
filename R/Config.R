@@ -63,8 +63,15 @@ Config <- R6::R6Class(
     #' @description Print details about the Tool.
     #' @param ... (ignored).
     print = function(...) {
+      # fmt: skip
+      res <- tibble::tribble(
+        ~var, ~value,
+        "tool", self$tool,
+        "nraw", as.character(nrow(self$raw_schemas_all)),
+        "ntidy", as.character(nrow(self$tidy_schemas_all))
+      )
       cat("#--- Config ---#\n")
-      print(self$tool)
+      print(knitr::kable(res))
       invisible(self)
     },
     #' @description Read YAML configs.
