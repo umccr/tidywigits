@@ -223,6 +223,10 @@ Tool <- R6::R6Class(
       if (nrow(self$files) == 0) {
         return(NULL)
       }
+      # if tidy = FALSE and keep_raw = FALSE, just return the file list
+      if (!tidy && !keep_raw) {
+        return(self$files)
+      }
       d <- self$files |>
         dplyr::mutate(
           parse_fun = glue("parse_{parser}"),
@@ -242,6 +246,10 @@ Tool <- R6::R6Class(
       if (!keep_raw) {
         d <- d |>
           dplyr::select(-"raw")
+      }
+      if (!tidy) {
+        d <- d |>
+          dplyr::select(-"tidy")
       }
       d
     }
