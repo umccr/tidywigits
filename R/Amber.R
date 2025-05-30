@@ -5,10 +5,11 @@
 #' @examples
 #' \dontrun{
 #' path <- here::here(
-#'   "nogit/oncoanalyser-wgts-dna/20250407e2ff5344/L2500331_L2500332/amber"
+#'   "nogit/oa_v1"
 #' )
 #' a <- Amber$new(path)
 #' a$tidy
+#' Amber$new(path, keep_raw = TRUE)$tidy
 #' }
 #' @export
 Amber <- R6::R6Class(
@@ -24,9 +25,18 @@ Amber <- R6::R6Class(
     #' ignored.
     #' @param files_tbl (`tibble(n)`)\cr
     #' Tibble of files from `list_files_dir`.
-    initialize = function(path = NULL, files_tbl = NULL) {
+    #' @param tidy (`logical(1)`)\cr
+    #' Should the raw parsed tibbles get tidied?
+    #' @param keep_raw (`logical(1)`)\cr
+    #' Should the raw parsed tibbles be kept in the final output?
+    initialize = function(
+      path = NULL,
+      files_tbl = NULL,
+      tidy = TRUE,
+      keep_raw = FALSE
+    ) {
       super$initialize(name = "amber", path = path, files_tbl = files_tbl)
-      self$tidy = super$.tidy(envir = self)
+      self$tidy = super$.tidy(envir = self, tidy = tidy, keep_raw = keep_raw)
     },
     #' @description Read `baf.pcf` file.
     #' @param x (`character(1)`)\cr

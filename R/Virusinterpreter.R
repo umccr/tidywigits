@@ -21,9 +21,19 @@ Virusinterpreter <- R6::R6Class(
     #' ignored.
     #' @param files_tbl (`tibble(n)`)\cr
     #' Tibble of files from `list_files_dir`.
-    initialize = function(path = NULL, files_tbl = NULL) {
-      super$initialize(name = "virusinterpreter", path = path, files_tbl = files_tbl)
-      self$tidy = super$.tidy(envir = self)
+    #' @param tidy (`logical(1)`)\cr
+    #' Should the raw parsed tibbles get tidied?
+    #' @param keep_raw (`logical(1)`)\cr
+    #' Should the raw parsed tibbles be kept in the final output?
+    initialize = function(
+      path = NULL,
+      files_tbl = NULL,
+      tidy = TRUE,
+      keep_raw = FALSE
+    ) {
+      name <- "virusinterpreter"
+      super$initialize(name = name, path = path, files_tbl = files_tbl)
+      self$tidy = super$.tidy(envir = self, tidy = tidy, keep_raw = keep_raw)
     },
 
     #' @description Read `virus.annotated.tsv` file.
