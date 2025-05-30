@@ -153,28 +153,31 @@ Tool <- R6::R6Class(
       )
     },
     #' @description Tidy file.
-    #' @param x (`character(1)`)\cr
-    #' File path.
+    #' @param x (`character(1)` or `tibble()`)\cr
+    #' File path or already parsed raw tibble.
     #' @param name (`character(1)`)\cr
     #' Parser name (e.g. "breakends" - see docs).
     #' @param convert_types (`logical(1)`)\cr
     #' Convert field types based on schema.
     .tidy_file = function(x, name, convert_types = FALSE) {
-      .parser <- self$.eval_func(glue("parse_{name}"))
-      d <- .parser(x)
-      version <- get_tbl_version_attr(d)
+      if (!tibble::is_tibble(x)) {
+        .parser <- self$.eval_func(glue("parse_{name}"))
+        x <- .parser(x)
+      }
+      version <- get_tbl_version_attr(x)
+      assertthat::assert_that(!is.null(version), msg = "version can't be NULL.")
       schema <- self$.tidy_schema(name, v = version)
-      colnames(d) <- schema[["field"]]
+      colnames(x) <- schema[["field"]]
       if (convert_types) {
         ctypes <- schema |>
           dplyr::select("field", "type") |>
           tibble::deframe()
-        d <- readr::type_convert(
-          d,
+        x <- readr::type_convert(
+          x,
           col_types = rlang::exec(readr::cols, !!!ctypes)
         )
       }
-      list(d) |>
+      list(x) |>
         setNames(name) |>
         enframe_data()
     },
@@ -210,19 +213,37 @@ Tool <- R6::R6Class(
     #' @description Tidy a list of files.
     #' @param envir (`environment()`)\cr
     #' Environment to evaluate the function within.
-    .tidy = function(envir = NULL) {
+    #' @param tidy (`logical(1)`)\cr
+    #' Should the raw parsed tibbles get tidied?
+    #' @param keep_raw (`logical(1)`)\cr
+    #' Should the raw parsed tibbles be kept in the final output?
+    .tidy = function(envir = NULL, tidy = TRUE, keep_raw = FALSE) {
       # TODO: see if we can utilise self$.tidy_file
       assertthat::assert_that(!is.null(envir))
       if (nrow(self$files) == 0) {
         return(NULL)
       }
-      self$files |>
-        dplyr::mutate(parser = glue("tidy_{parser}")) |>
+      d <- self$files |>
+        dplyr::mutate(
+          parse_fun = glue("parse_{parser}"),
+          tidy_fun = glue("tidy_{parser}")
+        ) |>
         dplyr::rowwise() |>
         dplyr::mutate(
-          tidy = list(self$.eval_func(.data$parser, envir)(.data$path))
+          raw = list(self$.eval_func(.data$parse_fun, envir)(.data$path)),
+          tidy = dplyr::if_else(
+            tidy,
+            list(self$.eval_func(.data$tidy_fun, envir)(.data$raw)),
+            list(NULL)
+          )
         ) |>
-        dplyr::ungroup()
+        dplyr::ungroup() |>
+        dplyr::select(-c("parse_fun", "tidy_fun", "FileObj", "schema"))
+      if (!keep_raw) {
+        d <- d |>
+          dplyr::select(-"raw")
+      }
+      d
     }
   )
 )

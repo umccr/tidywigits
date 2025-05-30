@@ -171,6 +171,7 @@ list_files_dir <- function(d, max_files = NULL, type = "file") {
 }
 
 get_tbl_version_attr <- function(tbl, x = "file_version") {
+  assertthat::has_attr(tbl, x)
   attr(tbl, x)
 }
 
