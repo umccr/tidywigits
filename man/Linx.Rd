@@ -31,20 +31,22 @@ Tidy tibble.}
 \itemize{
 \item \href{#method-Linx-new}{\code{Linx$new()}}
 \item \href{#method-Linx-list_files}{\code{Linx$list_files()}}
-\item \href{#method-Linx-parse_svs}{\code{Linx$parse_svs()}}
-\item \href{#method-Linx-tidy_svs}{\code{Linx$tidy_svs()}}
 \item \href{#method-Linx-parse_breakends}{\code{Linx$parse_breakends()}}
 \item \href{#method-Linx-tidy_breakends}{\code{Linx$tidy_breakends()}}
 \item \href{#method-Linx-parse_clusters}{\code{Linx$parse_clusters()}}
 \item \href{#method-Linx-tidy_clusters}{\code{Linx$tidy_clusters()}}
-\item \href{#method-Linx-parse_links}{\code{Linx$parse_links()}}
-\item \href{#method-Linx-tidy_links}{\code{Linx$tidy_links()}}
-\item \href{#method-Linx-parse_fusions}{\code{Linx$parse_fusions()}}
-\item \href{#method-Linx-tidy_fusions}{\code{Linx$tidy_fusions()}}
-\item \href{#method-Linx-parse_drivers}{\code{Linx$parse_drivers()}}
-\item \href{#method-Linx-tidy_drivers}{\code{Linx$tidy_drivers()}}
 \item \href{#method-Linx-parse_drivercatalog}{\code{Linx$parse_drivercatalog()}}
 \item \href{#method-Linx-tidy_drivercatalog}{\code{Linx$tidy_drivercatalog()}}
+\item \href{#method-Linx-parse_drivers}{\code{Linx$parse_drivers()}}
+\item \href{#method-Linx-tidy_drivers}{\code{Linx$tidy_drivers()}}
+\item \href{#method-Linx-parse_fusions}{\code{Linx$parse_fusions()}}
+\item \href{#method-Linx-tidy_fusions}{\code{Linx$tidy_fusions()}}
+\item \href{#method-Linx-parse_links}{\code{Linx$parse_links()}}
+\item \href{#method-Linx-tidy_links}{\code{Linx$tidy_links()}}
+\item \href{#method-Linx-parse_neoepitope}{\code{Linx$parse_neoepitope()}}
+\item \href{#method-Linx-tidy_neoepitope}{\code{Linx$tidy_neoepitope()}}
+\item \href{#method-Linx-parse_svs}{\code{Linx$parse_svs()}}
+\item \href{#method-Linx-tidy_svs}{\code{Linx$tidy_svs()}}
 \item \href{#method-Linx-parse_viscn}{\code{Linx$parse_viscn()}}
 \item \href{#method-Linx-tidy_viscn}{\code{Linx$tidy_viscn()}}
 \item \href{#method-Linx-parse_visfusion}{\code{Linx$parse_visfusion()}}
@@ -80,7 +82,7 @@ Tidy tibble.}
 \subsection{Method \code{new()}}{
 Create a new Linx object.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Linx$new(path = NULL, files_tbl = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Linx$new(path = NULL, files_tbl = NULL, tidy = TRUE, keep_raw = FALSE)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -92,6 +94,12 @@ ignored.}
 
 \item{\code{files_tbl}}{(\code{tibble(n)})\cr
 Tibble of files from \code{list_files_dir}.}
+
+\item{\code{tidy}}{(\code{logical(1)})\cr
+Should the raw parsed tibbles get tidied?}
+
+\item{\code{keep_raw}}{(\code{logical(1)})\cr
+Should the raw parsed tibbles be kept in the final output?}
 }
 \if{html}{\out{</div>}}
 }
@@ -106,42 +114,6 @@ to handle germline LINX files.
 \if{html}{\out{<div class="r">}}\preformatted{Linx$list_files()}\if{html}{\out{</div>}}
 }
 
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Linx-parse_svs"></a>}}
-\if{latex}{\out{\hypertarget{method-Linx-parse_svs}{}}}
-\subsection{Method \code{parse_svs()}}{
-Read \code{svs.tsv} file.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Linx$parse_svs(x)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{x}}{(\code{character(1)})\cr
-Path to file.}
-}
-\if{html}{\out{</div>}}
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Linx-tidy_svs"></a>}}
-\if{latex}{\out{\hypertarget{method-Linx-tidy_svs}{}}}
-\subsection{Method \code{tidy_svs()}}{
-Tidy \code{svs.tsv} file.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Linx$tidy_svs(x)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{x}}{(\code{character(1)})\cr
-Path to file.}
-}
-\if{html}{\out{</div>}}
-}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-Linx-parse_breakends"></a>}}
@@ -216,12 +188,12 @@ Path to file.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Linx-parse_links"></a>}}
-\if{latex}{\out{\hypertarget{method-Linx-parse_links}{}}}
-\subsection{Method \code{parse_links()}}{
-Read \code{links.tsv} file.
+\if{html}{\out{<a id="method-Linx-parse_drivercatalog"></a>}}
+\if{latex}{\out{\hypertarget{method-Linx-parse_drivercatalog}{}}}
+\subsection{Method \code{parse_drivercatalog()}}{
+Read \code{linx.driver.catalog.tsv} file.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Linx$parse_links(x)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Linx$parse_drivercatalog(x)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -234,48 +206,12 @@ Path to file.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Linx-tidy_links"></a>}}
-\if{latex}{\out{\hypertarget{method-Linx-tidy_links}{}}}
-\subsection{Method \code{tidy_links()}}{
-Tidy \code{links.tsv} file.
+\if{html}{\out{<a id="method-Linx-tidy_drivercatalog"></a>}}
+\if{latex}{\out{\hypertarget{method-Linx-tidy_drivercatalog}{}}}
+\subsection{Method \code{tidy_drivercatalog()}}{
+Tidy \code{linx.driver.catalog.tsv} file.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Linx$tidy_links(x)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{x}}{(\code{character(1)})\cr
-Path to file.}
-}
-\if{html}{\out{</div>}}
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Linx-parse_fusions"></a>}}
-\if{latex}{\out{\hypertarget{method-Linx-parse_fusions}{}}}
-\subsection{Method \code{parse_fusions()}}{
-Read \code{linx.fusion.tsv} file.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Linx$parse_fusions(x)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{x}}{(\code{character(1)})\cr
-Path to file.}
-}
-\if{html}{\out{</div>}}
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Linx-tidy_fusions"></a>}}
-\if{latex}{\out{\hypertarget{method-Linx-tidy_fusions}{}}}
-\subsection{Method \code{tidy_fusions()}}{
-Tidy \code{linx.fusion.tsv} file.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Linx$tidy_fusions(x)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Linx$tidy_drivercatalog(x)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -324,12 +260,12 @@ Path to file.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Linx-parse_drivercatalog"></a>}}
-\if{latex}{\out{\hypertarget{method-Linx-parse_drivercatalog}{}}}
-\subsection{Method \code{parse_drivercatalog()}}{
-Read \code{linx.driver.catalog.tsv} file.
+\if{html}{\out{<a id="method-Linx-parse_fusions"></a>}}
+\if{latex}{\out{\hypertarget{method-Linx-parse_fusions}{}}}
+\subsection{Method \code{parse_fusions()}}{
+Read \code{linx.fusion.tsv} file.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Linx$parse_drivercatalog(x)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Linx$parse_fusions(x)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -342,12 +278,120 @@ Path to file.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Linx-tidy_drivercatalog"></a>}}
-\if{latex}{\out{\hypertarget{method-Linx-tidy_drivercatalog}{}}}
-\subsection{Method \code{tidy_drivercatalog()}}{
-Tidy \code{linx.driver.catalog.tsv} file.
+\if{html}{\out{<a id="method-Linx-tidy_fusions"></a>}}
+\if{latex}{\out{\hypertarget{method-Linx-tidy_fusions}{}}}
+\subsection{Method \code{tidy_fusions()}}{
+Tidy \code{linx.fusion.tsv} file.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Linx$tidy_drivercatalog(x)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Linx$tidy_fusions(x)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{x}}{(\code{character(1)})\cr
+Path to file.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Linx-parse_links"></a>}}
+\if{latex}{\out{\hypertarget{method-Linx-parse_links}{}}}
+\subsection{Method \code{parse_links()}}{
+Read \code{links.tsv} file.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Linx$parse_links(x)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{x}}{(\code{character(1)})\cr
+Path to file.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Linx-tidy_links"></a>}}
+\if{latex}{\out{\hypertarget{method-Linx-tidy_links}{}}}
+\subsection{Method \code{tidy_links()}}{
+Tidy \code{links.tsv} file.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Linx$tidy_links(x)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{x}}{(\code{character(1)})\cr
+Path to file.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Linx-parse_neoepitope"></a>}}
+\if{latex}{\out{\hypertarget{method-Linx-parse_neoepitope}{}}}
+\subsection{Method \code{parse_neoepitope()}}{
+Read \code{neoepitope.tsv} file.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Linx$parse_neoepitope(x)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{x}}{(\code{character(1)})\cr
+Path to file.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Linx-tidy_neoepitope"></a>}}
+\if{latex}{\out{\hypertarget{method-Linx-tidy_neoepitope}{}}}
+\subsection{Method \code{tidy_neoepitope()}}{
+Tidy \code{neoepitope.tsv} file.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Linx$tidy_neoepitope(x)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{x}}{(\code{character(1)})\cr
+Path to file.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Linx-parse_svs"></a>}}
+\if{latex}{\out{\hypertarget{method-Linx-parse_svs}{}}}
+\subsection{Method \code{parse_svs()}}{
+Read \code{svs.tsv} file.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Linx$parse_svs(x)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{x}}{(\code{character(1)})\cr
+Path to file.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Linx-tidy_svs"></a>}}
+\if{latex}{\out{\hypertarget{method-Linx-tidy_svs}{}}}
+\subsection{Method \code{tidy_svs()}}{
+Tidy \code{svs.tsv} file.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Linx$tidy_svs(x)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{

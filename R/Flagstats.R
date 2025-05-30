@@ -5,7 +5,7 @@
 #' @examples
 #' \dontrun{
 #' path <- here::here(
-#'   "nogit/oncoanalyser-wgts-dna/20250407e2ff5344/L2500331_L2500332/flagstats"
+#'   "nogit/oa_v1/flagstats"
 #' )
 #' f <- Flagstats$new(path)
 #' }
@@ -23,9 +23,18 @@ Flagstats <- R6::R6Class(
     #' ignored.
     #' @param files_tbl (`tibble(n)`)\cr
     #' Tibble of files from `list_files_dir`.
-    initialize = function(path = NULL, files_tbl = NULL) {
+    #' @param tidy (`logical(1)`)\cr
+    #' Should the raw parsed tibbles get tidied?
+    #' @param keep_raw (`logical(1)`)\cr
+    #' Should the raw parsed tibbles be kept in the final output?
+    initialize = function(
+      path = NULL,
+      files_tbl = NULL,
+      tidy = TRUE,
+      keep_raw = FALSE
+    ) {
       super$initialize(name = "flagstats", path = path, files_tbl = files_tbl)
-      self$tidy = super$.tidy(envir = self)
+      self$tidy = super$.tidy(envir = self, tidy = tidy, keep_raw = keep_raw)
     },
     #' @description Read `flagstat` file.
     #' @param x (`character(1)`)\cr
@@ -117,7 +126,12 @@ Flagstats <- R6::R6Class(
     #' @param x (`character(1)`)\cr
     #' Path to file.
     tidy_flagstats = function(x) {
-      d <- self$parse_flagstats(x)
+      # tidying already done, just check colnames
+      # hack to handle raw tibble input since other funcs use .tidy_file
+      if (!tibble::is_tibble(x)) {
+        x <- self$parse_flagstats(x)
+      }
+      d <- x
       schema <- self$.tidy_schema("flagstats")
       assertthat::assert_that(identical(colnames(d), schema[["field"]]))
       list(flagstats = d) |>

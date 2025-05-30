@@ -51,7 +51,12 @@ Tidy tibble.}
 \subsection{Method \code{new()}}{
 Create a new Virusinterpreter object.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Virusinterpreter$new(path = NULL, files_tbl = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Virusinterpreter$new(
+  path = NULL,
+  files_tbl = NULL,
+  tidy = TRUE,
+  keep_raw = FALSE
+)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -63,6 +68,12 @@ ignored.}
 
 \item{\code{files_tbl}}{(\code{tibble(n)})\cr
 Tibble of files from \code{list_files_dir}.}
+
+\item{\code{tidy}}{(\code{logical(1)})\cr
+Should the raw parsed tibbles get tidied?}
+
+\item{\code{keep_raw}}{(\code{logical(1)})\cr
+Should the raw parsed tibbles be kept in the final output?}
 }
 \if{html}{\out{</div>}}
 }

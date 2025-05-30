@@ -10,7 +10,7 @@ Base class for all wigits tools.
 \dontrun{
 name <- "alignments"
 path <- here::here(
-  "nogit/oa_v2"
+  "nogit/oa_v1"
 )
 tool <- Tool$new(name = name, path = path)
 files_tbl <- list_files_dir("nogit/oa_v1")
@@ -163,8 +163,8 @@ Tidy file.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{x}}{(\code{character(1)})\cr
-File path.}
+\item{\code{x}}{(\code{character(1)} or \code{tibble()})\cr
+File path or already parsed raw tibble.}
 
 \item{\code{name}}{(\code{character(1)})\cr
 Parser name (e.g. "breakends" - see docs).}
@@ -229,7 +229,7 @@ Environment to evaluate the function within.}
 \subsection{Method \code{.tidy()}}{
 Tidy a list of files.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Tool$.tidy(envir = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Tool$.tidy(envir = NULL, tidy = TRUE, keep_raw = FALSE)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -237,6 +237,12 @@ Tidy a list of files.
 \describe{
 \item{\code{envir}}{(\code{environment()})\cr
 Environment to evaluate the function within.}
+
+\item{\code{tidy}}{(\code{logical(1)})\cr
+Should the raw parsed tibbles get tidied?}
+
+\item{\code{keep_raw}}{(\code{logical(1)})\cr
+Should the raw parsed tibbles be kept in the final output?}
 }
 \if{html}{\out{</div>}}
 }

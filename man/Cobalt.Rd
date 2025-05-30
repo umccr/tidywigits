@@ -18,7 +18,7 @@ cob$tidy$tidy |>
 }
 }
 \section{Super class}{
-\code{\link[tidywigits:Tool]{tidywigits::Tool}} -> \code{cobalt}
+\code{\link[tidywigits:Tool]{tidywigits::Tool}} -> \code{Cobalt}
 }
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
@@ -31,18 +31,18 @@ Tidy tibble.}
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-cobalt-new}{\code{Cobalt$new()}}
-\item \href{#method-cobalt-parse_gcmed}{\code{Cobalt$parse_gcmed()}}
-\item \href{#method-cobalt-tidy_gcmed}{\code{Cobalt$tidy_gcmed()}}
-\item \href{#method-cobalt-parse_ratiomed}{\code{Cobalt$parse_ratiomed()}}
-\item \href{#method-cobalt-tidy_ratiomed}{\code{Cobalt$tidy_ratiomed()}}
-\item \href{#method-cobalt-parse_ratiotsv}{\code{Cobalt$parse_ratiotsv()}}
-\item \href{#method-cobalt-tidy_ratiotsv}{\code{Cobalt$tidy_ratiotsv()}}
-\item \href{#method-cobalt-parse_ratiopcf}{\code{Cobalt$parse_ratiopcf()}}
-\item \href{#method-cobalt-tidy_ratiopcf}{\code{Cobalt$tidy_ratiopcf()}}
-\item \href{#method-cobalt-parse_version}{\code{Cobalt$parse_version()}}
-\item \href{#method-cobalt-tidy_version}{\code{Cobalt$tidy_version()}}
-\item \href{#method-cobalt-clone}{\code{Cobalt$clone()}}
+\item \href{#method-Cobalt-new}{\code{Cobalt$new()}}
+\item \href{#method-Cobalt-parse_gcmed}{\code{Cobalt$parse_gcmed()}}
+\item \href{#method-Cobalt-tidy_gcmed}{\code{Cobalt$tidy_gcmed()}}
+\item \href{#method-Cobalt-parse_ratiomed}{\code{Cobalt$parse_ratiomed()}}
+\item \href{#method-Cobalt-tidy_ratiomed}{\code{Cobalt$tidy_ratiomed()}}
+\item \href{#method-Cobalt-parse_ratiotsv}{\code{Cobalt$parse_ratiotsv()}}
+\item \href{#method-Cobalt-tidy_ratiotsv}{\code{Cobalt$tidy_ratiotsv()}}
+\item \href{#method-Cobalt-parse_ratiopcf}{\code{Cobalt$parse_ratiopcf()}}
+\item \href{#method-Cobalt-tidy_ratiopcf}{\code{Cobalt$tidy_ratiopcf()}}
+\item \href{#method-Cobalt-parse_version}{\code{Cobalt$parse_version()}}
+\item \href{#method-Cobalt-tidy_version}{\code{Cobalt$tidy_version()}}
+\item \href{#method-Cobalt-clone}{\code{Cobalt$clone()}}
 }
 }
 \if{html}{\out{
@@ -59,12 +59,12 @@ Tidy tibble.}
 </details>
 }}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-cobalt-new"></a>}}
-\if{latex}{\out{\hypertarget{method-cobalt-new}{}}}
+\if{html}{\out{<a id="method-Cobalt-new"></a>}}
+\if{latex}{\out{\hypertarget{method-Cobalt-new}{}}}
 \subsection{Method \code{new()}}{
 Create a new Cobalt object.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Cobalt$new(path = NULL, files_tbl = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Cobalt$new(path = NULL, files_tbl = NULL, tidy = TRUE, keep_raw = FALSE)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -76,13 +76,19 @@ ignored.}
 
 \item{\code{files_tbl}}{(\code{tibble(n)})\cr
 Tibble of files from \code{list_files_dir}.}
+
+\item{\code{tidy}}{(\code{logical(1)})\cr
+Should the raw parsed tibbles get tidied?}
+
+\item{\code{keep_raw}}{(\code{logical(1)})\cr
+Should the raw parsed tibbles be kept in the final output?}
 }
 \if{html}{\out{</div>}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-cobalt-parse_gcmed"></a>}}
-\if{latex}{\out{\hypertarget{method-cobalt-parse_gcmed}{}}}
+\if{html}{\out{<a id="method-Cobalt-parse_gcmed"></a>}}
+\if{latex}{\out{\hypertarget{method-Cobalt-parse_gcmed}{}}}
 \subsection{Method \code{parse_gcmed()}}{
 Read \code{gc.median.tsv} file.
 \subsection{Usage}{
@@ -99,8 +105,8 @@ Path to file.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-cobalt-tidy_gcmed"></a>}}
-\if{latex}{\out{\hypertarget{method-cobalt-tidy_gcmed}{}}}
+\if{html}{\out{<a id="method-Cobalt-tidy_gcmed"></a>}}
+\if{latex}{\out{\hypertarget{method-Cobalt-tidy_gcmed}{}}}
 \subsection{Method \code{tidy_gcmed()}}{
 Tidy \code{gc.median.tsv} file.
 \subsection{Usage}{
@@ -117,8 +123,8 @@ Path to file.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-cobalt-parse_ratiomed"></a>}}
-\if{latex}{\out{\hypertarget{method-cobalt-parse_ratiomed}{}}}
+\if{html}{\out{<a id="method-Cobalt-parse_ratiomed"></a>}}
+\if{latex}{\out{\hypertarget{method-Cobalt-parse_ratiomed}{}}}
 \subsection{Method \code{parse_ratiomed()}}{
 Read \code{ratio.median.tsv} file.
 \subsection{Usage}{
@@ -135,8 +141,8 @@ Path to file.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-cobalt-tidy_ratiomed"></a>}}
-\if{latex}{\out{\hypertarget{method-cobalt-tidy_ratiomed}{}}}
+\if{html}{\out{<a id="method-Cobalt-tidy_ratiomed"></a>}}
+\if{latex}{\out{\hypertarget{method-Cobalt-tidy_ratiomed}{}}}
 \subsection{Method \code{tidy_ratiomed()}}{
 Tidy \code{ratio.median.tsv} file.
 \subsection{Usage}{
@@ -153,8 +159,8 @@ Path to file.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-cobalt-parse_ratiotsv"></a>}}
-\if{latex}{\out{\hypertarget{method-cobalt-parse_ratiotsv}{}}}
+\if{html}{\out{<a id="method-Cobalt-parse_ratiotsv"></a>}}
+\if{latex}{\out{\hypertarget{method-Cobalt-parse_ratiotsv}{}}}
 \subsection{Method \code{parse_ratiotsv()}}{
 Read \code{ratio.tsv} file.
 \subsection{Usage}{
@@ -171,8 +177,8 @@ Path to file.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-cobalt-tidy_ratiotsv"></a>}}
-\if{latex}{\out{\hypertarget{method-cobalt-tidy_ratiotsv}{}}}
+\if{html}{\out{<a id="method-Cobalt-tidy_ratiotsv"></a>}}
+\if{latex}{\out{\hypertarget{method-Cobalt-tidy_ratiotsv}{}}}
 \subsection{Method \code{tidy_ratiotsv()}}{
 Tidy \code{ratio.tsv} file.
 \subsection{Usage}{
@@ -189,8 +195,8 @@ Path to file.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-cobalt-parse_ratiopcf"></a>}}
-\if{latex}{\out{\hypertarget{method-cobalt-parse_ratiopcf}{}}}
+\if{html}{\out{<a id="method-Cobalt-parse_ratiopcf"></a>}}
+\if{latex}{\out{\hypertarget{method-Cobalt-parse_ratiopcf}{}}}
 \subsection{Method \code{parse_ratiopcf()}}{
 Read \code{ratio.pcf} file.
 \subsection{Usage}{
@@ -207,8 +213,8 @@ Path to file.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-cobalt-tidy_ratiopcf"></a>}}
-\if{latex}{\out{\hypertarget{method-cobalt-tidy_ratiopcf}{}}}
+\if{html}{\out{<a id="method-Cobalt-tidy_ratiopcf"></a>}}
+\if{latex}{\out{\hypertarget{method-Cobalt-tidy_ratiopcf}{}}}
 \subsection{Method \code{tidy_ratiopcf()}}{
 Tidy \code{ratio.pcf} file.
 \subsection{Usage}{
@@ -225,8 +231,8 @@ Path to file.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-cobalt-parse_version"></a>}}
-\if{latex}{\out{\hypertarget{method-cobalt-parse_version}{}}}
+\if{html}{\out{<a id="method-Cobalt-parse_version"></a>}}
+\if{latex}{\out{\hypertarget{method-Cobalt-parse_version}{}}}
 \subsection{Method \code{parse_version()}}{
 Read \code{cobalt.version} file.
 \subsection{Usage}{
@@ -243,8 +249,8 @@ Path to file.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-cobalt-tidy_version"></a>}}
-\if{latex}{\out{\hypertarget{method-cobalt-tidy_version}{}}}
+\if{html}{\out{<a id="method-Cobalt-tidy_version"></a>}}
+\if{latex}{\out{\hypertarget{method-Cobalt-tidy_version}{}}}
 \subsection{Method \code{tidy_version()}}{
 Tidy \code{cobalt.version} file.
 \subsection{Usage}{
@@ -261,8 +267,8 @@ Path to file.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-cobalt-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-cobalt-clone}{}}}
+\if{html}{\out{<a id="method-Cobalt-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-Cobalt-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

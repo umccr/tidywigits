@@ -22,9 +22,19 @@ Bamtools <- R6::R6Class(
     #' ignored.
     #' @param files_tbl (`tibble(n)`)\cr
     #' Tibble of files from `list_files_dir`.
-    initialize = function(path = NULL, files_tbl = NULL) {
-      super$initialize(name = "bamtools", path = path, files_tbl = files_tbl)
-      self$tidy = super$.tidy(envir = self)
+    #' @param tidy (`logical(1)`)\cr
+    #' Should the raw parsed tibbles get tidied?
+    #' @param keep_raw (`logical(1)`)\cr
+    #' Should the raw parsed tibbles be kept in the final output?
+    initialize = function(
+      path = NULL,
+      files_tbl = NULL,
+      tidy = TRUE,
+      keep_raw = FALSE
+    ) {
+      name <- "bamtools"
+      super$initialize(name = name, path = path, files_tbl = files_tbl)
+      self$tidy = super$.tidy(envir = self, tidy = tidy, keep_raw = keep_raw)
     },
     #' @description Read `summary.tsv` file.
     #' @param x (`character(1)`)\cr
@@ -36,7 +46,11 @@ Bamtools <- R6::R6Class(
     #' @param x (`character(1)`)\cr
     #' Path to file.
     tidy_summary = function(x) {
-      d <- self$parse_summary(x)
+      # hack to handle raw tibble input since other funcs use .tidy_file
+      if (!tibble::is_tibble(x)) {
+        x <- self$parse_summary(x)
+      }
+      d <- x
       schema1 <- self$.tidy_schema("summary", subtbl = "tbl1")
       schema2 <- self$.tidy_schema("summary", subtbl = "tbl2")
       d1 <- d |>
@@ -79,13 +93,18 @@ Bamtools <- R6::R6Class(
       )
       d2 <- readr::read_tsv(x, col_types = "ci", comment = "#", skip = 3) |>
         set_tbl_version_attr(get_tbl_version_attr(d1))
-      list(metrics = d1[], histo = d2[])
+      list(metrics = d1[], histo = d2[]) |>
+        enframe_data()
     },
     #' @description Tidy `wgsmetrics` file.
     #' @param x (`character(1)`)\cr
     #' Path to file.
     tidy_wgsmetrics = function(x) {
-      d <- self$parse_wgsmetrics(x)
+      # hack to handle raw tibble input since other funcs use .tidy_file
+      if (!tibble::is_tibble(x)) {
+        x <- self$parse_wgsmetrics(x)
+      }
+      d <- x |> tibble::deframe()
       schema <- self$.tidy_schema("wgsmetrics")
       colnames(d[["metrics"]]) <- schema[["field"]]
       enframe_data(d)
@@ -181,10 +200,14 @@ Bamtools <- R6::R6Class(
     #' @param x (`character(1)`)\cr
     #' Path to file.
     tidy_flagstats = function(x) {
-      raw <- self$parse_flagstats(x)
+      # hack to handle raw tibble input since other funcs use .tidy_file
+      if (!tibble::is_tibble(x)) {
+        x <- self$parse_flagstats(x)
+      }
+      d <- x
       schema <- self$.tidy_schema("flagstats")
-      assertthat::assert_that(identical(colnames(raw), schema[["field"]]))
-      list(flagstats = raw) |>
+      assertthat::assert_that(identical(colnames(d), schema[["field"]]))
+      list(flagstats = d) |>
         enframe_data()
     },
     #' @description Read `coverage.tsv` file.
