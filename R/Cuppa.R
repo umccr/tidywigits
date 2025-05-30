@@ -23,9 +23,18 @@ Cuppa <- R6::R6Class(
     #' ignored.
     #' @param files_tbl (`tibble(n)`)\cr
     #' Tibble of files from `list_files_dir`.
-    initialize = function(path = NULL, files_tbl = NULL) {
+    #' @param tidy (`logical(1)`)\cr
+    #' Should the raw parsed tibbles get tidied?
+    #' @param keep_raw (`logical(1)`)\cr
+    #' Should the raw parsed tibbles be kept in the final output?
+    initialize = function(
+      path = NULL,
+      files_tbl = NULL,
+      tidy = TRUE,
+      keep_raw = FALSE
+    ) {
       super$initialize(name = "cuppa", path = path, files_tbl = files_tbl)
-      self$tidy = super$.tidy(envir = self)
+      self$tidy = super$.tidy(envir = self, tidy = tidy, keep_raw = keep_raw)
     },
     #' @description Read `cup.data.csv` file.
     #' @param x (`character(1)`)\cr
@@ -37,9 +46,12 @@ Cuppa <- R6::R6Class(
     #' @param x (`character(1)`)\cr
     #' Path to file.
     tidy_datacsv = function(x) {
-      raw <- self$parse_datacsv(x)
+      # hack to handle raw tibble input since other funcs use .tidy_file
+      if (!tibble::is_tibble(x)) {
+        x <- self$parse_predsum(x)
+      }
       # add a 'plot_section' column for potential easier grouping
-      d <- raw |>
+      d <- x |>
         dplyr::mutate(
           plot_section = dplyr::case_when(
             (.data$ResultType == "CLASSIFIER" & .data$DataType != "GENDER") |
@@ -81,7 +93,11 @@ Cuppa <- R6::R6Class(
     #' @param x (`character(1)`)\cr
     #' Path to file.
     tidy_predsum = function(x) {
-      d <- self$parse_predsum(x) |>
+      # hack to handle raw tibble input since other funcs use .tidy_file
+      if (!tibble::is_tibble(x)) {
+        x <- self$parse_predsum(x)
+      }
+      d <- x |>
         tidyr::pivot_longer(
           contains("pred_class_"),
           names_prefix = "pred_class_",
