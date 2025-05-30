@@ -8,6 +8,7 @@
 #'   "nogit"
 #' )
 #' a <- Alignments$new(path)
+#' a <- Alignments$new(path, tidy = FALSE, keep_raw = TRUE)
 #' }
 #' @export
 Alignments <- R6::R6Class(
@@ -23,9 +24,18 @@ Alignments <- R6::R6Class(
     #' ignored.
     #' @param files_tbl (`tibble(n)`)\cr
     #' Tibble of files from `list_files_dir`.
-    initialize = function(path = NULL, files_tbl = NULL) {
+    #' @param tidy (`logical(1)`)\cr
+    #' Should the raw parsed tibbles get tidied?
+    #' @param keep_raw (`logical(1)`)\cr
+    #' Should the raw parsed tibbles be kept in the final output?
+    initialize = function(
+      path = NULL,
+      files_tbl = NULL,
+      tidy = TRUE,
+      keep_raw = FALSE
+    ) {
       super$initialize(name = "alignments", path = path, files_tbl = files_tbl)
-      self$tidy = super$.tidy(envir = self)
+      self$tidy = super$.tidy(envir = self, tidy = tidy, keep_raw = keep_raw)
     },
     #' @description Read `duplicate_freq.tsv` file.
     #' @param x (`character(1)`)\cr
@@ -69,13 +79,18 @@ Alignments <- R6::R6Class(
         skip = 10
       ) |>
         set_tbl_version_attr("latest")
-      list(metrics = d1[], histo = d2[])
+      list(metrics = d1[], histo = d2[]) |>
+        enframe_data()
     },
     #' @description Tidy `md.metrics` file.
     #' @param x (`character(1)`)\cr
     #' Path to file.
     tidy_markdup = function(x) {
-      d <- self$parse_markdup(x)
+      # hack to handle raw tibble input since other funcs use .tidy_file
+      if (!tibble::is_tibble(x)) {
+        x <- self$parse_markdup(x)
+      }
+      d <- x |> tibble::deframe()
       schema <- self$.tidy_schema("markdup")
       schema_splitter <- which(schema$field == "SPLIT_HERE")
       s1 <- dplyr::slice(schema, 1:(schema_splitter - 1))
