@@ -14,7 +14,7 @@
 #' }
 #' @export
 Cobalt <- R6::R6Class(
-  "cobalt",
+  "Cobalt",
   inherit = Tool,
   public = list(
     #' @field tidy (`tibble()`)\cr
@@ -26,9 +26,18 @@ Cobalt <- R6::R6Class(
     #' ignored.
     #' @param files_tbl (`tibble(n)`)\cr
     #' Tibble of files from `list_files_dir`.
-    initialize = function(path = NULL, files_tbl = NULL) {
+    #' @param tidy (`logical(1)`)\cr
+    #' Should the raw parsed tibbles get tidied?
+    #' @param keep_raw (`logical(1)`)\cr
+    #' Should the raw parsed tibbles be kept in the final output?
+    initialize = function(
+      path = NULL,
+      files_tbl = NULL,
+      tidy = TRUE,
+      keep_raw = FALSE
+    ) {
       super$initialize(name = "cobalt", path = path, files_tbl = files_tbl)
-      self$tidy = super$.tidy(envir = self)
+      self$tidy = super$.tidy(envir = self, tidy = tidy, keep_raw = keep_raw)
     },
     #' @description Read `gc.median.tsv` file.
     #' @param x (`character(1)`)\cr
@@ -38,20 +47,25 @@ Cobalt <- R6::R6Class(
       d1 <- readr::read_tsv(x, col_names = TRUE, col_types = "dd", n_max = 1)
       # next rows are median per bucket
       d2 <- self$.parse_file(x, "gcmed", skip = 2)
-      list(sample_stats = d1[], bucket_stats = d2)
+      list(sample_stats = d1[], bucket_stats = d2) |>
+        enframe_data()
     },
     #' @description Tidy `gc.median.tsv` file.
     #' @param x (`character(1)`)\cr
     #' Path to file.
     tidy_gcmed = function(x) {
-      raw <- self$parse_gcmed(x)
+      # hack to handle raw tibble input since other funcs use .tidy_file
+      if (!tibble::is_tibble(x)) {
+        x <- self$parse_gcmed(x)
+      }
+      d <- x |> tibble::deframe()
       assertthat::assert_that(
-        identical(names(raw), c("sample_stats", "bucket_stats"))
+        identical(names(d), c("sample_stats", "bucket_stats"))
       )
       schema <- self$.tidy_schema("gcmed")
-      colnames(raw[["bucket_stats"]]) <- schema[["field"]]
-      colnames(raw[["sample_stats"]]) <- c("mean", "median")
-      enframe_data(raw)
+      colnames(d[["bucket_stats"]]) <- schema[["field"]]
+      colnames(d[["sample_stats"]]) <- c("mean", "median")
+      enframe_data(d)
     },
     #' @description Read `ratio.median.tsv` file.
     #' @param x (`character(1)`)\cr
