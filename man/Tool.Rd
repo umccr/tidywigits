@@ -61,6 +61,7 @@ Tibble of files from \code{list_files_dir}.}
 \item \href{#method-Tool-.parse_file_nohead}{\code{Tool$.parse_file_nohead()}}
 \item \href{#method-Tool-.eval_func}{\code{Tool$.eval_func()}}
 \item \href{#method-Tool-.tidy}{\code{Tool$.tidy()}}
+\item \href{#method-Tool-.write}{\code{Tool$.write()}}
 \item \href{#method-Tool-clone}{\code{Tool$clone()}}
 }
 }
@@ -243,6 +244,34 @@ Should the raw parsed tibbles get tidied?}
 
 \item{\code{keep_raw}}{(\code{logical(1)})\cr
 Should the raw parsed tibbles be kept in the final output?}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Tool-.write"></a>}}
+\if{latex}{\out{\hypertarget{method-Tool-.write}{}}}
+\subsection{Method \code{.write()}}{
+Write tidy tibbles.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Tool$.write(d, odir = NULL, pref = NULL, fmt = "tsv", id = NULL, dbconn = NULL)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{d}}{(\code{tibble()})\cr
+Tibble with at least one row of tidy tibbles with a name and data list-col.}
+
+\item{\code{odir}}{Directory path to output tidy files.}
+
+\item{\code{pref}}{Prefix of output files.}
+
+\item{\code{fmt}}{Format of output files.}
+
+\item{\code{id}}{ID to use for the dataset (e.g. \code{wfrid.123}, \code{prid.456}).}
+
+\item{\code{dbconn}}{Database connection object.}
 }
 \if{html}{\out{</div>}}
 }
