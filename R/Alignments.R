@@ -8,7 +8,15 @@
 #'   "nogit"
 #' )
 #' a <- Alignments$new(path)
-#' a <- Alignments$new(path, tidy = FALSE, keep_raw = TRUE)
+#' d <- a$tidy |>
+#'   dplyr::select("tidy") |>
+#'   tidyr::unnest("tidy") |>
+#'   dplyr::mutate(name = glue("alignments_{.data$name}"))
+#' a$.write(d = d,
+#'     odir = "nogit/test_data",
+#'     pref = "sampleB",
+#'     id = "run1",
+#'     fmt = "parquet")
 #' }
 #' @export
 Alignments <- R6::R6Class(

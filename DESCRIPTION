@@ -19,6 +19,7 @@ Depends:
     R (>= 4.4)
 Imports:
     argparse,
+    arrow,
     assertthat,
     cli,
     DBI,

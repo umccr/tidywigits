@@ -252,6 +252,50 @@ Tool <- R6::R6Class(
           dplyr::select(-"tidy")
       }
       d
+    },
+    #' @description Write tidy tibbles.
+    #' @param d  (`tibble()`)\cr
+    #' Tibble with at least one row of tidy tibbles with a name and data list-col.
+    #' @param odir Directory path to output tidy files.
+    #' @param pref Prefix of output files.
+    #' @param fmt Format of output files.
+    #' @param id ID to use for the dataset (e.g. `wfrid.123`, `prid.456`).
+    #' @param dbconn Database connection object.
+    .write = function(
+      d,
+      odir = NULL,
+      pref = NULL,
+      fmt = "tsv",
+      id = NULL,
+      dbconn = NULL
+    ) {
+      assertthat::assert_that(!is.null(id), !is.null(pref))
+      assertthat::assert_that(all(c("name", "data") %in% colnames(d)))
+      if (!is.null(odir)) {
+        pref <- file.path(odir, pref)
+      }
+      d_write <- d |>
+        dplyr::rowwise() |>
+        # for db we want the tibble name
+        dplyr::mutate(
+          p = ifelse(
+            fmt == "db",
+            as.character(.data$name),
+            as.character(glue("{pref}_{.data$name}"))
+          ),
+          out = list(
+            nemo_write(
+              d = .data$data,
+              pref = .data$p,
+              fmt = fmt,
+              id = id,
+              dbconn = dbconn
+            )
+          )
+        ) |>
+        dplyr::ungroup() |>
+        dplyr::select("name", "data", prefix = "p")
+      invisible(d_write)
     }
-  )
+  ) # public end
 )
