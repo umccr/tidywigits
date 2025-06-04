@@ -8,13 +8,21 @@ Base class for all wigits tools.
 }
 \examples{
 \dontrun{
-name <- "alignments"
 path <- here::here(
   "nogit/oa_v1"
 )
-tool <- Tool$new(name = name, path = path)
-files_tbl <- list_files_dir("nogit/oa_v1")
-Tool$new(name = "amber", path = "foo", files_tbl = files_tbl)
+a <- Alignments$new(path = path)$
+  .filter_files(exclude = "alignments_dupfreq")$
+  .tidy(keep_raw = TRUE)
+a <- Alignments$new(path)
+a$magic(
+    odir = "nogit/test_data",
+    pref = "sampleA",
+    fmt = "parquet",
+    id = "run1",
+    include = NULL,
+    exclude = NULL
+)
 }
 
 }
@@ -32,6 +40,9 @@ Config of tool.}
 
 \item{\code{files}}{(\code{tibble()})\cr
 Tibble of files matching available Tool patterns.}
+
+\item{\code{tbls}}{(\code{tibble()})\cr
+Tibble of tidy tibbles.}
 
 \item{\code{raw_schemas_all}}{(\code{tibble()})\cr
 All raw schemas for tool.}
@@ -55,12 +66,15 @@ Tibble of files from \code{list_files_dir}.}
 \itemize{
 \item \href{#method-Tool-new}{\code{Tool$new()}}
 \item \href{#method-Tool-print}{\code{Tool$print()}}
-\item \href{#method-Tool-list_files}{\code{Tool$list_files()}}
+\item \href{#method-Tool-.filter_files}{\code{Tool$.filter_files()}}
+\item \href{#method-Tool-.list_files}{\code{Tool$.list_files()}}
 \item \href{#method-Tool-.parse_file}{\code{Tool$.parse_file()}}
 \item \href{#method-Tool-.tidy_file}{\code{Tool$.tidy_file()}}
 \item \href{#method-Tool-.parse_file_nohead}{\code{Tool$.parse_file_nohead()}}
 \item \href{#method-Tool-.eval_func}{\code{Tool$.eval_func()}}
 \item \href{#method-Tool-.tidy}{\code{Tool$.tidy()}}
+\item \href{#method-Tool-.write}{\code{Tool$.write()}}
+\item \href{#method-Tool-magic}{\code{Tool$magic()}}
 \item \href{#method-Tool-clone}{\code{Tool$clone()}}
 }
 }
@@ -107,12 +121,33 @@ Print details about the Tool.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Tool-list_files"></a>}}
-\if{latex}{\out{\hypertarget{method-Tool-list_files}{}}}
-\subsection{Method \code{list_files()}}{
+\if{html}{\out{<a id="method-Tool-.filter_files"></a>}}
+\if{latex}{\out{\hypertarget{method-Tool-.filter_files}{}}}
+\subsection{Method \code{.filter_files()}}{
+Filter files in given tool directory.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Tool$.filter_files(include = NULL, exclude = NULL)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{include}}{(\code{character(n)})\cr
+Files to include.}
+
+\item{\code{exclude}}{(\code{character(n)})\cr
+Files to exclude.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Tool-.list_files"></a>}}
+\if{latex}{\out{\hypertarget{method-Tool-.list_files}{}}}
+\subsection{Method \code{.list_files()}}{
 List files in given tool directory.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Tool$list_files(type = "file")}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Tool$.list_files(type = "file")}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -229,20 +264,86 @@ Environment to evaluate the function within.}
 \subsection{Method \code{.tidy()}}{
 Tidy a list of files.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Tool$.tidy(envir = NULL, tidy = TRUE, keep_raw = FALSE)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Tool$.tidy(tidy = TRUE, keep_raw = FALSE)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{envir}}{(\code{environment()})\cr
-Environment to evaluate the function within.}
-
 \item{\code{tidy}}{(\code{logical(1)})\cr
 Should the raw parsed tibbles get tidied?}
 
 \item{\code{keep_raw}}{(\code{logical(1)})\cr
 Should the raw parsed tibbles be kept in the final output?}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Tool-.write"></a>}}
+\if{latex}{\out{\hypertarget{method-Tool-.write}{}}}
+\subsection{Method \code{.write()}}{
+Write tidy tibbles.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Tool$.write(odir = NULL, pref = NULL, fmt = "tsv", id = NULL, dbconn = NULL)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{odir}}{Directory path to output tidy files.}
+
+\item{\code{pref}}{Prefix of output files.}
+
+\item{\code{fmt}}{Format of output files.}
+
+\item{\code{id}}{ID to use for the dataset (e.g. \code{wfrid.123}, \code{prid.456}).}
+
+\item{\code{dbconn}}{Database connection object.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Tool-magic"></a>}}
+\if{latex}{\out{\hypertarget{method-Tool-magic}{}}}
+\subsection{Method \code{magic()}}{
+Magic.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Tool$magic(
+  odir = NULL,
+  pref = NULL,
+  fmt = "tsv",
+  id = NULL,
+  dbconn = NULL,
+  include = NULL,
+  exclude = NULL
+)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{odir}}{(\code{character(n)})\cr
+Directory path to output tidy files.}
+
+\item{\code{pref}}{(\code{character(n)})\cr
+Prefix of output files.}
+
+\item{\code{fmt}}{(\code{character(n)})\cr
+Format of output files.}
+
+\item{\code{id}}{(\code{character(n)})\cr
+ID to use for the dataset (e.g. \code{wfrid.123}, \code{prid.456}).}
+
+\item{\code{dbconn}}{(\code{DBIConnection})\cr
+Database connection object.}
+
+\item{\code{include}}{(\code{character(n)})\cr
+Files to include.}
+
+\item{\code{exclude}}{(\code{character(n)})\cr
+Files to exclude.}
 }
 \if{html}{\out{</div>}}
 }

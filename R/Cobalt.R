@@ -17,27 +17,14 @@ Cobalt <- R6::R6Class(
   "Cobalt",
   inherit = Tool,
   public = list(
-    #' @field tidy (`tibble()`)\cr
-    #' Tidy tibble.
-    tidy = NULL,
     #' @description Create a new Cobalt object.
     #' @param path (`character(1)`)\cr
     #' Output directory of tool. If `files_tbl` is supplied, this basically gets
     #' ignored.
     #' @param files_tbl (`tibble(n)`)\cr
     #' Tibble of files from `list_files_dir`.
-    #' @param tidy (`logical(1)`)\cr
-    #' Should the raw parsed tibbles get tidied?
-    #' @param keep_raw (`logical(1)`)\cr
-    #' Should the raw parsed tibbles be kept in the final output?
-    initialize = function(
-      path = NULL,
-      files_tbl = NULL,
-      tidy = TRUE,
-      keep_raw = FALSE
-    ) {
+    initialize = function(path = NULL, files_tbl = NULL) {
       super$initialize(name = "cobalt", path = path, files_tbl = files_tbl)
-      self$tidy = super$.tidy(envir = self, tidy = tidy, keep_raw = keep_raw)
     },
     #' @description Read `gc.median.tsv` file.
     #' @param x (`character(1)`)\cr

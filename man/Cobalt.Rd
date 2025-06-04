@@ -20,14 +20,6 @@ cob$tidy$tidy |>
 \section{Super class}{
 \code{\link[tidywigits:Tool]{tidywigits::Tool}} -> \code{Cobalt}
 }
-\section{Public fields}{
-\if{html}{\out{<div class="r6-fields">}}
-\describe{
-\item{\code{tidy}}{(\code{tibble()})\cr
-Tidy tibble.}
-}
-\if{html}{\out{</div>}}
-}
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
@@ -49,11 +41,14 @@ Tidy tibble.}
 <details><summary>Inherited methods</summary>
 <ul>
 <li><span class="pkg-link" data-pkg="tidywigits" data-topic="Tool" data-id=".eval_func"><a href='../../tidywigits/html/Tool.html#method-Tool-.eval_func'><code>tidywigits::Tool$.eval_func()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="tidywigits" data-topic="Tool" data-id=".filter_files"><a href='../../tidywigits/html/Tool.html#method-Tool-.filter_files'><code>tidywigits::Tool$.filter_files()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="tidywigits" data-topic="Tool" data-id=".list_files"><a href='../../tidywigits/html/Tool.html#method-Tool-.list_files'><code>tidywigits::Tool$.list_files()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="tidywigits" data-topic="Tool" data-id=".parse_file"><a href='../../tidywigits/html/Tool.html#method-Tool-.parse_file'><code>tidywigits::Tool$.parse_file()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="tidywigits" data-topic="Tool" data-id=".parse_file_nohead"><a href='../../tidywigits/html/Tool.html#method-Tool-.parse_file_nohead'><code>tidywigits::Tool$.parse_file_nohead()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="tidywigits" data-topic="Tool" data-id=".tidy"><a href='../../tidywigits/html/Tool.html#method-Tool-.tidy'><code>tidywigits::Tool$.tidy()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="tidywigits" data-topic="Tool" data-id=".tidy_file"><a href='../../tidywigits/html/Tool.html#method-Tool-.tidy_file'><code>tidywigits::Tool$.tidy_file()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="tidywigits" data-topic="Tool" data-id="list_files"><a href='../../tidywigits/html/Tool.html#method-Tool-list_files'><code>tidywigits::Tool$list_files()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="tidywigits" data-topic="Tool" data-id=".write"><a href='../../tidywigits/html/Tool.html#method-Tool-.write'><code>tidywigits::Tool$.write()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="tidywigits" data-topic="Tool" data-id="magic"><a href='../../tidywigits/html/Tool.html#method-Tool-magic'><code>tidywigits::Tool$magic()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="tidywigits" data-topic="Tool" data-id="print"><a href='../../tidywigits/html/Tool.html#method-Tool-print'><code>tidywigits::Tool$print()</code></a></span></li>
 </ul>
 </details>
@@ -64,7 +59,7 @@ Tidy tibble.}
 \subsection{Method \code{new()}}{
 Create a new Cobalt object.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Cobalt$new(path = NULL, files_tbl = NULL, tidy = TRUE, keep_raw = FALSE)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Cobalt$new(path = NULL, files_tbl = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -76,12 +71,6 @@ ignored.}
 
 \item{\code{files_tbl}}{(\code{tibble(n)})\cr
 Tibble of files from \code{list_files_dir}.}
-
-\item{\code{tidy}}{(\code{logical(1)})\cr
-Should the raw parsed tibbles get tidied?}
-
-\item{\code{keep_raw}}{(\code{logical(1)})\cr
-Should the raw parsed tibbles be kept in the final output?}
 }
 \if{html}{\out{</div>}}
 }

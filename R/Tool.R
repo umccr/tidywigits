@@ -4,13 +4,21 @@
 #' Base class for all wigits tools.
 #' @examples
 #' \dontrun{
-#' name <- "alignments"
 #' path <- here::here(
 #'   "nogit/oa_v1"
 #' )
-#' tool <- Tool$new(name = name, path = path)
-#' files_tbl <- list_files_dir("nogit/oa_v1")
-#' Tool$new(name = "amber", path = "foo", files_tbl = files_tbl)
+#' a <- Alignments$new(path = path)$
+#'   .filter_files(exclude = "alignments_dupfreq")$
+#'   .tidy(keep_raw = TRUE)
+#' a <- Alignments$new(path)
+#' a$magic(
+#'     odir = "nogit/test_data",
+#'     pref = "sampleA",
+#'     fmt = "parquet",
+#'     id = "run1",
+#'     include = NULL,
+#'     exclude = NULL
+#' )
 #' }
 #'
 #' @export
@@ -29,6 +37,9 @@ Tool <- R6::R6Class(
     #' @field files (`tibble()`)\cr
     #' Tibble of files matching available Tool patterns.
     files = NULL,
+    #' @field tbls (`tibble()`)\cr
+    #' Tibble of tidy tibbles.
+    tbls = NULL,
     #' @field raw_schemas_all (`tibble()`)\cr
     #' All raw schemas for tool.
     raw_schemas_all = NULL,
@@ -70,7 +81,8 @@ Tool <- R6::R6Class(
       self$.tidy_schema <- self$config$.tidy_schema
       self$.raw_schema <- self$config$.raw_schema
       self$.files_tbl <- files_tbl
-      self$files <- self$list_files()
+      # upon init, files starts off as the raw list of files
+      self$files <- self$.list_files()
     },
     #' @description Print details about the Tool.
     #' @param ... (ignored).
@@ -87,11 +99,36 @@ Tool <- R6::R6Class(
       print(knitr::kable(res))
       invisible(self)
     },
+    #' @description Filter files in given tool directory.
+    #' @param include (`character(n)`)\cr
+    #' Files to include.
+    #' @param exclude (`character(n)`)\cr
+    #' Files to exclude.
+    .filter_files = function(include = NULL, exclude = NULL) {
+      d0 <- self$files
+      d1 <- d0
+      assertthat::assert_that(
+        is.null(include) || is.null(exclude),
+        msg = "You cannot define both include and exclude!"
+      )
+      if (!is.null(include)) {
+        assertthat::assert_that(rlang::is_character(include))
+        d1 <- d1 |>
+          dplyr::filter(.data$tool_parser %in% include)
+      }
+      if (!is.null(exclude)) {
+        assertthat::assert_that(rlang::is_character(exclude))
+        d1 <- d1 |>
+          dplyr::filter(!.data$tool_parser %in% exclude)
+      }
+      self$files <- d1
+      invisible(self)
+    },
     #' @description List files in given tool directory.
     #' @param type (`character(1)`)\cr
     #' File types(s) to return (e.g. any, file, directory, symlink).
     #' See `fs::dir_info`.
-    list_files = function(type = "file") {
+    .list_files = function(type = "file") {
       files_tbl <- self$.files_tbl
       assertthat::assert_that(!is.null(self$path) || !is.null(files_tbl))
       if (!is.null(files_tbl)) {
@@ -131,9 +168,11 @@ Tool <- R6::R6Class(
             )
           ),
           prefix = FileObj$prefix,
-          schema = list(self$config$.raw_schema(.data$parser))
+          schema = list(self$config$.raw_schema(.data$parser)),
+          tool_parser = glue("{self$name}_{.data$parser}")
         ) |>
-        dplyr::ungroup()
+        dplyr::ungroup() |>
+        dplyr::relocate("tool_parser", .before = 1)
     },
     #' @description Parse file.
     #' @param x (`character(1)`)\cr
@@ -211,21 +250,19 @@ Tool <- R6::R6Class(
       get(fun, envir)
     },
     #' @description Tidy a list of files.
-    #' @param envir (`environment()`)\cr
-    #' Environment to evaluate the function within.
     #' @param tidy (`logical(1)`)\cr
     #' Should the raw parsed tibbles get tidied?
     #' @param keep_raw (`logical(1)`)\cr
     #' Should the raw parsed tibbles be kept in the final output?
-    .tidy = function(envir = NULL, tidy = TRUE, keep_raw = FALSE) {
-      # TODO: see if we can utilise self$.tidy_file
-      assertthat::assert_that(!is.null(envir))
+    .tidy = function(tidy = TRUE, keep_raw = FALSE) {
       if (nrow(self$files) == 0) {
-        return(NULL)
+        self$tbls <- NULL
+        invisible(self)
       }
-      # if tidy = FALSE and keep_raw = FALSE, just return the file list
+      # if both FALSE, just return the file list
       if (!tidy && !keep_raw) {
-        return(self$files)
+        self$tbls <- self$files
+        invisible(self)
       }
       d <- self$files |>
         dplyr::mutate(
@@ -234,10 +271,10 @@ Tool <- R6::R6Class(
         ) |>
         dplyr::rowwise() |>
         dplyr::mutate(
-          raw = list(self$.eval_func(.data$parse_fun, envir)(.data$path)),
+          raw = list(self$.eval_func(.data$parse_fun)(.data$path)),
           tidy = dplyr::if_else(
             tidy,
-            list(self$.eval_func(.data$tidy_fun, envir)(.data$raw)),
+            list(self$.eval_func(.data$tidy_fun)(.data$raw)),
             list(NULL)
           )
         ) |>
@@ -251,7 +288,83 @@ Tool <- R6::R6Class(
         d <- d |>
           dplyr::select(-"tidy")
       }
-      d
+      self$tbls <- d
+      invisible(self)
+    },
+    #' @description Write tidy tibbles.
+    #' @param odir Directory path to output tidy files.
+    #' @param pref Prefix of output files.
+    #' @param fmt Format of output files.
+    #' @param id ID to use for the dataset (e.g. `wfrid.123`, `prid.456`).
+    #' @param dbconn Database connection object.
+    .write = function(odir = NULL, pref = NULL, fmt = "tsv", id = NULL, dbconn = NULL) {
+      assertthat::assert_that(!is.null(id), !is.null(pref))
+      assertthat::assert_that(
+        !is.null(self$tbls),
+        nrow(self$tbls) > 0,
+        msg = "No rows found in self$tbls!"
+      )
+      if (!is.null(odir)) {
+        pref <- file.path(odir, pref)
+      }
+      d_write <- self$tbls |>
+        dplyr::select(
+          "tool_parser",
+          dplyr::contains("prefix"),
+          "tidy"
+        ) |>
+        tidyr::unnest("tidy", names_sep = "_") |>
+        dplyr::mutate(tbl_name = as.character(glue("{.data$tool_parser}_{.data$tidy_name}"))) |>
+        dplyr::rowwise() |>
+        dplyr::mutate(
+          p = ifelse(
+            fmt == "db",
+            as.character(.data$tbl_name),
+            as.character(glue("{pref}_{.data$tbl_name}"))
+          ),
+          out = list(
+            nemo_write(
+              d = .data$tidy_data,
+              pref = .data$p,
+              fmt = fmt,
+              id = id,
+              dbconn = dbconn
+            )
+          )
+        ) |>
+        dplyr::ungroup() |>
+        dplyr::select("tidy_name", "tidy_data", prefix = "p")
+      invisible(d_write)
+    },
+    #' @description Magic.
+    #' @param odir (`character(n)`)\cr
+    #' Directory path to output tidy files.
+    #' @param pref (`character(n)`)\cr
+    #' Prefix of output files.
+    #' @param fmt (`character(n)`)\cr
+    #' Format of output files.
+    #' @param id (`character(n)`)\cr
+    #' ID to use for the dataset (e.g. `wfrid.123`, `prid.456`).
+    #' @param dbconn (`DBIConnection`)\cr
+    #' Database connection object.
+    #' @param include (`character(n)`)\cr
+    #' Files to include.
+    #' @param exclude (`character(n)`)\cr
+    #' Files to exclude.
+    magic = function(
+      odir = NULL,
+      pref = NULL,
+      fmt = "tsv",
+      id = NULL,
+      dbconn = NULL,
+      include = NULL,
+      exclude = NULL
+    ) {
+      # fmt: skip
+      self$
+        .filter_files(include = include, exclude = exclude)$
+        .tidy()$
+        .write(odir = odir, pref = pref, fmt = fmt, id = id, dbconn = dbconn)
     }
-  )
+  ) # public end
 )

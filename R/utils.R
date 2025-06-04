@@ -16,7 +16,7 @@
 #' @examples
 #' \dontrun{
 #' path <- here::here(
-#'   "nogit/oncoanalyser-wgts-dna/20250407e2ff5344/L2500331_L2500332/bamtools"
+#'   "nogit/oa_v1/bamtools"
 #' )
 #' x <- Tool$new("bamtools", path)
 #' schemas_all <- x$raw_schemas_all
