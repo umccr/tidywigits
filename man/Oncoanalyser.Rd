@@ -8,7 +8,7 @@ Oncoanalyser file parsing and manipulation.
 }
 \examples{
 \dontrun{
-path <- here::here("nogit")
+path <- here::here("nogit/oa_v1")
 oa <- Oncoanalyser$new(path)
 oa$tbl |>
   dplyr::select(tool, prefix, prefix2, tidy) |>
@@ -32,6 +32,9 @@ Tidy tibble with oncoanalyser results.}
 \itemize{
 \item \href{#method-Oncoanalyser-new}{\code{Oncoanalyser$new()}}
 \item \href{#method-Oncoanalyser-print}{\code{Oncoanalyser$print()}}
+\item \href{#method-Oncoanalyser-.tidy}{\code{Oncoanalyser$.tidy()}}
+\item \href{#method-Oncoanalyser-.write}{\code{Oncoanalyser$.write()}}
+\item \href{#method-Oncoanalyser-.magic}{\code{Oncoanalyser$.magic()}}
 \item \href{#method-Oncoanalyser-clone}{\code{Oncoanalyser$clone()}}
 }
 }
@@ -69,6 +72,36 @@ Print details about the File.
 }
 \if{html}{\out{</div>}}
 }
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Oncoanalyser-.tidy"></a>}}
+\if{latex}{\out{\hypertarget{method-Oncoanalyser-.tidy}{}}}
+\subsection{Method \code{.tidy()}}{
+Tidy Oncoanalyser files.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Oncoanalyser$.tidy()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Oncoanalyser-.write"></a>}}
+\if{latex}{\out{\hypertarget{method-Oncoanalyser-.write}{}}}
+\subsection{Method \code{.write()}}{
+Write Oncoanalyser tibbles.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Oncoanalyser$.write()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Oncoanalyser-.magic"></a>}}
+\if{latex}{\out{\hypertarget{method-Oncoanalyser-.magic}{}}}
+\subsection{Method \code{.magic()}}{
+Magic.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Oncoanalyser$.magic()}\if{html}{\out{</div>}}
+}
+
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-Oncoanalyser-clone"></a>}}

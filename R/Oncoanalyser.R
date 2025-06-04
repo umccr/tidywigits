@@ -4,7 +4,7 @@
 #' Oncoanalyser file parsing and manipulation.
 #' @examples
 #' \dontrun{
-#' path <- here::here("nogit")
+#' path <- here::here("nogit/oa_v1")
 #' oa <- Oncoanalyser$new(path)
 #' oa$tbl |>
 #'   dplyr::select(tool, prefix, prefix2, tidy) |>
@@ -45,7 +45,9 @@ Oncoanalyser <- R6::R6Class(
         virusinterpreter = Virusinterpreter$new(files_tbl = ft)
       )
       d <- res |>
-        purrr::map(\(x) x[["tidy"]]) |>
+        purrr::map(\(x) {
+          x$.tidy()$tbls
+        }) |>
         dplyr::bind_rows(.id = "tool")
       self$tbl <- d
     },
@@ -63,6 +65,18 @@ Oncoanalyser <- R6::R6Class(
       cat("#--- Oncoanalyser ---#\n")
       print(res)
       invisible(self)
+    },
+    #' @description Tidy Oncoanalyser files.
+    .tidy = function() {
+      # TODO
+    },
+    #' @description Write Oncoanalyser tibbles.
+    .write = function() {
+      # TODO
+    },
+    #' @description Magic.
+    .magic = function() {
+      # TODO
     }
-  )
+  ) # public end
 )

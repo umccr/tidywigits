@@ -14,7 +14,7 @@
 #' a$magic(
 #'     odir = "nogit/test_data",
 #'     pref = "sampleA",
-#'     fmt = "tsv",
+#'     fmt = "parquet",
 #'     id = "run1",
 #'     include = NULL,
 #'     exclude = NULL
@@ -250,14 +250,11 @@ Tool <- R6::R6Class(
       get(fun, envir)
     },
     #' @description Tidy a list of files.
-    #' @param envir (`environment()`)\cr
-    #' Environment to evaluate the function within.
     #' @param tidy (`logical(1)`)\cr
     #' Should the raw parsed tibbles get tidied?
     #' @param keep_raw (`logical(1)`)\cr
     #' Should the raw parsed tibbles be kept in the final output?
     .tidy = function(tidy = TRUE, keep_raw = FALSE) {
-      # TODO: see if we can utilise self$.tidy_file
       if (nrow(self$files) == 0) {
         self$tbls <- NULL
         invisible(self)

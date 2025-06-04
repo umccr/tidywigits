@@ -18,7 +18,7 @@ a <- Alignments$new(path)
 a$magic(
     odir = "nogit/test_data",
     pref = "sampleA",
-    fmt = "tsv",
+    fmt = "parquet",
     id = "run1",
     include = NULL,
     exclude = NULL
@@ -275,9 +275,6 @@ Should the raw parsed tibbles get tidied?}
 
 \item{\code{keep_raw}}{(\code{logical(1)})\cr
 Should the raw parsed tibbles be kept in the final output?}
-
-\item{\code{envir}}{(\code{environment()})\cr
-Environment to evaluate the function within.}
 }
 \if{html}{\out{</div>}}
 }
