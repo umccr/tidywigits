@@ -8,6 +8,9 @@
 #'   "nogit"
 #' )
 #' a <- Alignments$new(path)
+#' tidied <- a$
+#'   .filter_files(include = "alignments_markdup")$
+#'   .tidy()
 #' d <- a$tidy |>
 #'   dplyr::select("tidy") |>
 #'   tidyr::unnest("tidy") |>
@@ -43,7 +46,7 @@ Alignments <- R6::R6Class(
       keep_raw = FALSE
     ) {
       super$initialize(name = "alignments", path = path, files_tbl = files_tbl)
-      self$tidy = super$.tidy(envir = self, tidy = tidy, keep_raw = keep_raw)
+      # self$tidy = super$.tidy(envir = self, tidy = tidy, keep_raw = keep_raw)
     },
     #' @description Read `duplicate_freq.tsv` file.
     #' @param x (`character(1)`)\cr

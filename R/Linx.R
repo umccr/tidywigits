@@ -39,8 +39,8 @@ Linx <- R6::R6Class(
     },
     #' @description List files in given linx directory. Overwrites parent class
     #' to handle germline LINX files.
-    list_files = function() {
-      res <- super$list_files()
+    .list_files = function() {
+      res <- super$.list_files()
       res |>
         dplyr::mutate(
           prefix2 = ifelse(
