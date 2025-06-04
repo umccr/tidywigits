@@ -32,7 +32,7 @@ Tidy tibble.}
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-Purple-new}{\code{Purple$new()}}
-\item \href{#method-Purple-list_files}{\code{Purple$list_files()}}
+\item \href{#method-Purple-.list_files}{\code{Purple$.list_files()}}
 \item \href{#method-Purple-parse_qc}{\code{Purple$parse_qc()}}
 \item \href{#method-Purple-tidy_qc}{\code{Purple$tidy_qc()}}
 \item \href{#method-Purple-parse_cnvgenetsv}{\code{Purple$parse_cnvgenetsv()}}
@@ -60,11 +60,13 @@ Tidy tibble.}
 <details><summary>Inherited methods</summary>
 <ul>
 <li><span class="pkg-link" data-pkg="tidywigits" data-topic="Tool" data-id=".eval_func"><a href='../../tidywigits/html/Tool.html#method-Tool-.eval_func'><code>tidywigits::Tool$.eval_func()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="tidywigits" data-topic="Tool" data-id=".filter_files"><a href='../../tidywigits/html/Tool.html#method-Tool-.filter_files'><code>tidywigits::Tool$.filter_files()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="tidywigits" data-topic="Tool" data-id=".parse_file"><a href='../../tidywigits/html/Tool.html#method-Tool-.parse_file'><code>tidywigits::Tool$.parse_file()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="tidywigits" data-topic="Tool" data-id=".parse_file_nohead"><a href='../../tidywigits/html/Tool.html#method-Tool-.parse_file_nohead'><code>tidywigits::Tool$.parse_file_nohead()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="tidywigits" data-topic="Tool" data-id=".tidy"><a href='../../tidywigits/html/Tool.html#method-Tool-.tidy'><code>tidywigits::Tool$.tidy()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="tidywigits" data-topic="Tool" data-id=".tidy_file"><a href='../../tidywigits/html/Tool.html#method-Tool-.tidy_file'><code>tidywigits::Tool$.tidy_file()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="tidywigits" data-topic="Tool" data-id=".write"><a href='../../tidywigits/html/Tool.html#method-Tool-.write'><code>tidywigits::Tool$.write()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="tidywigits" data-topic="Tool" data-id="magic"><a href='../../tidywigits/html/Tool.html#method-Tool-magic'><code>tidywigits::Tool$magic()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="tidywigits" data-topic="Tool" data-id="print"><a href='../../tidywigits/html/Tool.html#method-Tool-print'><code>tidywigits::Tool$print()</code></a></span></li>
 </ul>
 </details>
@@ -98,13 +100,13 @@ Should the raw parsed tibbles be kept in the final output?}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Purple-list_files"></a>}}
-\if{latex}{\out{\hypertarget{method-Purple-list_files}{}}}
-\subsection{Method \code{list_files()}}{
+\if{html}{\out{<a id="method-Purple-.list_files"></a>}}
+\if{latex}{\out{\hypertarget{method-Purple-.list_files}{}}}
+\subsection{Method \code{.list_files()}}{
 List files in given purple directory. Overwrites parent class
 to handle germline driver.catalog files.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Purple$list_files()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Purple$.list_files()}\if{html}{\out{</div>}}
 }
 
 }
