@@ -15,14 +15,6 @@ v <- Virusinterpreter$new(path)
 \section{Super class}{
 \code{\link[tidywigits:Tool]{tidywigits::Tool}} -> \code{Virusinterpreter}
 }
-\section{Public fields}{
-\if{html}{\out{<div class="r6-fields">}}
-\describe{
-\item{\code{tidy}}{(\code{tibble()})\cr
-Tidy tibble.}
-}
-\if{html}{\out{</div>}}
-}
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
