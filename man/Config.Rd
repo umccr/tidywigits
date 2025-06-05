@@ -7,14 +7,12 @@
 Config YAML file parsing.
 }
 \examples{
-\dontrun{
 tool <- "isofox"
 conf <- Config$new(tool)
-conf$.raw_schemas_valid()
 conf$.raw_schemas_all()
 conf$.tidy_schemas_all()
 conf$.tidy_descriptions()
-}
+
 }
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}

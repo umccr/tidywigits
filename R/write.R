@@ -12,7 +12,8 @@
 #' Output format. One of tsv, csv, parquet, rds, or db.
 #' @param id  (`character(1)`)\cr
 #' ID to use in the first `nemo_id` column for this table.
-#' @param dbconn DBIConnection object (see `DBI::dbConnect`).
+#' @param dbconn (`DBIConnection(1)`)\cr
+#' Database connection object (see `DBI::dbConnect`).
 #' @examples
 #' d <- tibble::tibble(name = "foo", data = 123)
 #' pref <- file.path(tempdir(), "data_test1")

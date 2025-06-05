@@ -84,7 +84,7 @@ Tibble of files from \code{list_files_dir}.}
 \subsection{Method \code{new()}}{
 Create a new Tool object.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Tool$new(name, path = NULL, files_tbl = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Tool$new(name = NULL, path = NULL, files_tbl = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -291,15 +291,20 @@ Write tidy tibbles.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{odir}}{Directory path to output tidy files.}
+\item{\code{odir}}{(\code{character(1)})\cr
+Directory path to output tidy files.}
 
-\item{\code{pref}}{Prefix of output files.}
+\item{\code{pref}}{(\code{character(1)})\cr
+Prefix of output files.}
 
-\item{\code{fmt}}{Format of output files.}
+\item{\code{fmt}}{(\code{character(1)})\cr
+Format of output files.}
 
-\item{\code{id}}{ID to use for the dataset (e.g. \code{wfrid.123}, \code{prid.456}).}
+\item{\code{id}}{(\code{character(1)})\cr
+ID to use for the dataset (e.g. \code{wfrid.123}, \code{prid.456}).}
 
-\item{\code{dbconn}}{Database connection object.}
+\item{\code{dbconn}}{(\code{DBIConnection})\cr
+Database connection object (see \code{DBI::dbConnect}).}
 }
 \if{html}{\out{</div>}}
 }
@@ -337,7 +342,7 @@ Format of output files.}
 ID to use for the dataset (e.g. \code{wfrid.123}, \code{prid.456}).}
 
 \item{\code{dbconn}}{(\code{DBIConnection})\cr
-Database connection object.}
+Database connection object (see \code{DBI::dbConnect}).}
 
 \item{\code{include}}{(\code{character(n)})\cr
 Files to include.}
