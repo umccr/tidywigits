@@ -191,7 +191,7 @@ Format of output files.}
 \item{\code{id}}{(\code{character(1)})\cr
 ID to use for the dataset (e.g. \code{wfrid.123}, \code{prid.456}).}
 
-\item{\code{dbconn}}{(\code{DBIConnection(1)})\cr
+\item{\code{dbconn}}{(\code{DBIConnection})\cr
 Database connection object (see \code{DBI::dbConnect}).}
 }
 \if{html}{\out{</div>}}
@@ -220,16 +220,16 @@ Magic.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{odir}}{(\code{character(n)})\cr
+\item{\code{odir}}{(\code{character(1)})\cr
 Directory path to output tidy files.}
 
-\item{\code{pref}}{(\code{character(n)})\cr
+\item{\code{pref}}{(\code{character(1)})\cr
 Prefix of output files.}
 
-\item{\code{fmt}}{(\code{character(n)})\cr
+\item{\code{fmt}}{(\code{character(1)})\cr
 Format of output files.}
 
-\item{\code{id}}{(\code{character(n)})\cr
+\item{\code{id}}{(\code{character(1)})\cr
 ID to use for the dataset (e.g. \code{wfrid.123}, \code{prid.456}).}
 
 \item{\code{dbconn}}{(\code{DBIConnection})\cr

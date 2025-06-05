@@ -43,6 +43,7 @@ Workflow <- R6::R6Class(
     #' @param tools (`list(n)`)\cr
     #' List of Tools that compose a Workflow.
     initialize = function(name, path = NULL, tools = NULL) {
+      self$name <- name
       private$validate_tools(tools)
       self$tools <- tools
       self$path <- normalizePath(path)
@@ -104,7 +105,7 @@ Workflow <- R6::R6Class(
     #' Format of output files.
     #' @param id (`character(1)`)\cr
     #' ID to use for the dataset (e.g. `wfrid.123`, `prid.456`).
-    #' @param dbconn (`DBIConnection(1)`)\cr
+    #' @param dbconn (`DBIConnection`)\cr
     #' Database connection object (see `DBI::dbConnect`).
     #' @return A tibble with all tibbles written.
     .write = function(odir = NULL, pref = NULL, fmt = "tsv", id = NULL, dbconn = NULL) {
@@ -113,13 +114,13 @@ Workflow <- R6::R6Class(
         dplyr::bind_rows()
     },
     #' @description Magic.
-    #' @param odir (`character(n)`)\cr
+    #' @param odir (`character(1)`)\cr
     #' Directory path to output tidy files.
-    #' @param pref (`character(n)`)\cr
+    #' @param pref (`character(1)`)\cr
     #' Prefix of output files.
-    #' @param fmt (`character(n)`)\cr
+    #' @param fmt (`character(1)`)\cr
     #' Format of output files.
-    #' @param id (`character(n)`)\cr
+    #' @param id (`character(1)`)\cr
     #' ID to use for the dataset (e.g. `wfrid.123`, `prid.456`).
     #' @param dbconn (`DBIConnection`)\cr
     #' Database connection object (see `DBI::dbConnect`).
