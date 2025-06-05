@@ -20,7 +20,8 @@ Output format. One of tsv, csv, parquet, rds, or db.}
 \item{id}{(\code{character(1)})\cr
 ID to use in the first \code{nemo_id} column for this table.}
 
-\item{dbconn}{DBIConnection object (see \code{DBI::dbConnect}).}
+\item{dbconn}{(\code{DBIConnection(1)})\cr
+Database connection object (see \code{DBI::dbConnect}).}
 }
 \description{
 Writes tibbles in the given format(s).

@@ -2,7 +2,7 @@
 
 # File R/write.R: @testexamples
 
-test_that("Function valid_out_fmt() @ L71", {
+test_that("Function valid_out_fmt() @ L72", {
   
   valid_out_fmt("tsv")
   expect_true(valid_out_fmt("tsv"))

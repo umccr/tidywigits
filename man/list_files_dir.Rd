@@ -7,12 +7,14 @@
 list_files_dir(d, max_files = NULL, type = "file")
 }
 \arguments{
-\item{d}{Directory path.}
+\item{d}{(\code{character(n)})\cr
+Character vector of one or more paths.}
 
-\item{max_files}{Max files returned.}
+\item{max_files}{(\code{integer(1)})\cr
+Max files returned.}
 
-\item{type}{File type(s) to return (e.g. any, file, directory, symlink). See
-\code{fs::dir_info}.}
+\item{type}{(\code{character(n)})\cr
+File type(s) to return (e.g. any, file, directory, symlink). See \code{fs::dir_info}.}
 }
 \value{
 A tibble with file basename, size, last modification timestamp
