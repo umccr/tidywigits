@@ -3,14 +3,15 @@
 #' @description
 #' Config YAML file parsing.
 #' @examples
-#' \dontrun{
 #' tool <- "isofox"
 #' conf <- Config$new(tool)
-#' conf$.raw_schemas_valid()
 #' conf$.raw_schemas_all()
 #' conf$.tidy_schemas_all()
 #' conf$.tidy_descriptions()
-#' }
+#'
+#' @testexamples
+#' expect_true(conf$.raw_schemas_valid())
+#'
 #' @export
 Config <- R6::R6Class(
   "Config",

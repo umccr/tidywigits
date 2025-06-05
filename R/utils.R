@@ -24,13 +24,7 @@
 #' fpath <- file.path(path, "L2500331.wgsmetrics")
 #' parse_file(fpath, pname, schemas_all)
 #' }
-parse_file <- function(
-  fpath,
-  pname,
-  schemas_all,
-  delim = "\t",
-  ...
-) {
+parse_file <- function(fpath, pname, schemas_all, delim = "\t", ...) {
   cnames <- file_hdr(fpath, delim = delim, ...)
   schema <- schema_guess(
     pname = pname,
@@ -143,10 +137,12 @@ schema_guess <- function(pname, cnames, schemas_all) {
 #'
 #' Lists files inside a given directory.
 #'
-#' @param d Directory path.
-#' @param max_files Max files returned.
-#' @param type File type(s) to return (e.g. any, file, directory, symlink). See
-#' `fs::dir_info`.
+#' @param d (`character(n)`)\cr
+#' Character vector of one or more paths.
+#' @param max_files (`integer(1)`)\cr
+#' Max files returned.
+#' @param type (`character(n)`)\cr
+#' File type(s) to return (e.g. any, file, directory, symlink). See `fs::dir_info`.
 #'
 #' @return A tibble with file basename, size, last modification timestamp
 #' and full path.
@@ -159,6 +155,7 @@ schema_guess <- function(pname, cnames, schemas_all) {
 list_files_dir <- function(d, max_files = NULL, type = "file") {
   d <- fs::dir_info(path = d, recurse = TRUE, type = type) |>
     dplyr::mutate(
+      path = normalizePath(.data$path),
       bname = basename(.data$path),
       lastmodified = .data$modification_time
     ) |>
@@ -188,8 +185,10 @@ set_tbl_version_attr <- function(tbl, v, x = "file_version") {
 #' From https://stackoverflow.com/a/62535671/2169986. Useful for handling
 #' edge cases with empty data. e.g. virusbreakend.vcf.summary.tsv
 #'
-#' @param ctypes Character vector of column types corresponding to `cnames`.
-#' @param cnames Character vector of column names to use.
+#' @param ctypes (`character(n)`)\cr
+#' Character vector of column types corresponding to `cnames`.
+#' @param cnames (`character(n)`)\cr
+#' Character vector of column names to use.
 #'
 #' @return A tibble with 0 rows and the given column names.
 #' @export

@@ -64,8 +64,8 @@ Tool <- R6::R6Class(
     #' ignored.
     #' @param files_tbl (`tibble(n)`)\cr
     #' Tibble of files from `list_files_dir`.
-    initialize = function(name, path = NULL, files_tbl = NULL) {
-      assertthat::assert_that(!is.null(path) || !is.null(files_tbl))
+    initialize = function(name = NULL, path = NULL, files_tbl = NULL) {
+      assertthat::assert_that(!is.null(path) || !is.null(files_tbl), !is.null(name))
       if (!is.null(files_tbl)) {
         assertthat::assert_that(is_files_tbl(files_tbl))
         if (!is.null(path)) {
@@ -82,7 +82,7 @@ Tool <- R6::R6Class(
       self$.raw_schema <- self$config$.raw_schema
       self$.files_tbl <- files_tbl
       # upon init, files starts off as the raw list of files
-      self$files <- self$.list_files()
+      self$files <- self$.list_files(type = "file")
     },
     #' @description Print details about the Tool.
     #' @param ... (ignored).
@@ -105,23 +105,25 @@ Tool <- R6::R6Class(
     #' @param exclude (`character(n)`)\cr
     #' Files to exclude.
     .filter_files = function(include = NULL, exclude = NULL) {
-      d0 <- self$files
-      d1 <- d0
-      assertthat::assert_that(
-        is.null(include) || is.null(exclude),
-        msg = "You cannot define both include and exclude!"
-      )
-      if (!is.null(include)) {
-        assertthat::assert_that(rlang::is_character(include))
-        d1 <- d1 |>
-          dplyr::filter(.data$tool_parser %in% include)
+      f1 <- function(d, include = NULL, exclude = NULL) {
+        assertthat::assert_that(
+          is.null(include) || is.null(exclude),
+          msg = "You cannot define both include and exclude!"
+        )
+        if (!is.null(include)) {
+          assertthat::assert_that(rlang::is_character(include))
+          d <- d |>
+            dplyr::filter(.data$tool_parser %in% include)
+        }
+        if (!is.null(exclude)) {
+          assertthat::assert_that(rlang::is_character(exclude))
+          d <- d |>
+            dplyr::filter(!.data$tool_parser %in% exclude)
+        }
+        d
       }
-      if (!is.null(exclude)) {
-        assertthat::assert_that(rlang::is_character(exclude))
-        d1 <- d1 |>
-          dplyr::filter(!.data$tool_parser %in% exclude)
-      }
-      self$files <- d1
+      self$files <- self$files |>
+        f1(include = include, exclude = exclude)
       invisible(self)
     },
     #' @description List files in given tool directory.
@@ -292,17 +294,22 @@ Tool <- R6::R6Class(
       invisible(self)
     },
     #' @description Write tidy tibbles.
-    #' @param odir Directory path to output tidy files.
-    #' @param pref Prefix of output files.
-    #' @param fmt Format of output files.
-    #' @param id ID to use for the dataset (e.g. `wfrid.123`, `prid.456`).
-    #' @param dbconn Database connection object.
+    #' @param odir (`character(1)`)\cr
+    #' Directory path to output tidy files.
+    #' @param pref (`character(1)`)\cr
+    #' Prefix of output files.
+    #' @param fmt (`character(1)`)\cr
+    #' Format of output files.
+    #' @param id (`character(1)`)\cr
+    #' ID to use for the dataset (e.g. `wfrid.123`, `prid.456`).
+    #' @param dbconn (`DBIConnection`)\cr
+    #' Database connection object (see `DBI::dbConnect`).
     .write = function(odir = NULL, pref = NULL, fmt = "tsv", id = NULL, dbconn = NULL) {
       assertthat::assert_that(!is.null(id), !is.null(pref))
       assertthat::assert_that(
         !is.null(self$tbls),
         nrow(self$tbls) > 0,
-        msg = "No rows found in self$tbls!"
+        msg = "No tidy tbls found! Did you forget to tidy?"
       )
       if (!is.null(odir)) {
         pref <- file.path(odir, pref)
@@ -346,7 +353,7 @@ Tool <- R6::R6Class(
     #' @param id (`character(n)`)\cr
     #' ID to use for the dataset (e.g. `wfrid.123`, `prid.456`).
     #' @param dbconn (`DBIConnection`)\cr
-    #' Database connection object.
+    #' Database connection object (see `DBI::dbConnect`).
     #' @param include (`character(n)`)\cr
     #' Files to include.
     #' @param exclude (`character(n)`)\cr
