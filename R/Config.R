@@ -33,28 +33,9 @@ Config <- R6::R6Class(
     #' Tool name.
     initialize = function(tool) {
       tool <- tolower(tool)
-      valid_tools <- c(
-        "alignments",
-        "amber",
-        "bamtools",
-        "chord",
-        "cobalt",
-        "cuppa",
-        "esvee",
-        "flagstats",
-        "gridss",
-        "isofox",
-        "lilac",
-        "linx",
-        "purple",
-        "sage",
-        "sigs",
-        "virusbreakend",
-        "virusinterpreter"
-      )
-      msg1 <- glue::glue_collapse(valid_tools, sep = ", ", last = " and ")
+      msg1 <- glue::glue_collapse(NEMO_TOOLS, sep = ", ", last = " and ")
       msg2 <- glue("'{tool}' is not a valid tool.\nCurrently supported: {msg1}")
-      assertthat::assert_that(tool %in% valid_tools, msg = msg2)
+      assertthat::assert_that(tool %in% NEMO_TOOLS, msg = msg2)
       self$tool <- tool
       self$config <- self$.read()
       self$raw_schemas_all <- self$.raw_schemas_all()
@@ -144,7 +125,7 @@ Config <- R6::R6Class(
     },
     #' @description Validate schema.
     .raw_schemas_valid = function() {
-      valid_types <- c("char", "int", "float")
+      valid_types <- c(char = "c", int = "i", float = "d")
       valid_types_print <- glue::glue_collapse(
         valid_types,
         sep = ", ",

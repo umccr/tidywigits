@@ -368,3 +368,23 @@ Tool <- R6::R6Class(
     }
   ) # public end
 )
+
+NEMO_TOOLS <- c(
+  "alignments",
+  "amber",
+  "bamtools",
+  "chord",
+  "cobalt",
+  "cuppa",
+  "esvee",
+  "flagstats",
+  "gridss",
+  "isofox",
+  "lilac",
+  "linx",
+  "purple",
+  "sage",
+  "sigs",
+  "virusbreakend",
+  "virusinterpreter"
+)
