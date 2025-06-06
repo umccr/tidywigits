@@ -99,7 +99,7 @@ to handle germline driver.catalog files.
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{type}}{(\code{character(1)})\cr
-File types(s) to return (e.g. any, file, directory, symlink).
+File type(s) to return (e.g. any, file, directory, symlink).
 See \code{fs::dir_info}.}
 }
 \if{html}{\out{</div>}}

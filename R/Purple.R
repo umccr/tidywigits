@@ -30,7 +30,7 @@ Purple <- R6::R6Class(
     #' @description List files in given purple directory. Overwrites parent class
     #' to handle germline driver.catalog files.
     #' @param type (`character(1)`)\cr
-    #' File types(s) to return (e.g. any, file, directory, symlink).
+    #' File type(s) to return (e.g. any, file, directory, symlink).
     #' See `fs::dir_info`.
     #' @return A tibble of file paths.
     .list_files = function(type = "file") {

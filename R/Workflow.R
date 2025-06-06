@@ -156,7 +156,7 @@ Workflow <- R6::R6Class(
             dplyr::mutate(tool = x$name) |>
             dplyr::relocate("tool", .before = 1)
         }) |>
-        dplyr::bind_rows(.id = "tool")
+        dplyr::bind_rows()
     },
     #' @description Get tidy tbls for all Tools.
     #' @return Tibble with tidy tbls of all Tools.
