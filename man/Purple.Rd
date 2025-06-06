@@ -92,9 +92,21 @@ Tibble of files from \code{list_files_dir}.}
 List files in given purple directory. Overwrites parent class
 to handle germline driver.catalog files.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Purple$.list_files()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Purple$.list_files(type = "file")}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{type}}{(\code{character(1)})\cr
+File types(s) to return (e.g. any, file, directory, symlink).
+See \code{fs::dir_info}.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+A tibble of file paths.
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-Purple-parse_qc"></a>}}
