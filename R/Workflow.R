@@ -5,7 +5,7 @@
 #' @examples
 #' \dontrun{
 #' path <- here::here("nogit/oa_v1")
-#' tools <- list(alignments = Alignments, sigs = Sigs)
+#' tools <- list(align = Alignments, sigs = Sigs)
 #' wf1 <- Workflow$new(name = "foo", path = path, tools = tools)
 #' wf1$.list_files()
 #' wf1$magic(
@@ -22,18 +22,12 @@ Workflow <- R6::R6Class(
     #' @field name (`character(1)`)\cr
     #' Name of workflow.
     name = NULL,
-    #' @field tools (`list(n)`)\cr
-    #' List of Tools that compose a Workflow.
-    tools = NULL,
     #' @field path (`character(n)`)\cr
     #' Path(s) to workflow results.
     path = NULL,
-    #' @field objs (`list(n)`)\cr
-    #' List of instantiated Tool objects.
-    objs = NULL,
-    #' @field tbls (`tibble()`)\cr
-    #' Tibble of tidy tibbles.
-    tbls = NULL,
+    #' @field tools (`list(n)`)\cr
+    #' List of Tools that compose a Workflow.
+    tools = NULL,
 
     #' @description Create a new Workflow object.
     #' @param name (`character(1)`)\cr
@@ -45,13 +39,11 @@ Workflow <- R6::R6Class(
     initialize = function(name, path = NULL, tools = NULL) {
       self$name <- name
       private$validate_tools(tools)
-      self$tools <- tools
       self$path <- normalizePath(path)
       ft <- list_files_dir(self$path)
       # handle everything in a list of Tools
-      objs <- tools |>
+      self$tools <- tools |>
         purrr::map(\(x) x$new(files_tbl = ft))
-      self$objs <- objs
     },
     #' @description Print details about the File.
     #' @param ... (ignored).
@@ -71,7 +63,7 @@ Workflow <- R6::R6Class(
     #' @param exclude (`character(n)`)\cr
     #' Files to exclude.
     .filter_files = function(include = NULL, exclude = NULL) {
-      self$objs <- self$objs |>
+      self$tools <- self$tools |>
         purrr::map(\(x) x$.filter_files(include = include, exclude = exclude))
       invisible(self)
     },
@@ -81,7 +73,7 @@ Workflow <- R6::R6Class(
     #' See `fs::dir_info`.
     #' @return A tibble with all files found for each Tool.
     .list_files = function(type = "file") {
-      self$objs |>
+      self$tools |>
         purrr::map(\(x) x$.list_files(type = type)) |>
         dplyr::bind_rows()
     },
@@ -92,7 +84,7 @@ Workflow <- R6::R6Class(
     #' Should the raw parsed tibbles be kept in the final output?
     #' @return self invisibly.
     .tidy = function(tidy = TRUE, keep_raw = FALSE) {
-      self$objs <- self$objs |>
+      self$tools <- self$tools |>
         purrr::map(\(x) x$.tidy())
       invisible(self)
     },
@@ -109,7 +101,7 @@ Workflow <- R6::R6Class(
     #' Database connection object (see `DBI::dbConnect`).
     #' @return A tibble with all tibbles written.
     .write = function(odir = NULL, pref = NULL, fmt = "tsv", id = NULL, dbconn = NULL) {
-      self$objs |>
+      self$tools |>
         purrr::map(\(x) x$.write(odir = odir, pref = pref, fmt = fmt, id = id, dbconn = dbconn)) |>
         dplyr::bind_rows()
     },
@@ -128,6 +120,7 @@ Workflow <- R6::R6Class(
     #' Files to include.
     #' @param exclude (`character(n)`)\cr
     #' Files to exclude.
+    #' @return A tibble with the tidy data and their output location prefix.
     magic = function(
       odir = NULL,
       pref = NULL,
@@ -142,6 +135,35 @@ Workflow <- R6::R6Class(
         .filter_files(include = include, exclude = exclude)$
         .tidy()$
         .write(odir = odir, pref = pref, fmt = fmt, id = id, dbconn = dbconn)
+    },
+    #' @description Get raw schemas for all Tools.
+    #' @return Tibble with names of tool and file, schema and its version.
+    get_raw_schemas_all = function() {
+      self$tools |>
+        purrr::map(\(x) {
+          x$raw_schemas_all |>
+            dplyr::mutate(tool = x$name) |>
+            dplyr::relocate("tool", .before = 1)
+        }) |>
+        dplyr::bind_rows()
+    },
+    #' @description Get tidy schemas for all Tools.
+    #' @return Tibble with names of tool and tbl, schema and its version.
+    get_tidy_schemas_all = function() {
+      self$tools |>
+        purrr::map(\(x) {
+          x$tidy_schemas_all |>
+            dplyr::mutate(tool = x$name) |>
+            dplyr::relocate("tool", .before = 1)
+        }) |>
+        dplyr::bind_rows(.id = "tool")
+    },
+    #' @description Get tidy tbls for all Tools.
+    #' @return Tibble with tidy tbls of all Tools.
+    get_tbls = function() {
+      self$tools |>
+        purrr::map(\(x) x$tbls) |>
+        dplyr::bind_rows()
     }
   ), # public end
   private = list(
