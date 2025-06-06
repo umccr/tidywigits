@@ -10,34 +10,39 @@ Oncoanalyser file parsing and manipulation.
 \dontrun{
 path <- here::here("nogit/oa_v1")
 oa <- Oncoanalyser$new(path)
-oa$tbl |>
-  dplyr::select(tool, prefix, prefix2, tidy) |>
-  tidyr::unnest(tidy) |>
-  print(n = 100)
+oa$magic(
+    odir = "nogit/test_data2",
+    pref = "sampleA",
+    fmt = "parquet",
+    id = "run1"
+)
 }
 }
-\section{Public fields}{
-\if{html}{\out{<div class="r6-fields">}}
-\describe{
-\item{\code{path}}{(\code{character(1)})\cr
-Absolute path to oncoanalyser results.}
-
-\item{\code{tbl}}{(\code{tibble()})\cr
-Tidy tibble with oncoanalyser results.}
-}
-\if{html}{\out{</div>}}
+\section{Super class}{
+\code{\link[tidywigits:Workflow]{tidywigits::Workflow}} -> \code{Oncoanalyser}
 }
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-Oncoanalyser-new}{\code{Oncoanalyser$new()}}
-\item \href{#method-Oncoanalyser-print}{\code{Oncoanalyser$print()}}
-\item \href{#method-Oncoanalyser-.tidy}{\code{Oncoanalyser$.tidy()}}
-\item \href{#method-Oncoanalyser-.write}{\code{Oncoanalyser$.write()}}
-\item \href{#method-Oncoanalyser-.magic}{\code{Oncoanalyser$.magic()}}
 \item \href{#method-Oncoanalyser-clone}{\code{Oncoanalyser$clone()}}
 }
 }
+\if{html}{\out{
+<details><summary>Inherited methods</summary>
+<ul>
+<li><span class="pkg-link" data-pkg="tidywigits" data-topic="Workflow" data-id=".filter_files"><a href='../../tidywigits/html/Workflow.html#method-Workflow-.filter_files'><code>tidywigits::Workflow$.filter_files()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="tidywigits" data-topic="Workflow" data-id=".list_files"><a href='../../tidywigits/html/Workflow.html#method-Workflow-.list_files'><code>tidywigits::Workflow$.list_files()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="tidywigits" data-topic="Workflow" data-id=".tidy"><a href='../../tidywigits/html/Workflow.html#method-Workflow-.tidy'><code>tidywigits::Workflow$.tidy()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="tidywigits" data-topic="Workflow" data-id=".write"><a href='../../tidywigits/html/Workflow.html#method-Workflow-.write'><code>tidywigits::Workflow$.write()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="tidywigits" data-topic="Workflow" data-id="get_raw_schemas_all"><a href='../../tidywigits/html/Workflow.html#method-Workflow-get_raw_schemas_all'><code>tidywigits::Workflow$get_raw_schemas_all()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="tidywigits" data-topic="Workflow" data-id="get_tbls"><a href='../../tidywigits/html/Workflow.html#method-Workflow-get_tbls'><code>tidywigits::Workflow$get_tbls()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="tidywigits" data-topic="Workflow" data-id="get_tidy_schemas_all"><a href='../../tidywigits/html/Workflow.html#method-Workflow-get_tidy_schemas_all'><code>tidywigits::Workflow$get_tidy_schemas_all()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="tidywigits" data-topic="Workflow" data-id="magic"><a href='../../tidywigits/html/Workflow.html#method-Workflow-magic'><code>tidywigits::Workflow$magic()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="tidywigits" data-topic="Workflow" data-id="print"><a href='../../tidywigits/html/Workflow.html#method-Workflow-print'><code>tidywigits::Workflow$print()</code></a></span></li>
+</ul>
+</details>
+}}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-Oncoanalyser-new"></a>}}
 \if{latex}{\out{\hypertarget{method-Oncoanalyser-new}{}}}
@@ -50,58 +55,11 @@ Create a new Oncoanalyser object.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{path}}{(\code{character(1)})\cr
-Output directory of tool.}
+\item{\code{path}}{(\code{character(n)})\cr
+Path(s) to Oncoanalyser results.}
 }
 \if{html}{\out{</div>}}
 }
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Oncoanalyser-print"></a>}}
-\if{latex}{\out{\hypertarget{method-Oncoanalyser-print}{}}}
-\subsection{Method \code{print()}}{
-Print details about the File.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Oncoanalyser$print(...)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{...}}{(ignored).}
-}
-\if{html}{\out{</div>}}
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Oncoanalyser-.tidy"></a>}}
-\if{latex}{\out{\hypertarget{method-Oncoanalyser-.tidy}{}}}
-\subsection{Method \code{.tidy()}}{
-Tidy Oncoanalyser files.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Oncoanalyser$.tidy()}\if{html}{\out{</div>}}
-}
-
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Oncoanalyser-.write"></a>}}
-\if{latex}{\out{\hypertarget{method-Oncoanalyser-.write}{}}}
-\subsection{Method \code{.write()}}{
-Write Oncoanalyser tibbles.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Oncoanalyser$.write()}\if{html}{\out{</div>}}
-}
-
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Oncoanalyser-.magic"></a>}}
-\if{latex}{\out{\hypertarget{method-Oncoanalyser-.magic}{}}}
-\subsection{Method \code{.magic()}}{
-Magic.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Oncoanalyser$.magic()}\if{html}{\out{</div>}}
-}
-
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-Oncoanalyser-clone"></a>}}

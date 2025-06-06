@@ -36,7 +36,7 @@ Workflow <- R6::R6Class(
     #' Path(s) to workflow results.
     #' @param tools (`list(n)`)\cr
     #' List of Tools that compose a Workflow.
-    initialize = function(name, path = NULL, tools = NULL) {
+    initialize = function(name = NULL, path = NULL, tools = NULL) {
       self$name <- name
       private$validate_tools(tools)
       self$path <- normalizePath(path)

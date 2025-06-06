@@ -56,7 +56,7 @@ List of Tools that compose a Workflow.}
 \subsection{Method \code{new()}}{
 Create a new Workflow object.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Workflow$new(name, path = NULL, tools = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Workflow$new(name = NULL, path = NULL, tools = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
