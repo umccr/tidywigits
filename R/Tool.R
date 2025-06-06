@@ -1,7 +1,7 @@
 #' @title Tool Object
 #'
 #' @description
-#' Base class for all wigits tools.
+#' Base class for all WiGiTS tools.
 #' @examples
 #' \dontrun{
 #' path <- here::here(
@@ -86,6 +86,7 @@ Tool <- R6::R6Class(
     },
     #' @description Print details about the Tool.
     #' @param ... (ignored).
+    #' @return self invisibly.
     print = function(...) {
       # fmt: skip
       res <- tibble::tribble(
@@ -104,6 +105,7 @@ Tool <- R6::R6Class(
     #' Files to include.
     #' @param exclude (`character(n)`)\cr
     #' Files to exclude.
+    #' @return The tibble of files with potentially removed rows.
     .filter_files = function(include = NULL, exclude = NULL) {
       f1 <- function(d, include = NULL, exclude = NULL) {
         assertthat::assert_that(
@@ -130,6 +132,7 @@ Tool <- R6::R6Class(
     #' @param type (`character(1)`)\cr
     #' File types(s) to return (e.g. any, file, directory, symlink).
     #' See `fs::dir_info`.
+    #' @return A tibble of file paths.
     .list_files = function(type = "file") {
       files_tbl <- self$.files_tbl
       assertthat::assert_that(!is.null(self$path) || !is.null(files_tbl))
@@ -184,6 +187,7 @@ Tool <- R6::R6Class(
     #' @param delim (`character(1)`)\cr
     #' File delimiter.
     #' @param ... Passed on to `readr::read_delim`.
+    #' @return A tibble with the parsed data.
     .parse_file = function(x, name, delim = "\t", ...) {
       parse_file(
         fpath = x,
@@ -200,6 +204,7 @@ Tool <- R6::R6Class(
     #' Parser name (e.g. "breakends" - see docs).
     #' @param convert_types (`logical(1)`)\cr
     #' Convert field types based on schema.
+    #' @return A tibble with the tidy data enframed.
     .tidy_file = function(x, name, convert_types = FALSE) {
       if (!tibble::is_tibble(x)) {
         .parser <- self$.eval_func(glue("parse_{name}"))
@@ -230,6 +235,7 @@ Tool <- R6::R6Class(
     #' @param delim (`character(1)`)\cr
     #' File delimiter.
     #' @param ... Passed on to `readr::read_delim`.
+    #' @return A tibble with the parsed data.
     .parse_file_nohead = function(x, pname, delim = "\t", ...) {
       schema <- self$raw_schemas_all |>
         dplyr::filter(.data$name == pname) |>
@@ -247,6 +253,7 @@ Tool <- R6::R6Class(
     #' Function from Tool to evaluate.
     #' @param envir (`environment()`)\cr
     #' Environment to evaluate the function within.
+    #' @return The evaluated function.
     .eval_func = function(fun, envir = self) {
       assertthat::assert_that(rlang::is_scalar_character(fun))
       get(fun, envir)
@@ -256,6 +263,7 @@ Tool <- R6::R6Class(
     #' Should the raw parsed tibbles get tidied?
     #' @param keep_raw (`logical(1)`)\cr
     #' Should the raw parsed tibbles be kept in the final output?
+    #' @return self invisibly.
     .tidy = function(tidy = TRUE, keep_raw = FALSE) {
       if (nrow(self$files) == 0) {
         self$tbls <- NULL
@@ -304,6 +312,7 @@ Tool <- R6::R6Class(
     #' ID to use for the dataset (e.g. `wfrid.123`, `prid.456`).
     #' @param dbconn (`DBIConnection`)\cr
     #' Database connection object (see `DBI::dbConnect`).
+    #' @return A tibble with the tidy data and their output location prefix.
     .write = function(odir = NULL, pref = NULL, fmt = "tsv", id = NULL, dbconn = NULL) {
       assertthat::assert_that(!is.null(id), !is.null(pref))
       assertthat::assert_that(
@@ -358,6 +367,7 @@ Tool <- R6::R6Class(
     #' Files to include.
     #' @param exclude (`character(n)`)\cr
     #' Files to exclude.
+    #' @return A tibble with the tidy data and their output location prefix.
     magic = function(
       odir = NULL,
       pref = NULL,
