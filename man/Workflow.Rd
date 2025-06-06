@@ -9,7 +9,7 @@ A Workflow is composed of multiple Tools.
 \examples{
 \dontrun{
 path <- here::here("nogit/oa_v1")
-tools <- list(alignments = Alignments, sigs = Sigs)
+tools <- list(align = Alignments, sigs = Sigs)
 wf1 <- Workflow$new(name = "foo", path = path, tools = tools)
 wf1$.list_files()
 wf1$magic(
@@ -26,17 +26,11 @@ wf1$magic(
 \item{\code{name}}{(\code{character(1)})\cr
 Name of workflow.}
 
-\item{\code{tools}}{(\code{list(n)})\cr
-List of Tools that compose a Workflow.}
-
 \item{\code{path}}{(\code{character(n)})\cr
 Path(s) to workflow results.}
 
-\item{\code{objs}}{(\code{list(n)})\cr
-List of instantiated Tool objects.}
-
-\item{\code{tbls}}{(\code{tibble()})\cr
-Tibble of tidy tibbles.}
+\item{\code{tools}}{(\code{list(n)})\cr
+List of Tools that compose a Workflow.}
 }
 \if{html}{\out{</div>}}
 }
@@ -50,6 +44,9 @@ Tibble of tidy tibbles.}
 \item \href{#method-Workflow-.tidy}{\code{Workflow$.tidy()}}
 \item \href{#method-Workflow-.write}{\code{Workflow$.write()}}
 \item \href{#method-Workflow-magic}{\code{Workflow$magic()}}
+\item \href{#method-Workflow-get_raw_schemas_all}{\code{Workflow$get_raw_schemas_all()}}
+\item \href{#method-Workflow-get_tidy_schemas_all}{\code{Workflow$get_tidy_schemas_all()}}
+\item \href{#method-Workflow-get_tbls}{\code{Workflow$get_tbls()}}
 \item \href{#method-Workflow-clone}{\code{Workflow$clone()}}
 }
 }
@@ -59,7 +56,7 @@ Tibble of tidy tibbles.}
 \subsection{Method \code{new()}}{
 Create a new Workflow object.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Workflow$new(name, path = NULL, tools = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Workflow$new(name = NULL, path = NULL, tools = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -242,6 +239,48 @@ Files to include.}
 Files to exclude.}
 }
 \if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+A tibble with the tidy data and their output location prefix.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Workflow-get_raw_schemas_all"></a>}}
+\if{latex}{\out{\hypertarget{method-Workflow-get_raw_schemas_all}{}}}
+\subsection{Method \code{get_raw_schemas_all()}}{
+Get raw schemas for all Tools.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Workflow$get_raw_schemas_all()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+Tibble with names of tool and file, schema and its version.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Workflow-get_tidy_schemas_all"></a>}}
+\if{latex}{\out{\hypertarget{method-Workflow-get_tidy_schemas_all}{}}}
+\subsection{Method \code{get_tidy_schemas_all()}}{
+Get tidy schemas for all Tools.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Workflow$get_tidy_schemas_all()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+Tibble with names of tool and tbl, schema and its version.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Workflow-get_tbls"></a>}}
+\if{latex}{\out{\hypertarget{method-Workflow-get_tbls}{}}}
+\subsection{Method \code{get_tbls()}}{
+Get tidy tbls for all Tools.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Workflow$get_tbls()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+Tibble with tidy tbls of all Tools.
 }
 }
 \if{html}{\out{<hr>}}

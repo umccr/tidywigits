@@ -4,7 +4,7 @@
 \alias{Tool}
 \title{Tool Object}
 \description{
-Base class for all wigits tools.
+Base class for all WiGiTS tools.
 }
 \examples{
 \dontrun{
@@ -119,6 +119,9 @@ Print details about the Tool.
 }
 \if{html}{\out{</div>}}
 }
+\subsection{Returns}{
+self invisibly.
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-Tool-.filter_files"></a>}}
@@ -140,6 +143,9 @@ Files to exclude.}
 }
 \if{html}{\out{</div>}}
 }
+\subsection{Returns}{
+The tibble of files with potentially removed rows.
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-Tool-.list_files"></a>}}
@@ -154,10 +160,13 @@ List files in given tool directory.
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{type}}{(\code{character(1)})\cr
-File types(s) to return (e.g. any, file, directory, symlink).
+File type(s) to return (e.g. any, file, directory, symlink).
 See \code{fs::dir_info}.}
 }
 \if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+A tibble of file paths.
 }
 }
 \if{html}{\out{<hr>}}
@@ -185,6 +194,9 @@ File delimiter.}
 }
 \if{html}{\out{</div>}}
 }
+\subsection{Returns}{
+A tibble with the parsed data.
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-Tool-.tidy_file"></a>}}
@@ -208,6 +220,9 @@ Parser name (e.g. "breakends" - see docs).}
 Convert field types based on schema.}
 }
 \if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+A tibble with the tidy data enframed.
 }
 }
 \if{html}{\out{<hr>}}
@@ -235,6 +250,9 @@ File delimiter.}
 }
 \if{html}{\out{</div>}}
 }
+\subsection{Returns}{
+A tibble with the parsed data.
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-Tool-.eval_func"></a>}}
@@ -257,6 +275,9 @@ Environment to evaluate the function within.}
 }
 \if{html}{\out{</div>}}
 }
+\subsection{Returns}{
+The evaluated function.
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-Tool-.tidy"></a>}}
@@ -277,6 +298,9 @@ Should the raw parsed tibbles get tidied?}
 Should the raw parsed tibbles be kept in the final output?}
 }
 \if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+self invisibly.
 }
 }
 \if{html}{\out{<hr>}}
@@ -307,6 +331,9 @@ ID to use for the dataset (e.g. \code{wfrid.123}, \code{prid.456}).}
 Database connection object (see \code{DBI::dbConnect}).}
 }
 \if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+A tibble with the tidy data and their output location prefix.
 }
 }
 \if{html}{\out{<hr>}}
@@ -351,6 +378,9 @@ Files to include.}
 Files to exclude.}
 }
 \if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+A tibble with the tidy data and their output location prefix.
 }
 }
 \if{html}{\out{<hr>}}
