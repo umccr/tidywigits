@@ -326,11 +326,19 @@ Tool <- R6::R6Class(
       d_write <- self$tbls |>
         dplyr::select(
           "tool_parser",
+          "parser",
           dplyr::contains("prefix"),
           "tidy"
         ) |>
+        tidyr::unite(col = "tbl_prefix", dplyr::contains("prefix"), sep = "_") |>
         tidyr::unnest("tidy", names_sep = "_") |>
-        dplyr::mutate(tbl_name = as.character(glue("{.data$tool_parser}_{.data$tidy_name}"))) |>
+        dplyr::mutate(
+          tbl_name = ifelse(
+            .data$parser == .data$tidy_name,
+            as.character(glue("{tbl_prefix}_{.data$tool_parser}")),
+            as.character(glue("{tbl_prefix}_{.data$tool_parser}_{.data$tidy_name}"))
+          )
+        ) |>
         dplyr::rowwise() |>
         dplyr::mutate(
           p = ifelse(
