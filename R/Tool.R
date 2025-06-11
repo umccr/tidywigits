@@ -5,12 +5,13 @@
 #' @examples
 #' \dontrun{
 #' path <- here::here(
-#'   "nogit/oa_v1"
+#'   "nogit"
 #' )
 #' a <- Alignments$new(path = path)$
 #'   .filter_files(exclude = "alignments_dupfreq")$
 #'   .tidy(keep_raw = TRUE)
 #' a <- Alignments$new(path)
+#' b <- Bamtools$new(path)
 #' a$magic(
 #'     odir = "nogit/test_data",
 #'     pref = "sampleA",
@@ -177,6 +178,11 @@ Tool <- R6::R6Class(
           tool_parser = glue("{self$name}_{.data$parser}")
         ) |>
         dplyr::ungroup() |>
+        dplyr::mutate(group = dplyr::row_number(), .by = "bname") |>
+        dplyr::mutate(
+          group = dplyr::if_else(.data$group == 1, glue(""), glue("_{.data$group}")),
+          prefix = glue("{.data$prefix}{.data$group}")
+        ) |>
         dplyr::relocate("tool_parser", .before = 1)
     },
     #' @description Parse file.
@@ -344,7 +350,7 @@ Tool <- R6::R6Class(
           p = ifelse(
             fmt == "db",
             as.character(.data$tbl_name),
-            as.character(glue("{pref}_{.data$tbl_name}"))
+            as.character(glue("{pref}{.data$tbl_name}"))
           ),
           out = list(
             nemo_write(
@@ -357,7 +363,7 @@ Tool <- R6::R6Class(
           )
         ) |>
         dplyr::ungroup() |>
-        dplyr::select("tidy_name", "tidy_data", prefix = "p")
+        dplyr::rename(prefix = "p")
       invisible(d_write)
     },
     #' @description Magic.
