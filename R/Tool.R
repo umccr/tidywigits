@@ -5,17 +5,19 @@
 #' @examples
 #' \dontrun{
 #' path <- here::here(
-#'   "nogit/oa_v1"
+#'   "nogit"
 #' )
 #' a <- Alignments$new(path = path)$
 #'   .filter_files(exclude = "alignments_dupfreq")$
 #'   .tidy(keep_raw = TRUE)
 #' a <- Alignments$new(path)
-#' a$magic(
+#' b <- Bamtools$new(path)
+#' lx <- Linx$new(path)
+#' lx$magic(
 #'     odir = "nogit/test_data",
-#'     pref = "sampleA",
+#'     pref = "",
 #'     fmt = "parquet",
-#'     id = "run1",
+#'     id = "run2",
 #'     include = NULL,
 #'     exclude = NULL
 #' )
@@ -173,10 +175,21 @@ Tool <- R6::R6Class(
             )
           ),
           prefix = FileObj$prefix,
+          # handle wigits version files
+          prefix = dplyr::if_else(
+            .data$parser == "version" && .data$prefix == "",
+            "version",
+            .data$prefix
+          ),
           schema = list(self$config$.raw_schema(.data$parser)),
           tool_parser = glue("{self$name}_{.data$parser}")
         ) |>
         dplyr::ungroup() |>
+        dplyr::mutate(group = dplyr::row_number(), .by = "bname") |>
+        dplyr::mutate(
+          group = dplyr::if_else(.data$group == 1, glue(""), glue("_{.data$group}")),
+          prefix = glue("{.data$prefix}{.data$group}")
+        ) |>
         dplyr::relocate("tool_parser", .before = 1)
     },
     #' @description Parse file.
@@ -326,17 +339,25 @@ Tool <- R6::R6Class(
       d_write <- self$tbls |>
         dplyr::select(
           "tool_parser",
+          "parser",
           dplyr::contains("prefix"),
           "tidy"
         ) |>
+        tidyr::unite(col = "tbl_prefix", dplyr::contains("prefix"), sep = "_") |>
         tidyr::unnest("tidy", names_sep = "_") |>
-        dplyr::mutate(tbl_name = as.character(glue("{.data$tool_parser}_{.data$tidy_name}"))) |>
+        dplyr::mutate(
+          tbl_name = ifelse(
+            .data$parser == .data$tidy_name,
+            as.character(glue("{tbl_prefix}_{.data$tool_parser}")),
+            as.character(glue("{tbl_prefix}_{.data$tool_parser}_{.data$tidy_name}"))
+          )
+        ) |>
         dplyr::rowwise() |>
         dplyr::mutate(
           p = ifelse(
             fmt == "db",
             as.character(.data$tbl_name),
-            as.character(glue("{pref}_{.data$tbl_name}"))
+            as.character(glue("{pref}{.data$tbl_name}"))
           ),
           out = list(
             nemo_write(
@@ -349,7 +370,7 @@ Tool <- R6::R6Class(
           )
         ) |>
         dplyr::ungroup() |>
-        dplyr::select("tidy_name", "tidy_data", prefix = "p")
+        dplyr::rename(prefix = "p")
       invisible(d_write)
     },
     #' @description Magic.
