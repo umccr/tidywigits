@@ -12,11 +12,12 @@
 #'   .tidy(keep_raw = TRUE)
 #' a <- Alignments$new(path)
 #' b <- Bamtools$new(path)
-#' a$magic(
+#' lx <- Linx$new(path)
+#' lx$magic(
 #'     odir = "nogit/test_data",
-#'     pref = "sampleA",
+#'     pref = "",
 #'     fmt = "parquet",
-#'     id = "run1",
+#'     id = "run2",
 #'     include = NULL,
 #'     exclude = NULL
 #' )
@@ -174,6 +175,12 @@ Tool <- R6::R6Class(
             )
           ),
           prefix = FileObj$prefix,
+          # handle wigits version files
+          prefix = dplyr::if_else(
+            .data$parser == "version" && .data$prefix == "",
+            "version",
+            .data$prefix
+          ),
           schema = list(self$config$.raw_schema(.data$parser)),
           tool_parser = glue("{self$name}_{.data$parser}")
         ) |>

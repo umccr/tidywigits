@@ -8,7 +8,7 @@
 #' oa <- Oncoanalyser$new(path)
 #' x <-
 #'   oa$magic(
-#'     odir = "nogit/test_data2",
+#'     odir = "nogit/test_data",
 #'     pref = "",
 #'     fmt = "parquet",
 #'     id = "run1"

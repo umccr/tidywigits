@@ -34,10 +34,10 @@ Linx <- R6::R6Class(
       res <- super$.list_files(type = type)
       res |>
         dplyr::mutate(
-          prefix2 = ifelse(
+          prefix = dplyr::if_else(
             grepl("linx\\.germline", .data$bname),
-            "germline",
-            ""
+            glue("{.data$prefix}_germline"),
+            glue("{.data$prefix}")
           )
         )
     },

@@ -10,9 +10,10 @@ Oncoanalyser file parsing and manipulation.
 \dontrun{
 path <- here::here("nogit/oa_v1")
 oa <- Oncoanalyser$new(path)
-oa$magic(
-    odir = "nogit/test_data2",
-    pref = "sampleA",
+x <-
+  oa$magic(
+    odir = "nogit/test_data",
+    pref = "",
     fmt = "parquet",
     id = "run1"
 )

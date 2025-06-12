@@ -9,17 +9,19 @@ Base class for all WiGiTS tools.
 \examples{
 \dontrun{
 path <- here::here(
-  "nogit/oa_v1"
+  "nogit"
 )
 a <- Alignments$new(path = path)$
   .filter_files(exclude = "alignments_dupfreq")$
   .tidy(keep_raw = TRUE)
 a <- Alignments$new(path)
-a$magic(
+b <- Bamtools$new(path)
+lx <- Linx$new(path)
+lx$magic(
     odir = "nogit/test_data",
-    pref = "sampleA",
+    pref = "",
     fmt = "parquet",
-    id = "run1",
+    id = "run2",
     include = NULL,
     exclude = NULL
 )
