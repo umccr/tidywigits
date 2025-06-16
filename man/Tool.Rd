@@ -9,22 +9,31 @@ Base class for all WiGiTS tools.
 \examples{
 \dontrun{
 path <- here::here(
-  "nogit"
+  "nogit/oa_v1"
 )
+# demo filter + tidy
 a <- Alignments$new(path = path)$
   .filter_files(exclude = "alignments_dupfreq")$
   .tidy(keep_raw = TRUE)
-a <- Alignments$new(path)
-b <- Bamtools$new(path)
+a$tbls
+a$files
+a$.list_files()
 lx <- Linx$new(path)
+dbconn <- DBI::dbConnect(
+  drv = RPostgres::Postgres(),
+  dbname = "nemo",
+  user = "orcabus"
+)
 lx$magic(
     odir = "nogit/test_data",
-    fpfix = "",
-    format = "parquet",
+    #format =
+    format = "db", # "parquet",
     id = "run2",
+    dbconn = dbconn,
     include = NULL,
     exclude = NULL
 )
+DBI::dbDisconnect(dbconn)
 }
 
 }
@@ -45,6 +54,10 @@ Tibble of files matching available Tool patterns.}
 
 \item{\code{tbls}}{(\code{tibble()})\cr
 Tibble of tidy tibbles.}
+
+\item{\code{needs_tidying}}{(\code{logical(1)})\cr
+Do files need to be tidied? Used when no files are detected, so we can
+use downstream as a bypass.}
 
 \item{\code{raw_schemas_all}}{(\code{tibble()})\cr
 All raw schemas for tool.}
@@ -342,7 +355,7 @@ A tibble with the tidy data and their output location prefix.
 Magic.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Tool$magic(
-  odir = NULL,
+  odir = ".",
   format = "tsv",
   id = NULL,
   dbconn = NULL,
@@ -354,13 +367,13 @@ Magic.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{odir}}{(\code{character(n)})\cr
+\item{\code{odir}}{(\code{character(1)})\cr
 Directory path to output tidy files.}
 
-\item{\code{format}}{(\code{character(n)})\cr
+\item{\code{format}}{(\code{character(1)})\cr
 Format of output files.}
 
-\item{\code{id}}{(\code{character(n)})\cr
+\item{\code{id}}{(\code{character(1)})\cr
 ID to use for the dataset (e.g. \code{wfrid.123}, \code{prid.456}).}
 
 \item{\code{dbconn}}{(\code{DBIConnection})\cr

@@ -5,22 +5,31 @@
 #' @examples
 #' \dontrun{
 #' path <- here::here(
-#'   "nogit"
+#'   "nogit/oa_v1"
 #' )
+#' # demo filter + tidy
 #' a <- Alignments$new(path = path)$
 #'   .filter_files(exclude = "alignments_dupfreq")$
 #'   .tidy(keep_raw = TRUE)
-#' a <- Alignments$new(path)
-#' b <- Bamtools$new(path)
+#' a$tbls
+#' a$files
+#' a$.list_files()
 #' lx <- Linx$new(path)
+#' dbconn <- DBI::dbConnect(
+#'   drv = RPostgres::Postgres(),
+#'   dbname = "nemo",
+#'   user = "orcabus"
+#' )
 #' lx$magic(
 #'     odir = "nogit/test_data",
-#'     fpfix = "",
-#'     format = "parquet",
+#'     #format =
+#'     format = "db", # "parquet",
 #'     id = "run2",
+#'     dbconn = dbconn,
 #'     include = NULL,
 #'     exclude = NULL
 #' )
+#' DBI::dbDisconnect(dbconn)
 #' }
 #'
 #' @export
@@ -42,6 +51,10 @@ Tool <- R6::R6Class(
     #' @field tbls (`tibble()`)\cr
     #' Tibble of tidy tibbles.
     tbls = NULL,
+    #' @field needs_tidying (`logical(1)`)\cr
+    #' Do files need to be tidied? Used when no files are detected, so we can
+    #' use downstream as a bypass.
+    needs_tidying = NULL,
     #' @field raw_schemas_all (`tibble()`)\cr
     #' All raw schemas for tool.
     raw_schemas_all = NULL,
@@ -83,6 +96,7 @@ Tool <- R6::R6Class(
       self$.tidy_schema <- self$config$.tidy_schema
       self$.raw_schema <- self$config$.raw_schema
       self$.files_tbl <- files_tbl
+      self$needs_tidying <- TRUE
       # upon init, files starts off as the raw list of files
       self$files <- self$.list_files(type = "file")
     },
@@ -278,14 +292,20 @@ Tool <- R6::R6Class(
     #' Should the raw parsed tibbles be kept in the final output?
     #' @return self invisibly.
     .tidy = function(tidy = TRUE, keep_raw = FALSE) {
+      # if no tidying needed, early return
+      if (!self$needs_tidying) {
+        return(invisible(self))
+      }
+      # if no files found, early return
       if (nrow(self$files) == 0) {
         self$tbls <- NULL
-        invisible(self)
+        self$needs_tidying <- FALSE
+        return(invisible(self))
       }
       # if both FALSE, just return the file list
       if (!tidy && !keep_raw) {
         self$tbls <- self$files
-        invisible(self)
+        return(invisible(self))
       }
       d <- self$files |>
         dplyr::mutate(
@@ -312,7 +332,8 @@ Tool <- R6::R6Class(
           dplyr::select(-"tidy")
       }
       self$tbls <- d
-      invisible(self)
+      self$needs_tidying <- FALSE
+      return(invisible(self))
     },
     #' @description Write tidy tibbles.
     #' @param odir (`character(1)`)\cr
@@ -327,11 +348,13 @@ Tool <- R6::R6Class(
     .write = function(odir = ".", format = "tsv", id = NULL, dbconn = NULL) {
       odir <- normalizePath(odir)
       assertthat::assert_that(!is.null(id))
-      assertthat::assert_that(
-        !is.null(self$tbls),
-        nrow(self$tbls) > 0,
-        msg = "No tidy tbls found! Did you forget to tidy?"
-      )
+      assertthat::assert_that(!self$needs_tidying, msg = "Did you forget to tidy?")
+      if (is.null(self$tbls)) {
+        # even though tidying is not needed, there must be no files detected
+        # for tidying (and therefore writing). So return NULL.
+        return(NULL)
+      }
+
       d_write <- self$tbls |>
         dplyr::select(
           "tool_parser",
@@ -377,11 +400,11 @@ Tool <- R6::R6Class(
       invisible(d_write)
     },
     #' @description Magic.
-    #' @param odir (`character(n)`)\cr
+    #' @param odir (`character(1)`)\cr
     #' Directory path to output tidy files.
-    #' @param format (`character(n)`)\cr
+    #' @param format (`character(1)`)\cr
     #' Format of output files.
-    #' @param id (`character(n)`)\cr
+    #' @param id (`character(1)`)\cr
     #' ID to use for the dataset (e.g. `wfrid.123`, `prid.456`).
     #' @param dbconn (`DBIConnection`)\cr
     #' Database connection object (see `DBI::dbConnect`).
@@ -391,7 +414,7 @@ Tool <- R6::R6Class(
     #' Files to exclude.
     #' @return A tibble with the tidy data and their output location prefix.
     magic = function(
-      odir = NULL,
+      odir = ".",
       format = "tsv",
       id = NULL,
       dbconn = NULL,
