@@ -2,34 +2,54 @@
 % Please edit documentation in R/write.R
 \name{nemo_write}
 \alias{nemo_write}
-\title{Write tibble}
+\title{Write data}
 \usage{
-nemo_write(d, pref = NULL, fmt = "tsv", id = NULL, dbconn = NULL)
+nemo_write(
+  d,
+  fpfix = NULL,
+  format = "tsv",
+  id = NULL,
+  dbconn = NULL,
+  dbtab = NULL
+)
 }
 \arguments{
-\item{d}{(\code{tibble()})\cr
-A tibble (or data.frame) with tidy data.}
+\item{d}{(\code{data.frame()})\cr
+A data.frame (or tibble) with tidy data.}
 
-\item{pref}{(\code{character(1)})\cr
-File prefix. The file extension gets generated automatically via the \code{fmt}
-argument.}
+\item{fpfix}{(\code{character(1)})\cr
+File prefix. The file extension is generated automatically via the \code{format}
+argument. For a format of db, this is inserted into the \code{nemo_pfix} column.}
 
-\item{fmt}{(\code{character(1)})\cr
+\item{format}{(\code{character(1)})\cr
 Output format. One of tsv, csv, parquet, rds, or db.}
 
 \item{id}{(\code{character(1)})\cr
 ID to use in the first \code{nemo_id} column for this table.}
 
 \item{dbconn}{(\code{DBIConnection(1)})\cr
-Database connection object (see \code{DBI::dbConnect}).}
+Database connection object (see \code{DBI::dbConnect}). Used only when format is db.}
+
+\item{dbtab}{(\code{character(1)})\cr
+Database table name (see \code{DBI::dbWriteTable}). Used only when format is db.}
 }
 \description{
-Writes tibbles in the given format(s).
+Writes tabular data in the given format.
 }
 \examples{
 d <- tibble::tibble(name = "foo", data = 123)
-pref <- file.path(tempdir(), "data_test1")
-fmt <- "csv"
+fpfix <- file.path(tempdir(), "data_test1")
+format <- "csv"
 id <- "run1"
-nemo_write(d = d, pref = pref, fmt = "csv", id = id)
+nemo_write(d = d, fpfix = fpfix, format = format, id = id)
+readr::read_csv(glue::glue("{fpfix}.csv.gz"))
+\dontshow{if (RPostgres::postgresHasDefault()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+# for database writing
+con <- DBI::dbConnect(RPostgres::Postgres())
+tbl_nm <- "awesome_tbl"
+nemo_write(d = d, fpfix = basename(fpfix), format = "db", id = "123", dbconn = con, dbtab = tbl_nm)
+DBI::dbListTables(con)
+DBI::dbReadTable(con, tbl_nm)
+DBI::dbDisconnect(con)
+\dontshow{\}) # examplesIf}
 }

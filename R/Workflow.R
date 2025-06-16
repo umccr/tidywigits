@@ -4,16 +4,27 @@
 #' A Workflow is composed of multiple Tools.
 #' @examples
 #' \dontrun{
-#' path <- here::here("nogit/oa_v1")
+#' path <- here::here("nogit/oa_v2")
 #' tools <- list(align = Alignments, sigs = Sigs)
 #' wf1 <- Workflow$new(name = "foo", path = path, tools = tools)
 #' wf1$.list_files()
 #' wf1$magic(
 #'     odir = "nogit/test_data",
-#'     pref = "sampleA",
-#'     fmt = "parquet",
+#'     format = "parquet",
 #'     id = "run1"
 #' )
+#'
+#' dbconn <- DBI::dbConnect(
+#'   drv = RPostgres::Postgres(),
+#'   dbname = "nemo",
+#'   user = "orcabus"
+#' )
+#' wf1$magic(
+#'     format = "db",
+#'     id = "runABC",
+#'     dbconn = dbconn
+#' )
+#'
 #' }
 #' @export
 Workflow <- R6::R6Class(
@@ -85,32 +96,28 @@ Workflow <- R6::R6Class(
     #' @return self invisibly.
     .tidy = function(tidy = TRUE, keep_raw = FALSE) {
       self$tools <- self$tools |>
-        purrr::map(\(x) x$.tidy())
+        purrr::map(\(x) x$.tidy(tidy = tidy, keep_raw = keep_raw))
       invisible(self)
     },
     #' @description Write tidy tibbles.
     #' @param odir (`character(1)`)\cr
     #' Directory path to output tidy files.
-    #' @param pref (`character(1)`)\cr
-    #' Prefix of output files.
-    #' @param fmt (`character(1)`)\cr
+    #' @param format (`character(1)`)\cr
     #' Format of output files.
     #' @param id (`character(1)`)\cr
     #' ID to use for the dataset (e.g. `wfrid.123`, `prid.456`).
     #' @param dbconn (`DBIConnection`)\cr
     #' Database connection object (see `DBI::dbConnect`).
     #' @return A tibble with all tibbles written.
-    .write = function(odir = NULL, pref = NULL, fmt = "tsv", id = NULL, dbconn = NULL) {
+    .write = function(odir = ".", format = "tsv", id = NULL, dbconn = NULL) {
       self$tools |>
-        purrr::map(\(x) x$.write(odir = odir, pref = pref, fmt = fmt, id = id, dbconn = dbconn)) |>
+        purrr::map(\(x) x$.write(odir = odir, format = format, id = id, dbconn = dbconn)) |>
         dplyr::bind_rows()
     },
     #' @description Magic.
     #' @param odir (`character(1)`)\cr
     #' Directory path to output tidy files.
-    #' @param pref (`character(1)`)\cr
-    #' Prefix of output files.
-    #' @param fmt (`character(1)`)\cr
+    #' @param format (`character(1)`)\cr
     #' Format of output files.
     #' @param id (`character(1)`)\cr
     #' ID to use for the dataset (e.g. `wfrid.123`, `prid.456`).
@@ -122,9 +129,8 @@ Workflow <- R6::R6Class(
     #' Files to exclude.
     #' @return A tibble with the tidy data and their output location prefix.
     magic = function(
-      odir = NULL,
-      pref = NULL,
-      fmt = "tsv",
+      odir = ".",
+      format = "tsv",
       id = NULL,
       dbconn = NULL,
       include = NULL,
@@ -134,7 +140,7 @@ Workflow <- R6::R6Class(
       self$
         .filter_files(include = include, exclude = exclude)$
         .tidy()$
-        .write(odir = odir, pref = pref, fmt = fmt, id = id, dbconn = dbconn)
+        .write(odir = odir, format = format, id = id, dbconn = dbconn)
     },
     #' @description Get raw schemas for all Tools.
     #' @return Tibble with names of tool and file, schema and its version.

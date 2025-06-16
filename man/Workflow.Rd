@@ -8,16 +8,27 @@ A Workflow is composed of multiple Tools.
 }
 \examples{
 \dontrun{
-path <- here::here("nogit/oa_v1")
+path <- here::here("nogit/oa_v2")
 tools <- list(align = Alignments, sigs = Sigs)
 wf1 <- Workflow$new(name = "foo", path = path, tools = tools)
 wf1$.list_files()
 wf1$magic(
     odir = "nogit/test_data",
-    pref = "sampleA",
-    fmt = "parquet",
+    format = "parquet",
     id = "run1"
 )
+
+dbconn <- DBI::dbConnect(
+  drv = RPostgres::Postgres(),
+  dbname = "nemo",
+  user = "orcabus"
+)
+wf1$magic(
+    format = "db",
+    id = "runABC",
+    dbconn = dbconn
+)
+
 }
 }
 \section{Public fields}{
@@ -164,13 +175,7 @@ self invisibly.
 \subsection{Method \code{.write()}}{
 Write tidy tibbles.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Workflow$.write(
-  odir = NULL,
-  pref = NULL,
-  fmt = "tsv",
-  id = NULL,
-  dbconn = NULL
-)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Workflow$.write(odir = ".", format = "tsv", id = NULL, dbconn = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -179,10 +184,7 @@ Write tidy tibbles.
 \item{\code{odir}}{(\code{character(1)})\cr
 Directory path to output tidy files.}
 
-\item{\code{pref}}{(\code{character(1)})\cr
-Prefix of output files.}
-
-\item{\code{fmt}}{(\code{character(1)})\cr
+\item{\code{format}}{(\code{character(1)})\cr
 Format of output files.}
 
 \item{\code{id}}{(\code{character(1)})\cr
@@ -204,9 +206,8 @@ A tibble with all tibbles written.
 Magic.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Workflow$magic(
-  odir = NULL,
-  pref = NULL,
-  fmt = "tsv",
+  odir = ".",
+  format = "tsv",
   id = NULL,
   dbconn = NULL,
   include = NULL,
@@ -220,10 +221,7 @@ Magic.
 \item{\code{odir}}{(\code{character(1)})\cr
 Directory path to output tidy files.}
 
-\item{\code{pref}}{(\code{character(1)})\cr
-Prefix of output files.}
-
-\item{\code{fmt}}{(\code{character(1)})\cr
+\item{\code{format}}{(\code{character(1)})\cr
 Format of output files.}
 
 \item{\code{id}}{(\code{character(1)})\cr

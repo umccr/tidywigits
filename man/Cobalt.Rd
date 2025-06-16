@@ -12,8 +12,9 @@ path <- here::here(
   "nogit"
 )
 cob <- Cobalt$new(path)
-cob$tidy$tidy |>
-  purrr::set_names(cob$tidy$parser) |>
+cob$.tidy()
+cob$tbls$tidy |>
+  purrr::set_names(cob$tbls$parser) |>
   purrr::map(\(x) x[["data"]][[1]])
 }
 }

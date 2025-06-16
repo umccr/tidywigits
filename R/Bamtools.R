@@ -6,7 +6,6 @@
 #' \dontrun{
 #' path <- here::here("nogit")
 #' b <- Bamtools$new(path)
-#' b$tidy$tidy
 #' }
 #' @export
 Bamtools <- R6::R6Class(

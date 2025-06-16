@@ -12,8 +12,9 @@ path <- here::here(
   "nogit"
 )
 sv <- Esvee$new(path)
-sv$tidy$tidy |>
-  purrr::set_names(sv$tidy$parser) |>
+sv$.tidy()
+sv$tbls$tidy |>
+  purrr::set_names(sv$tbls$parser) |>
   purrr::map(\(x) x[["data"]][[1]])
 }
 }

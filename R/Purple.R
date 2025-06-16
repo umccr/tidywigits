@@ -8,8 +8,9 @@
 #'   "nogit"
 #' )
 #' p <- Purple$new(path)
-#' p$tidy$tidy |>
-#'   purrr::set_names(p$tidy$parser) |>
+#' p$.tidy()
+#' p$tbls$tidy |>
+#'   purrr::set_names(p$tbls$parser) |>
 #'   purrr::map(\(x) x[["data"]][[1]])
 #' }
 #' @export

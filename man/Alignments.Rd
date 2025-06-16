@@ -9,13 +9,12 @@ Alignments file parsing and manipulation.
 \examples{
 \dontrun{
 path <- here::here(
-  "nogit/oa_v1"
+  "nogit/oa_v2"
 )
 a <- Alignments$new(path)
 a$magic(
     odir = "nogit/test_data",
-    pref = "sampleA",
-    fmt = "parquet",
+    format = "parquet",
     id = "run1",
     include = NULL,
     exclude = NULL

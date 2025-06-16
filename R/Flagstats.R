@@ -5,7 +5,7 @@
 #' @examples
 #' \dontrun{
 #' path <- here::here(
-#'   "nogit/oa_v1/flagstats"
+#'   "nogit/oa_v1"
 #' )
 #' f <- Flagstats$new(path)
 #' }
