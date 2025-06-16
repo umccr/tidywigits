@@ -12,9 +12,9 @@ path <- here::here(
   "nogit"
 )
 s <- Sage$new(path)
-s$tidy
-s$tidy$tidy |>
-  purrr::set_names(s$tidy$parser) |>
+s$.tidy()
+s$tbls$tidy |>
+  purrr::set_names(s$tbls$parser) |>
   purrr::map(\(x) x[["data"]][[1]])
 }
 }

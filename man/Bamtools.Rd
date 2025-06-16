@@ -10,7 +10,6 @@ Bamtools file parsing and manipulation.
 \dontrun{
 path <- here::here("nogit")
 b <- Bamtools$new(path)
-b$tidy$tidy
 }
 }
 \section{Super class}{

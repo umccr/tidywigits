@@ -8,14 +8,24 @@ Oncoanalyser file parsing and manipulation.
 }
 \examples{
 \dontrun{
-path <- here::here("nogit/oa_v1")
+path <- here::here("nogit/oa_v2")
 oa <- Oncoanalyser$new(path)
 x <-
   oa$magic(
     odir = "nogit/test_data",
-    pref = "",
-    fmt = "parquet",
+    format = "parquet",
     id = "run1"
+)
+dbconn <- DBI::dbConnect(
+  drv = RPostgres::Postgres(),
+  dbname = "nemo",
+  user = "orcabus"
+)
+x <-
+  oa$magic(
+    format = "db",
+    id = "runABC456",
+    dbconn = dbconn
 )
 }
 }

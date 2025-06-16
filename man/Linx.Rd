@@ -10,8 +10,9 @@ Linx file parsing and manipulation.
 \dontrun{
 path <- here::here("nogit/oa_v2")
 lx <- Linx$new(path)
-lx$tidy$tidy |>
-  purrr::set_names(lx$tidy$parser) |>
+lx$.tidy()
+lx$tbls$tidy |>
+  purrr::set_names(lx$tbls$parser) |>
   purrr::map(\(x) x[["data"]][[1]])
 }
 }

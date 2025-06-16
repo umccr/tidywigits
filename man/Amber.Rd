@@ -12,8 +12,6 @@ path <- here::here(
   "nogit/oa_v1"
 )
 a <- Amber$new(path)
-a$tidy
-Amber$new(path, keep_raw = TRUE)$tidy
 }
 }
 \section{Super class}{

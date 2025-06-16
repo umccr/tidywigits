@@ -25,7 +25,7 @@ raw:
           type: 'char'
         - field: 'trinucleotideContext'
           type: 'char'
-        - field: 'readType'
+        - field: 'readType' # new
           type: 'char'
         - field: 'count'
           type: 'float'
