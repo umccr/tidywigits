@@ -15,8 +15,8 @@
 #' lx <- Linx$new(path)
 #' lx$magic(
 #'     odir = "nogit/test_data",
-#'     pref = "",
-#'     fmt = "parquet",
+#'     fpfix = "",
+#'     format = "parquet",
 #'     id = "run2",
 #'     include = NULL,
 #'     exclude = NULL
@@ -316,69 +316,70 @@ Tool <- R6::R6Class(
     },
     #' @description Write tidy tibbles.
     #' @param odir (`character(1)`)\cr
-    #' Directory path to output tidy files.
-    #' @param pref (`character(1)`)\cr
-    #' Prefix of output files.
-    #' @param fmt (`character(1)`)\cr
+    #' Directory path to output tidy files. Ignored if format is db.
+    #' @param format (`character(1)`)\cr
     #' Format of output files.
     #' @param id (`character(1)`)\cr
     #' ID to use for the dataset (e.g. `wfrid.123`, `prid.456`).
     #' @param dbconn (`DBIConnection`)\cr
     #' Database connection object (see `DBI::dbConnect`).
     #' @return A tibble with the tidy data and their output location prefix.
-    .write = function(odir = NULL, pref = NULL, fmt = "tsv", id = NULL, dbconn = NULL) {
-      assertthat::assert_that(!is.null(id), !is.null(pref))
+    .write = function(odir = ".", format = "tsv", id = NULL, dbconn = NULL) {
+      odir <- normalizePath(odir)
+      assertthat::assert_that(!is.null(id))
       assertthat::assert_that(
         !is.null(self$tbls),
         nrow(self$tbls) > 0,
         msg = "No tidy tbls found! Did you forget to tidy?"
       )
-      if (!is.null(odir)) {
-        pref <- file.path(odir, pref)
-      }
       d_write <- self$tbls |>
         dplyr::select(
           "tool_parser",
           "parser",
-          dplyr::contains("prefix"),
+          "prefix",
           "tidy"
         ) |>
-        tidyr::unite(col = "tbl_prefix", dplyr::contains("prefix"), sep = "_") |>
         tidyr::unnest("tidy", names_sep = "_") |>
+        dplyr::rowwise() |>
+        # handle sub-tbls
         dplyr::mutate(
-          tbl_name = ifelse(
+          tbl_name = dplyr::if_else(
             .data$parser == .data$tidy_name,
-            as.character(glue("{tbl_prefix}_{.data$tool_parser}")),
-            as.character(glue("{tbl_prefix}_{.data$tool_parser}_{.data$tidy_name}"))
+            .data$tool_parser,
+            paste(.data$tool_parser, .data$tidy_name, sep = "_")
           )
         ) |>
-        dplyr::rowwise() |>
         dplyr::mutate(
-          p = ifelse(
-            fmt == "db",
-            as.character(.data$tbl_name),
-            as.character(glue("{pref}{.data$tbl_name}"))
+          fpfix = dplyr::if_else(
+            format == "db",
+            .data$prefix,
+            paste(file.path(odir, .data$prefix), .data$tbl_name, sep = "_")
           ),
+          dbtab = ifelse(
+            format == "db",
+            list(.data$tbl_name),
+            list(NULL)
+          )
+        ) |>
+        dplyr::mutate(
           out = list(
             nemo_write(
               d = .data$tidy_data,
-              pref = .data$p,
-              fmt = fmt,
+              fpfix = .data$fpfix,
+              format = format,
               id = id,
-              dbconn = dbconn
+              dbconn = dbconn,
+              dbtab = .data$dbtab
             )
           )
         ) |>
-        dplyr::ungroup() |>
-        dplyr::rename(prefix = "p")
+        dplyr::ungroup()
       invisible(d_write)
     },
     #' @description Magic.
     #' @param odir (`character(n)`)\cr
     #' Directory path to output tidy files.
-    #' @param pref (`character(n)`)\cr
-    #' Prefix of output files.
-    #' @param fmt (`character(n)`)\cr
+    #' @param format (`character(n)`)\cr
     #' Format of output files.
     #' @param id (`character(n)`)\cr
     #' ID to use for the dataset (e.g. `wfrid.123`, `prid.456`).
@@ -391,8 +392,7 @@ Tool <- R6::R6Class(
     #' @return A tibble with the tidy data and their output location prefix.
     magic = function(
       odir = NULL,
-      pref = NULL,
-      fmt = "tsv",
+      format = "tsv",
       id = NULL,
       dbconn = NULL,
       include = NULL,
@@ -402,7 +402,12 @@ Tool <- R6::R6Class(
       self$
         .filter_files(include = include, exclude = exclude)$
         .tidy()$
-        .write(odir = odir, pref = pref, fmt = fmt, id = id, dbconn = dbconn)
+        .write(
+          odir = odir,
+          format = format,
+          id = id,
+          dbconn = dbconn
+      )
     }
   ) # public end
 )

@@ -19,8 +19,8 @@ b <- Bamtools$new(path)
 lx <- Linx$new(path)
 lx$magic(
     odir = "nogit/test_data",
-    pref = "",
-    fmt = "parquet",
+    fpfix = "",
+    format = "parquet",
     id = "run2",
     include = NULL,
     exclude = NULL
@@ -311,19 +311,16 @@ self invisibly.
 \subsection{Method \code{.write()}}{
 Write tidy tibbles.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Tool$.write(odir = NULL, pref = NULL, fmt = "tsv", id = NULL, dbconn = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Tool$.write(odir = ".", format = "tsv", id = NULL, dbconn = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{odir}}{(\code{character(1)})\cr
-Directory path to output tidy files.}
+Directory path to output tidy files. Ignored if format is db.}
 
-\item{\code{pref}}{(\code{character(1)})\cr
-Prefix of output files.}
-
-\item{\code{fmt}}{(\code{character(1)})\cr
+\item{\code{format}}{(\code{character(1)})\cr
 Format of output files.}
 
 \item{\code{id}}{(\code{character(1)})\cr
@@ -346,8 +343,7 @@ Magic.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Tool$magic(
   odir = NULL,
-  pref = NULL,
-  fmt = "tsv",
+  format = "tsv",
   id = NULL,
   dbconn = NULL,
   include = NULL,
@@ -361,10 +357,7 @@ Magic.
 \item{\code{odir}}{(\code{character(n)})\cr
 Directory path to output tidy files.}
 
-\item{\code{pref}}{(\code{character(n)})\cr
-Prefix of output files.}
-
-\item{\code{fmt}}{(\code{character(n)})\cr
+\item{\code{format}}{(\code{character(n)})\cr
 Format of output files.}
 
 \item{\code{id}}{(\code{character(n)})\cr
