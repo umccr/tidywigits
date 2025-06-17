@@ -20,7 +20,7 @@
 #'   dbname = "nemo",
 #'   user = "orcabus"
 #' )
-#' lx$magic(
+#' lx$nemofy(
 #'     odir = "nogit/test_data",
 #'     #format =
 #'     format = "db", # "parquet",
@@ -397,7 +397,7 @@ Tool <- R6::R6Class(
         dplyr::ungroup()
       invisible(d_write)
     },
-    #' @description Magic.
+    #' @description Parse, filter, tidy and write files.
     #' @param odir (`character(1)`)\cr
     #' Directory path to output tidy files.
     #' @param format (`character(1)`)\cr
@@ -411,7 +411,7 @@ Tool <- R6::R6Class(
     #' @param exclude (`character(n)`)\cr
     #' Files to exclude.
     #' @return A tibble with the tidy data and their output location prefix.
-    magic = function(
+    nemofy = function(
       odir = ".",
       format = "tsv",
       id = NULL,

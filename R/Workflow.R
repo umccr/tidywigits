@@ -8,7 +8,7 @@
 #' tools <- list(align = Alignments, sigs = Sigs)
 #' wf1 <- Workflow$new(name = "foo", path = path, tools = tools)
 #' wf1$list_files()
-#' wf1$magic(
+#' wf1$nemofy(
 #'     odir = "nogit/test_data",
 #'     format = "parquet",
 #'     id = "run1"
@@ -19,7 +19,7 @@
 #'   dbname = "nemo",
 #'   user = "orcabus"
 #' )
-#' wf1$magic(
+#' wf1$nemofy(
 #'     format = "db",
 #'     id = "runABC",
 #'     dbconn = dbconn
@@ -114,7 +114,7 @@ Workflow <- R6::R6Class(
         purrr::map(\(x) x$write(odir = odir, format = format, id = id, dbconn = dbconn)) |>
         dplyr::bind_rows()
     },
-    #' @description Magic.
+    #' @description Parse, filter, tidy and write files.
     #' @param odir (`character(1)`)\cr
     #' Directory path to output tidy files.
     #' @param format (`character(1)`)\cr
@@ -128,7 +128,7 @@ Workflow <- R6::R6Class(
     #' @param exclude (`character(n)`)\cr
     #' Files to exclude.
     #' @return A tibble with the tidy data and their output location prefix.
-    magic = function(
+    nemofy = function(
       odir = ".",
       format = "tsv",
       id = NULL,

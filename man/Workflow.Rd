@@ -12,7 +12,7 @@ path <- here::here("nogit/oa_v2")
 tools <- list(align = Alignments, sigs = Sigs)
 wf1 <- Workflow$new(name = "foo", path = path, tools = tools)
 wf1$list_files()
-wf1$magic(
+wf1$nemofy(
     odir = "nogit/test_data",
     format = "parquet",
     id = "run1"
@@ -23,7 +23,7 @@ dbconn <- DBI::dbConnect(
   dbname = "nemo",
   user = "orcabus"
 )
-wf1$magic(
+wf1$nemofy(
     format = "db",
     id = "runABC",
     dbconn = dbconn
@@ -54,7 +54,7 @@ List of Tools that compose a Workflow.}
 \item \href{#method-Workflow-list_files}{\code{Workflow$list_files()}}
 \item \href{#method-Workflow-tidy}{\code{Workflow$tidy()}}
 \item \href{#method-Workflow-write}{\code{Workflow$write()}}
-\item \href{#method-Workflow-magic}{\code{Workflow$magic()}}
+\item \href{#method-Workflow-nemofy}{\code{Workflow$nemofy()}}
 \item \href{#method-Workflow-get_raw_schemas_all}{\code{Workflow$get_raw_schemas_all()}}
 \item \href{#method-Workflow-get_tidy_schemas_all}{\code{Workflow$get_tidy_schemas_all()}}
 \item \href{#method-Workflow-get_tbls}{\code{Workflow$get_tbls()}}
@@ -200,12 +200,12 @@ A tibble with all tibbles written.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Workflow-magic"></a>}}
-\if{latex}{\out{\hypertarget{method-Workflow-magic}{}}}
-\subsection{Method \code{magic()}}{
-Magic.
+\if{html}{\out{<a id="method-Workflow-nemofy"></a>}}
+\if{latex}{\out{\hypertarget{method-Workflow-nemofy}{}}}
+\subsection{Method \code{nemofy()}}{
+Parse, filter, tidy and write files.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Workflow$magic(
+\if{html}{\out{<div class="r">}}\preformatted{Workflow$nemofy(
   odir = ".",
   format = "tsv",
   id = NULL,

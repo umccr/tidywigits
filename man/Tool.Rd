@@ -24,7 +24,7 @@ dbconn <- DBI::dbConnect(
   dbname = "nemo",
   user = "orcabus"
 )
-lx$magic(
+lx$nemofy(
     odir = "nogit/test_data",
     #format =
     format = "db", # "parquet",
@@ -85,7 +85,7 @@ Tibble of files from \code{list_files_dir}.}
 \item \href{#method-Tool-.eval_func}{\code{Tool$.eval_func()}}
 \item \href{#method-Tool-tidy}{\code{Tool$tidy()}}
 \item \href{#method-Tool-write}{\code{Tool$write()}}
-\item \href{#method-Tool-magic}{\code{Tool$magic()}}
+\item \href{#method-Tool-nemofy}{\code{Tool$nemofy()}}
 \item \href{#method-Tool-clone}{\code{Tool$clone()}}
 }
 }
@@ -345,12 +345,12 @@ A tibble with the tidy data and their output location prefix.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Tool-magic"></a>}}
-\if{latex}{\out{\hypertarget{method-Tool-magic}{}}}
-\subsection{Method \code{magic()}}{
-Magic.
+\if{html}{\out{<a id="method-Tool-nemofy"></a>}}
+\if{latex}{\out{\hypertarget{method-Tool-nemofy}{}}}
+\subsection{Method \code{nemofy()}}{
+Parse, filter, tidy and write files.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Tool$magic(
+\if{html}{\out{<div class="r">}}\preformatted{Tool$nemofy(
   odir = ".",
   format = "tsv",
   id = NULL,

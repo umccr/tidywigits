@@ -8,7 +8,7 @@
 #'   "nogit/oa_v2"
 #' )
 #' a <- Alignments$new(path)
-#' a$magic(
+#' a$nemofy(
 #'     odir = "nogit/test_data",
 #'     format = "parquet",
 #'     id = "run1",
