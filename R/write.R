@@ -69,7 +69,7 @@ nemo_write <- function(d, fpfix = NULL, format = "tsv", id = NULL, dbconn = NULL
       stop("No where else to go, check your output format!")
     }
   }
-  # also gets returned in case of NULLformat
+  # also gets returned in case of NULL format
   return(invisible(d))
 }
 
