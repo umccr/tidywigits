@@ -9,11 +9,11 @@
 #' )
 #' # demo filter + tidy
 #' a <- Alignments$new(path = path)$
-#'   .filter_files(exclude = "alignments_dupfreq")$
-#'   .tidy(keep_raw = TRUE)
+#'   filter_files(exclude = "alignments_dupfreq")$
+#'   tidy(keep_raw = TRUE)
 #' a$tbls
 #' a$files
-#' a$.list_files()
+#' a$list_files()
 #' lx <- Linx$new(path)
 #' dbconn <- DBI::dbConnect(
 #'   drv = RPostgres::Postgres(),
@@ -35,6 +35,11 @@
 #' @export
 Tool <- R6::R6Class(
   "Tool",
+  private = list(
+    # Do files need to be tidied? Used when no files are detected, so we can
+    # use downstream as a bypass.
+    needs_tidying = NULL
+  ),
   public = list(
     #' @field name (`character(1)`)\cr
     #' Name of tool.
@@ -51,25 +56,21 @@ Tool <- R6::R6Class(
     #' @field tbls (`tibble()`)\cr
     #' Tibble of tidy tibbles.
     tbls = NULL,
-    #' @field needs_tidying (`logical(1)`)\cr
-    #' Do files need to be tidied? Used when no files are detected, so we can
-    #' use downstream as a bypass.
-    needs_tidying = NULL,
     #' @field raw_schemas_all (`tibble()`)\cr
     #' All raw schemas for tool.
     raw_schemas_all = NULL,
     #' @field tidy_schemas_all (`tibble()`)\cr
     #' All tidy schemas for tool.
     tidy_schemas_all = NULL,
-    #' @field .tidy_schema (`function()`)\cr
+    #' @field get_tidy_schema (`function()`)\cr
     #' Get specific tidy schema.
-    .tidy_schema = NULL,
-    #' @field .raw_schema (`function()`)\cr
+    get_tidy_schema = NULL,
+    #' @field get_raw_schema (`function()`)\cr
     #' Get specific raw schema.
-    .raw_schema = NULL,
-    #' @field .files_tbl (`tibble(n)`)\cr
+    get_raw_schema = NULL,
+    #' @field files_tbl (`tibble(n)`)\cr
     #' Tibble of files from `list_files_dir`.
-    .files_tbl = NULL,
+    files_tbl = NULL,
 
     #' @description Create a new Tool object.
     #' @param name (`character(1)`)\cr
@@ -93,12 +94,12 @@ Tool <- R6::R6Class(
       self$config <- Config$new(self$name)
       self$raw_schemas_all <- self$config$raw_schemas_all
       self$tidy_schemas_all <- self$config$tidy_schemas_all
-      self$.tidy_schema <- self$config$.tidy_schema
-      self$.raw_schema <- self$config$.raw_schema
-      self$.files_tbl <- files_tbl
-      self$needs_tidying <- TRUE
+      self$get_tidy_schema <- self$config$get_tidy_schema
+      self$get_raw_schema <- self$config$get_raw_schema
+      self$files_tbl <- files_tbl
+      private$needs_tidying <- TRUE
       # upon init, files starts off as the raw list of files
-      self$files <- self$.list_files(type = "file")
+      self$files <- self$list_files(type = "file")
     },
     #' @description Print details about the Tool.
     #' @param ... (ignored).
@@ -109,10 +110,11 @@ Tool <- R6::R6Class(
         ~var, ~value,
         "name", self$name,
         "path", self$path %||% "<ignored>",
-        "files", as.character(nrow(self$files))
+        "files", as.character(nrow(self$files)),
+        "tidied", as.character(!private$needs_tidying)
       ) |>
         tidyr::unnest("value")
-      cat("#--- Tool ---#\n")
+      cat(glue("#--- {self$name} Tool ---#"))
       print(knitr::kable(res))
       invisible(self)
     },
@@ -122,7 +124,7 @@ Tool <- R6::R6Class(
     #' @param exclude (`character(n)`)\cr
     #' Files to exclude.
     #' @return The tibble of files with potentially removed rows.
-    .filter_files = function(include = NULL, exclude = NULL) {
+    filter_files = function(include = NULL, exclude = NULL) {
       f1 <- function(d, include = NULL, exclude = NULL) {
         assertthat::assert_that(
           is.null(include) || is.null(exclude),
@@ -149,13 +151,13 @@ Tool <- R6::R6Class(
     #' File type(s) to return (e.g. any, file, directory, symlink).
     #' See `fs::dir_info`.
     #' @return A tibble of file paths.
-    .list_files = function(type = "file") {
-      files_tbl <- self$.files_tbl
+    list_files = function(type = "file") {
+      files_tbl <- self$files_tbl
       assertthat::assert_that(!is.null(self$path) || !is.null(files_tbl))
       if (!is.null(files_tbl)) {
         assertthat::assert_that(is_files_tbl(files_tbl))
       }
-      patterns <- self$config$.raw_patterns()
+      patterns <- self$config$get_raw_patterns()
       files <- files_tbl %||% list_files_dir(self$path, type = type)
       res <- files |>
         dplyr::rowwise() |>
@@ -195,7 +197,7 @@ Tool <- R6::R6Class(
             "version",
             .data$prefix
           ),
-          schema = list(self$config$.raw_schema(.data$parser)),
+          schema = list(self$config$get_raw_schema(.data$parser)),
           tool_parser = glue("{self$name}_{.data$parser}")
         ) |>
         dplyr::ungroup() |>
@@ -239,7 +241,7 @@ Tool <- R6::R6Class(
       }
       version <- get_tbl_version_attr(x)
       assertthat::assert_that(!is.null(version), msg = "version can't be NULL.")
-      schema <- self$.tidy_schema(name, v = version)
+      schema <- self$get_tidy_schema(name, v = version)
       colnames(x) <- schema[["field"]]
       if (convert_types) {
         ctypes <- schema |>
@@ -291,15 +293,15 @@ Tool <- R6::R6Class(
     #' @param keep_raw (`logical(1)`)\cr
     #' Should the raw parsed tibbles be kept in the final output?
     #' @return self invisibly.
-    .tidy = function(tidy = TRUE, keep_raw = FALSE) {
+    tidy = function(tidy = TRUE, keep_raw = FALSE) {
       # if no tidying needed, early return
-      if (!self$needs_tidying) {
+      if (!private$needs_tidying) {
         return(invisible(self))
       }
       # if no files found, early return
       if (nrow(self$files) == 0) {
         self$tbls <- NULL
-        self$needs_tidying <- FALSE
+        private$needs_tidying <- FALSE
         return(invisible(self))
       }
       # if both FALSE, just return the file list
@@ -332,7 +334,7 @@ Tool <- R6::R6Class(
           dplyr::select(-"tidy")
       }
       self$tbls <- d
-      self$needs_tidying <- FALSE
+      private$needs_tidying <- FALSE
       return(invisible(self))
     },
     #' @description Write tidy tibbles.
@@ -345,10 +347,10 @@ Tool <- R6::R6Class(
     #' @param dbconn (`DBIConnection`)\cr
     #' Database connection object (see `DBI::dbConnect`).
     #' @return A tibble with the tidy data and their output location prefix.
-    .write = function(odir = ".", format = "tsv", id = NULL, dbconn = NULL) {
+    write = function(odir = ".", format = "tsv", id = NULL, dbconn = NULL) {
       odir <- normalizePath(odir)
       assertthat::assert_that(!is.null(id))
-      assertthat::assert_that(!self$needs_tidying, msg = "Did you forget to tidy?")
+      assertthat::assert_that(!private$needs_tidying, msg = "Did you forget to tidy?")
       if (is.null(self$tbls)) {
         # even though tidying is not needed, there must be no files detected
         # for tidying (and therefore writing). So return NULL.
@@ -370,9 +372,7 @@ Tool <- R6::R6Class(
             .data$parser == .data$tidy_name,
             .data$tool_parser,
             paste(.data$tool_parser, .data$tidy_name, sep = "_")
-          )
-        ) |>
-        dplyr::mutate(
+          ),
           fpfix = dplyr::if_else(
             format == "db",
             .data$prefix,
@@ -382,9 +382,7 @@ Tool <- R6::R6Class(
             format == "db",
             list(.data$tbl_name),
             list(NULL)
-          )
-        ) |>
-        dplyr::mutate(
+          ),
           out = list(
             nemo_write(
               d = .data$tidy_data,
@@ -423,9 +421,9 @@ Tool <- R6::R6Class(
     ) {
       # fmt: skip
       self$
-        .filter_files(include = include, exclude = exclude)$
-        .tidy()$
-        .write(
+        filter_files(include = include, exclude = exclude)$
+        tidy()$
+        write(
           odir = odir,
           format = format,
           id = id,
