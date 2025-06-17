@@ -6,7 +6,7 @@
 #' \dontrun{
 #' path <- here::here("nogit/oa_v2")
 #' lx <- Linx$new(path)
-#' lx$.tidy()
+#' lx$tidy()
 #' lx$tbls$tidy |>
 #'   purrr::set_names(lx$tbls$parser) |>
 #'   purrr::map(\(x) x[["data"]][[1]])
@@ -31,8 +31,8 @@ Linx <- R6::R6Class(
     #' File type(s) to return (e.g. any, file, directory, symlink).
     #' See `fs::dir_info`.
     #' @return A tibble of file paths.
-    .list_files = function(type = "file") {
-      res <- super$.list_files(type = type)
+    list_files = function(type = "file") {
+      res <- super$list_files(type = type)
       res |>
         dplyr::mutate(
           prefix = dplyr::if_else(

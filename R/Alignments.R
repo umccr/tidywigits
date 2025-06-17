@@ -47,7 +47,7 @@ Alignments <- R6::R6Class(
     #' Path to file.
     parse_markdup = function(x) {
       # handle two different sections
-      schema <- self$.raw_schema("markdup")
+      schema <- self$get_raw_schema("markdup")
       # first make sure colnames are as expected
       hdr1 <- file_hdr(x, comment = "#")
       hdr2 <- file_hdr(x, comment = "#", skip = 10)
@@ -84,7 +84,7 @@ Alignments <- R6::R6Class(
         x <- self$parse_markdup(x)
       }
       d <- x |> tibble::deframe()
-      schema <- self$.tidy_schema("markdup")
+      schema <- self$get_tidy_schema("markdup")
       schema_splitter <- which(schema$field == "SPLIT_HERE")
       s1 <- dplyr::slice(schema, 1:(schema_splitter - 1))
       s2 <- dplyr::slice(schema, (schema_splitter + 1):nrow(schema))

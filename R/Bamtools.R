@@ -36,8 +36,8 @@ Bamtools <- R6::R6Class(
         x <- self$parse_summary(x)
       }
       d <- x
-      schema1 <- self$.tidy_schema("summary", subtbl = "tbl1")
-      schema2 <- self$.tidy_schema("summary", subtbl = "tbl2")
+      schema1 <- self$get_tidy_schema("summary", subtbl = "tbl1")
+      schema2 <- self$get_tidy_schema("summary", subtbl = "tbl2")
       d1 <- d |>
         dplyr::select(!dplyr::contains("DepthCoverage_"))
       assertthat::assert_that(ncol(d1) == nrow(schema1))
@@ -61,7 +61,7 @@ Bamtools <- R6::R6Class(
     #' Path to file.
     parse_wgsmetrics = function(x) {
       # handle two different sections
-      schema <- self$.raw_schema("wgsmetrics")
+      schema <- self$get_raw_schema("wgsmetrics")
       # first make sure colnames are as expected
       hdr1 <- file_hdr(x, comment = "#")
       assertthat::assert_that(identical(hdr1, schema[["field"]]))
@@ -90,7 +90,7 @@ Bamtools <- R6::R6Class(
         x <- self$parse_wgsmetrics(x)
       }
       d <- x |> tibble::deframe()
-      schema <- self$.tidy_schema("wgsmetrics")
+      schema <- self$get_tidy_schema("wgsmetrics")
       colnames(d[["metrics"]]) <- schema[["field"]]
       enframe_data(d)
     },
@@ -190,7 +190,7 @@ Bamtools <- R6::R6Class(
         x <- self$parse_flagstats(x)
       }
       d <- x
-      schema <- self$.tidy_schema("flagstats")
+      schema <- self$get_tidy_schema("flagstats")
       assertthat::assert_that(identical(colnames(d), schema[["field"]]))
       list(flagstats = d) |>
         enframe_data()

@@ -40,7 +40,7 @@ Chord <- R6::R6Class(
     #' Path to file.
     parse_signatures = function(x) {
       hdr <- file_hdr(x)
-      schema <- self$.raw_schema("signatures") |>
+      schema <- self$get_raw_schema("signatures") |>
         tibble::deframe()
 
       # header contains sample column in latest version
@@ -69,7 +69,7 @@ Chord <- R6::R6Class(
           values_to = "count"
         ) |>
         dplyr::select("signature", "count")
-      schema <- self$.tidy_schema("signatures")
+      schema <- self$get_tidy_schema("signatures")
       assertthat::assert_that(identical(colnames(d), schema[["field"]]))
       list(signatures = d) |>
         enframe_data()
