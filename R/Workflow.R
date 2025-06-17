@@ -7,8 +7,8 @@
 #' path <- here::here("nogit/oa_v2")
 #' tools <- list(align = Alignments, sigs = Sigs)
 #' wf1 <- Workflow$new(name = "foo", path = path, tools = tools)
-#' wf1$.list_files()
-#' wf1$magic(
+#' wf1$list_files()
+#' wf1$nemofy(
 #'     odir = "nogit/test_data",
 #'     format = "parquet",
 #'     id = "run1"
@@ -19,7 +19,7 @@
 #'   dbname = "nemo",
 #'   user = "orcabus"
 #' )
-#' wf1$magic(
+#' wf1$nemofy(
 #'     format = "db",
 #'     id = "runABC",
 #'     dbconn = dbconn
@@ -73,9 +73,9 @@ Workflow <- R6::R6Class(
     #' Files to include.
     #' @param exclude (`character(n)`)\cr
     #' Files to exclude.
-    .filter_files = function(include = NULL, exclude = NULL) {
+    filter_files = function(include = NULL, exclude = NULL) {
       self$tools <- self$tools |>
-        purrr::map(\(x) x$.filter_files(include = include, exclude = exclude))
+        purrr::map(\(x) x$filter_files(include = include, exclude = exclude))
       invisible(self)
     },
     #' @description List files in given workflow directory.
@@ -83,9 +83,9 @@ Workflow <- R6::R6Class(
     #' File types(s) to return (e.g. any, file, directory, symlink).
     #' See `fs::dir_info`.
     #' @return A tibble with all files found for each Tool.
-    .list_files = function(type = "file") {
+    list_files = function(type = "file") {
       self$tools |>
-        purrr::map(\(x) x$.list_files(type = type)) |>
+        purrr::map(\(x) x$list_files(type = type)) |>
         dplyr::bind_rows()
     },
     #' @description Tidy Workflow files.
@@ -94,9 +94,9 @@ Workflow <- R6::R6Class(
     #' @param keep_raw (`logical(1)`)\cr
     #' Should the raw parsed tibbles be kept in the final output?
     #' @return self invisibly.
-    .tidy = function(tidy = TRUE, keep_raw = FALSE) {
+    tidy = function(tidy = TRUE, keep_raw = FALSE) {
       self$tools <- self$tools |>
-        purrr::map(\(x) x$.tidy(tidy = tidy, keep_raw = keep_raw))
+        purrr::map(\(x) x$tidy(tidy = tidy, keep_raw = keep_raw))
       invisible(self)
     },
     #' @description Write tidy tibbles.
@@ -109,12 +109,12 @@ Workflow <- R6::R6Class(
     #' @param dbconn (`DBIConnection`)\cr
     #' Database connection object (see `DBI::dbConnect`).
     #' @return A tibble with all tibbles written.
-    .write = function(odir = ".", format = "tsv", id = NULL, dbconn = NULL) {
+    write = function(odir = ".", format = "tsv", id = NULL, dbconn = NULL) {
       self$tools |>
-        purrr::map(\(x) x$.write(odir = odir, format = format, id = id, dbconn = dbconn)) |>
+        purrr::map(\(x) x$write(odir = odir, format = format, id = id, dbconn = dbconn)) |>
         dplyr::bind_rows()
     },
-    #' @description Magic.
+    #' @description Parse, filter, tidy and write files.
     #' @param odir (`character(1)`)\cr
     #' Directory path to output tidy files.
     #' @param format (`character(1)`)\cr
@@ -128,7 +128,7 @@ Workflow <- R6::R6Class(
     #' @param exclude (`character(n)`)\cr
     #' Files to exclude.
     #' @return A tibble with the tidy data and their output location prefix.
-    magic = function(
+    nemofy = function(
       odir = ".",
       format = "tsv",
       id = NULL,
@@ -138,9 +138,9 @@ Workflow <- R6::R6Class(
     ) {
       # fmt: skip
       self$
-        .filter_files(include = include, exclude = exclude)$
-        .tidy()$
-        .write(odir = odir, format = format, id = id, dbconn = dbconn)
+        filter_files(include = include, exclude = exclude)$
+        tidy()$
+        write(odir = odir, format = format, id = id, dbconn = dbconn)
     },
     #' @description Get raw schemas for all Tools.
     #' @return Tibble with names of tool and file, schema and its version.

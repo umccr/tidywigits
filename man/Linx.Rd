@@ -10,7 +10,7 @@ Linx file parsing and manipulation.
 \dontrun{
 path <- here::here("nogit/oa_v2")
 lx <- Linx$new(path)
-lx$.tidy()
+lx$tidy()
 lx$tbls$tidy |>
   purrr::set_names(lx$tbls$parser) |>
   purrr::map(\(x) x[["data"]][[1]])
@@ -23,7 +23,7 @@ lx$tbls$tidy |>
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-Linx-new}{\code{Linx$new()}}
-\item \href{#method-Linx-.list_files}{\code{Linx$.list_files()}}
+\item \href{#method-Linx-list_files}{\code{Linx$list_files()}}
 \item \href{#method-Linx-parse_breakends}{\code{Linx$parse_breakends()}}
 \item \href{#method-Linx-tidy_breakends}{\code{Linx$tidy_breakends()}}
 \item \href{#method-Linx-parse_clusters}{\code{Linx$parse_clusters()}}
@@ -61,14 +61,14 @@ lx$tbls$tidy |>
 <details><summary>Inherited methods</summary>
 <ul>
 <li><span class="pkg-link" data-pkg="tidywigits" data-topic="Tool" data-id=".eval_func"><a href='../../tidywigits/html/Tool.html#method-Tool-.eval_func'><code>tidywigits::Tool$.eval_func()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="tidywigits" data-topic="Tool" data-id=".filter_files"><a href='../../tidywigits/html/Tool.html#method-Tool-.filter_files'><code>tidywigits::Tool$.filter_files()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="tidywigits" data-topic="Tool" data-id=".parse_file"><a href='../../tidywigits/html/Tool.html#method-Tool-.parse_file'><code>tidywigits::Tool$.parse_file()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="tidywigits" data-topic="Tool" data-id=".parse_file_nohead"><a href='../../tidywigits/html/Tool.html#method-Tool-.parse_file_nohead'><code>tidywigits::Tool$.parse_file_nohead()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="tidywigits" data-topic="Tool" data-id=".tidy"><a href='../../tidywigits/html/Tool.html#method-Tool-.tidy'><code>tidywigits::Tool$.tidy()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="tidywigits" data-topic="Tool" data-id=".tidy_file"><a href='../../tidywigits/html/Tool.html#method-Tool-.tidy_file'><code>tidywigits::Tool$.tidy_file()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="tidywigits" data-topic="Tool" data-id=".write"><a href='../../tidywigits/html/Tool.html#method-Tool-.write'><code>tidywigits::Tool$.write()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="tidywigits" data-topic="Tool" data-id="magic"><a href='../../tidywigits/html/Tool.html#method-Tool-magic'><code>tidywigits::Tool$magic()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="tidywigits" data-topic="Tool" data-id="filter_files"><a href='../../tidywigits/html/Tool.html#method-Tool-filter_files'><code>tidywigits::Tool$filter_files()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="tidywigits" data-topic="Tool" data-id="nemofy"><a href='../../tidywigits/html/Tool.html#method-Tool-nemofy'><code>tidywigits::Tool$nemofy()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="tidywigits" data-topic="Tool" data-id="print"><a href='../../tidywigits/html/Tool.html#method-Tool-print'><code>tidywigits::Tool$print()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="tidywigits" data-topic="Tool" data-id="tidy"><a href='../../tidywigits/html/Tool.html#method-Tool-tidy'><code>tidywigits::Tool$tidy()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="tidywigits" data-topic="Tool" data-id="write"><a href='../../tidywigits/html/Tool.html#method-Tool-write'><code>tidywigits::Tool$write()</code></a></span></li>
 </ul>
 </details>
 }}
@@ -95,13 +95,13 @@ Tibble of files from \code{list_files_dir}.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Linx-.list_files"></a>}}
-\if{latex}{\out{\hypertarget{method-Linx-.list_files}{}}}
-\subsection{Method \code{.list_files()}}{
+\if{html}{\out{<a id="method-Linx-list_files"></a>}}
+\if{latex}{\out{\hypertarget{method-Linx-list_files}{}}}
+\subsection{Method \code{list_files()}}{
 List files in given linx directory. Overwrites parent class
 to handle germline LINX files.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Linx$.list_files(type = "file")}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Linx$list_files(type = "file")}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{

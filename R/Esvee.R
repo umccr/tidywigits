@@ -8,7 +8,7 @@
 #'   "nogit"
 #' )
 #' sv <- Esvee$new(path)
-#' sv$.tidy()
+#' sv$tidy()
 #' sv$tbls$tidy |>
 #'   purrr::set_names(sv$tbls$parser) |>
 #'   purrr::map(\(x) x[["data"]][[1]])

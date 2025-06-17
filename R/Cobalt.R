@@ -50,7 +50,7 @@ Cobalt <- R6::R6Class(
       assertthat::assert_that(
         identical(names(d), c("sample_stats", "bucket_stats"))
       )
-      schema <- self$.tidy_schema("gcmed")
+      schema <- self$get_tidy_schema("gcmed")
       colnames(d[["bucket_stats"]]) <- schema[["field"]]
       colnames(d[["sample_stats"]]) <- c("mean", "median")
       enframe_data(d)

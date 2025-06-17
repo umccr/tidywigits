@@ -11,7 +11,7 @@ Oncoanalyser file parsing and manipulation.
 path <- here::here("nogit/oa_v2")
 oa <- Oncoanalyser$new(path)
 x <-
-  oa$magic(
+  oa$nemofy(
     odir = "nogit/test_data",
     format = "parquet",
     id = "run1"
@@ -22,7 +22,7 @@ dbconn <- DBI::dbConnect(
   user = "orcabus"
 )
 x <-
-  oa$magic(
+  oa$nemofy(
     format = "db",
     id = "runABC456",
     dbconn = dbconn
@@ -42,15 +42,15 @@ x <-
 \if{html}{\out{
 <details><summary>Inherited methods</summary>
 <ul>
-<li><span class="pkg-link" data-pkg="tidywigits" data-topic="Workflow" data-id=".filter_files"><a href='../../tidywigits/html/Workflow.html#method-Workflow-.filter_files'><code>tidywigits::Workflow$.filter_files()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="tidywigits" data-topic="Workflow" data-id=".list_files"><a href='../../tidywigits/html/Workflow.html#method-Workflow-.list_files'><code>tidywigits::Workflow$.list_files()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="tidywigits" data-topic="Workflow" data-id=".tidy"><a href='../../tidywigits/html/Workflow.html#method-Workflow-.tidy'><code>tidywigits::Workflow$.tidy()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="tidywigits" data-topic="Workflow" data-id=".write"><a href='../../tidywigits/html/Workflow.html#method-Workflow-.write'><code>tidywigits::Workflow$.write()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="tidywigits" data-topic="Workflow" data-id="filter_files"><a href='../../tidywigits/html/Workflow.html#method-Workflow-filter_files'><code>tidywigits::Workflow$filter_files()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="tidywigits" data-topic="Workflow" data-id="get_raw_schemas_all"><a href='../../tidywigits/html/Workflow.html#method-Workflow-get_raw_schemas_all'><code>tidywigits::Workflow$get_raw_schemas_all()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="tidywigits" data-topic="Workflow" data-id="get_tbls"><a href='../../tidywigits/html/Workflow.html#method-Workflow-get_tbls'><code>tidywigits::Workflow$get_tbls()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="tidywigits" data-topic="Workflow" data-id="get_tidy_schemas_all"><a href='../../tidywigits/html/Workflow.html#method-Workflow-get_tidy_schemas_all'><code>tidywigits::Workflow$get_tidy_schemas_all()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="tidywigits" data-topic="Workflow" data-id="magic"><a href='../../tidywigits/html/Workflow.html#method-Workflow-magic'><code>tidywigits::Workflow$magic()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="tidywigits" data-topic="Workflow" data-id="list_files"><a href='../../tidywigits/html/Workflow.html#method-Workflow-list_files'><code>tidywigits::Workflow$list_files()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="tidywigits" data-topic="Workflow" data-id="nemofy"><a href='../../tidywigits/html/Workflow.html#method-Workflow-nemofy'><code>tidywigits::Workflow$nemofy()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="tidywigits" data-topic="Workflow" data-id="print"><a href='../../tidywigits/html/Workflow.html#method-Workflow-print'><code>tidywigits::Workflow$print()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="tidywigits" data-topic="Workflow" data-id="tidy"><a href='../../tidywigits/html/Workflow.html#method-Workflow-tidy'><code>tidywigits::Workflow$tidy()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="tidywigits" data-topic="Workflow" data-id="write"><a href='../../tidywigits/html/Workflow.html#method-Workflow-write'><code>tidywigits::Workflow$write()</code></a></span></li>
 </ul>
 </details>
 }}

@@ -2,14 +2,20 @@
 
 # File R/Config.R: @testexamples
 
-test_that("Function Config() @ L16", {
+test_that("Function Config() @ L22", {
   
   tool <- "isofox"
   conf <- Config$new(tool)
-  conf$.raw_schemas_all()
-  conf$.tidy_schemas_all()
-  conf$.tidy_descriptions()
+  conf$get_raw_patterns()
+  conf$get_raw_versions()
+  conf$get_raw_descriptions()
+  conf$get_raw_schemas_all()
+  conf$get_raw_schema("summary")
+  conf$are_raw_schemas_valid()
+  conf$get_tidy_descriptions()
+  conf$get_tidy_schemas_all()
+  conf$get_tidy_schema("summary")
   
-  expect_true(conf$.raw_schemas_valid())
+  expect_true(conf$are_raw_schemas_valid())
 })
 

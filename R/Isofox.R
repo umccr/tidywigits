@@ -8,7 +8,7 @@
 #'   "nogit"
 #' )
 #' i <- Isofox$new(path)
-#' i$.tidy()
+#' i$tidy()
 #' i$tbls$tidy |>
 #'   purrr::set_names(i$tbls$parser) |>
 #'   purrr::map(\(x) x[["data"]][[1]])

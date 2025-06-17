@@ -11,8 +11,8 @@ A Workflow is composed of multiple Tools.
 path <- here::here("nogit/oa_v2")
 tools <- list(align = Alignments, sigs = Sigs)
 wf1 <- Workflow$new(name = "foo", path = path, tools = tools)
-wf1$.list_files()
-wf1$magic(
+wf1$list_files()
+wf1$nemofy(
     odir = "nogit/test_data",
     format = "parquet",
     id = "run1"
@@ -23,7 +23,7 @@ dbconn <- DBI::dbConnect(
   dbname = "nemo",
   user = "orcabus"
 )
-wf1$magic(
+wf1$nemofy(
     format = "db",
     id = "runABC",
     dbconn = dbconn
@@ -50,11 +50,11 @@ List of Tools that compose a Workflow.}
 \itemize{
 \item \href{#method-Workflow-new}{\code{Workflow$new()}}
 \item \href{#method-Workflow-print}{\code{Workflow$print()}}
-\item \href{#method-Workflow-.filter_files}{\code{Workflow$.filter_files()}}
-\item \href{#method-Workflow-.list_files}{\code{Workflow$.list_files()}}
-\item \href{#method-Workflow-.tidy}{\code{Workflow$.tidy()}}
-\item \href{#method-Workflow-.write}{\code{Workflow$.write()}}
-\item \href{#method-Workflow-magic}{\code{Workflow$magic()}}
+\item \href{#method-Workflow-filter_files}{\code{Workflow$filter_files()}}
+\item \href{#method-Workflow-list_files}{\code{Workflow$list_files()}}
+\item \href{#method-Workflow-tidy}{\code{Workflow$tidy()}}
+\item \href{#method-Workflow-write}{\code{Workflow$write()}}
+\item \href{#method-Workflow-nemofy}{\code{Workflow$nemofy()}}
 \item \href{#method-Workflow-get_raw_schemas_all}{\code{Workflow$get_raw_schemas_all()}}
 \item \href{#method-Workflow-get_tidy_schemas_all}{\code{Workflow$get_tidy_schemas_all()}}
 \item \href{#method-Workflow-get_tbls}{\code{Workflow$get_tbls()}}
@@ -103,12 +103,12 @@ Print details about the File.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Workflow-.filter_files"></a>}}
-\if{latex}{\out{\hypertarget{method-Workflow-.filter_files}{}}}
-\subsection{Method \code{.filter_files()}}{
+\if{html}{\out{<a id="method-Workflow-filter_files"></a>}}
+\if{latex}{\out{\hypertarget{method-Workflow-filter_files}{}}}
+\subsection{Method \code{filter_files()}}{
 Filter files in given workflow directory.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Workflow$.filter_files(include = NULL, exclude = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Workflow$filter_files(include = NULL, exclude = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -124,12 +124,12 @@ Files to exclude.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Workflow-.list_files"></a>}}
-\if{latex}{\out{\hypertarget{method-Workflow-.list_files}{}}}
-\subsection{Method \code{.list_files()}}{
+\if{html}{\out{<a id="method-Workflow-list_files"></a>}}
+\if{latex}{\out{\hypertarget{method-Workflow-list_files}{}}}
+\subsection{Method \code{list_files()}}{
 List files in given workflow directory.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Workflow$.list_files(type = "file")}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Workflow$list_files(type = "file")}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -146,12 +146,12 @@ A tibble with all files found for each Tool.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Workflow-.tidy"></a>}}
-\if{latex}{\out{\hypertarget{method-Workflow-.tidy}{}}}
-\subsection{Method \code{.tidy()}}{
+\if{html}{\out{<a id="method-Workflow-tidy"></a>}}
+\if{latex}{\out{\hypertarget{method-Workflow-tidy}{}}}
+\subsection{Method \code{tidy()}}{
 Tidy Workflow files.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Workflow$.tidy(tidy = TRUE, keep_raw = FALSE)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Workflow$tidy(tidy = TRUE, keep_raw = FALSE)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -170,12 +170,12 @@ self invisibly.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Workflow-.write"></a>}}
-\if{latex}{\out{\hypertarget{method-Workflow-.write}{}}}
-\subsection{Method \code{.write()}}{
+\if{html}{\out{<a id="method-Workflow-write"></a>}}
+\if{latex}{\out{\hypertarget{method-Workflow-write}{}}}
+\subsection{Method \code{write()}}{
 Write tidy tibbles.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Workflow$.write(odir = ".", format = "tsv", id = NULL, dbconn = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Workflow$write(odir = ".", format = "tsv", id = NULL, dbconn = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -200,12 +200,12 @@ A tibble with all tibbles written.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Workflow-magic"></a>}}
-\if{latex}{\out{\hypertarget{method-Workflow-magic}{}}}
-\subsection{Method \code{magic()}}{
-Magic.
+\if{html}{\out{<a id="method-Workflow-nemofy"></a>}}
+\if{latex}{\out{\hypertarget{method-Workflow-nemofy}{}}}
+\subsection{Method \code{nemofy()}}{
+Parse, filter, tidy and write files.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Workflow$magic(
+\if{html}{\out{<div class="r">}}\preformatted{Workflow$nemofy(
   odir = ".",
   format = "tsv",
   id = NULL,

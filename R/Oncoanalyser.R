@@ -7,7 +7,7 @@
 #' path <- here::here("nogit/oa_v2")
 #' oa <- Oncoanalyser$new(path)
 #' x <-
-#'   oa$magic(
+#'   oa$nemofy(
 #'     odir = "nogit/test_data",
 #'     format = "parquet",
 #'     id = "run1"
@@ -18,7 +18,7 @@
 #'   user = "orcabus"
 #' )
 #' x <-
-#'   oa$magic(
+#'   oa$nemofy(
 #'     format = "db",
 #'     id = "runABC456",
 #'     dbconn = dbconn

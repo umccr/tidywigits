@@ -100,7 +100,7 @@ file_hdr <- function(x, delim = "\t", n_max = 0, ...) {
 #' pname <- "viscn"
 #' cnames <- file_hdr(x)
 #' conf <- Config$new("linx")
-#' schemas_all <- conf$.raw_schemas_all()
+#' schemas_all <- conf$get_raw_schemas_all()
 #' schema_guess(pname, cnames, schemas_all)
 #' }
 schema_guess <- function(pname, cnames, schemas_all) {

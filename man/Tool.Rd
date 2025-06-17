@@ -13,18 +13,18 @@ path <- here::here(
 )
 # demo filter + tidy
 a <- Alignments$new(path = path)$
-  .filter_files(exclude = "alignments_dupfreq")$
-  .tidy(keep_raw = TRUE)
+  filter_files(exclude = "alignments_dupfreq")$
+  tidy(keep_raw = TRUE)
 a$tbls
 a$files
-a$.list_files()
+a$list_files()
 lx <- Linx$new(path)
 dbconn <- DBI::dbConnect(
   drv = RPostgres::Postgres(),
   dbname = "nemo",
   user = "orcabus"
 )
-lx$magic(
+lx$nemofy(
     odir = "nogit/test_data",
     #format =
     format = "db", # "parquet",
@@ -55,23 +55,19 @@ Tibble of files matching available Tool patterns.}
 \item{\code{tbls}}{(\code{tibble()})\cr
 Tibble of tidy tibbles.}
 
-\item{\code{needs_tidying}}{(\code{logical(1)})\cr
-Do files need to be tidied? Used when no files are detected, so we can
-use downstream as a bypass.}
-
 \item{\code{raw_schemas_all}}{(\code{tibble()})\cr
 All raw schemas for tool.}
 
 \item{\code{tidy_schemas_all}}{(\code{tibble()})\cr
 All tidy schemas for tool.}
 
-\item{\code{.tidy_schema}}{(\verb{function()})\cr
+\item{\code{get_tidy_schema}}{(\verb{function()})\cr
 Get specific tidy schema.}
 
-\item{\code{.raw_schema}}{(\verb{function()})\cr
+\item{\code{get_raw_schema}}{(\verb{function()})\cr
 Get specific raw schema.}
 
-\item{\code{.files_tbl}}{(\code{tibble(n)})\cr
+\item{\code{files_tbl}}{(\code{tibble(n)})\cr
 Tibble of files from \code{list_files_dir}.}
 }
 \if{html}{\out{</div>}}
@@ -81,15 +77,15 @@ Tibble of files from \code{list_files_dir}.}
 \itemize{
 \item \href{#method-Tool-new}{\code{Tool$new()}}
 \item \href{#method-Tool-print}{\code{Tool$print()}}
-\item \href{#method-Tool-.filter_files}{\code{Tool$.filter_files()}}
-\item \href{#method-Tool-.list_files}{\code{Tool$.list_files()}}
+\item \href{#method-Tool-filter_files}{\code{Tool$filter_files()}}
+\item \href{#method-Tool-list_files}{\code{Tool$list_files()}}
 \item \href{#method-Tool-.parse_file}{\code{Tool$.parse_file()}}
 \item \href{#method-Tool-.tidy_file}{\code{Tool$.tidy_file()}}
 \item \href{#method-Tool-.parse_file_nohead}{\code{Tool$.parse_file_nohead()}}
 \item \href{#method-Tool-.eval_func}{\code{Tool$.eval_func()}}
-\item \href{#method-Tool-.tidy}{\code{Tool$.tidy()}}
-\item \href{#method-Tool-.write}{\code{Tool$.write()}}
-\item \href{#method-Tool-magic}{\code{Tool$magic()}}
+\item \href{#method-Tool-tidy}{\code{Tool$tidy()}}
+\item \href{#method-Tool-write}{\code{Tool$write()}}
+\item \href{#method-Tool-nemofy}{\code{Tool$nemofy()}}
 \item \href{#method-Tool-clone}{\code{Tool$clone()}}
 }
 }
@@ -139,12 +135,12 @@ self invisibly.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Tool-.filter_files"></a>}}
-\if{latex}{\out{\hypertarget{method-Tool-.filter_files}{}}}
-\subsection{Method \code{.filter_files()}}{
+\if{html}{\out{<a id="method-Tool-filter_files"></a>}}
+\if{latex}{\out{\hypertarget{method-Tool-filter_files}{}}}
+\subsection{Method \code{filter_files()}}{
 Filter files in given tool directory.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Tool$.filter_files(include = NULL, exclude = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Tool$filter_files(include = NULL, exclude = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -163,12 +159,12 @@ The tibble of files with potentially removed rows.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Tool-.list_files"></a>}}
-\if{latex}{\out{\hypertarget{method-Tool-.list_files}{}}}
-\subsection{Method \code{.list_files()}}{
+\if{html}{\out{<a id="method-Tool-list_files"></a>}}
+\if{latex}{\out{\hypertarget{method-Tool-list_files}{}}}
+\subsection{Method \code{list_files()}}{
 List files in given tool directory.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Tool$.list_files(type = "file")}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Tool$list_files(type = "file")}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -295,12 +291,12 @@ The evaluated function.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Tool-.tidy"></a>}}
-\if{latex}{\out{\hypertarget{method-Tool-.tidy}{}}}
-\subsection{Method \code{.tidy()}}{
+\if{html}{\out{<a id="method-Tool-tidy"></a>}}
+\if{latex}{\out{\hypertarget{method-Tool-tidy}{}}}
+\subsection{Method \code{tidy()}}{
 Tidy a list of files.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Tool$.tidy(tidy = TRUE, keep_raw = FALSE)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Tool$tidy(tidy = TRUE, keep_raw = FALSE)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -319,12 +315,12 @@ self invisibly.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Tool-.write"></a>}}
-\if{latex}{\out{\hypertarget{method-Tool-.write}{}}}
-\subsection{Method \code{.write()}}{
+\if{html}{\out{<a id="method-Tool-write"></a>}}
+\if{latex}{\out{\hypertarget{method-Tool-write}{}}}
+\subsection{Method \code{write()}}{
 Write tidy tibbles.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Tool$.write(odir = ".", format = "tsv", id = NULL, dbconn = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Tool$write(odir = ".", format = "tsv", id = NULL, dbconn = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -349,12 +345,12 @@ A tibble with the tidy data and their output location prefix.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Tool-magic"></a>}}
-\if{latex}{\out{\hypertarget{method-Tool-magic}{}}}
-\subsection{Method \code{magic()}}{
-Magic.
+\if{html}{\out{<a id="method-Tool-nemofy"></a>}}
+\if{latex}{\out{\hypertarget{method-Tool-nemofy}{}}}
+\subsection{Method \code{nemofy()}}{
+Parse, filter, tidy and write files.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Tool$magic(
+\if{html}{\out{<div class="r">}}\preformatted{Tool$nemofy(
   odir = ".",
   format = "tsv",
   id = NULL,

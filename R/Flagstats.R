@@ -119,7 +119,7 @@ Flagstats <- R6::R6Class(
         x <- self$parse_flagstats(x)
       }
       d <- x
-      schema <- self$.tidy_schema("flagstats")
+      schema <- self$get_tidy_schema("flagstats")
       assertthat::assert_that(identical(colnames(d), schema[["field"]]))
       list(flagstats = d) |>
         enframe_data()
