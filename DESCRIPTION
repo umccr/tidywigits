@@ -18,21 +18,17 @@ License: MIT + file LICENSE
 Depends:
     R (>= 4.4)
 Imports:
-    argparse,
     arrow,
     assertthat,
-    cli,
     DBI,
     dplyr,
     fs,
-    ggplot2,
     glue,
     purrr,
     RPostgres,
     R6,
     readr,
     rlang,
-    scales,
     tibble,
     tidyr,
     yaml

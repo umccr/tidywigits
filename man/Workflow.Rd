@@ -196,7 +196,7 @@ Database connection object (see \code{DBI::dbConnect}).}
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
-A tibble with all tibbles written.
+A tibble with the tidy data and their output location prefix.
 }
 }
 \if{html}{\out{<hr>}}

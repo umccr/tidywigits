@@ -108,7 +108,7 @@ Workflow <- R6::R6Class(
     #' ID to use for the dataset (e.g. `wfrid.123`, `prid.456`).
     #' @param dbconn (`DBIConnection`)\cr
     #' Database connection object (see `DBI::dbConnect`).
-    #' @return A tibble with all tibbles written.
+    #' @return A tibble with the tidy data and their output location prefix.
     write = function(odir = ".", format = "tsv", id = NULL, dbconn = NULL) {
       self$tools |>
         purrr::map(\(x) x$write(odir = odir, format = format, id = id, dbconn = dbconn)) |>
