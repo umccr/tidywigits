@@ -213,3 +213,11 @@ schema_type_remap <- function(x) {
 enframe_data <- function(x) {
   tibble::enframe(x, value = "data")
 }
+
+#' Print current timestamp for logging
+#'
+#' @return Current timestamp as character.
+#' @export
+date_log <- function() {
+  as.character(glue('[{format(Sys.time(), "%Y-%m-%dT%H:%M:%S%Z")}]'))
+}
