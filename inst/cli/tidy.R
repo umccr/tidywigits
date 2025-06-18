@@ -1,9 +1,10 @@
 # fmt: skip
 tidy_add_args <- function(subp) {
+  fmts <- nemo_out_formats() |> glue::glue_collapse(sep = ", ")
   tidy <- subp$add_parser("tidy", help = "Tidy WiGiTS Workflow Outputs")
   tidy$add_argument("-d", "--in_dir", help = glue("{emoji('snail')} Input directory."), required = TRUE)
   tidy$add_argument("-o", "--out_dir", help = glue("{emoji('rocket')} Output directory."))
-  tidy$add_argument("-f", "--format", help = glue("{emoji('art')} Format of output (def: %(default)s)."), default = "parquet")
+  tidy$add_argument("-f", "--format", help = glue("{emoji('art')} Format of output (def: %(default)s). Choices: {fmts}"), default = "parquet")
   tidy$add_argument("-i", "--id", help = glue("{emoji('triangular_flag_on_post')} ID to use for this run."), required = TRUE)
   tidy$add_argument("--dbname", help = glue("{emoji('dog')} Database name (def: %(default)s)."), default = "nemo")
   tidy$add_argument("--dbuser", help = glue("{emoji('turtle')} Database user (def: %(default)s)."), default = "orcabus")
@@ -31,6 +32,7 @@ tidy_parse_args <- function(args) {
 }
 
 nemo_tidy <- function(in_dir, out_dir, out_format, id, dbname, dbuser) {
+  tidywigits::valid_out_fmt(out_format)
   dbconn <- NULL
   if (out_format == "db") {
     dbconn <- DBI::dbConnect(

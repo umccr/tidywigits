@@ -26,7 +26,6 @@ dbconn <- DBI::dbConnect(
 )
 lx$nemofy(
     odir = "nogit/test_data",
-    #format =
     format = "db", # "parquet",
     id = "run2",
     dbconn = dbconn,
