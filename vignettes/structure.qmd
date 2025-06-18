@@ -94,7 +94,7 @@ File descriptions based on the Hartwig documentation.
 
 ```{r}
 #| label: purple_config_raw_descriptions
-conf$.raw_descriptions() |>
+conf$get_raw_descriptions() |>
   knitr::kable(caption = glue("{toolu} raw file descriptions."))
 ```
 
@@ -106,7 +106,7 @@ character.
 
 ```{r}
 #| label: purple_config_raw_patterns
-conf$.raw_patterns() |>
+conf$get_raw_patterns() |>
   knitr::kable(caption = glue("{toolu} raw file patterns."))
 ```
 
@@ -121,7 +121,7 @@ version of the tool that generated a file with a different schema.
 
 ```{r}
 #| label: purple_config_raw_versions
-conf$.raw_versions() |>
+conf$get_raw_versions() |>
   knitr::kable(caption = glue("{toolu} raw file versions."))
 ```
 
@@ -138,7 +138,7 @@ for each input file (just showing top few below):
 ```{r}
 #| label: purple_config_raw_schemas1
 #| results: asis
-s <- conf$.raw_schemas_all()
+s <- conf$get_raw_schemas_all()
 for (nm in s[["name"]]) {
   cat(glue("##### {nm}  \n\n"))
   cat("\n\n")
@@ -171,7 +171,7 @@ Tidy descriptions are the same as the raw descriptions for now.
 
 ```{r}
 #| label: purple_config_tidy_descriptions
-conf$.tidy_descriptions() |>
+conf$get_tidy_descriptions() |>
   knitr::kable(caption = glue("{toolu} tidy file descriptions."))
 ```
 
@@ -184,7 +184,7 @@ conf$.tidy_descriptions() |>
 ```{r}
 #| label: purple_config_tidy_schemas1
 #| results: asis
-s <- conf$.tidy_schemas_all()
+s <- conf$get_tidy_schemas_all()
 for (nm in s[["name"]]) {
   cat(glue("##### {nm}  \n\n"))
   cat("\n\n")

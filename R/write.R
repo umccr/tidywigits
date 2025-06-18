@@ -85,10 +85,18 @@ nemo_write <- function(d, fpfix = NULL, format = "tsv", id = NULL, dbconn = NULL
 #' expect_error(valid_out_fmt(c("tsv", "csv")))
 #' @export
 valid_out_fmt <- function(x) {
-  format_choices <- c("tsv", "csv", "parquet", "rds", "db")
+  format_choices <- nemo_out_formats()
   y <- glue::glue_collapse(format_choices, sep = ", ", last = " or ")
   assertthat::assert_that(
-    is.null(x) | (length(x) == 1 && x %in% format_choices),
-    msg = glue("Output format should be one of {y}, _or_ NULL.")
+    rlang::is_scalar_character(x) && x %in% format_choices,
+    msg = glue("Output format should be _one_ of {y}.")
   )
+}
+
+#' Output Formats Supported
+#'
+#' @return Character vector of supported output formats.
+#' @export
+nemo_out_formats <- function() {
+  c("parquet", "db", "tsv", "csv", "rds")
 }
