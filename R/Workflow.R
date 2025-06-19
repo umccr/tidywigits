@@ -83,7 +83,7 @@ Workflow <- R6::R6Class(
     #' File types(s) to return (e.g. any, file, directory, symlink).
     #' See `fs::dir_info`.
     #' @return A tibble with all files found for each Tool.
-    list_files = function(type = "file") {
+    list_files = function(type = c("file", "symlink")) {
       self$tools |>
         purrr::map(\(x) x$list_files(type = type)) |>
         dplyr::bind_rows()
