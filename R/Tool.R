@@ -141,9 +141,12 @@ Tool <- R6::R6Class(
         }
         d
       }
+      if (nrow(self$files) == 0) {
+        return(invisible(self))
+      }
       self$files <- self$files |>
         f1(include = include, exclude = exclude)
-      invisible(self)
+      return(invisible(self))
     },
     #' @description List files in given tool directory.
     #' @param type (`character(1)`)\cr

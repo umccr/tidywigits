@@ -129,7 +129,7 @@ Files to exclude.}
 \subsection{Method \code{list_files()}}{
 List files in given workflow directory.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Workflow$list_files(type = "file")}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Workflow$list_files(type = c("file", "symlink"))}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{

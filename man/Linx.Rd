@@ -10,10 +10,13 @@ Linx file parsing and manipulation.
 \dontrun{
 path <- here::here("nogit/oa_v2")
 lx <- Linx$new(path)
+lx$list_files()
 lx$tidy()
 lx$tbls$tidy |>
   purrr::set_names(lx$tbls$parser) |>
   purrr::map(\(x) x[["data"]][[1]])
+
+lx2 <- Linx$new(file.path(path, "amber")) # returns 0
 }
 }
 \section{Super class}{

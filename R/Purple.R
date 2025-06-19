@@ -36,6 +36,9 @@ Purple <- R6::R6Class(
     #' @return A tibble of file paths.
     list_files = function(type = "file") {
       res <- super$list_files(type = type)
+      if (nrow(res) == 0) {
+        return(res)
+      }
       res |>
         dplyr::mutate(
           prefix = dplyr::if_else(
