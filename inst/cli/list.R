@@ -9,7 +9,6 @@ list_parse_args <- function(args) {
   list_args <- list(
     in_dir = args$in_dir
   )
-  do.call(nemo_list, list_args)
   # list run
   if (args$quiet) {
     res <- suppressMessages(do.call(nemo_list, list_args))
@@ -23,6 +22,5 @@ nemo_list <- function(in_dir) {
   d <- oa$list_files()
   res <- d |>
     dplyr::select("tool_parser", "prefix", "bname", "size", "lastmodified", "path")
-  readr::write_csv(res, stdout())
-  return(invisible(res))
+  readr::write_tsv(res, stdout())
 }
