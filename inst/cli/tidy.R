@@ -2,7 +2,7 @@
 tidy_add_args <- function(subp) {
   fmts <- nemo_out_formats() |> glue::glue_collapse(sep = ", ")
   tidy <- subp$add_parser("tidy", help = "Tidy WiGiTS Workflow Outputs")
-  tidy$add_argument("-d", "--in_dir", help = glue("{emoji('snail')} Input directory."), required = TRUE)
+  tidy$add_argument("-d", "--in_dir", help = glue("{emoji('ambulance')} Input directory."), required = TRUE)
   tidy$add_argument("-o", "--out_dir", help = glue("{emoji('rocket')} Output directory."))
   tidy$add_argument("-f", "--format", help = glue("{emoji('art')} Format of output (def: %(default)s). Choices: {fmts}"), default = "parquet")
   tidy$add_argument("-i", "--id", help = glue("{emoji('triangular_flag_on_post')} ID to use for this run."), required = TRUE)
@@ -25,9 +25,9 @@ tidy_parse_args <- function(args) {
 
   # tidy run
   if (args$quiet) {
-    rds_obj <- suppressMessages(do.call(nemo_tidy, tidy_args))
+    res <- suppressMessages(do.call(nemo_tidy, tidy_args))
   } else {
-    rds_obj <- do.call(nemo_tidy, tidy_args)
+    res <- do.call(nemo_tidy, tidy_args)
   }
 }
 

@@ -21,14 +21,18 @@ subparser_name <- "subparser_name"
 subp <- p$add_subparsers(help = "sub-command help", dest = subparser_name)
 
 source(system.file("cli/tidy.R", package = pkg))
+source(system.file("cli/list.R", package = pkg))
 
 tidy_add_args(subp)
+list_add_args(subp)
 args <- p$parse_args()
 
 if (length(args$subparser_name) == 0) {
   p$print_help()
 } else if (args$subparser_name == "tidy") {
   tidy_parse_args(args)
+} else if (args$subparser_name == "list") {
+  list_parse_args(args)
 } else {
   cli::cli_alert_danger("Need to specify 'tidy' in the cli...")
 }
