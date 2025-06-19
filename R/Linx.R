@@ -6,10 +6,13 @@
 #' \dontrun{
 #' path <- here::here("nogit/oa_v2")
 #' lx <- Linx$new(path)
+#' lx$list_files()
 #' lx$tidy()
 #' lx$tbls$tidy |>
 #'   purrr::set_names(lx$tbls$parser) |>
 #'   purrr::map(\(x) x[["data"]][[1]])
+#'
+#' lx2 <- Linx$new(file.path(path, "amber")) # returns 0
 #' }
 #' @export
 Linx <- R6::R6Class(
@@ -33,6 +36,9 @@ Linx <- R6::R6Class(
     #' @return A tibble of file paths.
     list_files = function(type = "file") {
       res <- super$list_files(type = type)
+      if (nrow(res) == 0) {
+        return(res)
+      }
       res |>
         dplyr::mutate(
           prefix = dplyr::if_else(
