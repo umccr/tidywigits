@@ -66,7 +66,7 @@ File <- R6::R6Class(
         "prefix", self$prefix,
         "size", as.character(self$size)
       )
-      cat("#--- File ---#\n")
+      cat(glue("#--- File {self$bname} ---#"))
       print(knitr::kable(res))
       invisible(self)
     }

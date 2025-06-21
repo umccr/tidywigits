@@ -113,7 +113,7 @@ Tool <- R6::R6Class(
         "tidied", as.character(!private$needs_tidying)
       ) |>
         tidyr::unnest("value")
-      cat(glue("#--- {self$name} Tool ---#"))
+      cat(glue("#--- Tool {self$name} ---#"))
       print(knitr::kable(res))
       invisible(self)
     },
