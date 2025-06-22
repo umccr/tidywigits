@@ -34,7 +34,7 @@ tidy:
               'average coverage of the viral genome as reported by VIRUSBreakend
               ("meanDepth")'
           - field: 'expected_clonal_coverage'
-            type: 'float'
+            type: 'char'
             description:
               'expected coverage assuming the virus is clonally integrated once
               in the tumor DNA'
@@ -79,7 +79,7 @@ tidy:
               'average coverage of the viral genome as reported by VIRUSBreakend
               ("meanDepth")'
           - field: 'expected_clonal_coverage'
-            type: 'float'
+            type: 'char'
             description:
               'expected coverage assuming the virus is clonally integrated once
               in the tumor DNA'
