@@ -58,7 +58,7 @@ Config <- R6::R6Class(
         "nraw", as.character(nrow(self$raw_schemas_all)),
         "ntidy", as.character(nrow(self$tidy_schemas_all))
       )
-      cat(glue("#--- Config for {self$tool} ---#\n"))
+      cat(glue("#--- Config {self$tool} ---#\n"))
       print(knitr::kable(res))
       invisible(self)
     },

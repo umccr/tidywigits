@@ -22,7 +22,7 @@ raw:
         - field: 'meanCoverage'
           type: 'float'
         - field: 'expectedClonalCoverage'
-          type: 'float'
+          type: 'char' # handle null
         - field: 'reported'
           type: 'char'
         - field: 'driverLikelihood'
@@ -43,7 +43,7 @@ raw:
         - field: 'meanCoverage'
           type: 'float'
         - field: 'expectedClonalCoverage'
-          type: 'float'
+          type: 'char' # handle null
         - field: 'reported'
           type: 'char'
         - field: 'blacklisted'

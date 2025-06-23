@@ -41,9 +41,9 @@ Delta table.
 [WiGiTS]: <https://github.com/hartwigmedical/hmftools> "WiGiTS suite"
 
 {tidywigits} is built on top of R's [R6] encapsulated object-oriented programming
-implementation. This helps quite a bit with code organisation and avoiding code
-duplication. It consists of several base classes like `File`, `Config` and `Tool`
-which we describe below.
+implementation, which helps with code organisation. It consists of several base
+classes like `File`, `Config`, `Tool`, and `Workflow` which we describe below.
+Each R6 class can contain public and private functions and non-functions (fields).
 
 [R6]: <https://github.com/r-lib/R6> "R6 package repo"
 
@@ -70,10 +70,10 @@ f1_obj$prefix
 
 ## `Config`
 
-A `Config` object contains functionality for interacting with YAML 
+A `Config` object contains functionality for interacting with YAML
 configuration files that are part of {tidywigits}. These configuration files
 (under `inst/config`) specify the schemas, types, patterns and field descriptions
-for the _raw_ input files and _tidy_ output _tbls_.
+for the _raw_ input _files_ and _tidy_ output _tbls_.
 
 ### raw
 
@@ -129,7 +129,7 @@ conf$get_raw_versions() |>
 
 #### schemas
 
-The raw schemas specify the column name and type (e.g. character (`c`), 
+The raw schemas specify the column name and type (e.g. character (`c`),
 integer (`i`), float/double (`d`))
 for each input file (just showing top few below):
 
@@ -159,7 +159,7 @@ for (nm in s[["name"]]) {
 ### tidy
 
 Now let's look at some of the information in the tidy PURPLE config. The
-difference between raw and tidy configs is mostly in the column names (they get
+difference between raw and tidy configs is mostly in the column names (they are
 standardised to lowercase separated by underscores, i.e. snake_case), and some
 raw files get split into multiple tidy tables (e.g. for normalisation purposes).
 
@@ -211,9 +211,149 @@ utilises the very simple `readr::read_delim` function from the {[readr]} package
 that reads all the data into memory.
 These simple parsers are used in 80-90% of cases, so in the future we can
 optimise the parsing if needed with faster packages such as {[data.table]},
-{[duckdb-r]}, {[neo-r-polars]} etc..
+{[duckdb-r]} or {[neo-r-polars]}.
 
 [readr]: <https://github.com/tidyverse/readr> "readr"
 [duckdb-r]: <https://github.com/duckdb/duckdb-r> "duckdb-r"
 [data.table]: <https://github.com/Rdatatable/data.table> "data.table"
 [neo-r-polars]: <https://github.com/eitsupi/neo-r-polars> "neo-r-polars"
+
+### initialise
+
+We can have different `Tool` children classes that inherit (or override) functions
+and fields from the `Tool` parent class.
+For example, we can create a `Tool` object for PURPLE as follows:
+
+- Initialise a `Purple` object:
+
+```{r}
+#| label: tool_purple
+ppl_path <- here::here("nogit/oa_v1/purple")
+ppl <- Purple$new(path = ppl_path)
+# each class comes with a print function
+ppl
+```
+
+### config
+
+- Its `Config` object is also constructed based on the `name` supplied - this
+is used internally to find files of interest and infer their schemas:
+
+```{r}
+#| label: ppl_conf
+ppl$config
+ppl$config$get_raw_patterns()
+ppl$config$get_raw_schema("puritytsv")
+ppl$config$get_tidy_schema("puritytsv")
+```
+
+### list
+
+We can list files that can be parsed with `list_files`:
+
+```{r}
+#| label: ppl_list
+(lf <- ppl$list_files())
+lf |> dplyr::slice(1) |> str()
+```
+
+### tidy
+
+We can parse and tidy files of interest using the `tidy` function. Note
+that this function is called on the object and not assigned anywhere:
+
+```{r}
+#| label: ppl_tidy
+# this will create a new field tbls containing the tidy data (and optionally
+# the 'raw' parsed data)
+ppl$tidy(tidy = TRUE, keep_raw = TRUE)
+ppl$tbls
+ppl$tbls$raw[[8]] |> dplyr::glimpse()
+# the tidy tibbles are nested to allow for more than one tidy tibble per file
+ppl$tbls$tidy[[8]][["data"]][[1]] |> dplyr::glimpse()
+```
+
+### filter
+
+We can also focus on a subset of files to tidy using the `filter_files` function.
+The `include` and `exclude` arguments can specify which parsers to include or
+exclude in the analysis:
+
+```{r}
+#| label: ppl_filter
+# create new Purple object
+ppl2 <- Purple$new(path = ppl_path)
+ppl2$files
+ppl2$filter_files(include = c("purple_qc", "purple_cnvsomtsv"))
+ppl2$files
+```
+
+### write
+
+After tidying the data of interest, we can write the tidy tibbles to various
+formats, like Apache Parquet, PostgreSQL, CSV/TSV and R's RDS.
+Below we can see that the `id` specified is added to the written files in
+an additional `nemo_id` column. This can be used e.g. to distinguish results
+from different runs in a data pipeline.
+When writing to a database like PostgreSQL, another column `nemo_pfix` is used
+to distinguish results from the same run from the same tool.
+
+```{r}
+#| label: ppl_write
+ppl2$tidy() # first need to tidy
+outdir1 <- tempdir()
+fmt <- "tsv"
+ppl2$write(odir = outdir1, format = fmt, id = "run123")
+(wfiles <- fs::dir_info(outdir1) |> dplyr::select(1:5))
+readr::read_tsv(wfiles$path[2], show_col_types = F)
+```
+
+### nemofy
+
+The `nemofy` function is a convenient wrapper for the process of filtering,
+tidying, and writing.
+
+```{r}
+#| label: nemofy1
+ppl3 <- Purple$new(path = ppl_path)
+outdir2 <- file.path(tempdir(), "ppl3") |> fs::dir_create()
+ppl3$files
+ppl3$nemofy(
+  odir = outdir2,
+  format = "tsv",
+  id = "run_ppl3",
+  exclude = c("purple_cnvgenetsv", "purple_cnvsomtsv", "purple_drivercatalog", "purple_germdeltsv")
+)
+(wfiles2 <- fs::dir_info(outdir2) |> dplyr::select(1:5))
+readr::read_tsv(wfiles2$path[2], show_col_types = F)
+```
+
+## `Workflow`
+
+A `Workflow` consists of a list of one or more `Tool`s. We can construct a
+certain `Workflow` with different `Tool`s, which would allow parsing and writing
+tidy tables from a variety of bioinformatic tools.
+The [Oncoanalyser] Nextflow pipeline uses several tools from [WiGiTS], and we
+can construct a `Oncoanalyser` class as a `Workflow` child based on a suite of
+`Tool`s under the [tidywigits] R package. Similarly to `Tool`, a `Workflow` object
+contains functions such as `filter_files`, `list_files`, `tidy`, `write` and
+`nemofy`:
+
+[Oncoanalyser]: <https://github.com/nf-core/oncoanalyser> "Oncoanalyser"
+[tidywigits]: <https://github.com/umccr/tidywigits> "tidywigits"
+
+
+```{r}
+#| label: oa_init
+oa <- Oncoanalyser$new(here::here("nogit/oa_v1"))
+outdir3 <- file.path(tempdir(), "oa") |> fs::dir_create()
+oa$list_files()
+x <- oa$nemofy(
+  odir = outdir3,
+  format = "tsv",
+  id = "oa_run1",
+  exclude = c("cobalt_ratiotsv", "amber_baftsv", "isofox_altsj", "isofox_transdata")
+)
+(wfiles3 <- fs::dir_info(outdir3) |> dplyr::select(1:5))
+readr::read_tsv(wfiles3$path[5], show_col_types = F)
+```

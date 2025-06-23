@@ -62,6 +62,8 @@ Workflow <- R6::R6Class(
       # fmt: skip
       res <- tibble::tribble(
         ~var, ~value,
+        "name", self$name,
+        "path", self$path,
         "ntools", as.character(length(self$tools))
       )
       cat("#--- Workflow ---#\n")
