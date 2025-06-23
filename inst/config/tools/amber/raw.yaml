@@ -22,28 +22,28 @@ raw:
           type: 'int'
         - field: 'mean'
           type: 'float'
-  baftsv:
-    description: 'BAF for reference and tumor at each heterozygous site.'
-    pattern: "\\.amber\\.baf\\.tsv\\.gz$"
-    ftype: 'tsv'
-    schema:
-      latest:
-        - field: 'chromosome'
-          type: 'char'
-        - field: 'position'
-          type: 'int'
-        - field: 'tumorBAF'
-          type: 'float'
-        - field: 'tumorModifiedBAF'
-          type: 'float'
-        - field: 'tumorDepth'
-          type: 'int'
-        - field: 'normalBAF'
-          type: 'float'
-        - field: 'normalModifiedBAF'
-          type: 'float'
-        - field: 'normalDepth'
-          type: 'int'
+#  baftsv:
+#    description: 'BAF for reference and tumor at each heterozygous site.'
+#    pattern: "\\.amber\\.baf\\.tsv\\.gz$"
+#    ftype: 'tsv'
+#    schema:
+#      latest:
+#        - field: 'chromosome'
+#          type: 'char'
+#        - field: 'position'
+#          type: 'int'
+#        - field: 'tumorBAF'
+#          type: 'float'
+#        - field: 'tumorModifiedBAF'
+#          type: 'float'
+#        - field: 'tumorDepth'
+#          type: 'int'
+#        - field: 'normalBAF'
+#          type: 'float'
+#        - field: 'normalModifiedBAF'
+#          type: 'float'
+#        - field: 'normalDepth'
+#          type: 'int'
   contaminationtsv:
     description: 'Entry at each homozygous site in the reference and tumor.'
     pattern: "\\.amber\\.contamination\\.tsv$"

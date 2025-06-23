@@ -23,30 +23,30 @@ raw:
           type: 'float'
         - field: 'count'
           type: 'float'
-  ratiotsv:
-    description: 'Read counts and ratios (with reference or supposed diploid regions).'
-    pattern: "\\.cobalt\\.ratio\\.tsv\\.gz$"
-    ftype: 'tsv'
-    schema:
-      latest:
-        - field: 'chromosome'
-          type: 'char'
-        - field: 'position'
-          type: 'float'
-        - field: 'referenceReadDepth'
-          type: 'float'
-        - field: 'tumorReadDepth'
-          type: 'float'
-        - field: 'referenceGCRatio'
-          type: 'float'
-        - field: 'tumorGCRatio'
-          type: 'float'
-        - field: 'referenceGCDiploidRatio'
-          type: 'float'
-        - field: 'referenceGCContent'
-          type: 'float'
-        - field: 'tumorGCContent'
-          type: 'float'
+#  ratiotsv:
+#    description: 'Read counts and ratios (with reference or supposed diploid regions).'
+#    pattern: "\\.cobalt\\.ratio\\.tsv\\.gz$"
+#    ftype: 'tsv'
+#    schema:
+#      latest:
+#        - field: 'chromosome'
+#          type: 'char'
+#        - field: 'position'
+#          type: 'float'
+#        - field: 'referenceReadDepth'
+#          type: 'float'
+#        - field: 'tumorReadDepth'
+#          type: 'float'
+#        - field: 'referenceGCRatio'
+#          type: 'float'
+#        - field: 'tumorGCRatio'
+#          type: 'float'
+#        - field: 'referenceGCDiploidRatio'
+#          type: 'float'
+#        - field: 'referenceGCContent'
+#          type: 'float'
+#        - field: 'tumorGCContent'
+#          type: 'float'
   ratiopcf:
     description: 'Segmented regions determined from the ratios (piecewise constant fit).'
     pattern: "\\.cobalt\\.ratio\\.pcf$"
