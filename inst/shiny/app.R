@@ -1,9 +1,11 @@
 require(shiny)
 require(tibble, include.only = "as_tibble")
-require(dplyr)
+require(dplyr, include.only = c("filter", "mutate", "select"))
 require(DBI, include.only = "dbConnect")
 require(RPostgres, include.only = "Postgres")
 require(reactable, include.only = c("reactable", "renderReactable", "reactableOutput", "colDef"))
+require(glue, include.only = "glue")
+require(purrr, include.only = "map")
 
 nemoids <- c(
   "2024111009da2405",
@@ -17,12 +19,27 @@ nemoids <- c(
   "20250608f7479a9b",
   "20250617f2e5b3a0"
 )
-table_config <- list(
-  list(name = "amber_qc", display = "AmberQC"),
-  list(name = "lilac_qc", display = "LilacQC"),
-  list(name = "purple_qc", display = "PurpleQC")
+
+# fmt: skip
+table_config <- tibble::tribble(
+  ~name,                          ~display,
+  "amber_qc",                     "AmberQC",
+  "lilac_qc",                     "LilacQC",
+  "lilac_summary",                "LilacSummary",
+  "purple_qc",                    "PurpleQC",
+  "purple_puritytsv",             "PurplePuritytsv",
+  "purple_drivercatalog",         "PurpleDriverCatalog",
+  "linx_drivers",                 "LinxDrivers",
+  "chord_prediction",             "ChordPred",
+  "cobalt_gcmed_sample_stats",    "CobaltGCmed Sample",
+  "cobalt_gcmed_bucket_stats",    "CobaltGC Bucket",
+  "sigs_allocation",              "SigsAllocation",
+  "flagstats_flagstats",          "FlagStats",
+  "bamtools_wgsmetrics_metrics",  "BamtoolsWgsMetrics",
+  "virusbreakend_summary",        "VirusBreakend",
+  "virusinterpreter_annotated",   "VirusInterpreter"
 )
-table_names <- sapply(table_config, function(x) x$name)
+table_names <- table_config$name
 
 ui <- fluidPage(
   titlePanel("NemoUI"),
@@ -37,6 +54,11 @@ ui <- fluidPage(
           multiple = TRUE,
           selected = nemoids[1],
           width = "100%"
+        ),
+        checkboxInput(
+          "select_all_ids",
+          "Select All IDs",
+          value = FALSE
         ),
         hr(),
         div(
@@ -54,48 +76,42 @@ ui <- fluidPage(
       )
     )
   ),
+  # main tabbed interface
   fluidRow(
     column(
       12,
-      do.call(
-        tabsetPanel,
-        c(
-          id = "main_tabs",
-          lapply(
-            table_config,
-            function(config) {
-              tabPanel(
-                config$display,
-                br(),
-                fluidRow(
-                  column(
-                    12,
-                    div(
-                      style = "margin-bottom: 10px;",
-                      h4(
-                        paste("Table:", config$display),
-                        style = "display: inline-block; margin-right: 20px;"
-                      ),
-                      span(
-                        textOutput(paste0(config$name, "_info")),
-                        style = "color: #666; font-size: 14px;"
-                      )
-                    ),
-                    reactableOutput(paste0(config$name, "_table"))
+      tabsetPanel(
+        id = "main_tabs",
+        !!!purrr::pmap(table_config, function(name, display) {
+          tabPanel(
+            display,
+            br(),
+            fluidRow(
+              column(
+                12,
+                div(
+                  style = "margin-bottom: 10px;",
+                  h4(
+                    glue("Table: {display}"),
+                    style = "display: inline-block; margin-right: 20px;"
+                  ),
+                  span(
+                    textOutput(glue("{name}_info")),
+                    style = "color: #666; font-size: 14px;"
                   )
-                )
-              )
-            }
-          ),
-          list(
-            tabPanel(
-              "Summary",
-              br(),
-              fluidRow(
-                column(6, h4("Table Stats"), reactableOutput("detailed_overview")),
-                column(6, h4("Nemo Tables"), reactableOutput("all_tables_list"))
+                ),
+                reactableOutput(glue("{name}_table"))
               )
             )
+          )
+        }),
+        # summary tab
+        tabPanel(
+          "Summary",
+          br(),
+          fluidRow(
+            column(6, h4("Table Stats"), reactableOutput("detailed_overview")),
+            column(6, h4("Nemo Tables"), reactableOutput("all_tables_list"))
           )
         )
       )
@@ -109,7 +125,24 @@ server <- function(input, output, session) {
     dbname = "nemo",
     user = "orcabus"
   )
-  nemoid <- reactive(input$nemoid)
+  nemoid <- reactive(
+    {
+      if (input$select_all_ids) {
+        nemoids
+      } else {
+        input$nemoid
+      }
+    }
+  )
+
+  # observer to handle "Select All" checkbox
+  observeEvent(input$select_all_ids, {
+    if (input$select_all_ids) {
+      updateSelectInput(session, "nemoid", selected = nemoids)
+    } else {
+      updateSelectInput(session, "nemoid", selected = nemoids[1])
+    }
+  })
 
   create_filtered_table_reactive <- function(nm) {
     reactive({
@@ -118,12 +151,12 @@ server <- function(input, output, session) {
       tryCatch(
         {
           dplyr::tbl(con, nm) |>
-            dplyr::filter(nemo_id == selected_nemoid) |>
-            dplyr::as_tibble()
+            dplyr::filter(nemo_id %in% selected_nemoid) |>
+            tibble::as_tibble()
         },
         error = function(e) {
           tibble::tibble(
-            Error = paste("Could not load table:", nm),
+            Error = glue("Could not load table: {nm}"),
             Details = as.character(e$message)
           )
         }
@@ -131,23 +164,25 @@ server <- function(input, output, session) {
     })
   }
 
-  table_reactives <- setNames(
-    lapply(table_names, create_filtered_table_reactive),
-    table_names
-  )
+  table_reactives <- table_names |>
+    purrr::map(create_filtered_table_reactive) |>
+    purrr::set_names(table_names)
 
-  lapply(table_config, function(config) {
-    table_name <- config$name
-
+  purrr::pwalk(table_config, function(name, display) {
     # main table output
-    output[[paste0(table_name, "_table")]] <- renderReactable({
-      data <- table_reactives[[table_name]]()
+    output[[glue("{name}_table")]] <- renderReactable({
+      data <- table_reactives[[name]]()
 
       if (nrow(data) == 0) {
         return(
           reactable(
-            tibble::tibble(Message = paste("No data found for NemoID:", nemoid())),
-            columns = list(Message = reactable::colDef(align = "center", style = "color: #999;"))
+            tibble::tibble(
+              Message = glue(
+                "No data found for NemoID(s): ",
+                glue::glue_collapse(nemoid(), sep = ", ", last = " and ")
+              )
+            ),
+            columns = list(Message = colDef(align = "center", style = "color: #999;"))
           )
         )
       }
@@ -157,7 +192,7 @@ server <- function(input, output, session) {
         searchable = TRUE,
         filterable = TRUE,
         pagination = TRUE,
-        defaultPageSize = 8,
+        defaultPageSize = 15,
         highlight = TRUE,
         striped = TRUE,
         compact = TRUE,
@@ -173,10 +208,10 @@ server <- function(input, output, session) {
     })
 
     # info text per table
-    output[[paste0(table_name, "_info")]] <- renderText({
-      data <- table_reactives[[table_name]]()
+    output[[glue("{name}_info")]] <- renderText({
+      data <- table_reactives[[name]]()
       if (nrow(data) > 0 && !"Error" %in% names(data)) {
-        paste0("(", nrow(data), " rows, ", ncol(data), " columns)")
+        glue("({nrow(data)} rows {ncol(data)} columns)")
       } else if ("Error" %in% names(data)) {
         "(Error loading table)"
       } else {
@@ -187,11 +222,19 @@ server <- function(input, output, session) {
 
   # summary text in header
   output$summary_text <- renderText({
-    total_rows <- sum(sapply(table_reactives, function(reactive_data) {
+    selected_ids <- nemoid()
+    total_rows <- sum(purrr::map_int(table_reactives, \(reactive_data) {
       data <- reactive_data()
       if (!"Error" %in% names(data)) nrow(data) else 0
     }))
-    paste0("NemoID: ", nemoid(), "\n\nTotal rows across all tables: ", total_rows)
+    if (length(selected_ids) == 1) {
+      glue("NemoID: {selected_ids}; Total rows across all tables: {total_rows}")
+    } else {
+      glue(
+        "Selected {length(selected_ids)} NemoIDs; ",
+        "Total rows across all tables: {total_rows}"
+      )
+    }
   })
 
   # Overview table in header
@@ -199,16 +242,16 @@ server <- function(input, output, session) {
     req(nemoid())
 
     overview_data <- tibble::tibble(
-      Table = sapply(table_config, function(x) x$display),
-      Rows = sapply(table_reactives, function(reactive_data) {
+      Table = table_config$display,
+      Rows = purrr::map_int(table_reactives, \(reactive_data) {
         data <- reactive_data()
         if (!"Error" %in% names(data)) nrow(data) else 0
       }),
-      Columns = sapply(table_reactives, function(reactive_data) {
+      Columns = purrr::map_int(table_reactives, \(reactive_data) {
         data <- reactive_data()
         if (!"Error" %in% names(data)) ncol(data) else 0
       }),
-      Status = sapply(table_reactives, function(reactive_data) {
+      Status = purrr::map_chr(table_reactives, \(reactive_data) {
         data <- reactive_data()
         if ("Error" %in% names(data)) {
           "Error"
@@ -237,7 +280,7 @@ server <- function(input, output, session) {
               "Error" = "#dc3545",
               "#6c757d"
             )
-            span(style = paste0("color: ", color, "; font-weight: bold;"), value)
+            span(style = glue("color: {color}; font-weight: bold;"), value)
           }
         )
       ),
@@ -253,17 +296,17 @@ server <- function(input, output, session) {
     req(nemoid())
 
     detailed_data <- tibble::tibble(
-      Table = table_names,
-      Display_Name = sapply(table_config, function(x) x$display),
-      Row_Count = sapply(table_reactives, function(reactive_data) {
+      Table = table_config$name,
+      Display_Name = table_config$display,
+      Row_Count = purrr::map_int(table_reactives, \(reactive_data) {
         data <- reactive_data()
         if (!"Error" %in% names(data)) nrow(data) else 0
       }),
-      Column_Count = sapply(table_reactives, function(reactive_data) {
+      Column_Count = purrr::map_int(table_reactives, \(reactive_data) {
         data <- reactive_data()
         if (!"Error" %in% names(data)) ncol(data) else 0
       }),
-      Has_Data = sapply(table_reactives, function(reactive_data) {
+      Has_Data = purrr::map_int(table_reactives, \(reactive_data) {
         data <- reactive_data()
         !"Error" %in% names(data) && nrow(data) > 0
       })
@@ -309,7 +352,7 @@ server <- function(input, output, session) {
             if (value) {
               span(style = "color: #28a745; font-weight: bold;", "✓")
             } else {
-              span(style = "color: #6c757d;", "—")
+              span(style = "color: #6c757d;", "-")
             }
           }
         )
