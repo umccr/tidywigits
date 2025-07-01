@@ -34,23 +34,26 @@ for subdir in "${subdirs[@]}"; do
         --exclude "*" \
         --include "*.duplicate_freq.tsv" \
         --include "*.amber.baf.pcf" \
-        --include "*.amber.baf.tsv.gz" \
         --include "*.amber.contamination.tsv" \
         --include "*.amber.qc" \
         --include "*.amber.homozygousregion.tsv" \
         --include "*.wgsmetrics" \
         --include "*_chord_prediction.txt" \
         --include "*_chord_signatures.txt" \
+        --include "*.chord.mutation_contexts.tsv" \
+        --include "*.chord.prediction.tsv" \
         --include "*cobalt.version" \
         --include "*.cobalt.gc.median.tsv" \
         --include "*.cobalt.ratio.pcf" \
-        --include "*.cobalt.ratio.tsv.gz" \
         --include "*.cobalt.ratio.median.tsv" \
         --include "*_cup_report.pdf" \
         --include "*.cup.data.csv" \
         --include "*.cup.report.summary.png" \
         --include "*.cuppa.chart.png" \
         --include "*.cuppa.conclusion.txt" \
+        --include "*.cuppa_data.tsv.gz" \
+        --include "*.cuppa.vis_data.tsv" \
+        --include "*.cuppa.pred_summ.tsv" \
         --include "*.flagstat" \
         --include "*.lilac.candidates.coverage.tsv" \
         --include "*.lilac.qc.tsv" \
