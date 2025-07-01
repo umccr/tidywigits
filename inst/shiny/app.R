@@ -7,18 +7,7 @@ require(reactable, include.only = c("reactable", "renderReactable", "reactableOu
 require(glue, include.only = "glue")
 require(purrr, include.only = "map")
 
-nemoids <- c(
-  "2024111009da2405",
-  "202412012adef417",
-  "202412133238a1c4",
-  "20250113709c77e0",
-  "2025012239384760",
-  "202503028851ddaa",
-  "20250407e2ff5344",
-  "20250513ae34f991",
-  "20250608f7479a9b",
-  "20250617f2e5b3a0"
-)
+source("ids.R")
 
 # fmt: skip
 table_config <- tibble::tribble(
