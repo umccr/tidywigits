@@ -7,6 +7,8 @@ require(reactable, include.only = c("reactable", "renderReactable", "reactableOu
 require(glue, include.only = "glue")
 require(purrr, include.only = "map")
 
+# ids.R contains vector of ids
+# nemoids <- c("abc123", "edf456")
 source("ids.R")
 
 # fmt: skip
@@ -21,7 +23,7 @@ table_config <- tibble::tribble(
   "linx_drivers",                 "LinxDrivers",
   "chord_prediction",             "ChordPred",
   "cobalt_gcmed_sample_stats",    "CobaltGCmed Sample",
-  "cobalt_gcmed_bucket_stats",    "CobaltGC Bucket",
+  "cobalt_gcmed_bucket_stats",    "CobaltGCmed Bucket",
   "sigs_allocation",              "SigsAllocation",
   "flagstats_flagstats",          "FlagStats",
   "bamtools_wgsmetrics_metrics",  "BamtoolsWgsMetrics",
