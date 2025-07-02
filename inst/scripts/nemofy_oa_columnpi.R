@@ -4,6 +4,8 @@ require(tibble, include.only = "tibble")
 require(DBI, include.only = "dbConnect")
 require(fs, include.only = "dir_ls")
 require(dplyr)
+require(tidyr, include.only = "unnest")
+require(RPostgres, include.only = "Postgres")
 
 dbconn <- DBI::dbConnect(
   drv = RPostgres::Postgres(),
