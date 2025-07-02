@@ -2,6 +2,7 @@ require(here, include.only = "here")
 require(glue, include.only = "glue")
 require(tibble, include.only = "tibble")
 require(DBI, include.only = "dbConnect")
+require(RPostgres, include.only = "Postgres")
 require(dplyr)
 
 dbconn <- DBI::dbConnect(
