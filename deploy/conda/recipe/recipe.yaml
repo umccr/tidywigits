@@ -1,6 +1,10 @@
-package:
+context:
   name: r-tidywigits
-  version: 0.0.1 # bump2version
+  version: 0.0.1 # bumpversion
+
+package:
+  name: ${{ name|lower }}
+  version: ${{ version }}
 
 source:
   path: ../../..
@@ -8,13 +12,8 @@ source:
 build:
   number: 0
   noarch: generic
-  rpaths:
-    - lib/R/lib/
-    - lib/
 
 requirements:
-  build:
-    - git
   host:
     - r-base
     - r-argparse
@@ -23,7 +22,7 @@ requirements:
     - r-cli
     - r-dbi
     - r-dplyr
-    - r-emojifont
+    #- r-emojifont
     - r-fs
     - r-glue
     - r-here
@@ -45,7 +44,7 @@ requirements:
     - r-cli
     - r-dbi
     - r-dplyr
-    - r-emojifont
+    #- r-emojifont
     - r-fs
     - r-glue
     - r-here
@@ -60,12 +59,22 @@ requirements:
     - r-tidyr
     - r-yaml
 
-test:
-  commands:
-    - $R -e "library('tidywigits')"
+tests:
+  - r:
+      libraries:
+        - tidywigits
+  - script:
     - tidywigits.R --version
 
 about:
-  home: https://github.com/umccr/tidywigits
-  license: MIT
+  homepage: https://github.com/umccr/tidywigits
   summary: WiGiTS workflow tidying
+  description: WiGiTS workflow tidying
+  license: MIT
+  license_file: LICENSE
+  repository: https://github.com/umccr/tidywigits
+  documentation: https://umccr.github.io/tidywigits/
+
+extra:
+  recipe-maintainers:
+    - pdiakumis
