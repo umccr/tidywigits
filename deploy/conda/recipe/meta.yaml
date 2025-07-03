@@ -1,0 +1,71 @@
+package:
+  name: r-tidywigits
+  version: 0.0.1 # bump2version
+
+source:
+  path: ../../..
+
+build:
+  number: 0
+  noarch: generic
+  rpaths:
+    - lib/R/lib/
+    - lib/
+
+requirements:
+  build:
+    - git
+  host:
+    - r-base
+    - r-argparse
+    - r-arrow
+    - r-assertthat
+    - r-cli
+    - r-dbi
+    - r-dplyr
+    - r-emojifont
+    - r-fs
+    - r-glue
+    - r-here
+    - r-knitr
+    - r-purrr
+    - r-r6
+    - r-rpostgres
+    - r-readr
+    - r-rlang
+    - r-rmarkdown
+    - r-tibble
+    - r-tidyr
+    - r-yaml
+  run:
+    - r-base
+    - r-argparse
+    - r-arrow
+    - r-assertthat
+    - r-cli
+    - r-dbi
+    - r-dplyr
+    - r-emojifont
+    - r-fs
+    - r-glue
+    - r-here
+    - r-knitr
+    - r-purrr
+    - r-r6
+    - r-rpostgres
+    - r-readr
+    - r-rlang
+    - r-rmarkdown
+    - r-tibble
+    - r-tidyr
+    - r-yaml
+
+test:
+  commands:
+    - $R -e "library('tidywigits')"
+    - tidywigits.R --version
+
+about:
+  home: https://github.com/umccr/tidywigits
+  license: MIT
+  summary: WiGiTS workflow tidying
