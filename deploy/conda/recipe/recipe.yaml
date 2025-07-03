@@ -22,7 +22,7 @@ requirements:
     - r-cli
     - r-dbi
     - r-dplyr
-    #- r-emojifont
+    - r-emojifont
     - r-fs
     - r-glue
     - r-here
@@ -44,7 +44,7 @@ requirements:
     - r-cli
     - r-dbi
     - r-dplyr
-    #- r-emojifont
+    - r-emojifont
     - r-fs
     - r-glue
     - r-here
