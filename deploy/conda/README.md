@@ -1,0 +1,1 @@
+- `recipe/recipe.yaml`: see rattler-build docs at https://rattler.build/latest/
