@@ -20,7 +20,6 @@ knitr:
   require(tidywigits)
   require(dplyr)
   require(glue, include.only = "glue")
-  require(here, include.only = "here")
   require(purrr, include.only = "map")
   require(readr, include.only = "read_tsv")
   require(tibble, include.only = "tibble")
@@ -228,7 +227,7 @@ For example, we can create a `Tool` object for PURPLE as follows:
 
 ```{r}
 #| label: tool_purple
-ppl_path <- here::here("nogit/oa_v1/purple")
+ppl_path <- system.file("extdata/purple", package = "tidywigits")
 ppl <- Purple$new(path = ppl_path)
 # each class comes with a print function
 ppl
@@ -345,7 +344,8 @@ contains functions such as `filter_files`, `list_files`, `tidy`, `write` and
 
 ```{r}
 #| label: oa_init
-oa <- Oncoanalyser$new(here::here("nogit/oa_v1"))
+oa <- system.file("extdata/purple", package = "tidywigits") |>
+  Oncoanalyser$new()
 outdir3 <- file.path(tempdir(), "oa") |> fs::dir_create()
 oa$list_files()
 x <- oa$nemofy(
