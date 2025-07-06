@@ -311,7 +311,7 @@ contains functions such as `filter_files`, `list_files`, `tidy`, `write` and
 [tidywigits]: <https://github.com/umccr/tidywigits> "tidywigits"
 
 
-```{r oa_init}}
+```{r oa_init}
 oa <- system.file("extdata/purple", package = "tidywigits") |>
   Oncoanalyser$new()
 outdir3 <- file.path(tempdir(), "oa") |> fs::dir_create()

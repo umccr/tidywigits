@@ -52,12 +52,15 @@ pr <- function(n) {
 
 ## v0.0.2 (2025-XX-XX)
 
+- `r vdiff("0.0.2", "0.0.1")`
+
+Mostly Shiny, Conda, Docker and pkgdown support.
+
 - Conda: add recipe and rattler-builder (`r pr(124)`, `r iss(4)`)
 - Shiny: add summary app (`r pr(122)`)
 - CLI: Add listing and tidy include/exclude support (`r pr(116)`)
 - Add pkgdown support (`r pr(125)`, `r iss(37)`)
 
-- `r vdiff("0.0.2", "0.0.1")`
 
 ## v0.0.1 (2025-06-19)
 
