@@ -52,6 +52,11 @@ pr <- function(n) {
 
 ## v0.0.2 (2025-XX-XX)
 
+- Conda: add recipe and rattler-builder (`r pr(124)`, `r iss(4)`)
+- Shiny: add summary app (`r pr(122)`)
+- CLI: Add listing and tidy include/exclude support (`r pr(116)`)
+- Add pkgdown support (`r pr(125)`, `r iss(37)`)
+
 - `r vdiff("0.0.2", "0.0.1")`
 
 ## v0.0.1 (2025-06-19)
@@ -90,9 +95,6 @@ Initial release of tidywigits.
 - Tool:
   - write functionality (`r pr(98)`, `r iss(95)`)
   - optionally output raw parsed tibbles (`r pr(94)`, `r iss(91)`)
-- Add listing and tidy include/exclude support (`r pr(116)`)
 - UML diagram (`r pr(107)`, `r iss(106)`)
 - DB schema (`r pr(111)`, `r iss(110)`)
-- CLI (`r pr(114)`)
-- Shiny summary app (`r pr(122)`)
-- Conda recipe (`r pr(124)`, `r iss(4)`)
+- CLI support (`r pr(114)`)
