@@ -1,0 +1,68 @@
+url: https://umccr.github.io/tidywigits
+title: tidywigits
+authors:
+  Peter Diakumis:
+    href: https://github.com/pdiakumis
+template:
+  bootstrap: 5
+  bootswatch: zephyr
+navbar:
+  structure:
+    left: [home, articles, news]
+    right: [reference, search, github]
+  components:
+    home:
+      text: Intro
+      href: index.html
+    articles:
+      text: Articles
+      menu:
+        - text: Structure
+          href: articles/structure.html
+        - text: Developers
+          href: articles/developers.html
+    news:
+      text: NEWS
+      href: articles/NEWS.html
+reference:
+  - title: "Base Classes"
+    contents:
+      - File
+      - Config
+      - Tool
+      - Workflow
+  - title: "Tool Classes"
+    contents:
+      - Alignments
+      - Amber
+      - Bamtools
+      - Chord
+      - Cobalt
+      - Cuppa
+      - Esvee
+      - Flagstats
+      - Isofox
+      - Lilac
+      - Linx
+      - Purple
+      - Sage
+      - Sigs
+      - Virusbreakend
+      - Virusinterpreter
+  - title: "Oncoanalyser"
+    contents:
+      - Oncoanalyser
+  - title: "Config"
+    contents:
+      - config_prep_raw
+      - config_prep_raw_schema
+  - title: "Other"
+    contents:
+      - date_log
+      - empty_tbl
+      - list_files_dir
+      - nemo_out_formats
+      - nemo_write
+      - parse_file
+      - schema_guess
+      - valid_out_fmt

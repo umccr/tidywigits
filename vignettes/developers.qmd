@@ -1,0 +1,48 @@
+---
+title: "Developers"
+vignette: >
+  %\VignetteIndexEntry{Developers}
+  %\VignetteEngine{quarto::html}
+  %\VignetteEncoding{UTF-8}
+knitr:
+  opts_chunk:
+    collapse: true
+    comment: '#>'
+---
+
+```{r knitr_opts, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## Development notes
+
+### R pkg dev
+
+
+| Command                               | Comment                                                 | Shortcut          |
+| ---------                             | ---------                                               | ---------         |
+| `devtools::check()`                   | build and check the pkg                                 | `Cmd + Shift + E` |
+| `devtools::load_all()`                | load the pkg                                            | `Cmd + Shift + L` |
+| `devtools::document()`                | document the pkg                                        | `Cmd + Shift + D` |
+| `pak::local_install(upgrade = FALSE)` | install the pkg into the first library of `.libPaths()` | `Cmd + Shift + B` |
+
+### conda
+
+| Command                                                                              | Comment                                                           |
+| ---------                                                                            | ---------                                                         |
+| `conda install foo -c bar`                                                           | install pkg `foo` from channel `bar`                              |
+| `conda create --file env.yml --prefix ./bar`                                         | install conda pkgs listed in `env.yml` into the `./bar` directory |
+| `conda info -e`                                                                      | list conda environments installed on this machine                 |
+| `rattler-build build -r recipe.yaml --output-dir ${HOME}/tmp`                        | build conda pkg from a recipe file                                |
+| `rattler-build upload anaconda -o umccr --api-key <xxx> ${HOME}/tmp/r-tidywigits.conda` | upload conda pkg to anaconda                               |
+
+### pkgdown
+
+| Command                                  | Comment                         |
+| ---------                                | ---------                       |
+| `pkgdown::build_site()`                  | builds entire site              |
+| `pkgdown::build_articles(quiet = FALSE)` | builds vignettes in debug mode  |
+| `pkgdown::build_article("developers")`   | builds developers vignette only |

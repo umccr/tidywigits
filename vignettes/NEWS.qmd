@@ -1,0 +1,103 @@
+---
+title: "NEWS"
+vignette: >
+  %\VignetteIndexEntry{News}
+  %\VignetteEngine{quarto::html}
+  %\VignetteEncoding{UTF-8}
+knitr:
+  opts_chunk:
+    collapse: true
+    comment: '#>'
+---
+
+```{r}
+#| label: pkgs
+#| message: false
+#| warning: false
+#| echo: false
+{
+  require(htmltools, include.only = c("a"))
+  require(glue, include.only = "glue")
+}
+```
+
+```{r echo=FALSE}
+repo <- "https://github.com/umccr/tidywigits"
+vdiff <- function(new, old) {
+  stopifnot(utils::compareVersion(new, old) == 1)
+  htmltools::a(
+    href = glue::glue("{repo}/compare/v{old}...v{new}"),
+    glue::glue("v{new} - v{old} diff")
+  )
+}
+
+pr_or_issue <- function(n, type) {
+  x <- c(iss = "issues", pr = "pull")
+  stopifnot(is.numeric(n), n > 0, type %in% names(x))
+  type2 <- x[type]
+  htmltools::a(
+    href = glue::glue("{repo}/{type2}/{n}"),
+    glue::glue("{type}{n}")
+  )
+}
+
+iss <- function(n) {
+  pr_or_issue(n, "iss")
+}
+
+pr <- function(n) {
+  pr_or_issue(n, "pr")
+}
+```
+
+## v0.0.2 (2025-XX-XX)
+
+- `r vdiff("0.0.2", "0.0.1")`
+
+Mostly Shiny, Conda, Docker and pkgdown support.
+
+- Conda: add recipe and rattler-builder (`r pr(124)`, `r iss(4)`)
+- Shiny: add summary app (`r pr(122)`)
+- CLI: Add listing and tidy include/exclude support (`r pr(116)`)
+- Add pkgdown support (`r pr(125)`, `r iss(37)`)
+
+
+## v0.0.1 (2025-06-19)
+
+Initial release of tidywigits.
+
+- R pkg skeleton (`r pr(6)`)
+- Add `Config`, `File` and `Tool` classes (`r pr(12)`)
+- Add `Workflow` class (`r pr(99)`, `r iss(97)`)
+- Add `Oncoanalyser` class (`r pr(52)`, `r pr(101)`, `r iss(39)`)
+- Add `bump-my-version` (`r pr(10)`, `r iss(3)`)
+- Add `pre-commit` hooks (`r pr(8)`, `r iss(2)`)
+- Add `Makefile` and `air.toml` (`r pr(7)`)
+- Support for main outputs from the following WiGiTS tools:
+  - Alignments (`r pr(28)`, `r pr(79)`, `r iss(17)`, `r iss(77)`)
+  - Amber (`r pr(14)`, `r iss(13)`)
+  - Bamtools (`r pr(44)`, `r pr(66)`, `r iss(62)`, `r iss(16)`)
+  - Chord (`r pr(29)`, `r pr(38)`, `r iss(18)`, `r iss(38)`)
+  - Cobalt (`r pr(33)`, `r iss(15)`)
+  - Cuppa (`r pr(30)`, `r pr(68)`, `r iss(19)`, `r iss(67)`)
+  - Esvee (`r pr(87)`, `r iss(61)`)
+  - Flagstats (`r pr(45)`, `r pr(46)`, `r iss(20)`)
+  - Isofox (`r pr(80)`, `r iss(76)`)
+  - Lilac (`r pr(31)`, `r iss(21)`)
+  - Linx (`r pr(50)`, `r pr(89)`, `r iss(22)`, `r iss(88)`)
+  - Purple (`r pr(36)`, `r pr(51)`, `r iss(23)`, `r iss(49)`)
+  - Sage (`r pr(48)`, `r pr(72)`, `r pr(73)`, `r iss(24)`, `r iss(71)`, `r iss(57)`)
+  - Sigs (`r pr(47)`, `r iss(25)`)
+  - Virusbreakend (`r pr(42)`, `r iss(26)`)
+  - Virusinterpreter (`r pr(40)`, `r pr(65)`, `r iss(27)`, `r iss(41)`)
+- Schema: 
+  - versioning (`r pr(64)`, `r iss(43)`)
+  - guesser (`r pr(69)`, `r iss(63)`)
+- Vignettes:
+  - Setup (`r pr(92)`, `r iss(60)`)
+- Tool:
+  - write functionality (`r pr(98)`, `r iss(95)`)
+  - optionally output raw parsed tibbles (`r pr(94)`, `r iss(91)`)
+- UML diagram (`r pr(107)`, `r iss(106)`)
+- DB schema (`r pr(111)`, `r iss(110)`)
+- CLI support (`r pr(114)`)
