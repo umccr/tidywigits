@@ -1,0 +1,5 @@
+[core]
+    remote = cloudflare_r2_nemo
+['remote "cloudflare_r2_nemo"']
+    url = s3://umccr-nemo-1/dvc
+    endpointurl = https://33925db4f44e42e6b686522712d94b6f.r2.cloudflarestorage.com
