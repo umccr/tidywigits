@@ -1,0 +1,6 @@
+outs:
+- md5: ab96717a1ff6e992e3c186ce7d516ae7.dir
+  size: 7185
+  nfiles: 11
+  hash: md5
+  path: purple
