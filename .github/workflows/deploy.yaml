@@ -40,8 +40,9 @@ jobs:
           # ls -l inst/extdata/*
           # first build
           rattler-build build \
-            --recipe ${conda_recipe}/recipe.yaml
-          pkg_path=$(find ./output -type f -name "*.conda")
+            --recipe ${conda_recipe}/recipe.yaml \
+            --output-dir ${RUNNER_TEMP}/out1
+          pkg_path=$(find ${RUNNER_TEMP}/out1 -type f -name "*.conda")
           echo ${pkg_path}
           # now upload
           rattler-build upload anaconda \
