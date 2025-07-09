@@ -130,6 +130,8 @@ jobs:
     defaults:
       run:
         shell: bash -l {0}
+    permissions:
+      contents: write # for committing
     steps:
       - name: Code checkout
         uses: actions/checkout@v4
@@ -153,5 +155,7 @@ jobs:
       - name: 🌐 Website publish
         run: |
           Rscript -e "list.files(system.file('extdata', package= 'tidywigits'), recursive = TRUE)"
+          git config --local user.email "actions@github.com"
+          git config --local user.name "GitHub Actions"
           Rscript -e "pkgdown::deploy_to_branch(new_process = FALSE)"
 
