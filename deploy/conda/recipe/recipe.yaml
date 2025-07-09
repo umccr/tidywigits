@@ -1,6 +1,6 @@
 context:
   name: r-tidywigits
-  version: 0.0.1.9007 # bump
+  version: 0.0.1.9008 # bump
 
 package:
   name: ${{ name|lower }}
