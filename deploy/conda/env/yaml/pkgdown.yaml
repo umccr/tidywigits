@@ -1,8 +1,9 @@
+name: pkgdown_env
 channels:
   - umccr
   - conda-forge
 dependencies:
-  - r-tidywigits ==0.0.1 # versioned by bump2version
+  - r-tidywigits ==0.0.1 # bump
   - r-htmltools
   - r-pkgdown
   - quarto
