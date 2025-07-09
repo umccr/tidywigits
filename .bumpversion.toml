@@ -39,7 +39,3 @@ filename = "deploy/conda/env/yaml/tidywigits.yaml"
 search = "r-tidywigits =={current_version}"
 replace = "r-tidywigits =={new_version}"
 
-[[tool.bumpversion.files]]
-filename = "deploy/conda/env/yaml/pkgdown.yaml"
-search = "r-tidywigits =={current_version}"
-replace = "r-tidywigits =={new_version}"

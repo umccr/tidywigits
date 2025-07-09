@@ -133,19 +133,25 @@ jobs:
     steps:
       - name: Code checkout
         uses: actions/checkout@v4
-      - name: Miniforge setup
-        uses: conda-incubator/setup-miniconda@v3
-        with:
-          auto-update-conda: true
-          environment-file: ${{ env.conda_env_yaml }}/pkgdown.yaml
-          activate-environment: pkgdown_env
-          miniforge-version: latest
-      - name: 🌐 Website publish
+      - name: DVC setup
+        uses: iterative/setup-dvc@v1
+      - name: DVC pull
         run: |
           # pull test data
           dvc pull
           ls -l inst/extdata/*
-          ${pkg_name}.R --version
-          R CMD build --no-build-vignettes --no-manual --no-resave-data .
+      - name: R setup
+        uses: r-lib/actions/setup-r@v2
+        with:
+          use-public-rspm: true
+      - name: R deps
+        uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          extra-packages: any::pkgdown, local::.
+          install-quarto: true
+          needs: website
+      - name: 🌐 Website publish
+        run: |
+          Rscript -e "list.files(system.file('extdata', package= 'tidywigits'), recursive = TRUE)"
           Rscript -e "pkgdown::deploy_to_branch(new_process = FALSE)"
 
