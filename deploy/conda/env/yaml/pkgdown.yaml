@@ -3,7 +3,7 @@ channels:
   - umccr
   - conda-forge
 dependencies:
-  - r-tidywigits ==0.0.1 # bump
+  - r-tidywigits ==0.0.1.9000 # bump
   - r-htmltools
   - r-pkgdown
   - quarto

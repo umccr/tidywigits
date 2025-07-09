@@ -1,5 +1,5 @@
 [tool.bumpversion]
-current_version = "0.0.1"
+current_version = "0.0.1.9000"
 search = "{current_version}"
 replace = "{new_version}"
 message = "Bump version: {current_version} → {new_version}"
@@ -32,7 +32,7 @@ replace = "VERSION: '{new_version}'"
 [[tool.bumpversion.files]]
 filename = "deploy/conda/recipe/recipe.yaml"
 search = "version: {current_version}"
-replace = "Version: {new_version}"
+replace = "version: {new_version}"
 
 [[tool.bumpversion.files]]
 filename = "deploy/conda/env/yaml/tidywigits.yaml"
