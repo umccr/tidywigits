@@ -122,7 +122,6 @@ jobs:
           context: .
           push: true
           platforms: linux/amd64
-          file: ./deploy/docker/Dockerfile
   pkgdown:
     name: pkgdown
     needs: [condarise-dockerise]
