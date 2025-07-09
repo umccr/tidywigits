@@ -23,7 +23,7 @@ RUN apt-get update && \
 ENV PATH="/opt/${MINIF}/bin:$PATH"
 ARG CONDA_ENV_DIR="/home/conda_envs"
 ARG LOCKFILE="conda-linux-64.lock"
-COPY "./deploy/conda/env/lock/${LOCKFILE}" "${CONDA_ENV_DIR}/"
+COPY "../../deploy/conda/env/lock/${LOCKFILE}" "${CONDA_ENV_DIR}/"
 RUN conda create -n "tidywigits_env" --file "${CONDA_ENV_DIR}/${LOCKFILE}"
 RUN conda clean --all --force-pkgs-dirs --yes
 
