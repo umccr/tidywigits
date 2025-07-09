@@ -1,0 +1,3 @@
+- `condabuild.yaml`: for conda-build
+- `tidywigits.yaml`: for conda-lock
+- `pkgdown.yaml`: for pkgdown

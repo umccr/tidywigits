@@ -1,0 +1,7 @@
+name: condabuild
+
+channels:
+  - conda-forge
+dependencies:
+  - rattler-build
+  - conda-lock
