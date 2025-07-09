@@ -8,3 +8,5 @@ dependencies:
   - r-pkgdown
   - r-quarto
   - quarto
+  - dvc
+  - dvc-s3

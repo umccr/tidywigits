@@ -18,7 +18,7 @@ env:
   VERSION: '0.0.1.9007' # bump
 
 jobs:
-  condarise-dockerise-document:
+  condarise-dockerise:
     if: "startsWith(github.event.head_commit.message, 'Bump version:')"
     name: Conda Docker Docs
     runs-on: ubuntu-latest
@@ -40,12 +40,6 @@ jobs:
           miniforge-version: latest
       - name: 🐍 Conda pkg build and upload
         run: |
-          # pull test data
-          dvc remote list
-          dvc config --list --show-origin
-          dvc doctor
-          dvc pull
-          ls -l inst/extdata/*
           # conda build
           rattler-build build \
             --recipe ${conda_recipe}/recipe.yaml \
@@ -78,13 +72,6 @@ jobs:
           git add .
           git commit -m "${MSG}"
           git push
-
-      - name: 🌐 Website publish
-        run: |
-          conda env create -f ${conda_env_yaml}/pkgdown.yaml
-          conda activate pkgdown_env
-          ${pkg_name}.R --version
-          Rscript -e "pkgdown::deploy_to_branch(new_process = FALSE)"
 
       - name: 📥 Pull lock commit
         id: pull_lock_commit
@@ -136,3 +123,29 @@ jobs:
           push: true
           platforms: linux/amd64
           file: ./deploy/docker/Dockerfile
+  pkgdown:
+    name: pkgdown
+    needs: [condarise-dockerise]
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash -l {0}
+    steps:
+      - name: Code checkout
+        uses: actions/checkout@v4
+      - name: Miniforge setup
+        uses: conda-incubator/setup-miniconda@v3
+        with:
+          auto-update-conda: true
+          environment-file: ${{ env.conda_env_yaml }}/pkgdown.yaml
+          activate-environment: pkgdown_env
+          miniforge-version: latest
+      - name: 🌐 Website publish
+        run: |
+          # pull test data
+          dvc pull
+          ls -l inst/extdata/*
+          ${pkg_name}.R --version
+          R CMD build --no-build-vignettes --no-manual --no-resave-data .
+          Rscript -e "pkgdown::deploy_to_branch(new_process = FALSE)"
+
