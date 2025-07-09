@@ -5,3 +5,5 @@ channels:
 dependencies:
   - rattler-build
   - conda-lock
+  - dvc
+  - dvc-s3
