@@ -6,4 +6,5 @@ dependencies:
   - r-tidywigits ==0.0.1.9004 # bump
   - r-htmltools
   - r-pkgdown
+  - r-quarto
   - quarto
