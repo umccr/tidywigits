@@ -27,6 +27,7 @@ jobs:
         shell: bash -l {0}
     permissions:
       contents: write # for committing lockfiles
+      packages: write # for docker
 
     steps:
       - name: Code checkout
