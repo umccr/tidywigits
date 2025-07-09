@@ -39,7 +39,7 @@ jobs:
           # first build
           rattler-build build \
             --recipe ${conda_recipe}/recipe.yaml
-          pkg_path=$(find ./outdir -type f -name "*.conda")
+          pkg_path=$(find ./output -type f -name "*.conda")
           # check if pkg_path is empty or has multiple files
           [ -n "$pkg_path" ] && { echo "No conda pkg found" >&2; exit 1; }
           [ "$(echo "$pkg_path" | wc -l)" -eq 1 ] || { echo "Multiple conda pkg files found" >&2; exit 1; }
