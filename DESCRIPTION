@@ -1,6 +1,6 @@
 Package: tidywigits
 Title: Tidy WiGiTS
-Version: 0.0.1.9001
+Version: 0.0.1.9002
 Description: Tidy outputs from The Hartwig Medical Foundation's WiGiTS
              suite of genome and transcriptome analysis tools.
              Writes to various formats for downstream ingestion
