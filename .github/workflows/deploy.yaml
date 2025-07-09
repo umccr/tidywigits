@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - feat/9-gha
 env:
   pkg_name: tidywigits
   anaconda_token: ${{ secrets.ANACONDA_UPLOAD_TOKEN }}
@@ -14,7 +15,6 @@ env:
 
 jobs:
   condarise-dockerise-document:
-    # When merging to main and the commit message starts with 'Bump version:'
     if: "startsWith(github.event.head_commit.message, 'Bump version:')"
     name: Conda Docker Docs
     runs-on: ubuntu-latest
