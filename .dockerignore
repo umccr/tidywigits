@@ -1,3 +1,3 @@
 *
-!deploy/conda/env/lock/tidywigits-linux-64.lock
+!deploy/conda/env/lock/conda-linux-64.lock
 !.dockerignore
