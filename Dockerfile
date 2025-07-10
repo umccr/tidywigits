@@ -1,4 +1,4 @@
-FROM ubuntu:20.04
+FROM ubuntu:24.04
 LABEL org.opencontainers.image.authors="peterdiakumis@gmail.com" \
       org.opencontainers.image.description="WiGiTS workflow tidying" \
       org.opencontainers.image.source="https://github.com/umccr/tidywigits" \
