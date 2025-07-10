@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-      - feat/9-gha
 env:
   pkg_name: tidywigits
   anaconda_token: ${{ secrets.ANACONDA_UPLOAD_TOKEN }}
