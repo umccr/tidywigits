@@ -36,6 +36,7 @@ Correct flex boxes from sizing based upon the largest in tabset
   require(tibble, include.only = "tibble")
   require(tidyr, include.only = "unnest")
   require(fs, include.only = "dir_info")
+  require(knitr, include.only = "kable")
 }
 ```
 

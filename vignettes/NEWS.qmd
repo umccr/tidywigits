@@ -50,17 +50,21 @@ pr <- function(n) {
 }
 ```
 
-## v0.0.2 (2025-XX-XX)
+## DEV
+
+## v0.0.2 (2025-07-10)
 
 - `r vdiff("0.0.2", "0.0.1")`
 
-Mostly Shiny, Conda, Docker and pkgdown support.
+Mostly Shiny, Conda, Docker, pkgdown and GitHub Actions support.
 
-- Conda: add recipe and rattler-builder (`r pr(124)`, `r iss(4)`)
-- Shiny: add summary app (`r pr(122)`)
-- CLI: Add listing and tidy include/exclude support (`r pr(116)`)
-- Add pkgdown support (`r pr(125)`, `r iss(37)`)
-
+- Add GitHub Actions for deployment of the following (`r pr(130)`, `r iss(9)`):
+  - Conda: add recipe and rattler-builder (`r pr(124)`, `r iss(4)`)
+  - Docker: add Dockerfile (`r pr(130)`)
+  - Shiny: add summary app (`r pr(122)`)
+  - CLI: Add listing and tidy include/exclude support (`r pr(116)`)
+  - Add pkgdown support (`r pr(125)`, `r iss(37)`)
+  - Add DVC support with some purple test data (`r pr(126)`, `r iss(59)`)
 
 ## v0.0.1 (2025-06-19)
 
