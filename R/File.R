@@ -44,7 +44,7 @@ File <- R6::R6Class(
     #' @param suffix_pattern (`character(1)`)\cr
     #' Suffix pattern.
     initialize = function(path = NULL, suffix_pattern = NULL) {
-      assertthat::assert_that(rlang::is_scalar_atomic(path))
+      stopifnot(rlang::is_scalar_atomic(path))
       self$path <- normalizePath(path)
       self$bname <- basename(self$path)
       self$suffix_pattern <- suffix_pattern
