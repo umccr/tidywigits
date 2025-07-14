@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">tidywigits</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.1.9015</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -61,7 +61,7 @@
       <h1>Structure</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/umccr/tidywigits/blob/feat/9-gha/vignettes/structure.Rmd" class="external-link"><code>vignettes/structure.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/umccr/tidywigits/blob/main/vignettes/structure.Rmd" class="external-link"><code>vignettes/structure.Rmd</code></a></small>
       <div class="d-none name"><code>structure.Rmd</code></div>
     </div>
 
@@ -93,37 +93,9 @@ e.g. Apache Parquet, PostgreSQL, Delta table.</p>
 <p>{tidywigits} is built on top of R’s <a href="https://github.com/r-lib/R6" title="R6 package repo" class="external-link">R6</a>
 encapsulated object-oriented programming implementation, which helps
 with code organisation. It consists of several base classes like
-<code>File</code>, <code>Config</code>, <code>Tool</code>, and
-<code>Workflow</code> which we describe below. Each R6 class can contain
-public and private functions and non-functions (fields).</p>
-<div class="section level2">
-<h2 id="file">
-<code>File</code><a class="anchor" aria-label="anchor" href="#file"></a>
-</h2>
-<p>A <code>File</code> object represents… a file. It has an absolute
-path, a basename, and a size. Given a suffix pattern, it spits out its
-prefix. See <code><a href="../reference/File.html">?File</a></code>.</p>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="op">(</span><span class="va">f1</span> <span class="op">&lt;-</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/readr_example.html" class="external-link">readr_example</a></span><span class="op">(</span><span class="st">"mtcars.csv"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "/home/runner/work/_temp/Library/readr/extdata/mtcars.csv"</span></span>
-<span><span class="op">(</span><span class="va">f1_obj</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/File.html">File</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>path <span class="op">=</span> <span class="va">f1</span>, suffix_pattern <span class="op">=</span> <span class="st">"\\.csv"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; #--- File mtcars.csv ---#</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; |var            |value                                                    |</span></span>
-<span><span class="co">#&gt; |:--------------|:--------------------------------------------------------|</span></span>
-<span><span class="co">#&gt; |path           |/home/runner/work/_temp/Library/readr/extdata/mtcars.csv |</span></span>
-<span><span class="co">#&gt; |bname          |mtcars.csv                                               |</span></span>
-<span><span class="co">#&gt; |suffix_pattern |\.csv                                                    |</span></span>
-<span><span class="co">#&gt; |prefix         |mtcars                                                   |</span></span>
-<span><span class="co">#&gt; |size           |1.27K                                                    |</span></span></code></pre></div>
-<p>You can access the individual fields in the classic R list-like
-manner, using the <code>$</code> sign:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">f1_obj</span><span class="op">$</span><span class="va">suffix_pattern</span></span>
-<span><span class="co">#&gt; [1] "\\.csv"</span></span>
-<span><span class="va">f1_obj</span><span class="op">$</span><span class="va">prefix</span></span>
-<span><span class="co">#&gt; [1] "mtcars"</span></span></code></pre></div>
-</div>
+<code>Config</code>, <code>Tool</code>, and <code>Workflow</code> which
+we describe below. Each R6 class can contain public and private
+functions and non-functions (fields).</p>
 <div class="section level2">
 <h2 id="config">
 <code>Config</code><a class="anchor" aria-label="anchor" href="#config"></a>
@@ -154,7 +126,7 @@ input <em>files</em> and <em>tidy</em> output <em>tbls</em>. See
 
 <p>Let’s look at some of the information for the raw PURPLE config, for
 instance:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">tool</span> <span class="op">&lt;-</span> <span class="st">"purple"</span></span>
 <span><span class="va">toolu</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/chartr.html" class="external-link">toupper</a></span><span class="op">(</span><span class="va">tool</span><span class="op">)</span></span>
 <span><span class="va">conf</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/Config.html">Config</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">tool</span><span class="op">)</span></span>
@@ -166,13 +138,15 @@ instance:</p>
 <span><span class="co">#&gt; |tool  |purple |</span></span>
 <span><span class="co">#&gt; |nraw  |10     |</span></span>
 <span><span class="co">#&gt; |ntidy |10     |</span></span></code></pre></div>
+<p>You can access the individual fields in the classic R list-like
+manner, using the <code>$</code> sign.</p>
 </div>
 <div class="tab-pane" id="patterns" role="tabpanel" aria-labelledby="patterns-tab">
 
 <p>Patterns are used to fish out the relevant files from a directory
 listing. Note that the <code>\</code> needs to be doubled in the R code
 since it’s an escaped character.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">conf</span><span class="op">$</span><span class="fu">get_raw_patterns</span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span>caption <span class="op">=</span> <span class="fu">glue</span><span class="op">(</span><span class="st">"{toolu} raw file patterns."</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
@@ -232,7 +206,7 @@ since it’s an escaped character.</p>
 <div class="tab-pane" id="descriptions" role="tabpanel" aria-labelledby="descriptions-tab">
 
 <p>File descriptions based on the Hartwig documentation.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">conf</span><span class="op">$</span><span class="fu">get_raw_descriptions</span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span>caption <span class="op">=</span> <span class="fu">glue</span><span class="op">(</span><span class="st">"{toolu} raw file descriptions."</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
@@ -301,7 +275,7 @@ available LINX schemas. For now we are using <code>latest</code> as a
 default version based on the most recent schema tests, and any
 discrepancies we see are labelled accordingly by the version of the tool
 that generated a file with a different schema.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">conf</span><span class="op">$</span><span class="fu">get_raw_versions</span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span>caption <span class="op">=</span> <span class="fu">glue</span><span class="op">(</span><span class="st">"{toolu} raw file versions."</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
@@ -359,7 +333,7 @@ that generated a file with a different schema.</p>
 <p>The raw schemas specify the column name and type (e.g. character
 (<code>c</code>), integer (<code>i</code>), float/double
 (<code>d</code>)) for each input file (just showing a couple below):</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="op">(</span><span class="va">s</span> <span class="op">&lt;-</span> <span class="va">conf</span><span class="op">$</span><span class="fu">get_raw_schemas_all</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 10 × 3</span></span></span>
 <span><span class="co">#&gt;    name          version schema           </span></span>
@@ -418,7 +392,7 @@ i.e. snake_case), and some raw files get split into multiple tidy tables
 <div class="tab-pane" id="descriptions-1" role="tabpanel" aria-labelledby="descriptions-1-tab">
 
 <p>Tidy descriptions are the same as the raw descriptions for now.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">conf</span><span class="op">$</span><span class="fu">get_tidy_descriptions</span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span>caption <span class="op">=</span> <span class="fu">glue</span><span class="op">(</span><span class="st">"{toolu} tidy file descriptions."</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
@@ -480,7 +454,7 @@ the HMF gene panel.</td>
 </div>
 <div class="tab-pane" id="schemas-1" role="tabpanel" aria-labelledby="schemas-1-tab">
 
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="op">(</span><span class="va">s</span> <span class="op">&lt;-</span> <span class="va">conf</span><span class="op">$</span><span class="fu">get_tidy_schemas_all</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 10 × 4</span></span></span>
 <span><span class="co">#&gt;    name          version tbl   schema           </span></span>
@@ -556,7 +530,7 @@ as follows:</p>
 <ul>
 <li>Initialise a <code>Purple</code> object:</li>
 </ul>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ppl_path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata/purple"</span>, package <span class="op">=</span> <span class="st">"tidywigits"</span><span class="op">)</span></span>
 <span><span class="va">ppl</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/Purple.html">Purple</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>path <span class="op">=</span> <span class="va">ppl_path</span><span class="op">)</span></span>
 <span><span class="co"># each class comes with a print function</span></span>
@@ -577,7 +551,7 @@ as follows:</p>
 <code>name</code> supplied - this is used internally to find files of
 interest and infer their schemas:</li>
 </ul>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ppl</span><span class="op">$</span><span class="va">config</span></span>
 <span><span class="co">#&gt; #--- Config purple ---#</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -635,43 +609,32 @@ interest and infer their schemas:</li>
 
 <p>We can list files that can be parsed with
 <code>list_files</code>:</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="op">(</span><span class="va">lf</span> <span class="op">&lt;-</span> <span class="va">ppl</span><span class="op">$</span><span class="fu">list_files</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 11 × 11</span></span></span>
-<span><span class="co">#&gt;    tool_parser    parser bname    size lastmodified        path  pattern FileObj</span></span>
-<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;glue&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fs::b&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;list&gt;</span> </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> purple_cnvgen… cnvge… LXXX…   1.44K 2025-07-10 <span style="color: #949494;">03:56:58</span> /hom… <span style="color: #949494;">"</span>\\.pu… <span style="color: #949494;">&lt;File&gt;</span> </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> purple_cnvsom… cnvso… LXXX…   1.32K 2025-07-10 <span style="color: #949494;">03:56:58</span> /hom… <span style="color: #949494;">"</span>\\.pu… <span style="color: #949494;">&lt;File&gt;</span> </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> purple_driver… drive… LXXX…     819 2025-07-10 <span style="color: #949494;">03:56:58</span> /hom… <span style="color: #949494;">"</span>\\.pu… <span style="color: #949494;">&lt;File&gt;</span> </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> purple_driver… drive… LXXX…     468 2025-07-10 <span style="color: #949494;">03:56:58</span> /hom… <span style="color: #949494;">"</span>\\.pu… <span style="color: #949494;">&lt;File&gt;</span> </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> purple_germde… germd… LXXX…   1.24K 2025-07-10 <span style="color: #949494;">03:56:58</span> /hom… <span style="color: #949494;">"</span>\\.pu… <span style="color: #949494;">&lt;File&gt;</span> </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> purple_purity… purit… LXXX…     484 2025-07-10 <span style="color: #949494;">03:56:58</span> /hom… <span style="color: #949494;">"</span>\\.pu… <span style="color: #949494;">&lt;File&gt;</span> </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> purple_purity… purit… LXXX…     462 2025-07-10 <span style="color: #949494;">03:56:58</span> /hom… <span style="color: #949494;">"</span>\\.pu… <span style="color: #949494;">&lt;File&gt;</span> </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> purple_qc      qc     LXXX…     228 2025-07-10 <span style="color: #949494;">03:56:58</span> /hom… <span style="color: #949494;">"</span>\\.pu… <span style="color: #949494;">&lt;File&gt;</span> </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> purple_somclo… somcl… LXXX…     451 2025-07-10 <span style="color: #949494;">03:56:58</span> /hom… <span style="color: #949494;">"</span>\\.pu… <span style="color: #949494;">&lt;File&gt;</span> </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> purple_somhist somhi… LXXX…     138 2025-07-10 <span style="color: #949494;">03:56:58</span> /hom… <span style="color: #949494;">"</span>\\.pu… <span style="color: #949494;">&lt;File&gt;</span> </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">11</span> purple_version versi… purp…      39 2025-07-10 <span style="color: #949494;">03:56:58</span> /hom… <span style="color: #949494;">"</span>^purp… <span style="color: #949494;">&lt;File&gt;</span> </span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 3 more variables: prefix &lt;glue&gt;, schema &lt;list&gt;, group &lt;glue&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 11 × 10</span></span></span>
+<span><span class="co">#&gt;    tool_parser     parser bname    size lastmodified        path  pattern prefix</span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;glue&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fs::b&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;glue&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> purple_cnvgene… cnvge… LXXX…   1.44K 2025-07-14 <span style="color: #949494;">11:38:10</span> /hom… <span style="color: #949494;">"</span>\\.pu… LXXXX…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> purple_cnvsomt… cnvso… LXXX…   1.32K 2025-07-14 <span style="color: #949494;">11:38:10</span> /hom… <span style="color: #949494;">"</span>\\.pu… LXXXX…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> purple_driverc… drive… LXXX…     819 2025-07-14 <span style="color: #949494;">11:38:10</span> /hom… <span style="color: #949494;">"</span>\\.pu… LXXXX…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> purple_driverc… drive… LXXX…     468 2025-07-14 <span style="color: #949494;">11:38:10</span> /hom… <span style="color: #949494;">"</span>\\.pu… LXXXX…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> purple_germdel… germd… LXXX…   1.24K 2025-07-14 <span style="color: #949494;">11:38:10</span> /hom… <span style="color: #949494;">"</span>\\.pu… LXXXX…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> purple_purityr… purit… LXXX…     484 2025-07-14 <span style="color: #949494;">11:38:10</span> /hom… <span style="color: #949494;">"</span>\\.pu… LXXXX…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> purple_purityt… purit… LXXX…     462 2025-07-14 <span style="color: #949494;">11:38:10</span> /hom… <span style="color: #949494;">"</span>\\.pu… LXXXX…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> purple_qc       qc     LXXX…     228 2025-07-14 <span style="color: #949494;">11:38:10</span> /hom… <span style="color: #949494;">"</span>\\.pu… LXXXX…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> purple_somclon… somcl… LXXX…     451 2025-07-14 <span style="color: #949494;">11:38:10</span> /hom… <span style="color: #949494;">"</span>\\.pu… LXXXX…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> purple_somhist  somhi… LXXX…     138 2025-07-14 <span style="color: #949494;">11:38:10</span> /hom… <span style="color: #949494;">"</span>\\.pu… LXXXX…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">11</span> purple_version  versi… purp…      39 2025-07-14 <span style="color: #949494;">11:38:10</span> /hom… <span style="color: #949494;">"</span>^purp… versi…</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 2 more variables: schema &lt;list&gt;, group &lt;glue&gt;</span></span></span>
 <span><span class="va">lf</span> <span class="op">|&gt;</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; tibble [1 × 11] (S3: tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt; tibble [1 × 10] (S3: tbl_df/tbl/data.frame)</span></span>
 <span><span class="co">#&gt;  $ tool_parser : 'glue' chr "purple_cnvgenetsv"</span></span>
 <span><span class="co">#&gt;  $ parser      : chr "cnvgenetsv"</span></span>
 <span><span class="co">#&gt;  $ bname       : chr "LXXXXXXX.purple.cnv.gene.tsv"</span></span>
 <span><span class="co">#&gt;  $ size        : 'fs_bytes' num 1.44K</span></span>
-<span><span class="co">#&gt;  $ lastmodified: POSIXct[1:1], format: "2025-07-10 03:56:58"</span></span>
+<span><span class="co">#&gt;  $ lastmodified: POSIXct[1:1], format: "2025-07-14 11:38:10"</span></span>
 <span><span class="co">#&gt;  $ path        : chr "/home/runner/work/_temp/Library/tidywigits/extdata/purple/LXXXXXXX.purple.cnv.gene.tsv"</span></span>
 <span><span class="co">#&gt;  $ pattern     : chr "\\.purple\\.cnv\\.gene\\.tsv$"</span></span>
-<span><span class="co">#&gt;  $ FileObj     :List of 1</span></span>
-<span><span class="co">#&gt;   ..$ :Classes 'File', 'R6' &lt;File&gt;</span></span>
-<span><span class="co">#&gt;   Public:</span></span>
-<span><span class="co">#&gt;     bname: LXXXXXXX.purple.cnv.gene.tsv</span></span>
-<span><span class="co">#&gt;     clone: function (deep = FALSE) </span></span>
-<span><span class="co">#&gt;     initialize: function (path = NULL, suffix_pattern = NULL) </span></span>
-<span><span class="co">#&gt;     path: /home/runner/work/_temp/Library/tidywigits/extdata/purpl ...</span></span>
-<span><span class="co">#&gt;     prefix: LXXXXXXX</span></span>
-<span><span class="co">#&gt;     print: function (...) </span></span>
-<span><span class="co">#&gt;     size: 1.44K</span></span>
-<span><span class="co">#&gt;     suffix_pattern: \.purple\.cnv\.gene\.tsv$ </span></span>
 <span><span class="co">#&gt;  $ prefix      : 'glue' chr "LXXXXXXX"</span></span>
 <span><span class="co">#&gt;  $ schema      :List of 1</span></span>
 <span><span class="co">#&gt;   ..$ : tibble [18 × 2] (S3: tbl_df/tbl/data.frame)</span></span>
@@ -684,7 +647,7 @@ interest and infer their schemas:</li>
 <p>We can parse and tidy files of interest using the <code>tidy</code>
 function. Note that this function is called on the object and not
 assigned anywhere:</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># this will create a new field tbls containing the tidy data (and optionally</span></span>
 <span><span class="co"># the 'raw' parsed data)</span></span>
 <span><span class="va">ppl</span><span class="op">$</span><span class="fu">tidy</span><span class="op">(</span>tidy <span class="op">=</span> <span class="cn">TRUE</span>, keep_raw <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
@@ -692,17 +655,17 @@ assigned anywhere:</p>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 11 × 11</span></span></span>
 <span><span class="co">#&gt;    tool_parser     parser bname    size lastmodified        path  pattern prefix</span></span>
 <span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;glue&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fs::b&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;glue&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> purple_cnvgene… cnvge… LXXX…   1.44K 2025-07-10 <span style="color: #949494;">03:56:58</span> /hom… <span style="color: #949494;">"</span>\\.pu… LXXXX…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> purple_cnvsomt… cnvso… LXXX…   1.32K 2025-07-10 <span style="color: #949494;">03:56:58</span> /hom… <span style="color: #949494;">"</span>\\.pu… LXXXX…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> purple_driverc… drive… LXXX…     819 2025-07-10 <span style="color: #949494;">03:56:58</span> /hom… <span style="color: #949494;">"</span>\\.pu… LXXXX…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> purple_driverc… drive… LXXX…     468 2025-07-10 <span style="color: #949494;">03:56:58</span> /hom… <span style="color: #949494;">"</span>\\.pu… LXXXX…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> purple_germdel… germd… LXXX…   1.24K 2025-07-10 <span style="color: #949494;">03:56:58</span> /hom… <span style="color: #949494;">"</span>\\.pu… LXXXX…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> purple_purityr… purit… LXXX…     484 2025-07-10 <span style="color: #949494;">03:56:58</span> /hom… <span style="color: #949494;">"</span>\\.pu… LXXXX…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> purple_purityt… purit… LXXX…     462 2025-07-10 <span style="color: #949494;">03:56:58</span> /hom… <span style="color: #949494;">"</span>\\.pu… LXXXX…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> purple_qc       qc     LXXX…     228 2025-07-10 <span style="color: #949494;">03:56:58</span> /hom… <span style="color: #949494;">"</span>\\.pu… LXXXX…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> purple_somclon… somcl… LXXX…     451 2025-07-10 <span style="color: #949494;">03:56:58</span> /hom… <span style="color: #949494;">"</span>\\.pu… LXXXX…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> purple_somhist  somhi… LXXX…     138 2025-07-10 <span style="color: #949494;">03:56:58</span> /hom… <span style="color: #949494;">"</span>\\.pu… LXXXX…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">11</span> purple_version  versi… purp…      39 2025-07-10 <span style="color: #949494;">03:56:58</span> /hom… <span style="color: #949494;">"</span>^purp… versi…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> purple_cnvgene… cnvge… LXXX…   1.44K 2025-07-14 <span style="color: #949494;">11:38:10</span> /hom… <span style="color: #949494;">"</span>\\.pu… LXXXX…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> purple_cnvsomt… cnvso… LXXX…   1.32K 2025-07-14 <span style="color: #949494;">11:38:10</span> /hom… <span style="color: #949494;">"</span>\\.pu… LXXXX…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> purple_driverc… drive… LXXX…     819 2025-07-14 <span style="color: #949494;">11:38:10</span> /hom… <span style="color: #949494;">"</span>\\.pu… LXXXX…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> purple_driverc… drive… LXXX…     468 2025-07-14 <span style="color: #949494;">11:38:10</span> /hom… <span style="color: #949494;">"</span>\\.pu… LXXXX…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> purple_germdel… germd… LXXX…   1.24K 2025-07-14 <span style="color: #949494;">11:38:10</span> /hom… <span style="color: #949494;">"</span>\\.pu… LXXXX…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> purple_purityr… purit… LXXX…     484 2025-07-14 <span style="color: #949494;">11:38:10</span> /hom… <span style="color: #949494;">"</span>\\.pu… LXXXX…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> purple_purityt… purit… LXXX…     462 2025-07-14 <span style="color: #949494;">11:38:10</span> /hom… <span style="color: #949494;">"</span>\\.pu… LXXXX…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> purple_qc       qc     LXXX…     228 2025-07-14 <span style="color: #949494;">11:38:10</span> /hom… <span style="color: #949494;">"</span>\\.pu… LXXXX…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> purple_somclon… somcl… LXXX…     451 2025-07-14 <span style="color: #949494;">11:38:10</span> /hom… <span style="color: #949494;">"</span>\\.pu… LXXXX…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> purple_somhist  somhi… LXXX…     138 2025-07-14 <span style="color: #949494;">11:38:10</span> /hom… <span style="color: #949494;">"</span>\\.pu… LXXXX…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">11</span> purple_version  versi… purp…      39 2025-07-14 <span style="color: #949494;">11:38:10</span> /hom… <span style="color: #949494;">"</span>^purp… versi…</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ 3 more variables: group &lt;glue&gt;, raw &lt;list&gt;, tidy &lt;list&gt;</span></span></span>
 <span><span class="va">ppl</span><span class="op">$</span><span class="va">tbls</span><span class="op">$</span><span class="va">raw</span><span class="op">[[</span><span class="fl">8</span><span class="op">]</span><span class="op">]</span> <span class="op">|&gt;</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Rows: 1</span></span>
@@ -742,33 +705,33 @@ assigned anywhere:</p>
 <code>filter_files</code> function. The <code>include</code> and
 <code>exclude</code> arguments can specify which parsers to include or
 exclude in the analysis:</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># create new Purple object</span></span>
 <span><span class="va">ppl2</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/Purple.html">Purple</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>path <span class="op">=</span> <span class="va">ppl_path</span><span class="op">)</span></span>
 <span><span class="va">ppl2</span><span class="op">$</span><span class="va">files</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 11 × 11</span></span></span>
-<span><span class="co">#&gt;    tool_parser    parser bname    size lastmodified        path  pattern FileObj</span></span>
-<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;glue&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fs::b&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;list&gt;</span> </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> purple_cnvgen… cnvge… LXXX…   1.44K 2025-07-10 <span style="color: #949494;">03:56:58</span> /hom… <span style="color: #949494;">"</span>\\.pu… <span style="color: #949494;">&lt;File&gt;</span> </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> purple_cnvsom… cnvso… LXXX…   1.32K 2025-07-10 <span style="color: #949494;">03:56:58</span> /hom… <span style="color: #949494;">"</span>\\.pu… <span style="color: #949494;">&lt;File&gt;</span> </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> purple_driver… drive… LXXX…     819 2025-07-10 <span style="color: #949494;">03:56:58</span> /hom… <span style="color: #949494;">"</span>\\.pu… <span style="color: #949494;">&lt;File&gt;</span> </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> purple_driver… drive… LXXX…     468 2025-07-10 <span style="color: #949494;">03:56:58</span> /hom… <span style="color: #949494;">"</span>\\.pu… <span style="color: #949494;">&lt;File&gt;</span> </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> purple_germde… germd… LXXX…   1.24K 2025-07-10 <span style="color: #949494;">03:56:58</span> /hom… <span style="color: #949494;">"</span>\\.pu… <span style="color: #949494;">&lt;File&gt;</span> </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> purple_purity… purit… LXXX…     484 2025-07-10 <span style="color: #949494;">03:56:58</span> /hom… <span style="color: #949494;">"</span>\\.pu… <span style="color: #949494;">&lt;File&gt;</span> </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> purple_purity… purit… LXXX…     462 2025-07-10 <span style="color: #949494;">03:56:58</span> /hom… <span style="color: #949494;">"</span>\\.pu… <span style="color: #949494;">&lt;File&gt;</span> </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> purple_qc      qc     LXXX…     228 2025-07-10 <span style="color: #949494;">03:56:58</span> /hom… <span style="color: #949494;">"</span>\\.pu… <span style="color: #949494;">&lt;File&gt;</span> </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> purple_somclo… somcl… LXXX…     451 2025-07-10 <span style="color: #949494;">03:56:58</span> /hom… <span style="color: #949494;">"</span>\\.pu… <span style="color: #949494;">&lt;File&gt;</span> </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> purple_somhist somhi… LXXX…     138 2025-07-10 <span style="color: #949494;">03:56:58</span> /hom… <span style="color: #949494;">"</span>\\.pu… <span style="color: #949494;">&lt;File&gt;</span> </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">11</span> purple_version versi… purp…      39 2025-07-10 <span style="color: #949494;">03:56:58</span> /hom… <span style="color: #949494;">"</span>^purp… <span style="color: #949494;">&lt;File&gt;</span> </span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 3 more variables: prefix &lt;glue&gt;, schema &lt;list&gt;, group &lt;glue&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 11 × 10</span></span></span>
+<span><span class="co">#&gt;    tool_parser     parser bname    size lastmodified        path  pattern prefix</span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;glue&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fs::b&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;glue&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> purple_cnvgene… cnvge… LXXX…   1.44K 2025-07-14 <span style="color: #949494;">11:38:10</span> /hom… <span style="color: #949494;">"</span>\\.pu… LXXXX…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> purple_cnvsomt… cnvso… LXXX…   1.32K 2025-07-14 <span style="color: #949494;">11:38:10</span> /hom… <span style="color: #949494;">"</span>\\.pu… LXXXX…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> purple_driverc… drive… LXXX…     819 2025-07-14 <span style="color: #949494;">11:38:10</span> /hom… <span style="color: #949494;">"</span>\\.pu… LXXXX…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> purple_driverc… drive… LXXX…     468 2025-07-14 <span style="color: #949494;">11:38:10</span> /hom… <span style="color: #949494;">"</span>\\.pu… LXXXX…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> purple_germdel… germd… LXXX…   1.24K 2025-07-14 <span style="color: #949494;">11:38:10</span> /hom… <span style="color: #949494;">"</span>\\.pu… LXXXX…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> purple_purityr… purit… LXXX…     484 2025-07-14 <span style="color: #949494;">11:38:10</span> /hom… <span style="color: #949494;">"</span>\\.pu… LXXXX…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> purple_purityt… purit… LXXX…     462 2025-07-14 <span style="color: #949494;">11:38:10</span> /hom… <span style="color: #949494;">"</span>\\.pu… LXXXX…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> purple_qc       qc     LXXX…     228 2025-07-14 <span style="color: #949494;">11:38:10</span> /hom… <span style="color: #949494;">"</span>\\.pu… LXXXX…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> purple_somclon… somcl… LXXX…     451 2025-07-14 <span style="color: #949494;">11:38:10</span> /hom… <span style="color: #949494;">"</span>\\.pu… LXXXX…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> purple_somhist  somhi… LXXX…     138 2025-07-14 <span style="color: #949494;">11:38:10</span> /hom… <span style="color: #949494;">"</span>\\.pu… LXXXX…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">11</span> purple_version  versi… purp…      39 2025-07-14 <span style="color: #949494;">11:38:10</span> /hom… <span style="color: #949494;">"</span>^purp… versi…</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 2 more variables: schema &lt;list&gt;, group &lt;glue&gt;</span></span></span>
 <span><span class="va">ppl2</span><span class="op">$</span><span class="fu">filter_files</span><span class="op">(</span>include <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"purple_qc"</span>, <span class="st">"purple_cnvsomtsv"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">ppl2</span><span class="op">$</span><span class="va">files</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 2 × 11</span></span></span>
-<span><span class="co">#&gt;   tool_parser     parser bname    size lastmodified        path  pattern FileObj</span></span>
-<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;glue&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fs::b&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;list&gt;</span> </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> purple_cnvsomt… cnvso… LXXX…   1.32K 2025-07-10 <span style="color: #949494;">03:56:58</span> /hom… <span style="color: #949494;">"</span>\\.pu… <span style="color: #949494;">&lt;File&gt;</span> </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> purple_qc       qc     LXXX…     228 2025-07-10 <span style="color: #949494;">03:56:58</span> /hom… <span style="color: #949494;">"</span>\\.pu… <span style="color: #949494;">&lt;File&gt;</span> </span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 3 more variables: prefix &lt;glue&gt;, schema &lt;list&gt;, group &lt;glue&gt;</span></span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 2 × 10</span></span></span>
+<span><span class="co">#&gt;   tool_parser      parser bname    size lastmodified        path  pattern prefix</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;glue&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fs::b&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;glue&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> purple_cnvsomtsv cnvso… LXXX…   1.32K 2025-07-14 <span style="color: #949494;">11:38:10</span> /hom… <span style="color: #949494;">"</span>\\.pu… LXXXX…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> purple_qc        qc     LXXX…     228 2025-07-14 <span style="color: #949494;">11:38:10</span> /hom… <span style="color: #949494;">"</span>\\.pu… LXXXX…</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 2 more variables: schema &lt;list&gt;, group &lt;glue&gt;</span></span></span></code></pre></div>
 </div>
 <div class="tab-pane" id="write" role="tabpanel" aria-labelledby="write-tab">
 
@@ -780,34 +743,32 @@ used e.g. to distinguish results from different runs in a data pipeline.
 When writing to a database like PostgreSQL, another column
 <code>nemo_pfix</code> is used to distinguish results from the same run
 from the same tool.</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ppl2</span><span class="op">$</span><span class="fu">tidy</span><span class="op">(</span><span class="op">)</span> <span class="co"># first need to tidy</span></span>
 <span><span class="va">outdir1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">fmt</span> <span class="op">&lt;-</span> <span class="st">"tsv"</span></span>
 <span><span class="va">ppl2</span><span class="op">$</span><span class="fu">write</span><span class="op">(</span>odir <span class="op">=</span> <span class="va">outdir1</span>, format <span class="op">=</span> <span class="va">fmt</span>, id <span class="op">=</span> <span class="st">"run123"</span><span class="op">)</span></span>
 <span><span class="op">(</span><span class="va">wfiles</span> <span class="op">&lt;-</span> <span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="https://fs.r-lib.org/reference/dir_ls.html" class="external-link">dir_info</a></span><span class="op">(</span><span class="va">outdir1</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 19 × 5</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 17 × 5</span></span></span>
 <span><span class="co">#&gt;    path                            type     size permissions modification_time  </span></span>
 <span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;fs::path&gt;</span>                      <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fs::b&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fs::perms&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>             </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> …<span style="color: #BB0000; font-weight: bold;">XXXXXX_purple_cnvsomtsv.tsv.gz</span> file      631 rw-r--r--   2025-07-10 <span style="color: #949494;">03:57:41</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> …<span style="color: #BB0000; font-weight: bold;">LM6k/LXXXXXXX_purple_qc.tsv.gz</span> file      186 rw-r--r--   2025-07-10 <span style="color: #949494;">03:57:41</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> …mp/RtmpGHLM6k/file249c115a20c4 file    4.71K rw-r--r--   2025-07-10 <span style="color: #949494;">03:57:39</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> …mp/RtmpGHLM6k/file249c12c9a05f file    4.71K rw-r--r--   2025-07-10 <span style="color: #949494;">03:57:39</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> /tmp/RtmpGHLM6k/file249c159b12c file    4.71K rw-r--r--   2025-07-10 <span style="color: #949494;">03:57:39</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> …mp/RtmpGHLM6k/file249c1a21df8b file    4.71K rw-r--r--   2025-07-10 <span style="color: #949494;">03:57:38</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> …mp/RtmpGHLM6k/file249c221c83ea file    4.71K rw-r--r--   2025-07-10 <span style="color: #949494;">03:57:38</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> /tmp/RtmpGHLM6k/file249c26b27d7 file    4.71K rw-r--r--   2025-07-10 <span style="color: #949494;">03:57:38</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> …mp/RtmpGHLM6k/file249c2fea82b5 file    4.71K rw-r--r--   2025-07-10 <span style="color: #949494;">03:57:38</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> …mp/RtmpGHLM6k/file249c3d2e34b8 file    4.71K rw-r--r--   2025-07-10 <span style="color: #949494;">03:57:39</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">11</span> …mp/RtmpGHLM6k/file249c44e2365e file    4.71K rw-r--r--   2025-07-10 <span style="color: #949494;">03:57:39</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">12</span> …mp/RtmpGHLM6k/file249c50907d14 file    4.71K rw-r--r--   2025-07-10 <span style="color: #949494;">03:57:38</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">13</span> …mp/RtmpGHLM6k/file249c5d6d8144 file    4.71K rw-r--r--   2025-07-10 <span style="color: #949494;">03:57:39</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">14</span> …mp/RtmpGHLM6k/file249c6abab626 file    4.71K rw-r--r--   2025-07-10 <span style="color: #949494;">03:57:39</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">15</span> …mp/RtmpGHLM6k/file249c6d683b09 file    4.71K rw-r--r--   2025-07-10 <span style="color: #949494;">03:57:40</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">16</span> …mp/RtmpGHLM6k/file249c6fc231c7 file    4.71K rw-r--r--   2025-07-10 <span style="color: #949494;">03:57:41</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">17</span> …mp/RtmpGHLM6k/file249c7c7f74c7 file    4.71K rw-r--r--   2025-07-10 <span style="color: #949494;">03:57:39</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">18</span> …mp/RtmpGHLM6k/file249c7e9211ce file    4.71K rw-r--r--   2025-07-10 <span style="color: #949494;">03:57:40</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">19</span> …rmarkdown-str249c23d8be2c.html file    1.12K rw-r--r--   2025-07-10 <span style="color: #949494;">03:57:37</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> …<span style="color: #BB0000; font-weight: bold;">XXXXXX_purple_cnvsomtsv.tsv.gz</span> file      631 rw-r--r--   2025-07-14 <span style="color: #949494;">11:39:02</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> …<span style="color: #BB0000; font-weight: bold;">3VFi/LXXXXXXX_purple_qc.tsv.gz</span> file      186 rw-r--r--   2025-07-14 <span style="color: #949494;">11:39:02</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> …mp/Rtmphs3VFi/file229926947191 file    4.71K rw-r--r--   2025-07-14 <span style="color: #949494;">11:39:01</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> …mp/Rtmphs3VFi/file22993ec683a4 file    4.71K rw-r--r--   2025-07-14 <span style="color: #949494;">11:39:01</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> …mp/Rtmphs3VFi/file22993f46862b file    4.71K rw-r--r--   2025-07-14 <span style="color: #949494;">11:39:01</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> …mp/Rtmphs3VFi/file229940db5ef8 file    4.71K rw-r--r--   2025-07-14 <span style="color: #949494;">11:39:00</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> …mp/Rtmphs3VFi/file2299466fc5ab file    4.71K rw-r--r--   2025-07-14 <span style="color: #949494;">11:39:00</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> …mp/Rtmphs3VFi/file229947d54ea2 file    4.71K rw-r--r--   2025-07-14 <span style="color: #949494;">11:39:00</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> …mp/Rtmphs3VFi/file22994ee3f90e file    4.71K rw-r--r--   2025-07-14 <span style="color: #949494;">11:39:02</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> …mp/Rtmphs3VFi/file2299547d2870 file    4.71K rw-r--r--   2025-07-14 <span style="color: #949494;">11:39:01</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">11</span> …mp/Rtmphs3VFi/file22995865c599 file    4.71K rw-r--r--   2025-07-14 <span style="color: #949494;">11:39:00</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">12</span> …mp/Rtmphs3VFi/file229962f9985e file    4.71K rw-r--r--   2025-07-14 <span style="color: #949494;">11:39:00</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">13</span> …mp/Rtmphs3VFi/file229967124ebe file    4.71K rw-r--r--   2025-07-14 <span style="color: #949494;">11:39:00</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">14</span> …mp/Rtmphs3VFi/file229973c12047 file    4.71K rw-r--r--   2025-07-14 <span style="color: #949494;">11:39:02</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">15</span> …mp/Rtmphs3VFi/file229976170c00 file    4.71K rw-r--r--   2025-07-14 <span style="color: #949494;">11:39:00</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">16</span> /tmp/Rtmphs3VFi/file2299c6faa09 file    4.71K rw-r--r--   2025-07-14 <span style="color: #949494;">11:39:01</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">17</span> …rmarkdown-str22995a45b6db.html file    1.13K rw-r--r--   2025-07-14 <span style="color: #949494;">11:38:59</span></span></span>
 <span><span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html" class="external-link">read_tsv</a></span><span class="op">(</span><span class="va">wfiles</span><span class="op">$</span><span class="va">path</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>, show_col_types <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 1 × 13</span></span></span>
 <span><span class="co">#&gt;   nemo_id qc_status method cn_segments unsupported_cn_segments purity</span></span>
@@ -821,25 +782,25 @@ from the same tool.</p>
 
 <p>The <code>nemofy</code> function is a convenient wrapper for the
 process of filtering, tidying, and writing.</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ppl3</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/Purple.html">Purple</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>path <span class="op">=</span> <span class="va">ppl_path</span><span class="op">)</span></span>
 <span><span class="va">outdir2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"ppl3"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="https://fs.r-lib.org/reference/create.html" class="external-link">dir_create</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">ppl3</span><span class="op">$</span><span class="va">files</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 11 × 11</span></span></span>
-<span><span class="co">#&gt;    tool_parser    parser bname    size lastmodified        path  pattern FileObj</span></span>
-<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;glue&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fs::b&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;list&gt;</span> </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> purple_cnvgen… cnvge… LXXX…   1.44K 2025-07-10 <span style="color: #949494;">03:56:58</span> /hom… <span style="color: #949494;">"</span>\\.pu… <span style="color: #949494;">&lt;File&gt;</span> </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> purple_cnvsom… cnvso… LXXX…   1.32K 2025-07-10 <span style="color: #949494;">03:56:58</span> /hom… <span style="color: #949494;">"</span>\\.pu… <span style="color: #949494;">&lt;File&gt;</span> </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> purple_driver… drive… LXXX…     819 2025-07-10 <span style="color: #949494;">03:56:58</span> /hom… <span style="color: #949494;">"</span>\\.pu… <span style="color: #949494;">&lt;File&gt;</span> </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> purple_driver… drive… LXXX…     468 2025-07-10 <span style="color: #949494;">03:56:58</span> /hom… <span style="color: #949494;">"</span>\\.pu… <span style="color: #949494;">&lt;File&gt;</span> </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> purple_germde… germd… LXXX…   1.24K 2025-07-10 <span style="color: #949494;">03:56:58</span> /hom… <span style="color: #949494;">"</span>\\.pu… <span style="color: #949494;">&lt;File&gt;</span> </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> purple_purity… purit… LXXX…     484 2025-07-10 <span style="color: #949494;">03:56:58</span> /hom… <span style="color: #949494;">"</span>\\.pu… <span style="color: #949494;">&lt;File&gt;</span> </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> purple_purity… purit… LXXX…     462 2025-07-10 <span style="color: #949494;">03:56:58</span> /hom… <span style="color: #949494;">"</span>\\.pu… <span style="color: #949494;">&lt;File&gt;</span> </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> purple_qc      qc     LXXX…     228 2025-07-10 <span style="color: #949494;">03:56:58</span> /hom… <span style="color: #949494;">"</span>\\.pu… <span style="color: #949494;">&lt;File&gt;</span> </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> purple_somclo… somcl… LXXX…     451 2025-07-10 <span style="color: #949494;">03:56:58</span> /hom… <span style="color: #949494;">"</span>\\.pu… <span style="color: #949494;">&lt;File&gt;</span> </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> purple_somhist somhi… LXXX…     138 2025-07-10 <span style="color: #949494;">03:56:58</span> /hom… <span style="color: #949494;">"</span>\\.pu… <span style="color: #949494;">&lt;File&gt;</span> </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">11</span> purple_version versi… purp…      39 2025-07-10 <span style="color: #949494;">03:56:58</span> /hom… <span style="color: #949494;">"</span>^purp… <span style="color: #949494;">&lt;File&gt;</span> </span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 3 more variables: prefix &lt;glue&gt;, schema &lt;list&gt;, group &lt;glue&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 11 × 10</span></span></span>
+<span><span class="co">#&gt;    tool_parser     parser bname    size lastmodified        path  pattern prefix</span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;glue&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fs::b&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;glue&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> purple_cnvgene… cnvge… LXXX…   1.44K 2025-07-14 <span style="color: #949494;">11:38:10</span> /hom… <span style="color: #949494;">"</span>\\.pu… LXXXX…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> purple_cnvsomt… cnvso… LXXX…   1.32K 2025-07-14 <span style="color: #949494;">11:38:10</span> /hom… <span style="color: #949494;">"</span>\\.pu… LXXXX…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> purple_driverc… drive… LXXX…     819 2025-07-14 <span style="color: #949494;">11:38:10</span> /hom… <span style="color: #949494;">"</span>\\.pu… LXXXX…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> purple_driverc… drive… LXXX…     468 2025-07-14 <span style="color: #949494;">11:38:10</span> /hom… <span style="color: #949494;">"</span>\\.pu… LXXXX…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> purple_germdel… germd… LXXX…   1.24K 2025-07-14 <span style="color: #949494;">11:38:10</span> /hom… <span style="color: #949494;">"</span>\\.pu… LXXXX…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> purple_purityr… purit… LXXX…     484 2025-07-14 <span style="color: #949494;">11:38:10</span> /hom… <span style="color: #949494;">"</span>\\.pu… LXXXX…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> purple_purityt… purit… LXXX…     462 2025-07-14 <span style="color: #949494;">11:38:10</span> /hom… <span style="color: #949494;">"</span>\\.pu… LXXXX…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> purple_qc       qc     LXXX…     228 2025-07-14 <span style="color: #949494;">11:38:10</span> /hom… <span style="color: #949494;">"</span>\\.pu… LXXXX…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> purple_somclon… somcl… LXXX…     451 2025-07-14 <span style="color: #949494;">11:38:10</span> /hom… <span style="color: #949494;">"</span>\\.pu… LXXXX…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> purple_somhist  somhi… LXXX…     138 2025-07-14 <span style="color: #949494;">11:38:10</span> /hom… <span style="color: #949494;">"</span>\\.pu… LXXXX…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">11</span> purple_version  versi… purp…      39 2025-07-14 <span style="color: #949494;">11:38:10</span> /hom… <span style="color: #949494;">"</span>^purp… versi…</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 2 more variables: schema &lt;list&gt;, group &lt;glue&gt;</span></span></span>
 <span><span class="va">ppl3</span><span class="op">$</span><span class="fu">nemofy</span><span class="op">(</span></span>
 <span>  odir <span class="op">=</span> <span class="va">outdir2</span>,</span>
 <span>  format <span class="op">=</span> <span class="st">"tsv"</span>,</span>
@@ -850,12 +811,12 @@ process of filtering, tidying, and writing.</p>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 5</span></span></span>
 <span><span class="co">#&gt;   path                               type   size permissions modification_time  </span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;fs::path&gt;</span>                         <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fs:&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fs::perms&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>             </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> …<span style="color: #BB0000; font-weight: bold;">XXXXXXX_purple_purityrange.tsv.gz</span> file    204 rw-r--r--   2025-07-10 <span style="color: #949494;">03:57:41</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> …<span style="color: #BB0000; font-weight: bold;">/LXXXXXXX_purple_puritytsv.tsv.gz</span> file    303 rw-r--r--   2025-07-10 <span style="color: #949494;">03:57:41</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> …<span style="color: #BB0000; font-weight: bold;">6k/ppl3/LXXXXXXX_purple_qc.tsv.gz</span> file    186 rw-r--r--   2025-07-10 <span style="color: #949494;">03:57:41</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> …<span style="color: #BB0000; font-weight: bold;">XXXXXX_purple_somclonality.tsv.gz</span> file    154 rw-r--r--   2025-07-10 <span style="color: #949494;">03:57:41</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> …<span style="color: #BB0000; font-weight: bold;">l3/LXXXXXXX_purple_somhist.tsv.gz</span> file    108 rw-r--r--   2025-07-10 <span style="color: #949494;">03:57:41</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> …<span style="color: #BB0000; font-weight: bold;">pl3/version_purple_version.tsv.gz</span> file     77 rw-r--r--   2025-07-10 <span style="color: #949494;">03:57:41</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> …<span style="color: #BB0000; font-weight: bold;">XXXXXXX_purple_purityrange.tsv.gz</span> file    204 rw-r--r--   2025-07-14 <span style="color: #949494;">11:39:03</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> …<span style="color: #BB0000; font-weight: bold;">/LXXXXXXX_purple_puritytsv.tsv.gz</span> file    303 rw-r--r--   2025-07-14 <span style="color: #949494;">11:39:03</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> …<span style="color: #BB0000; font-weight: bold;">Fi/ppl3/LXXXXXXX_purple_qc.tsv.gz</span> file    186 rw-r--r--   2025-07-14 <span style="color: #949494;">11:39:03</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> …<span style="color: #BB0000; font-weight: bold;">XXXXXX_purple_somclonality.tsv.gz</span> file    154 rw-r--r--   2025-07-14 <span style="color: #949494;">11:39:03</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> …<span style="color: #BB0000; font-weight: bold;">l3/LXXXXXXX_purple_somhist.tsv.gz</span> file    108 rw-r--r--   2025-07-14 <span style="color: #949494;">11:39:03</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> …<span style="color: #BB0000; font-weight: bold;">pl3/version_purple_version.tsv.gz</span> file     77 rw-r--r--   2025-07-14 <span style="color: #949494;">11:39:03</span></span></span>
 <span><span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html" class="external-link">read_tsv</a></span><span class="op">(</span><span class="va">wfiles2</span><span class="op">$</span><span class="va">path</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>, show_col_types <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 1 × 26</span></span></span>
 <span><span class="co">#&gt;   nemo_id  purity norm_factor score diploid_proportion ploidy gender status</span></span>
@@ -887,26 +848,26 @@ on a suite of <code>Tool</code>s under the <a href="https://github.com/umccr/tid
 <code>Tool</code>, a <code>Workflow</code> object contains functions
 such as <code>filter_files</code>, <code>list_files</code>,
 <code>tidy</code>, <code>write</code> and <code>nemofy</code>:</p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">oa</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata/purple"</span>, package <span class="op">=</span> <span class="st">"tidywigits"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="va"><a href="../reference/Oncoanalyser.html">Oncoanalyser</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">outdir3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"oa"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="https://fs.r-lib.org/reference/create.html" class="external-link">dir_create</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">oa</span><span class="op">$</span><span class="fu">list_files</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 11 × 11</span></span></span>
-<span><span class="co">#&gt;    parser    bname    size lastmodified        path  pattern tool_parser FileObj</span></span>
-<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fs::b&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;glue&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;list&gt;</span> </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> cnvgenet… LXXX…   1.44K 2025-07-10 <span style="color: #949494;">03:56:58</span> /hom… <span style="color: #949494;">"</span>\\.pu… purple_cnv… <span style="color: #949494;">&lt;File&gt;</span> </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> cnvsomtsv LXXX…   1.32K 2025-07-10 <span style="color: #949494;">03:56:58</span> /hom… <span style="color: #949494;">"</span>\\.pu… purple_cnv… <span style="color: #949494;">&lt;File&gt;</span> </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> driverca… LXXX…     819 2025-07-10 <span style="color: #949494;">03:56:58</span> /hom… <span style="color: #949494;">"</span>\\.pu… purple_dri… <span style="color: #949494;">&lt;File&gt;</span> </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> driverca… LXXX…     468 2025-07-10 <span style="color: #949494;">03:56:58</span> /hom… <span style="color: #949494;">"</span>\\.pu… purple_dri… <span style="color: #949494;">&lt;File&gt;</span> </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> germdelt… LXXX…   1.24K 2025-07-10 <span style="color: #949494;">03:56:58</span> /hom… <span style="color: #949494;">"</span>\\.pu… purple_ger… <span style="color: #949494;">&lt;File&gt;</span> </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> purityra… LXXX…     484 2025-07-10 <span style="color: #949494;">03:56:58</span> /hom… <span style="color: #949494;">"</span>\\.pu… purple_pur… <span style="color: #949494;">&lt;File&gt;</span> </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> puritytsv LXXX…     462 2025-07-10 <span style="color: #949494;">03:56:58</span> /hom… <span style="color: #949494;">"</span>\\.pu… purple_pur… <span style="color: #949494;">&lt;File&gt;</span> </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> qc        LXXX…     228 2025-07-10 <span style="color: #949494;">03:56:58</span> /hom… <span style="color: #949494;">"</span>\\.pu… purple_qc   <span style="color: #949494;">&lt;File&gt;</span> </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> somclona… LXXX…     451 2025-07-10 <span style="color: #949494;">03:56:58</span> /hom… <span style="color: #949494;">"</span>\\.pu… purple_som… <span style="color: #949494;">&lt;File&gt;</span> </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> somhist   LXXX…     138 2025-07-10 <span style="color: #949494;">03:56:58</span> /hom… <span style="color: #949494;">"</span>\\.pu… purple_som… <span style="color: #949494;">&lt;File&gt;</span> </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">11</span> version   purp…      39 2025-07-10 <span style="color: #949494;">03:56:58</span> /hom… <span style="color: #949494;">"</span>^purp… purple_ver… <span style="color: #949494;">&lt;File&gt;</span> </span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 3 more variables: prefix &lt;glue&gt;, schema &lt;list&gt;, group &lt;glue&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 11 × 10</span></span></span>
+<span><span class="co">#&gt;    parser     bname    size lastmodified        path  pattern tool_parser prefix</span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fs::b&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;glue&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;glue&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> cnvgenetsv LXXX…   1.44K 2025-07-14 <span style="color: #949494;">11:38:10</span> /hom… <span style="color: #949494;">"</span>\\.pu… purple_cnv… LXXXX…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> cnvsomtsv  LXXX…   1.32K 2025-07-14 <span style="color: #949494;">11:38:10</span> /hom… <span style="color: #949494;">"</span>\\.pu… purple_cnv… LXXXX…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> drivercat… LXXX…     819 2025-07-14 <span style="color: #949494;">11:38:10</span> /hom… <span style="color: #949494;">"</span>\\.pu… purple_dri… LXXXX…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> drivercat… LXXX…     468 2025-07-14 <span style="color: #949494;">11:38:10</span> /hom… <span style="color: #949494;">"</span>\\.pu… purple_dri… LXXXX…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> germdeltsv LXXX…   1.24K 2025-07-14 <span style="color: #949494;">11:38:10</span> /hom… <span style="color: #949494;">"</span>\\.pu… purple_ger… LXXXX…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> purityran… LXXX…     484 2025-07-14 <span style="color: #949494;">11:38:10</span> /hom… <span style="color: #949494;">"</span>\\.pu… purple_pur… LXXXX…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> puritytsv  LXXX…     462 2025-07-14 <span style="color: #949494;">11:38:10</span> /hom… <span style="color: #949494;">"</span>\\.pu… purple_pur… LXXXX…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> qc         LXXX…     228 2025-07-14 <span style="color: #949494;">11:38:10</span> /hom… <span style="color: #949494;">"</span>\\.pu… purple_qc   LXXXX…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> somclonal… LXXX…     451 2025-07-14 <span style="color: #949494;">11:38:10</span> /hom… <span style="color: #949494;">"</span>\\.pu… purple_som… LXXXX…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> somhist    LXXX…     138 2025-07-14 <span style="color: #949494;">11:38:10</span> /hom… <span style="color: #949494;">"</span>\\.pu… purple_som… LXXXX…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">11</span> version    purp…      39 2025-07-14 <span style="color: #949494;">11:38:10</span> /hom… <span style="color: #949494;">"</span>^purp… purple_ver… versi…</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 2 more variables: schema &lt;list&gt;, group &lt;glue&gt;</span></span></span>
 <span><span class="va">x</span> <span class="op">&lt;-</span> <span class="va">oa</span><span class="op">$</span><span class="fu">nemofy</span><span class="op">(</span></span>
 <span>  odir <span class="op">=</span> <span class="va">outdir3</span>,</span>
 <span>  format <span class="op">=</span> <span class="st">"tsv"</span>,</span>
@@ -917,17 +878,17 @@ such as <code>filter_files</code>, <code>list_files</code>,
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 11 × 5</span></span></span>
 <span><span class="co">#&gt;    path                              type   size permissions modification_time  </span></span>
 <span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;fs::path&gt;</span>                        <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fs:&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fs::perms&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>             </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> …<span style="color: #BB0000; font-weight: bold;">line_purple_drivercatalog.tsv.gz</span> file    363 rw-r--r--   2025-07-10 <span style="color: #949494;">03:57:43</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> …<span style="color: #BB0000; font-weight: bold;">XXXXXXX_purple_cnvgenetsv.tsv.gz</span> file    444 rw-r--r--   2025-07-10 <span style="color: #949494;">03:57:43</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> …<span style="color: #BB0000; font-weight: bold;">LXXXXXXX_purple_cnvsomtsv.tsv.gz</span> file    633 rw-r--r--   2025-07-10 <span style="color: #949494;">03:57:43</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> …<span style="color: #BB0000; font-weight: bold;">XXXX_purple_drivercatalog.tsv.gz</span> file    293 rw-r--r--   2025-07-10 <span style="color: #949494;">03:57:43</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> …<span style="color: #BB0000; font-weight: bold;">XXXXXXX_purple_germdeltsv.tsv.gz</span> file    479 rw-r--r--   2025-07-10 <span style="color: #949494;">03:57:43</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> …<span style="color: #BB0000; font-weight: bold;">XXXXXX_purple_purityrange.tsv.gz</span> file    202 rw-r--r--   2025-07-10 <span style="color: #949494;">03:57:43</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> …<span style="color: #BB0000; font-weight: bold;">LXXXXXXX_purple_puritytsv.tsv.gz</span> file    303 rw-r--r--   2025-07-10 <span style="color: #949494;">03:57:43</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> …<span style="color: #BB0000; font-weight: bold;">M6k/oa/LXXXXXXX_purple_qc.tsv.gz</span> file    185 rw-r--r--   2025-07-10 <span style="color: #949494;">03:57:43</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> …<span style="color: #BB0000; font-weight: bold;">XXXXX_purple_somclonality.tsv.gz</span> file    153 rw-r--r--   2025-07-10 <span style="color: #949494;">03:57:43</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> …<span style="color: #BB0000; font-weight: bold;">a/LXXXXXXX_purple_somhist.tsv.gz</span> file    107 rw-r--r--   2025-07-10 <span style="color: #949494;">03:57:43</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">11</span> …<span style="color: #BB0000; font-weight: bold;">oa/version_purple_version.tsv.gz</span> file     76 rw-r--r--   2025-07-10 <span style="color: #949494;">03:57:43</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> …<span style="color: #BB0000; font-weight: bold;">line_purple_drivercatalog.tsv.gz</span> file    363 rw-r--r--   2025-07-14 <span style="color: #949494;">11:39:04</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> …<span style="color: #BB0000; font-weight: bold;">XXXXXXX_purple_cnvgenetsv.tsv.gz</span> file    444 rw-r--r--   2025-07-14 <span style="color: #949494;">11:39:04</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> …<span style="color: #BB0000; font-weight: bold;">LXXXXXXX_purple_cnvsomtsv.tsv.gz</span> file    633 rw-r--r--   2025-07-14 <span style="color: #949494;">11:39:04</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> …<span style="color: #BB0000; font-weight: bold;">XXXX_purple_drivercatalog.tsv.gz</span> file    293 rw-r--r--   2025-07-14 <span style="color: #949494;">11:39:04</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> …<span style="color: #BB0000; font-weight: bold;">XXXXXXX_purple_germdeltsv.tsv.gz</span> file    479 rw-r--r--   2025-07-14 <span style="color: #949494;">11:39:04</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> …<span style="color: #BB0000; font-weight: bold;">XXXXXX_purple_purityrange.tsv.gz</span> file    202 rw-r--r--   2025-07-14 <span style="color: #949494;">11:39:04</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> …<span style="color: #BB0000; font-weight: bold;">LXXXXXXX_purple_puritytsv.tsv.gz</span> file    303 rw-r--r--   2025-07-14 <span style="color: #949494;">11:39:04</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> …<span style="color: #BB0000; font-weight: bold;">VFi/oa/LXXXXXXX_purple_qc.tsv.gz</span> file    185 rw-r--r--   2025-07-14 <span style="color: #949494;">11:39:04</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> …<span style="color: #BB0000; font-weight: bold;">XXXXX_purple_somclonality.tsv.gz</span> file    153 rw-r--r--   2025-07-14 <span style="color: #949494;">11:39:04</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> …<span style="color: #BB0000; font-weight: bold;">a/LXXXXXXX_purple_somhist.tsv.gz</span> file    107 rw-r--r--   2025-07-14 <span style="color: #949494;">11:39:04</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">11</span> …<span style="color: #BB0000; font-weight: bold;">oa/version_purple_version.tsv.gz</span> file     76 rw-r--r--   2025-07-14 <span style="color: #949494;">11:39:04</span></span></span>
 <span><span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html" class="external-link">read_tsv</a></span><span class="op">(</span><span class="va">wfiles3</span><span class="op">$</span><span class="va">path</span><span class="op">[</span><span class="fl">5</span><span class="op">]</span>, show_col_types <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 10 × 17</span></span></span>
 <span><span class="co">#&gt;    nemo_id gene        chromosome chromosome_band region_start region_end</span></span>
