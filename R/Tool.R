@@ -159,40 +159,37 @@ Tool <- R6::R6Class(
       if (!is.null(files_tbl)) {
         assertthat::assert_that(is_files_tbl(files_tbl))
       }
-      patterns <- self$config$get_raw_patterns()
+      patterns <- self$config$get_raw_patterns() |>
+        dplyr::rename(pat_name = "name", pat_value = "value")
       files <- files_tbl %||% list_files_dir(self$path, type = type)
       res <- files |>
         tidyr::crossing(patterns) |>
-        dplyr::filter(stringr::str_detect(.data$bname, .data$value)) |>
+        dplyr::filter(stringr::str_detect(.data$bname, .data$pat_value)) |>
         dplyr::select(
-          parser = "name",
+          parser = "pat_name",
           "bname",
           "size",
           "lastmodified",
           "path",
-          pattern = "value"
+          pattern = "pat_value"
         )
       if (nrow(res) == 0) {
         return(res)
       }
       res |>
-        dplyr::rowwise() |>
         dplyr::mutate(
-          FileObj = list(
-            File$new(
-              path = .data$path,
-              suffix_pattern = .data$pattern
-            )
-          ),
-          prefix = FileObj$prefix,
+          prefix = stringr::str_replace(.data$bname, glue("(.*){.data$pattern}"), "\\1"),
           # handle wigits version files
           prefix = dplyr::if_else(
-            .data$parser == "version" && .data$prefix == "",
+            .data$parser == "version" & .data$prefix == "",
             "version",
             .data$prefix
           ),
-          schema = list(self$config$get_raw_schema(.data$parser)),
           tool_parser = glue("{self$name}_{.data$parser}")
+        ) |>
+        dplyr::rowwise() |>
+        dplyr::mutate(
+          schema = list(self$config$get_raw_schema(.data$parser))
         ) |>
         dplyr::ungroup() |>
         dplyr::mutate(group = dplyr::row_number(), .by = "bname") |>
@@ -318,7 +315,7 @@ Tool <- R6::R6Class(
           )
         ) |>
         dplyr::ungroup() |>
-        dplyr::select(-c("parse_fun", "tidy_fun", "FileObj", "schema"))
+        dplyr::select(-c("parse_fun", "tidy_fun", "schema"))
       if (!keep_raw) {
         d <- d |>
           dplyr::select(-"raw")
