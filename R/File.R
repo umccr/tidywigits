@@ -31,9 +31,6 @@ File <- R6::R6Class(
     #' @field suffix_pattern (`character(1)`)\cr
     #' Suffix pattern.
     suffix_pattern = NULL,
-    #' @field size (`character(1)`)\cr
-    #' Size of file.
-    size = NULL,
     #' @field prefix (`character(1)`)\cr
     #' Prefix of file.
     prefix = NULL,
@@ -45,10 +42,9 @@ File <- R6::R6Class(
     #' Suffix pattern.
     initialize = function(path = NULL, suffix_pattern = NULL) {
       stopifnot(rlang::is_scalar_atomic(path))
-      self$path <- normalizePath(path)
+      self$path <- path
       self$bname <- basename(self$path)
       self$suffix_pattern <- suffix_pattern
-      self$size <- fs::file_size(self$path)
       if (!rlang::is_null(suffix_pattern)) {
         self$prefix = sub(glue("(.*){suffix_pattern}"), "\\1", self$bname)
       }
@@ -63,8 +59,7 @@ File <- R6::R6Class(
         "path", self$path,
         "bname", self$bname,
         "suffix_pattern", self$suffix_pattern,
-        "prefix", self$prefix,
-        "size", as.character(self$size)
+        "prefix", self$prefix
       )
       cat(glue("#--- File {self$bname} ---#"))
       print(knitr::kable(res))
