@@ -42,6 +42,9 @@ Path(s) to workflow results.}
 
 \item{\code{tools}}{(\code{list(n)})\cr
 List of Tools that compose a Workflow.}
+
+\item{\code{files_tbl}}{(\code{tibble(n)})\cr
+Tibble of files from \code{list_files_dir}.}
 }
 \if{html}{\out{</div>}}
 }

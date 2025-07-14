@@ -54,29 +54,10 @@ Delta table.
 
 {tidywigits} is built on top of R's [R6] encapsulated object-oriented programming
 implementation, which helps with code organisation. It consists of several base
-classes like `File`, `Config`, `Tool`, and `Workflow` which we describe below.
+classes like `Config`, `Tool`, and `Workflow` which we describe below.
 Each R6 class can contain public and private functions and non-functions (fields).
 
 [R6]: <https://github.com/r-lib/R6> "R6 package repo"
-
-
-## `File`
-
-A `File` object represents... a file. It has an absolute path, a basename, and
-a size. Given a suffix pattern, it spits out its prefix. See `?File`.
-
-```{r file_example1}
-(f1 <- readr::readr_example("mtcars.csv"))
-(f1_obj <- File$new(path = f1, suffix_pattern = "\\.csv"))
-```
-
-You can access the individual fields in the classic R list-like manner, using
-the `$` sign:
-
-```{r file_example2}
-f1_obj$suffix_pattern
-f1_obj$prefix
-```
 
 ## `Config`
 
@@ -97,6 +78,9 @@ toolu <- toupper(tool)
 conf <- Config$new(tool)
 conf
 ```
+
+You can access the individual fields in the classic R list-like manner, using
+the `$` sign.
 
 #### patterns
 

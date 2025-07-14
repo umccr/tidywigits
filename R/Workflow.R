@@ -39,6 +39,9 @@ Workflow <- R6::R6Class(
     #' @field tools (`list(n)`)\cr
     #' List of Tools that compose a Workflow.
     tools = NULL,
+    #' @field files_tbl (`tibble(n)`)\cr
+    #' Tibble of files from `list_files_dir`.
+    files_tbl = NULL,
 
     #' @description Create a new Workflow object.
     #' @param name (`character(1)`)\cr
@@ -51,10 +54,10 @@ Workflow <- R6::R6Class(
       self$name <- name
       private$validate_tools(tools)
       self$path <- normalizePath(path)
-      ft <- list_files_dir(self$path)
+      self$files_tbl <- list_files_dir(self$path)
       # handle everything in a list of Tools
       self$tools <- tools |>
-        purrr::map(\(x) x$new(files_tbl = ft))
+        purrr::map(\(x) x$new(files_tbl = self$files_tbl))
     },
     #' @description Print details about the File.
     #' @param ... (ignored).
@@ -176,11 +179,11 @@ Workflow <- R6::R6Class(
   ), # public end
   private = list(
     validate_tools = function(x) {
-      assertthat::assert_that(rlang::is_bare_list(x))
-      assertthat::assert_that(all(purrr::map_lgl(x, R6::is.R6Class)))
+      stopifnot(rlang::is_bare_list(x))
+      stopifnot(all(purrr::map_lgl(x, R6::is.R6Class)))
       tool_nms <- purrr::map_chr(x, "classname") |> tolower()
-      assertthat::assert_that(!is.null(tool_nms) && all(tool_nms %in% NEMO_TOOLS))
-      assertthat::assert_that(all(purrr::map(x, "inherit") == as.symbol("Tool")))
+      stopifnot(!is.null(tool_nms) && all(tool_nms %in% NEMO_TOOLS))
+      stopifnot(all(purrr::map(x, "inherit") == as.symbol("Tool")))
     }
   ) # private end
 )

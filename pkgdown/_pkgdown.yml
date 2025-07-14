@@ -27,7 +27,6 @@ navbar:
 reference:
   - title: "Base Classes"
     contents:
-      - File
       - Config
       - Tool
       - Workflow

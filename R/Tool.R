@@ -82,7 +82,7 @@ Tool <- R6::R6Class(
     initialize = function(name = NULL, path = NULL, files_tbl = NULL) {
       assertthat::assert_that(!is.null(path) || !is.null(files_tbl), !is.null(name))
       if (!is.null(files_tbl)) {
-        assertthat::assert_that(is_files_tbl(files_tbl))
+        stopifnot(is_files_tbl(files_tbl))
         if (!is.null(path)) {
           # gets ignored if files_tbl is specified
           path <- NULL
@@ -130,12 +130,12 @@ Tool <- R6::R6Class(
           msg = "You cannot define both include and exclude!"
         )
         if (!is.null(include)) {
-          assertthat::assert_that(rlang::is_character(include))
+          stopifnot(rlang::is_character(include))
           d <- d |>
             dplyr::filter(.data$tool_parser %in% include)
         }
         if (!is.null(exclude)) {
-          assertthat::assert_that(rlang::is_character(exclude))
+          stopifnot(rlang::is_character(exclude))
           d <- d |>
             dplyr::filter(!.data$tool_parser %in% exclude)
         }
@@ -159,48 +159,37 @@ Tool <- R6::R6Class(
       if (!is.null(files_tbl)) {
         assertthat::assert_that(is_files_tbl(files_tbl))
       }
-      patterns <- self$config$get_raw_patterns()
+      patterns <- self$config$get_raw_patterns() |>
+        dplyr::rename(pat_name = "name", pat_value = "value")
       files <- files_tbl %||% list_files_dir(self$path, type = type)
       res <- files |>
-        dplyr::rowwise() |>
-        dplyr::mutate(
-          matched_name = list(
-            patterns |>
-              dplyr::filter(stringr::str_detect(bname, .data$value)) |>
-              dplyr::select(parser = "name", pattern = "value")
-          )
-        ) |>
-        dplyr::ungroup() |>
-        tidyr::unnest("matched_name") |>
+        tidyr::crossing(patterns) |>
+        dplyr::filter(stringr::str_detect(.data$bname, .data$pat_value)) |>
         dplyr::select(
-          "parser",
+          parser = "pat_name",
           "bname",
           "size",
           "lastmodified",
           "path",
-          "pattern"
+          pattern = "pat_value"
         )
       if (nrow(res) == 0) {
         return(res)
       }
       res |>
-        dplyr::rowwise() |>
         dplyr::mutate(
-          FileObj = list(
-            File$new(
-              path = .data$path,
-              suffix_pattern = .data$pattern
-            )
-          ),
-          prefix = FileObj$prefix,
+          prefix = stringr::str_replace(.data$bname, glue("(.*){.data$pattern}"), "\\1"),
           # handle wigits version files
           prefix = dplyr::if_else(
-            .data$parser == "version" && .data$prefix == "",
+            .data$parser == "version" & .data$prefix == "",
             "version",
             .data$prefix
           ),
-          schema = list(self$config$get_raw_schema(.data$parser)),
           tool_parser = glue("{self$name}_{.data$parser}")
+        ) |>
+        dplyr::rowwise() |>
+        dplyr::mutate(
+          schema = list(self$config$get_raw_schema(.data$parser))
         ) |>
         dplyr::ungroup() |>
         dplyr::mutate(group = dplyr::row_number(), .by = "bname") |>
@@ -242,7 +231,7 @@ Tool <- R6::R6Class(
         x <- .parser(x)
       }
       version <- get_tbl_version_attr(x)
-      assertthat::assert_that(!is.null(version), msg = "version can't be NULL.")
+      stopifnot(!is.null(version))
       schema <- self$get_tidy_schema(name, v = version)
       colnames(x) <- schema[["field"]]
       if (convert_types) {
@@ -286,7 +275,7 @@ Tool <- R6::R6Class(
     #' Environment to evaluate the function within.
     #' @return The evaluated function.
     .eval_func = function(fun, envir = self) {
-      assertthat::assert_that(rlang::is_scalar_character(fun))
+      stopifnot(rlang::is_scalar_character(fun))
       get(fun, envir)
     },
     #' @description Tidy a list of files.
@@ -326,7 +315,7 @@ Tool <- R6::R6Class(
           )
         ) |>
         dplyr::ungroup() |>
-        dplyr::select(-c("parse_fun", "tidy_fun", "FileObj", "schema"))
+        dplyr::select(-c("parse_fun", "tidy_fun", "schema"))
       if (!keep_raw) {
         d <- d |>
           dplyr::select(-"raw")
@@ -352,8 +341,8 @@ Tool <- R6::R6Class(
     write = function(odir = ".", format = "tsv", id = NULL, dbconn = NULL) {
       fs::dir_create(odir)
       odir <- normalizePath(odir)
-      assertthat::assert_that(!is.null(id))
-      assertthat::assert_that(!private$needs_tidying, msg = "Did you forget to tidy?")
+      stopifnot(!is.null(id))
+      stopifnot("Did you forget to tidy?" = !private$needs_tidying)
       if (is.null(self$tbls)) {
         # even though tidying is not needed, there must be no files detected
         # for tidying (and therefore writing). So return NULL.

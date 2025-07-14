@@ -34,16 +34,16 @@
 #' DBI::dbDisconnect(con)
 #' @export
 nemo_write <- function(d, fpfix = NULL, format = "tsv", id = NULL, dbconn = NULL, dbtab = NULL) {
-  assertthat::assert_that(!is.null(id), !is.null(fpfix))
-  assertthat::assert_that(is.data.frame(d))
+  stopifnot(!is.null(id), !is.null(fpfix))
+  stopifnot(is.data.frame(d))
   valid_out_fmt(format)
   fpfix <- as.character(fpfix)
   d <- d |>
     tibble::add_column(nemo_id = as.character(id), .before = 1)
   if (format == "db") {
-    assertthat::assert_that(!is.null(dbconn), msg = "Valid db conn needed")
-    assertthat::assert_that(!is.null(dbtab), msg = "Valid db tab name needed")
-    assertthat::assert_that(!grepl("/", fpfix)) # avoid accidental dir path
+    stopifnot("Valid db conn needed" = !is.null(dbconn))
+    stopifnot("Valid db tab name needed" = !is.null(dbtab))
+    stopifnot(!grepl("/", fpfix)) # avoid accidental dir path
     d <- d |>
       tibble::add_column(nemo_pfix = as.character(fpfix), .after = 1)
     DBI::dbWriteTable(
