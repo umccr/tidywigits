@@ -1,14 +1,15 @@
 {
+  use("arrow", "read_parquet")
+  use("DBI", "dbConnect")
+  use("dplyr", c("filter", "mutate", "select"))
+  use("ggplot2")
+  use("glue", "glue")
+  use("plotly", c("renderPlotly", "plotlyOutput", "ggplotly"))
+  use("reactable", c("reactable", "renderReactable", "reactableOutput", "colDef", "colFormat"))
+  use("RPostgres", "Postgres")
   use("shiny")
   use("shinydashboard")
-  use("dplyr", c("filter", "mutate", "select"))
-  use("DBI", "dbConnect")
-  use("RPostgres", c("Postgres"))
-  use("reactable", c("reactable", "renderReactable", "reactableOutput", "colDef", "colFormat"))
-  use("plotly", c("renderPlotly", "plotlyOutput", "ggplotly"))
-  use("arrow", "read_parquet")
-  use("glue", "glue")
-  use("ggplot2")
+  use("tibble", "tibble")
 }
 
 # UI
@@ -16,29 +17,14 @@ ui <- dashboardPage(
   dashboardHeader(title = "WiGiTS Results"),
   dashboardSidebar(
     sidebarMenu(
-      # Patient selection
+      # ID selection
       div(
         style = "padding: 20px;",
         h4("Pick ID"),
-        textInput("library_id", "Library ID:", placeholder = "LibraryID"),
+        textInput("library_id", "LibraryID:", placeholder = "LibraryID"),
         actionButton("load_data", "Data Load", class = "btn-primary"),
         br(),
         br(),
-
-        # Global filters (initially hidden)
-        conditionalPanel(
-          condition = "output.data_loaded",
-          h4("Global Filters"),
-          numericInput(
-            "min_af",
-            "Min Allele Frequency (%):",
-            value = 0,
-            min = 0,
-            max = 100,
-            step = 1
-          ),
-          numericInput("min_quality", "Min Quality Score:", value = 0, min = 0, step = 1)
-        )
       ),
 
       # Nav menu
@@ -81,13 +67,13 @@ ui <- dashboardPage(
             solidHeader = TRUE,
             div(
               class = "loading-message",
-              h3("Gimme a LibraryID"),
+              h3("LibraryID"),
               br(),
               conditionalPanel(
                 condition = "input.load_data > 0 && !output.data_loaded",
                 div(
                   icon("spinner", class = "fa-spin"),
-                  "Loading patient data..."
+                  "Loading data..."
                 )
               )
             )
@@ -101,27 +87,30 @@ ui <- dashboardPage(
         fluidRow(
           box(
             width = 12,
-            title = "Quality Control Summary",
+            title = "QC Status",
             status = "primary",
             solidHeader = TRUE,
             collapsible = TRUE,
-            uiOutput("qc_summary_cards")
+            collapsed = FALSE,
+            tabsetPanel(
+              tabPanel("PURPLE", reactableOutput("purple_qc")),
+              tabPanel("AMBER", reactableOutput("amber_qc")),
+              tabPanel("LILAC", reactableOutput("lilac_qc"))
+            )
           )
         ),
         fluidRow(
           box(
             width = 12,
             title = "QC Details",
-            status = "info",
+            status = "primary",
             solidHeader = TRUE,
             collapsible = TRUE,
-            collapsed = TRUE,
+            collapsed = FALSE,
             tabsetPanel(
-              tabPanel("QC Table 1", reactableOutput("qc_table_1")),
-              tabPanel("QC Table 2", reactableOutput("qc_table_2")),
-              tabPanel("QC Table 3", reactableOutput("qc_table_3")),
-              tabPanel("QC Table 4", reactableOutput("qc_table_4")),
-              tabPanel("QC Table 5", reactableOutput("qc_table_5"))
+              tabPanel("PURPLE Purity", reactableOutput("purple_puritytsv")),
+              tabPanel("CHORD", reactableOutput("chord_prediction")),
+              tabPanel("LILAC Summary", reactableOutput("lilac_summary"))
             )
           )
         )
@@ -216,7 +205,7 @@ ui <- dashboardPage(
 
 # Server
 server <- function(input, output, session) {
-  # Database connection
+  # DB connection
   con <- DBI::dbConnect(
     drv = RPostgres::Postgres(),
     dbname = "nemo",
@@ -229,60 +218,78 @@ server <- function(input, output, session) {
     data_loaded = FALSE
   )
 
-  # Data loading function
-  load_patient_data <- function(library_id) {
-    # Example data:
-    list(
-      qc_table_1 = data.frame(
-        library_id = library_id,
-        metric = c("Total Reads", "Mapped Reads", "Duplicate Rate"),
-        value = c(1000000, 950000, 0.05),
-        status = c("PASS", "PASS", "PASS")
-      ),
-      snv_results = data.frame(
-        library_id = rep(library_id, 100),
-        chromosome = sample(paste0("chr", 1:22), 100, replace = TRUE),
-        position = sample(1:1000000, 100),
-        ref = sample(c("A", "T", "C", "G"), 100, replace = TRUE),
-        alt = sample(c("A", "T", "C", "G"), 100, replace = TRUE),
-        allele_freq = runif(100, 0, 1),
-        quality_score = runif(100, 0, 100),
-        gene = sample(paste0("Gene", 1:50), 100, replace = TRUE)
-      ),
-      cnv_results = data.frame(
-        library_id = rep(library_id, 20),
-        chromosome = sample(paste0("chr", 1:22), 20, replace = TRUE),
-        start = sample(1:1000000, 20),
-        end = sample(1000000:2000000, 20),
-        copy_number = sample(c(0, 1, 3, 4), 20, replace = TRUE),
-        gene = sample(paste0("Gene", 1:50), 20, replace = TRUE)
-      ),
-      sv_results = data.frame(
-        library_id = rep(library_id, 15),
-        chromosome1 = sample(paste0("chr", 1:22), 15, replace = TRUE),
-        position1 = sample(1:1000000, 15),
-        chromosome2 = sample(paste0("chr", 1:22), 15, replace = TRUE),
-        position2 = sample(1000000:2000000, 15),
-        sv_type = sample(c("DEL", "DUP", "INV", "TRA"), 15, replace = TRUE),
-        quality_score = runif(15, 0, 100)
-      )
+  # Data loader
+  # library_id <- "L2300659"
+  load_data <- function(library_id) {
+    tabs <- c(
+      "purple_qc",
+      "amber_qc",
+      "lilac_qc",
+      "lilac_summary",
+      "purple_puritytsv",
+      "purple_drivercatalog",
+      "chord_prediction",
+      "sigs_allocation",
+      "flagstats_flagstats",
+      "bamtools_wgsmetrics_metrics",
+      "virusbreakend_summary",
+      "virusinterpreter_annotated"
     )
+    library_exists <- FALSE
+    # Check if library exists in any of the tables
+    for (tab in tabs) {
+      query <- glue("SELECT COUNT(*) as count FROM \"{tab}\" WHERE nemo_pfix = '{library_id}'")
+      result <- DBI::dbGetQuery(con, query)
+      if (result$count > 0) {
+        library_exists <- TRUE
+        break
+      }
+    }
+    if (!library_exists) {
+      stop(glue("LibraryID {library_id} not found in any table"))
+    }
+    safe_query <- function(tab) {
+      tryCatch(
+        {
+          # query <- glue("SELECT * FROM \"{tab}\" WHERE nemo_pfix = '{library_id}'")
+          # result <- DBI::dbGetQuery(con, query)
+          result <- dplyr::tbl(con, tab) |>
+            dplyr::filter(nemo_pfix == library_id) |>
+            dplyr::select(-c("nemo_id", "nemo_pfix")) |>
+            dplyr::collect()
+          if (nrow(result) == 0) {
+            return(tibble(library_id = character(0)))
+          }
+          return(result)
+        },
+        error = function(e) {
+          warning(glue("Error querying table {tab}: {e$message}"))
+          return(tibble(library_id = character(0)))
+        }
+      )
+    }
+
+    dat <- list()
+    for (tab in tabs) {
+      dat[[tab]] <- safe_query(tab)
+    }
+    return(dat)
   }
 
-  # Load data when button is clicked
+  # Load data upon click
   observeEvent(input$load_data, {
     req(input$library_id)
 
     tryCatch(
       {
-        values$patient_data <- load_patient_data(input$library_id)
+        values$patient_data <- load_data(input$library_id)
         values$data_loaded <- TRUE
 
         # Switch to QC tab after loading
         updateTabItems(session, "tabs", "qc")
       },
       error = function(e) {
-        showNotification(paste("Error loading data:", e$message), type = "error")
+        showNotification(glue("Error loading data: {e$message}"), type = "error")
       }
     )
   })
@@ -320,11 +327,53 @@ server <- function(input, output, session) {
   })
 
   # QC Tables
-  output$qc_table_1 <- renderReactable({
+  output$purple_qc <- renderReactable({
     req(values$data_loaded)
 
     reactable(
-      values$patient_data$qc_table_1,
+      values$patient_data$purple_qc,
+      filterable = TRUE,
+      searchable = TRUE,
+      striped = TRUE,
+      highlight = TRUE,
+      columns = list(
+        qc_status = colDef(cell = function(value) {
+          if (value == "PASS") {
+            span(style = "color: green; font-weight: bold;", value)
+          } else {
+            span(style = "color: red; font-weight: bold;", value)
+          }
+        })
+      )
+    )
+  })
+
+  output$amber_qc <- renderReactable({
+    req(values$data_loaded)
+
+    reactable(
+      values$patient_data$amber_qc,
+      filterable = TRUE,
+      searchable = TRUE,
+      striped = TRUE,
+      highlight = TRUE,
+      columns = list(
+        qcstatus = colDef(cell = function(value) {
+          if (value == "PASS") {
+            span(style = "color: green; font-weight: bold;", value)
+          } else {
+            span(style = "color: red; font-weight: bold;", value)
+          }
+        })
+      )
+    )
+  })
+
+  output$lilac_qc <- renderReactable({
+    req(values$data_loaded)
+
+    reactable(
+      values$patient_data$lilac_qc,
       filterable = TRUE,
       searchable = TRUE,
       striped = TRUE,
