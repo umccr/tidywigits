@@ -14,8 +14,14 @@ tidy_add_args <- function(subp) {
 }
 
 tidy_parse_args <- function(args) {
-  fs::dir_create(args$out_dir)
-  out_dir <- normalizePath(args$out_dir)
+  out_dir <- args$out_dir
+  if (args$format != "db") {
+    if (is.null(out_dir)) {
+      stop("Output directory must be specified when format is not 'db'.")
+    }
+    fs::dir_create(out_dir)
+    out_dir <- normalizePath(out_dir)
+  }
   include <- args$include
   exclude <- args$exclude
   if (!is.null(include)) {
