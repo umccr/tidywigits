@@ -339,8 +339,13 @@ Tool <- R6::R6Class(
     #' Database connection object (see `DBI::dbConnect`).
     #' @return A tibble with the tidy data and their output location prefix.
     write = function(odir = ".", format = "tsv", id = NULL, dbconn = NULL) {
-      fs::dir_create(odir)
-      odir <- normalizePath(odir)
+      if (format != "db") {
+        if (is.null(odir)) {
+          stop("Output directory must be specified when format is not 'db'.")
+        }
+        fs::dir_create(odir)
+        odir <- normalizePath(odir)
+      }
       stopifnot(!is.null(id))
       stopifnot("Did you forget to tidy?" = !private$needs_tidying)
       if (is.null(self$tbls)) {
