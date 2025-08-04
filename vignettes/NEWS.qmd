@@ -52,7 +52,13 @@ pr <- function(n) {
 
 ## DEV
 
-## v0.0.2 (2025-07-10)
+## v0.0.3 (2025-08-04)
+
+- `r vdiff("0.0.3", "0.0.2")`
+
+Fixed bug where `normalizePath` was getting called with NULL output directory in the db format case (`r pr(133)`).
+
+## v0.0.2 (2025-07-14)
 
 - `r vdiff("0.0.2", "0.0.1")`
 
