@@ -1,8 +1,20 @@
 {
-    "[quarto]": {
-        "editor.formatOnSave": true
-    },
-    "[r]": {
-        "editor.formatOnSave": true
+  "[quarto]": {
+    "editor.formatOnSave": true
+  },
+  "[r]": {
+    "editor.formatOnSave": true
+  },
+  "sqltools.connections": [
+    {
+      "previewLimit": 50,
+      "server": "localhost",
+      "port": 5432,
+      "driver": "PostgreSQL",
+      "database": "nemo",
+      "username": "orcabus",
+      "name": "nemo1",
+      "password": ""
     }
+  ]
 }
