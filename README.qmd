@@ -26,6 +26,18 @@ require(tidywigits)
 
 - Docs: <https://umccr.github.io/tidywigits/>
 
+{tidywigits} is an R package that parses and tidies outputs from the [WiGiTS]
+suite of genome and transcriptome analysis tools for cancer research and diagnostics,
+created by the Hartwig Medical Foundation.
+
+[WiGiTS]: <https://github.com/hartwigmedical/hmftools> "WiGiTS suite"
+
+In short, it traverses through a directory containing results from one or more
+runs of WiGiTS tools, parses any files it recognises, tidies
+them up (which includes data reshaping, normalisation, column name cleanup etc.),
+and writes them to the output format of choice e.g. Apache Parquet, PostgreSQL,
+Delta table.
+
 ## 🍕 Installation
 
 ### R
@@ -36,24 +48,24 @@ remotes::install_github("umccr/tidywigits")
 
 ### Conda
 
-#### Linux & MacOS (non-M1)
+#### Linux & MacOS (non-ARM)
 
 ```bash
 conda create \
   -n tidywigits_env \
-  -c umccr -c bioconda -c conda-forge \
+  -c umccr -c conda-forge \
   r-tidywigits==X.X.X
 
 conda activate tidywigits_env
 ```
 
-#### MacOS M1
+#### MacOS ARM
 
 ```bash
 CONDA_SUBDIR=osx-64 \
   conda create \
   -n tidywigits_env \
-  -c umccr -c bioconda -c conda-forge \
+  -c umccr -c conda-forge \
   r-tidywigits==X.X.X
 
 conda activate tidywigits_env
@@ -63,4 +75,43 @@ conda activate tidywigits_env
 
 ```bash
 docker pull --platform linux/amd64 ghcr.io/umccr/tidywigits:X.X.X
+```
+
+## 🌀 CLI
+
+A `tidywigits.R` command line interface is available for convenience.
+
+- If you're using the conda package, the `tidywigits.R` command will already be
+  available inside the activated conda environment.
+- If you're _not_ using the conda package, you need to export the
+  `tidywigits/inst/cli/` directory to your `PATH` in order to use `tidywigits.R`.
+
+```{bash}
+#| label: cli1
+#| echo: true
+#| eval: false
+tw_cli=$(Rscript -e 'x = system.file("cli", package = "tidywigits"); cat(x, "\n")' | xargs)
+export PATH="${tw_cli}:${PATH}"
+```
+
+```{bash}
+#| label: cli2
+#| echo: false
+#| prompt: true
+tw_cli=$(Rscript -e 'x = system.file("cli", package = "tidywigits"); cat(x, "\n")' | xargs)
+export PATH="${tw_cli}:${PATH}"
+
+echo "tidywigits.R --version" & tidywigits.R --version
+echo ""
+echo "#-----------------------------------#"
+echo "tidywigits.R --help" & tidywigits.R --help
+echo ""
+echo "#-----------------------------------#"
+echo "#------- Tidy ----------------------#"
+echo "tidywigits.R tidy --help" & tidywigits.R tidy --help
+echo ""
+echo "#-----------------------------------#"
+echo "#------- List ----------------------#"
+echo "tidywigits.R list --help" & tidywigits.R list --help
+echo ""
 ```

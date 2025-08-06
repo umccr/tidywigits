@@ -40,18 +40,6 @@ Correct flex boxes from sizing based upon the largest in tabset
 }
 ```
 
-{tidywigits} is an R package that parses and tidies outputs from the [WiGiTS]
-suite of genome and transcriptome analysis tools for cancer research and diagnostics,
-created by the Hartwig Medical Foundation.
-
-In short, it traverses through a directory containing results from one or more
-runs of WiGiTS tools, parses any files it recognises, tidies
-them up (which includes data reshaping, normalisation, column name cleanup etc.),
-and writes them to the output format of choice e.g. Apache Parquet, PostgreSQL,
-Delta table.
-
-[WiGiTS]: <https://github.com/hartwigmedical/hmftools> "WiGiTS suite"
-
 {tidywigits} is built on top of R's [R6] encapsulated object-oriented programming
 implementation, which helps with code organisation. It consists of several base
 classes like `Config`, `Tool`, and `Workflow` which we describe below.
