@@ -1,0 +1,10 @@
+Conda package available from the umccr Anaconda channel at <https://anaconda.org/umccr/r-tidywigits>.
+
+```bash
+conda create \
+  -n tidywigits_env \
+  -c umccr -c conda-forge \
+  r-tidywigits==X.X.X
+
+conda activate tidywigits_env
+```

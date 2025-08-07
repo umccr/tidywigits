@@ -22,60 +22,75 @@ knitr::opts_chunk$set(
 require(tidywigits)
 ```
 
-# 🧬✨ tidywigits
+# 🧬✨ tidywigits: Tidy WiGiTS Outputs
 
 - Docs: <https://umccr.github.io/tidywigits/>
+
+```{r}
+#| label: setup
+#| echo: false
+# template path
+tp <- "inst/doc-templates"
+```
+
+## Overview
 
 {tidywigits} is an R package that parses and tidies outputs from the [WiGiTS]
 suite of genome and transcriptome analysis tools for cancer research and diagnostics,
 created by the Hartwig Medical Foundation.
 
-[WiGiTS]: <https://github.com/hartwigmedical/hmftools> "WiGiTS suite"
-
 In short, it traverses through a directory containing results from one or more
 runs of WiGiTS tools, parses any files it recognises, tidies
 them up (which includes data reshaping, normalisation, column name cleanup etc.),
 and writes them to the output format of choice e.g. Apache Parquet, PostgreSQL,
-Delta table.
+TSV etc..
+
+[WiGiTS]: <https://github.com/hartwigmedical/hmftools> "WiGiTS suite"
+
+**TODO: ADD GIF**
+
+## Quick Links
+
+- 📚 [Documentation](https://umccr.github.io/tidywigits/)
+- 🎨 [Examples](#-examples)
+- 🍕 [Installation](#-installation)
+- 🌀 [CLI](#-cli)
+
+## 🎨 Examples
+
+You can output tidywigits results to a variety of formats, including TSV, Parquet,
+or write directly to a PostgreSQL database.
+
+- Parquet:
+
+```r
+in_dir <- "path/to/wigits/results"
+out_dir <- "path/to/tidied/output"
+oa <- Oncoanalyser$new(in_dir)
+res1 <- oa$nemofy(odir = out_dir, format = "parquet", id = "parquet_example")
+```
+
+- PostgreSQL (this should work with any typical database that has an R
+  driver, e.g. MySQL, SQLite, etc., just make sure you create the correct
+  connection object):
+
+```r
+dbconn <- DBI::dbConnect(
+  drv = RPostgres::Postgres(),
+  dbname = "nemo",
+  user = "orcabus"
+)
+res2 <-
+  oa$nemofy(
+    format = "db",
+    id = "db_example",
+    dbconn = dbconn
+)
+```
 
 ## 🍕 Installation
 
-### R
-
-```r
-remotes::install_github("umccr/tidywigits")
-```
-
-### Conda
-
-#### Linux & MacOS (non-ARM)
-
-```bash
-conda create \
-  -n tidywigits_env \
-  -c umccr -c conda-forge \
-  r-tidywigits==X.X.X
-
-conda activate tidywigits_env
-```
-
-#### MacOS ARM
-
-```bash
-CONDA_SUBDIR=osx-64 \
-  conda create \
-  -n tidywigits_env \
-  -c umccr -c conda-forge \
-  r-tidywigits==X.X.X
-
-conda activate tidywigits_env
-```
-
-### Docker
-
-```bash
-docker pull --platform linux/amd64 ghcr.io/umccr/tidywigits:X.X.X
-```
+{{< include /inst/doc-templates/installation/_installation.qmd >}}
 
 ## 🌀 CLI
 
@@ -115,3 +130,4 @@ echo "#------- List ----------------------#"
 echo "tidywigits.R list --help" & tidywigits.R list --help
 echo ""
 ```
+

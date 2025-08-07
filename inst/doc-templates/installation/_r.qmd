@@ -1,0 +1,7 @@
+You can install and load the latest version or a specific tag directly from GitHub with one of the following:
+
+```r
+remotes::install_github("umccr/tidywigits")
+remotes::install_github("umccr/tidywigits@vX.X.X")
+library(tidywigits)
+```

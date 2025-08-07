@@ -1,0 +1,7 @@
+If you use Pixi, you can create a new environment with the released conda package:
+
+```bash
+pixi init -c umccr -c conda-forge ./tidy_env
+cd ./tidy_env
+pixi add r-tidywigits==X.X.X
+```

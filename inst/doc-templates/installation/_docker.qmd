@@ -1,0 +1,5 @@
+Docker image available in the GitHub Container Registry at <https://github.com/umccr/tidywigits/pkgs/container/tidywigits>.
+
+```bash
+docker pull --platform linux/amd64 ghcr.io/umccr/tidywigits:X.X.X
+```
