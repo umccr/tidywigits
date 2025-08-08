@@ -4,7 +4,7 @@
 
 # 🧬✨ tidywigits: Tidy WiGiTS Outputs
 
-- Docs: <https://umccr.github.io/tidywigits/>
+📚 Docs: https://umccr.github.io/tidywigits/
 
 ## Overview
 
@@ -17,16 +17,7 @@ In short, it traverses through a directory containing results from one
 or more runs of WiGiTS tools, parses any files it recognises, tidies
 them up (which includes data reshaping, normalisation, column name
 cleanup etc.), and writes them to the output format of choice
-e.g. Apache Parquet, PostgreSQL, TSV etc..
-
-**TODO: ADD GIF**
-
-## Quick Links
-
-- 📚 [Documentation](https://umccr.github.io/tidywigits/)
-- 🎨 [Examples](#-examples)
-- 🍕 [Installation](#-installation)
-- 🌀 [CLI](#-cli)
+e.g. Apache Parquet, PostgreSQL, TSV, RDS.
 
 ## 🎨 Examples
 
@@ -62,50 +53,21 @@ res2 <-
 
 ## 🍕 Installation
 
-### R
-
-You can install and load the latest version or a specific tag directly
-from GitHub with one of the following:
+Install using {remotes} (or {devtools}) directly from GitHub:
 
 ``` r
-remotes::install_github("umccr/tidywigits")
-remotes::install_github("umccr/tidywigits@vX.X.X")
-library(tidywigits)
+install.packages("remotes")
+remotes::install_github("umccr/tidywigits") # latest main commit
+remotes::install_github("umccr/tidywigits@vX.X.X") # released version X.X.X
 ```
 
-### Conda
+Alternatively, a conda package is available that includes the R is
+available to install directly from GitHub. A conda package is also
+available, which includes the R package and all dependencies. A Docker
+image is also available, which includes the conda package and all
+dependencies.
 
-Conda package available from the umccr Anaconda channel at
-<https://anaconda.org/umccr/r-tidywigits>.
-
-``` bash
-conda create \
-  -n tidywigits_env \
-  -c umccr -c conda-forge \
-  r-tidywigits==X.X.X
-
-conda activate tidywigits_env
-```
-
-### Docker
-
-Docker image available in the GitHub Container Registry at
-<https://github.com/umccr/tidywigits/pkgs/container/tidywigits>.
-
-``` bash
-docker pull --platform linux/amd64 ghcr.io/umccr/tidywigits:X.X.X
-```
-
-### Pixi
-
-If you use Pixi, you can create a new environment with the released
-conda package:
-
-``` bash
-pixi init -c umccr -c conda-forge ./tidy_env
-cd ./tidy_env
-pixi add r-tidywigits==X.X.X
-```
+For more details see: <https://umccr.github.io/tidywigits/installation/>
 
 ## 🌀 CLI
 

@@ -5,6 +5,7 @@ format: gfm
 <!-- README.md is generated from README.qmd. Please edit that file -->
 
 ```{r}
+#| label: knitr_opts
 #| include: false
 knitr::opts_chunk$set(
   collapse = TRUE,
@@ -24,37 +25,11 @@ require(tidywigits)
 
 # 🧬✨ tidywigits: Tidy WiGiTS Outputs
 
-- Docs: <https://umccr.github.io/tidywigits/>
-
-```{r}
-#| label: setup
-#| echo: false
-# template path
-tp <- "inst/doc-templates"
-```
+📚 Docs: https://umccr.github.io/tidywigits/
 
 ## Overview
 
-{tidywigits} is an R package that parses and tidies outputs from the [WiGiTS]
-suite of genome and transcriptome analysis tools for cancer research and diagnostics,
-created by the Hartwig Medical Foundation.
-
-In short, it traverses through a directory containing results from one or more
-runs of WiGiTS tools, parses any files it recognises, tidies
-them up (which includes data reshaping, normalisation, column name cleanup etc.),
-and writes them to the output format of choice e.g. Apache Parquet, PostgreSQL,
-TSV etc..
-
-[WiGiTS]: <https://github.com/hartwigmedical/hmftools> "WiGiTS suite"
-
-**TODO: ADD GIF**
-
-## Quick Links
-
-- 📚 [Documentation](https://umccr.github.io/tidywigits/)
-- 🎨 [Examples](#-examples)
-- 🍕 [Installation](#-installation)
-- 🌀 [CLI](#-cli)
+{{< include /inst/doc-templates/introduction/_overview.qmd >}}
 
 ## 🎨 Examples
 
@@ -90,7 +65,15 @@ res2 <-
 
 ## 🍕 Installation
 
-{{< include /inst/doc-templates/installation/_installation.qmd >}}
+{{< include /inst/doc-templates/installation/_r.qmd >}}
+
+Alternatively, a conda package is available that includes the R
+is available to install directly from GitHub. A conda package is also
+available, which includes the R package and all dependencies. A Docker image
+is also available, which includes the conda package and all dependencies.
+
+For more details see: <https://umccr.github.io/tidywigits/installation/>
+
 
 ## 🌀 CLI
 

@@ -1,7 +1,7 @@
-You can install and load the latest version or a specific tag directly from GitHub with one of the following:
+Install using {remotes} (or {devtools}) directly from GitHub:
 
 ```r
-remotes::install_github("umccr/tidywigits")
-remotes::install_github("umccr/tidywigits@vX.X.X")
-library(tidywigits)
+install.packages("remotes")
+remotes::install_github("umccr/tidywigits") # latest main commit
+remotes::install_github("umccr/tidywigits@vX.X.X") # released version X.X.X
 ```
