@@ -1,0 +1,6 @@
+outs:
+- md5: cdd8b38bb45c064caf53132ee896a3a5.dir
+  size: 249
+  nfiles: 1
+  hash: md5
+  path: virusinterpreter

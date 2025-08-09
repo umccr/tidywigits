@@ -1,0 +1,6 @@
+outs:
+- md5: 6c16b6b63748e80222a91ee6b98a9076.dir
+  size: 567
+  nfiles: 1
+  hash: md5
+  path: virusbreakend

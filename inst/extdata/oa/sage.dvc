@@ -1,0 +1,6 @@
+outs:
+- md5: 87d1bfeacd029949483d648ea63a74e3.dir
+  size: 7365
+  nfiles: 8
+  hash: md5
+  path: sage

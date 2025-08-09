@@ -1,0 +1,6 @@
+outs:
+- md5: e87b6b979a8ef8913256a14cbd306e11.dir
+  size: 1602
+  nfiles: 4
+  hash: md5
+  path: amber

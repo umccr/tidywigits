@@ -1,0 +1,6 @@
+outs:
+- md5: a077025a30bcbd5a7da03cfb653a0580.dir
+  size: 2026
+  nfiles: 2
+  hash: md5
+  path: chord
