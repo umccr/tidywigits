@@ -1,0 +1,6 @@
+outs:
+- md5: 9c1c41dd8981d0fea769b4c4627036f4.dir
+  size: 231
+  nfiles: 1
+  hash: md5
+  path: alignments

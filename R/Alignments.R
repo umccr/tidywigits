@@ -3,19 +3,12 @@
 #' @description
 #' Alignments file parsing and manipulation.
 #' @examples
-#' \dontrun{
-#' path <- here::here(
-#'   "nogit/oa_v2"
-#' )
-#' a <- Alignments$new(path)
-#' a$nemofy(
-#'     odir = "nogit/test_data",
-#'     format = "parquet",
-#'     id = "run1",
-#'     include = NULL,
-#'     exclude = NULL
-#' )
-#' }
+#' cls <- Alignments
+#' indir <- system.file("extdata/oa", package = "tidywigits")
+#' odir <- tempdir()
+#' id <- "alignments_run1"
+#' obj <- cls$new(indir)
+#' obj$nemofy(odir = odir, format = "parquet", id = id, include = NULL, exclude = NULL)
 #' @export
 Alignments <- R6::R6Class(
   "Alignments",
