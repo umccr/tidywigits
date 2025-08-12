@@ -3,10 +3,13 @@
 #' @description
 #' Virusinterpreter file parsing and manipulation.
 #' @examples
-#' \dontrun{
-#' path <- here::here("nogit")
-#' v <- Virusinterpreter$new(path)
-#' }
+#' cls <- Virusinterpreter
+#' indir <- system.file("extdata/oa", package = "tidywigits")
+#' odir <- tempdir()
+#' id <- "virusinterpreter_run1"
+#' obj <- cls$new(indir)
+#' obj$nemofy(odir = odir, format = "parquet", id = id)
+#' list.files(odir, pattern = "parquet", full.names = FALSE)
 #' @export
 Virusinterpreter <- R6::R6Class(
   "Virusinterpreter",
@@ -17,7 +20,7 @@ Virusinterpreter <- R6::R6Class(
     #' Output directory of tool. If `files_tbl` is supplied, this basically gets
     #' ignored.
     #' @param files_tbl (`tibble(n)`)\cr
-    #' Tibble of files from `list_files_dir`.
+    #' Tibble of files from [list_files_dir()].
     #' @param tidy (`logical(1)`)\cr
     #' Should the raw parsed tibbles get tidied?
     #' @param keep_raw (`logical(1)`)\cr

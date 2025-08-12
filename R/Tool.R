@@ -68,7 +68,7 @@ Tool <- R6::R6Class(
     #' Get specific raw schema.
     get_raw_schema = NULL,
     #' @field files_tbl (`tibble(n)`)\cr
-    #' Tibble of files from `list_files_dir`.
+    #' Tibble of files from [list_files_dir()].
     files_tbl = NULL,
 
     #' @description Create a new Tool object.
@@ -78,7 +78,7 @@ Tool <- R6::R6Class(
     #' Output directory of tool. If `files_tbl` is supplied, this basically gets
     #' ignored.
     #' @param files_tbl (`tibble(n)`)\cr
-    #' Tibble of files from `list_files_dir`.
+    #' Tibble of files from [list_files_dir()].
     initialize = function(name = NULL, path = NULL, files_tbl = NULL) {
       assertthat::assert_that(!is.null(path) || !is.null(files_tbl), !is.null(name))
       if (!is.null(files_tbl)) {
