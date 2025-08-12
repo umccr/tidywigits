@@ -67,7 +67,7 @@ Get specific tidy schema.}
 Get specific raw schema.}
 
 \item{\code{files_tbl}}{(\code{tibble(n)})\cr
-Tibble of files from \code{list_files_dir}.}
+Tibble of files from \code{\link[=list_files_dir]{list_files_dir()}}.}
 }
 \if{html}{\out{</div>}}
 }
@@ -108,7 +108,7 @@ Output directory of tool. If \code{files_tbl} is supplied, this basically gets
 ignored.}
 
 \item{\code{files_tbl}}{(\code{tibble(n)})\cr
-Tibble of files from \code{list_files_dir}.}
+Tibble of files from \code{\link[=list_files_dir]{list_files_dir()}}.}
 }
 \if{html}{\out{</div>}}
 }

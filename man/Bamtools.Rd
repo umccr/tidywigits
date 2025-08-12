@@ -7,10 +7,13 @@
 Bamtools file parsing and manipulation.
 }
 \examples{
-\dontrun{
-path <- here::here("nogit")
-b <- Bamtools$new(path)
-}
+cls <- Bamtools
+indir <- system.file("extdata/oa", package = "tidywigits")
+odir <- tempdir()
+id <- "bamtools_run1"
+obj <- cls$new(indir)
+obj$nemofy(odir = odir, format = "parquet", id = id)
+list.files(odir, pattern = "parquet", full.names = FALSE)
 }
 \section{Super class}{
 \code{\link[tidywigits:Tool]{tidywigits::Tool}} -> \code{Bamtools}
@@ -67,7 +70,7 @@ Output directory of tool. If \code{files_tbl} is supplied, this basically gets
 ignored.}
 
 \item{\code{files_tbl}}{(\code{tibble(n)})\cr
-Tibble of files from \code{list_files_dir}.}
+Tibble of files from \code{\link[=list_files_dir]{list_files_dir()}}.}
 }
 \if{html}{\out{</div>}}
 }
