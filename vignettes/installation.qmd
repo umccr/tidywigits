@@ -1,0 +1,38 @@
+---
+title: "Installation"
+vignette: >
+  %\VignetteIndexEntry{Installation}
+  %\VignetteEngine{quarto::html}
+  %\VignetteEncoding{UTF-8}
+knitr:
+  opts_chunk:
+    collapse: true
+    comment: '#>'
+---
+
+```{r knitr_opts, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## Installation
+
+There are several ways to install {tidywigits}:
+
+### R
+
+{{< include ../inst/doc-templates/installation/_r.qmd >}}
+
+### Conda
+
+{{< include ../inst/doc-templates/installation/_conda.qmd >}}
+
+### Docker
+
+{{< include ../inst/doc-templates/installation/_docker.qmd >}}
+
+### Pixi
+
+{{< include ../inst/doc-templates/installation/_pixi.qmd >}}

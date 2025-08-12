@@ -19,18 +19,35 @@ them up (which includes data reshaping, normalisation, column name
 cleanup etc.), and writes them to the output format of choice
 e.g. Apache Parquet, PostgreSQL, TSV, RDS.
 
-## 🎨 Examples
+## Examples
 
-You can output tidywigits results to a variety of formats, including
-TSV, Parquet, or write directly to a PostgreSQL database.
+You can output tidywigits results to a variety of formats, including TSV
+and Parquet, or write directly to a PostgreSQL database.
 
 - Parquet:
 
 ``` r
-in_dir <- "path/to/wigits/results"
-out_dir <- "path/to/tidied/output"
+in_dir <- system.file("extdata/oa", package = "tidywigits")
+out_dir <- tempdir() |> fs::dir_create("parquet_example")
 oa <- Oncoanalyser$new(in_dir)
-res1 <- oa$nemofy(odir = out_dir, format = "parquet", id = "parquet_example")
+res <- oa$nemofy(odir = out_dir, format = "parquet", id = "parquet_example")
+fs::dir_info(out_dir) |>
+  dplyr::mutate(bname = basename(.data$path)) |>
+  dplyr::select("bname", "size", "type")
+# A tibble: 64 × 3
+   bname                                              size type 
+   <chr>                                       <fs::bytes> <fct>
+ 1 sample1_2_sage_bqrtsv.parquet                      3.1K file 
+ 2 sample1_alignments_dupfreq.parquet                1.95K file 
+ 3 sample1_amber_bafpcf.parquet                      3.27K file 
+ 4 sample1_amber_contaminationtsv.parquet            4.13K file 
+ 5 sample1_amber_homozygousregion.parquet            3.18K file 
+ 6 sample1_amber_qc.parquet                          2.35K file 
+ 7 sample1_bamtools_wgsmetrics_histo.parquet         4.19K file 
+ 8 sample1_bamtools_wgsmetrics_metrics.parquet      10.12K file 
+ 9 sample1_chord_prediction.parquet                  3.43K file 
+10 sample1_chord_signatures.parquet                  2.17K file 
+# ℹ 54 more rows
 ```
 
 - PostgreSQL (this should work with any typical database that has an R
@@ -38,22 +55,25 @@ res1 <- oa$nemofy(odir = out_dir, format = "parquet", id = "parquet_example")
   correct connection object):
 
 ``` r
+in_dir <- system.file("extdata/oa", package = "tidywigits")
+out_dir <- tempdir() |> fs::dir_create("parquet_example")
+oa <- Oncoanalyser$new(in_dir)
 dbconn <- DBI::dbConnect(
   drv = RPostgres::Postgres(),
   dbname = "nemo",
-  user = "orcabus"
+  user = "user1"
 )
-res2 <-
+res <-
   oa$nemofy(
     format = "db",
     id = "db_example",
     dbconn = dbconn
-)
+  )
 ```
 
 ## 🍕 Installation
 
-Install using {remotes} (or {devtools}) directly from GitHub:
+Install using {remotes} directly from GitHub:
 
 ``` r
 install.packages("remotes")
@@ -61,11 +81,11 @@ remotes::install_github("umccr/tidywigits") # latest main commit
 remotes::install_github("umccr/tidywigits@vX.X.X") # released version X.X.X
 ```
 
-Alternatively, a conda package is available that includes the R is
-available to install directly from GitHub. A conda package is also
-available, which includes the R package and all dependencies. A Docker
-image is also available, which includes the conda package and all
-dependencies.
+Alternatively:
+
+- conda package: <https://anaconda.org/umccr/r-tidywigits>
+- Docker image:
+  <https://github.com/umccr/tidywigits/pkgs/container/tidywigits>
 
 For more details see: <https://umccr.github.io/tidywigits/installation/>
 

@@ -1,0 +1,10 @@
+```{r}
+#| label: parquet_example
+in_dir <- system.file("extdata/oa", package = "tidywigits")
+out_dir <- tempdir() |> fs::dir_create("parquet_example")
+oa <- Oncoanalyser$new(in_dir)
+res <- oa$nemofy(odir = out_dir, format = "parquet", id = "parquet_example")
+fs::dir_info(out_dir) |>
+  dplyr::mutate(bname = basename(.data$path)) |>
+  dplyr::select("bname", "size", "type")
+```

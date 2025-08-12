@@ -23,6 +23,11 @@ knitr::opts_chunk$set(
 require(tidywigits)
 ```
 
+```{r}
+#| label: opts
+#| echo: false
+options(width = 100)
+```
 # 🧬✨ tidywigits: Tidy WiGiTS Outputs
 
 📚 Docs: https://umccr.github.io/tidywigits/
@@ -33,47 +38,29 @@ require(tidywigits)
 
 ## 🎨 Examples
 
-You can output tidywigits results to a variety of formats, including TSV, Parquet,
+You can output tidywigits results to a variety of formats, including TSV and Parquet,
 or write directly to a PostgreSQL database.
 
 - Parquet:
 
-```r
-in_dir <- "path/to/wigits/results"
-out_dir <- "path/to/tidied/output"
-oa <- Oncoanalyser$new(in_dir)
-res1 <- oa$nemofy(odir = out_dir, format = "parquet", id = "parquet_example")
-```
+{{< include /inst/doc-templates/examples/_parquet1.qmd >}}
 
 - PostgreSQL (this should work with any typical database that has an R
   driver, e.g. MySQL, SQLite, etc., just make sure you create the correct
   connection object):
 
-```r
-dbconn <- DBI::dbConnect(
-  drv = RPostgres::Postgres(),
-  dbname = "nemo",
-  user = "orcabus"
-)
-res2 <-
-  oa$nemofy(
-    format = "db",
-    id = "db_example",
-    dbconn = dbconn
-)
-```
+{{< include /inst/doc-templates/examples/_postgresql1.qmd >}}
 
 ## 🍕 Installation
 
 {{< include /inst/doc-templates/installation/_r.qmd >}}
 
-Alternatively, a conda package is available that includes the R
-is available to install directly from GitHub. A conda package is also
-available, which includes the R package and all dependencies. A Docker image
-is also available, which includes the conda package and all dependencies.
+Alternatively:
+
+- conda package: <https://anaconda.org/umccr/r-tidywigits>
+- Docker image: <https://github.com/umccr/tidywigits/pkgs/container/tidywigits>
 
 For more details see: <https://umccr.github.io/tidywigits/installation/>
-
 
 ## 🌀 CLI
 

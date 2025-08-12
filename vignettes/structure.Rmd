@@ -5,11 +5,11 @@ vignette: >
   %\VignetteIndexEntry{Structure}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
+knitr:
+  opts_chunk:
+    collapse: true
+    comment: '#>'
 ---
-
-```{r knitr_opts, include = FALSE}
-knitr::opts_chunk$set(comment = "#>", collapse = TRUE)
-```
 
 ```{css, echo=FALSE}
 /*
@@ -28,15 +28,15 @@ Correct flex boxes from sizing based upon the largest in tabset
 
 ```{r pkgs, message=FALSE, warning=FALSE, echo=FALSE}
 {
-  require(tidywigits)
-  require(dplyr)
-  require(glue, include.only = "glue")
-  require(purrr, include.only = "map")
-  require(readr, include.only = "read_tsv")
-  require(tibble, include.only = "tibble")
-  require(tidyr, include.only = "unnest")
-  require(fs, include.only = "dir_info")
-  require(knitr, include.only = "kable")
+  use("tidywigits")
+  use("dplyr")
+  use("glue", "glue")
+  use("purrr", "map")
+  use("readr", "read_tsv")
+  use("tibble", "tibble")
+  use("tidyr", "unnest")
+  use("fs", "dir_info")
+  use("knitr", "kable")
 }
 ```
 
@@ -83,7 +83,7 @@ conf$get_raw_patterns() |>
 
 #### descriptions
 
-File descriptions based on the Hartwig documentation.
+File descriptions based on the available Hartwig documentation.
 
 ```{r purple_config_raw_descriptions}
 conf$get_raw_descriptions() |>
@@ -163,7 +163,7 @@ optimise the parsing if needed with faster packages such as {[data.table]},
 [readr]: <https://github.com/tidyverse/readr> "readr"
 [duckdb-r]: <https://github.com/duckdb/duckdb-r> "duckdb-r"
 [data.table]: <https://github.com/Rdatatable/data.table> "data.table"
-[neo-r-polars]: <https://github.com/eitsupi/neo-r-polars> "neo-r-polars"
+[r-polars]: <https://github.com/pola-rs/r-polars> "r-polars"
 
 ### initialise
 
@@ -174,7 +174,7 @@ For example, we can create a `Tool` object for PURPLE as follows:
 - Initialise a `Purple` object:
 
 ```{r tool_purple}
-ppl_path <- system.file("extdata/purple", package = "tidywigits")
+ppl_path <- system.file("extdata/oa/purple", package = "tidywigits")
 ppl <- Purple$new(path = ppl_path)
 # each class comes with a print function
 ppl
@@ -194,7 +194,7 @@ ppl$config$get_tidy_schema("puritytsv")
 
 ### list
 
-We can list files that can be parsed with `list_files`:
+We can list files that can be parsed with `list_files()`:
 
 ```{r ppl_list}
 (lf <- ppl$list_files())
@@ -218,7 +218,7 @@ ppl$tbls$tidy[[8]][["data"]][[1]] |> dplyr::glimpse()
 
 ### filter
 
-We can also focus on a subset of files to tidy using the `filter_files` function.
+We can also focus on a subset of files to tidy using the `[filter_files()]` function.
 The `include` and `exclude` arguments can specify which parsers to include or
 exclude in the analysis:
 
@@ -240,7 +240,7 @@ from different runs in a data pipeline.
 When writing to a database like PostgreSQL, another column `nemo_pfix` is used
 to distinguish results from the same run from the same tool.
 
-```{r ppl_write}
+```{r ppl_write, eval=FALSE}
 ppl2$tidy() # first need to tidy
 outdir1 <- tempdir()
 fmt <- "tsv"
@@ -285,7 +285,7 @@ contains functions such as `filter_files`, `list_files`, `tidy`, `write` and
 
 
 ```{r oa_init}
-oa <- system.file("extdata/purple", package = "tidywigits") |>
+oa <- system.file("extdata/oa/purple", package = "tidywigits") |>
   Oncoanalyser$new()
 outdir3 <- file.path(tempdir(), "oa") |> fs::dir_create()
 oa$list_files()
