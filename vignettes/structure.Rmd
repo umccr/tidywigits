@@ -40,6 +40,12 @@ Correct flex boxes from sizing based upon the largest in tabset
 }
 ```
 
+```{r}
+#| label: opts
+#| echo: false
+options(width = 100)
+```
+
 {tidywigits} is built on top of R's [R6] encapsulated object-oriented programming
 implementation, which helps with code organisation. It consists of several base
 classes like `Config`, `Tool`, and `Workflow` which we describe below.
@@ -73,8 +79,6 @@ the `$` sign.
 #### patterns
 
 Patterns are used to fish out the relevant files from a directory listing.
-Note that the `\` needs to be doubled in the R code since it's an escaped
-character.
 
 ```{r purple_config_raw_patterns}
 conf$get_raw_patterns() |>
@@ -83,7 +87,7 @@ conf$get_raw_patterns() |>
 
 #### descriptions
 
-File descriptions based on the available Hartwig documentation.
+File descriptions are based on the available Hartwig documentation.
 
 ```{r purple_config_raw_descriptions}
 conf$get_raw_descriptions() |>
@@ -158,7 +162,7 @@ that reads all the data into memory. See `?Tool`.
 
 These simple parsers are used in 80-90% of cases, so in the future we can
 optimise the parsing if needed with faster packages such as {[data.table]},
-{[duckdb-r]} or {[neo-r-polars]}.
+{[duckdb-r]} or {[r-polars]}.
 
 [readr]: <https://github.com/tidyverse/readr> "readr"
 [duckdb-r]: <https://github.com/duckdb/duckdb-r> "duckdb-r"
@@ -218,7 +222,7 @@ ppl$tbls$tidy[[8]][["data"]][[1]] |> dplyr::glimpse()
 
 ### filter
 
-We can also focus on a subset of files to tidy using the `[filter_files()]` function.
+We can also focus on a subset of files to tidy using the `filter_files()` function.
 The `include` and `exclude` arguments can specify which parsers to include or
 exclude in the analysis:
 
@@ -264,7 +268,10 @@ ppl3$nemofy(
   id = "run_ppl3",
   exclude = c("purple_cnvgenetsv", "purple_cnvsomtsv", "purple_drivercatalog", "purple_germdeltsv")
 )
-(wfiles2 <- fs::dir_info(outdir2) |> dplyr::select(1:5))
+wfiles2 <- fs::dir_info(outdir2) |>
+  dplyr::mutate(bname = basename(.data$path))
+wfiles2 |>
+  dplyr::select("bname", "size", "type")
 readr::read_tsv(wfiles2$path[2], show_col_types = F)
 ```
 
