@@ -1,4 +1,14 @@
 ```{r}
+#| label: pkg_load_postgresql
+#| echo: false
+#| message: false
+#| eval: false
+use("DBI", "dbConnect")
+use("RPostgres", "Postgres")
+use("fs", "dir_create")
+```
+
+```{r}
 #| label: postgresql_example
 #| eval: false
 in_dir <- system.file("extdata/oa", package = "tidywigits")

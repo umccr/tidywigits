@@ -6,7 +6,7 @@
 \alias{tidywigits-package}
 \title{tidywigits: Tidy WiGiTS}
 \description{
-Tidy outputs from The Hartwig Medical Foundation's WiGiTS suite of genome and transcriptome analysis tools. Writes to various formats for downstream ingestion into data warehouses and databases.
+Tidies outputs from The Hartwig Medical Foundation's WiGiTS suite of genome and transcriptome analysis tools. Writes to various formats for downstream ingestion into data warehouses and databases.
 }
 \seealso{
 Useful links:

@@ -1,4 +1,12 @@
 ```{r}
+#| label: pkg_load_parquet
+#| echo: false
+#| message: false
+use("dplyr", "mutate")
+use("fs", "dir_create")
+```
+
+```{r}
 #| label: parquet_example
 in_dir <- system.file("extdata/oa", package = "tidywigits")
 out_dir <- tempdir() |> fs::dir_create("parquet_example")

@@ -1,26 +1,18 @@
 ---
 format: gfm
+knitr:
+  opts_chunk:
+    collapse: true
+    comment: ''
 ---
 
 <!-- README.md is generated from README.qmd. Please edit that file -->
 
 ```{r}
-#| label: knitr_opts
-#| include: false
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "",
-  fig.path = "man/figures/README-",
-  out.width = "100%"
-)
-```
-
-```{r}
 #| label: pkg_load
 #| echo: false
 #| message: false
-#| warning: false
-require(tidywigits)
+use("tidywigits")
 ```
 
 ```{r}
@@ -28,28 +20,54 @@ require(tidywigits)
 #| echo: false
 options(width = 100)
 ```
+
 # 🧬✨ tidywigits: Tidy WiGiTS Outputs
 
-📚 Docs: https://umccr.github.io/tidywigits/
+
+[![1] ![2] ![3]](https://github.com/umccr/tidywigits/pkgs/container/tidywigits)
+[![4] ![5]](https://anaconda.org/umccr/r-tidywigits)
+
+[1]: <https://ghcr-badge.egpl.dev/umccr/tidywigits/tags>
+[2]: <https://ghcr-badge.egpl.dev/umccr/tidywigits/latest_tag>
+[3]: <https://ghcr-badge.egpl.dev/umccr/tidywigits/size?tag=0.0.3>
+[4]: <https://anaconda.org/umccr/r-tidywigits/badges/version.svg>
+[5]: <https://anaconda.org/umccr/r-tidywigits/badges/latest_release_date.svg>
+
+- 📚 Docs: https://umccr.github.io/tidywigits/:
+  - files/tables supported: <https://umccr.github.io/tidywigits/schemas>
+  - installation: <https://umccr.github.io/tidywigits/installation>
+  - R6 structure: <https://umccr.github.io/tidywigits/structure>
+  - developer notes: <https://umccr.github.io/tidywigits/developers>
 
 ## Overview
 
 {{< include /inst/doc-templates/introduction/_overview.qmd >}}
 
-## 🎨 Examples
+## 🎨 Quick Start
 
-You can output tidywigits results to a variety of formats, including TSV and Parquet,
-or write directly to a PostgreSQL database.
+The starting point of {tidywigits} is a directory with WiGiTS results. Let's
+look at some sample data under <https://github.com/umccr/tidywigits/tree/main/inst/extdata/oa>:
+
+```{r}
+#| label: example_input_tree
+#| code-fold: true
+#| code-summary: "Click here"
+system.file("extdata/oa", package = "tidywigits") |>
+  fs::dir_tree(invert = TRUE, glob = "*.dvc")
+```
+
+We can parse, tidy up, and write the WiGiTS results into e.g. Parquet format or
+a PostgreSQL database as follows:
 
 - Parquet:
 
 {{< include /inst/doc-templates/examples/_parquet1.qmd >}}
 
-- PostgreSQL (this should work with any typical database that has an R
-  driver, e.g. MySQL, SQLite, etc., just make sure you create the correct
-  connection object):
+- PostgreSQL:
 
 {{< include /inst/doc-templates/examples/_postgresql1.qmd >}}
+
+**IMPORTANT**: support for VCFs is under active development.
 
 ## 🍕 Installation
 
@@ -82,7 +100,6 @@ export PATH="${tw_cli}:${PATH}"
 ```{bash}
 #| label: cli2
 #| echo: false
-#| prompt: true
 tw_cli=$(Rscript -e 'x = system.file("cli", package = "tidywigits"); cat(x, "\n")' | xargs)
 export PATH="${tw_cli}:${PATH}"
 
@@ -100,4 +117,3 @@ echo "#------- List ----------------------#"
 echo "tidywigits.R list --help" & tidywigits.R list --help
 echo ""
 ```
-

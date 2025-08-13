@@ -1,4 +1,5 @@
-Conda package available from the umccr Anaconda channel at <https://anaconda.org/umccr/r-tidywigits>.
+Conda package is available from the umccr Anaconda channel at
+<https://anaconda.org/umccr/r-tidywigits>.
 
 ```bash
 conda create \

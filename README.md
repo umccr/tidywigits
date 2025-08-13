@@ -4,7 +4,17 @@
 
 # 🧬✨ tidywigits: Tidy WiGiTS Outputs
 
-📚 Docs: https://umccr.github.io/tidywigits/
+[![1](https://ghcr-badge.egpl.dev/umccr/tidywigits/tags.png)
+![2](https://ghcr-badge.egpl.dev/umccr/tidywigits/latest_tag.png)
+![3](https://ghcr-badge.egpl.dev/umccr/tidywigits/size?tag=0.0.3)](https://github.com/umccr/tidywigits/pkgs/container/tidywigits)
+[![4](https://anaconda.org/umccr/r-tidywigits/badges/version.svg)
+![5](https://anaconda.org/umccr/r-tidywigits/badges/latest_release_date.svg)](https://anaconda.org/umccr/r-tidywigits)
+
+- 📚 Docs: https://umccr.github.io/tidywigits/:
+  - files/tables supported: <https://umccr.github.io/tidywigits/schemas>
+  - installation: <https://umccr.github.io/tidywigits/installation>
+  - R6 structure: <https://umccr.github.io/tidywigits/structure>
+  - developer notes: <https://umccr.github.io/tidywigits/developers>
 
 ## Overview
 
@@ -19,10 +29,104 @@ them up (which includes data reshaping, normalisation, column name
 cleanup etc.), and writes them to the output format of choice
 e.g. Apache Parquet, PostgreSQL, TSV, RDS.
 
-## Examples
+## 🎨 Quick Start
 
-You can output tidywigits results to a variety of formats, including TSV
-and Parquet, or write directly to a PostgreSQL database.
+The starting point of {tidywigits} is a directory with WiGiTS results.
+Let’s look at some sample data under
+<https://github.com/umccr/tidywigits/tree/main/inst/extdata/oa>:
+
+<details class="code-fold">
+<summary>Click here</summary>
+
+``` r
+system.file("extdata/oa", package = "tidywigits") |>
+  fs::dir_tree(invert = TRUE, glob = "*.dvc")
+/Users/pdiakumis/Library/R/arm64/4.5/library/tidywigits/extdata/oa
+├── alignments
+│   └── sample1.duplicate_freq.tsv
+├── amber
+│   ├── sample1.amber.baf.pcf
+│   ├── sample1.amber.contamination.tsv
+│   ├── sample1.amber.homozygousregion.tsv
+│   └── sample1.amber.qc
+├── bamtools
+│   └── sample1.wgsmetrics
+├── chord
+│   ├── sample1.chord.mutation_contexts.tsv
+│   └── sample1.chord.prediction.tsv
+├── cobalt
+│   ├── cobalt.version
+│   ├── sample1.cobalt.gc.median.tsv
+│   ├── sample1.cobalt.ratio.median.tsv
+│   └── sample1.cobalt.ratio.pcf
+├── cuppa
+│   ├── sample1.cuppa.pred_summ.tsv
+│   ├── sample1.cuppa.vis_data.tsv
+│   └── sample1.cuppa_data.tsv.gz
+├── lilac
+│   ├── sample1.lilac.candidates.coverage.tsv
+│   ├── sample1.lilac.qc.tsv
+│   └── sample1.lilac.tsv
+├── linx
+│   ├── germline_annotations
+│   │   ├── linx.version
+│   │   ├── sample1.linx.germline.breakend.tsv
+│   │   ├── sample1.linx.germline.clusters.tsv
+│   │   ├── sample1.linx.germline.disruption.tsv
+│   │   ├── sample1.linx.germline.driver.catalog.tsv
+│   │   ├── sample1.linx.germline.links.tsv
+│   │   └── sample1.linx.germline.svs.tsv
+│   └── somatic_annotations
+│       ├── linx.version
+│       ├── sample1.linx.breakend.tsv
+│       ├── sample1.linx.clusters.tsv
+│       ├── sample1.linx.driver.catalog.tsv
+│       ├── sample1.linx.drivers.tsv
+│       ├── sample1.linx.fusion.tsv
+│       ├── sample1.linx.links.tsv
+│       ├── sample1.linx.svs.tsv
+│       ├── sample1.linx.vis_copy_number.tsv
+│       ├── sample1.linx.vis_fusion.tsv
+│       ├── sample1.linx.vis_gene_exon.tsv
+│       ├── sample1.linx.vis_protein_domain.tsv
+│       ├── sample1.linx.vis_segments.tsv
+│       └── sample1.linx.vis_sv_data.tsv
+├── purple
+│   ├── purple.version
+│   ├── sample1.purple.cnv.gene.tsv
+│   ├── sample1.purple.cnv.somatic.tsv
+│   ├── sample1.purple.driver.catalog.germline.tsv
+│   ├── sample1.purple.driver.catalog.somatic.tsv
+│   ├── sample1.purple.germline.deletion.tsv
+│   ├── sample1.purple.purity.range.tsv
+│   ├── sample1.purple.purity.tsv
+│   ├── sample1.purple.qc
+│   ├── sample1.purple.somatic.clonality.tsv
+│   └── sample1.purple.somatic.hist.tsv
+├── sage
+│   ├── germline
+│   │   ├── sample1.sage.bqr.tsv
+│   │   ├── sample2.sage.bqr.tsv
+│   │   ├── sample2.sage.exon.medians.tsv
+│   │   └── sample2.sage.gene.coverage.tsv
+│   └── somatic
+│       ├── sample1.sage.bqr.tsv
+│       ├── sample1.sage.exon.medians.tsv
+│       ├── sample1.sage.gene.coverage.tsv
+│       └── sample2.sage.bqr.tsv
+├── sigs
+│   ├── sample1.sig.allocation.tsv
+│   └── sample1.sig.snv_counts.csv
+├── virusbreakend
+│   └── sample1.virusbreakend.vcf.summary.tsv
+└── virusinterpreter
+    └── sample1.virus.annotated.tsv
+```
+
+</details>
+
+We can parse, tidy up, and write the WiGiTS results into e.g. Parquet
+format or a PostgreSQL database as follows:
 
 - Parquet:
 
@@ -50,9 +154,7 @@ fs::dir_info(out_dir) |>
 # ℹ 54 more rows
 ```
 
-- PostgreSQL (this should work with any typical database that has an R
-  driver, e.g. MySQL, SQLite, etc., just make sure you create the
-  correct connection object):
+- PostgreSQL:
 
 ``` r
 in_dir <- system.file("extdata/oa", package = "tidywigits")
@@ -70,6 +172,8 @@ res <-
     dbconn = dbconn
   )
 ```
+
+**IMPORTANT**: support for VCFs is under active development.
 
 ## 🍕 Installation
 
