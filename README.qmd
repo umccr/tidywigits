@@ -24,14 +24,11 @@ options(width = 100)
 # 🧬✨ tidywigits: Tidy WiGiTS Outputs
 
 
-[![1] ![2] ![3]](https://github.com/umccr/tidywigits/pkgs/container/tidywigits)
-[![4] ![5]](https://anaconda.org/umccr/r-tidywigits)
+[![conda-latest1]](https://anaconda.org/umccr/r-tidywigits)
+[![gha]](https://github.com/umccr/tidywigits/actions/workflows/deploy.yaml)
 
-[1]: <https://ghcr-badge.egpl.dev/umccr/tidywigits/tags>
-[2]: <https://ghcr-badge.egpl.dev/umccr/tidywigits/latest_tag>
-[3]: <https://ghcr-badge.egpl.dev/umccr/tidywigits/size?tag=0.0.3>
-[4]: <https://anaconda.org/umccr/r-tidywigits/badges/version.svg>
-[5]: <https://anaconda.org/umccr/r-tidywigits/badges/latest_release_date.svg>
+[conda-latest1]: <https://anaconda.org/umccr/r-tidywigits/badges/latest_release_date.svg> "Conda Latest Release"
+[gha]: <https://github.com/umccr/tidywigits/actions/workflows/deploy.yaml/badge.svg> "GitHub Actions"
 
 - 📚 Docs: https://umccr.github.io/tidywigits/:
   - files/tables supported: <https://umccr.github.io/tidywigits/schemas>
@@ -46,7 +43,10 @@ options(width = 100)
 ## 🎨 Quick Start
 
 The starting point of {tidywigits} is a directory with WiGiTS results. Let's
-look at some sample data under <https://github.com/umccr/tidywigits/tree/main/inst/extdata/oa>:
+look at some sample data (tracked via [DVC]) under
+<https://github.com/umccr/tidywigits/tree/main/inst/extdata/oa>:
+
+[DVC]: <https://dvc.org/>
 
 ```{r}
 #| label: example_input_tree

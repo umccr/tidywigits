@@ -1,6 +1,12 @@
+[![ghcr-tags] ![ghcr-latest] ![ghcr-size]](https://github.com/umccr/tidywigits/pkgs/container/tidywigits)
+
+[ghcr-tags]: <https://ghcr-badge.egpl.dev/umccr/tidywigits/tags> "GHCR tags"
+[ghcr-latest]: <https://ghcr-badge.egpl.dev/umccr/tidywigits/latest_tag> "GHCR latest tag"
+[ghcr-size]: <https://ghcr-badge.egpl.dev/umccr/tidywigits/size?tag=0.0.3> "GHCR image size"
+
 Docker image is available in the GitHub Container Registry at
 <https://github.com/umccr/tidywigits/pkgs/container/tidywigits>.
 
 ```bash
-docker pull --platform linux/amd64 ghcr.io/umccr/tidywigits:X.X.X
+docker pull --platform linux/amd64 ghcr.io/umccr/tidywigits:0.0.3
 ```

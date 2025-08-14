@@ -4,11 +4,8 @@
 
 # 🧬✨ tidywigits: Tidy WiGiTS Outputs
 
-[![1](https://ghcr-badge.egpl.dev/umccr/tidywigits/tags.png)
-![2](https://ghcr-badge.egpl.dev/umccr/tidywigits/latest_tag.png)
-![3](https://ghcr-badge.egpl.dev/umccr/tidywigits/size?tag=0.0.3)](https://github.com/umccr/tidywigits/pkgs/container/tidywigits)
-[![4](https://anaconda.org/umccr/r-tidywigits/badges/version.svg)
-![5](https://anaconda.org/umccr/r-tidywigits/badges/latest_release_date.svg)](https://anaconda.org/umccr/r-tidywigits)
+[![conda-latest1](https://anaconda.org/umccr/r-tidywigits/badges/latest_release_date.svg "Conda Latest Release")](https://anaconda.org/umccr/r-tidywigits)
+[![gha](https://github.com/umccr/tidywigits/actions/workflows/deploy.yaml/badge.svg "GitHub Actions")](https://github.com/umccr/tidywigits/actions/workflows/deploy.yaml)
 
 - 📚 Docs: https://umccr.github.io/tidywigits/:
   - files/tables supported: <https://umccr.github.io/tidywigits/schemas>
@@ -32,8 +29,8 @@ e.g. Apache Parquet, PostgreSQL, TSV, RDS.
 ## 🎨 Quick Start
 
 The starting point of {tidywigits} is a directory with WiGiTS results.
-Let’s look at some sample data under
-<https://github.com/umccr/tidywigits/tree/main/inst/extdata/oa>:
+Let’s look at some sample data (tracked via [DVC](https://dvc.org/))
+under <https://github.com/umccr/tidywigits/tree/main/inst/extdata/oa>:
 
 <details class="code-fold">
 <summary>Click here</summary>
@@ -163,14 +160,13 @@ oa <- Oncoanalyser$new(in_dir)
 dbconn <- DBI::dbConnect(
   drv = RPostgres::Postgres(),
   dbname = "nemo",
-  user = "user1"
+  user = "orcabus"
 )
-res <-
-  oa$nemofy(
-    format = "db",
-    id = "db_example",
-    dbconn = dbconn
-  )
+res <- oa$nemofy(
+  format = "db",
+  id = "db_example",
+  dbconn = dbconn
+)
 ```
 
 **IMPORTANT**: support for VCFs is under active development.
@@ -182,7 +178,7 @@ Install using {remotes} directly from GitHub:
 ``` r
 install.packages("remotes")
 remotes::install_github("umccr/tidywigits") # latest main commit
-remotes::install_github("umccr/tidywigits@vX.X.X") # released version X.X.X
+remotes::install_github("umccr/tidywigits@v0.0.3") # released version
 ```
 
 Alternatively:
