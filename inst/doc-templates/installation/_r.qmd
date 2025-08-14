@@ -3,5 +3,5 @@ Install using {remotes} directly from GitHub:
 ```r
 install.packages("remotes")
 remotes::install_github("umccr/tidywigits") # latest main commit
-remotes::install_github("umccr/tidywigits@vX.X.X") # released version X.X.X
+remotes::install_github("umccr/tidywigits@v0.0.3") # released version
 ```
