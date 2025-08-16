@@ -1,0 +1,85 @@
+---
+title: "Schemas"
+output: rmarkdown::html_document
+vignette: >
+  %\VignetteIndexEntry{Schemas}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+knitr:
+  opts_chunk:
+    collapse: true
+    comment: '#>'
+---
+
+```{css, echo=FALSE}
+/*
+https://github.com/r-lib/pkgdown/issues/2721
+Correct flex boxes from sizing based upon the largest in tabset
+*/
+
+.tab-content>.tab-pane {
+  display: none;
+}
+
+.tab-content>.active {
+  display: block;
+}
+```
+
+```{r pkgs, message=FALSE, warning=FALSE, echo=FALSE}
+{
+  use("tidywigits", c("Config", "NEMO_TOOLS"))
+  use("dplyr")
+  use("glue", "glue")
+  use("purrr")
+  use("readr", "read_tsv")
+  use("tibble", "tibble")
+  use("tidyr", "unnest")
+  use("fs", "dir_info")
+  use("knitr", "kable")
+  use("reactable")
+  use("htmltools", c("HTML", "tags"))
+}
+vignettes_script <- system.file("scripts/vignettes/schemas.R", package = "tidywigits")
+source(vignettes_script)
+```
+
+```{r}
+#| label: opts
+#| echo: false
+options(width = 120)
+```
+
+```{r}
+#| label: read_configs
+tools <- NEMO_TOOLS
+get_schemas <- function(tool) {
+  conf <- Config$new(tool)
+  .get_raw <- function() {
+    pats <- conf$get_raw_patterns()
+    desc <- conf$get_raw_descriptions()
+    conf$raw_schemas_all |>
+      dplyr::left_join(desc, by = "name") |>
+      dplyr::left_join(pats, by = "name", suffix = c("_descr", "_pattern")) |>
+      dplyr::select(
+        tbl = "name",
+        description = "value_descr",
+        pattern = "value_pattern",
+        "version",
+        "schema"
+      )
+  }
+  .get_raw()
+}
+d <- purrr::map(tools, get_schemas) |>
+  purrr::set_names(toupper(tools)) |>
+  purrr::map("raw") |>
+  dplyr::bind_rows(.id = "tool") |>
+  tidyr::nest(schema_version = c("version", "schema")) |>
+  dplyr::mutate(row_id = row_number(), n = row_id) |>
+  dplyr::relocate(n)
+```
+
+```{r}
+reactable_schema(d_raw)
+```

@@ -63,12 +63,17 @@ Config <- R6::R6Class(
       invisible(self)
     },
     #' @description Read YAML configs.
+    #' @param pkg (`character(1)`)\cr
+    #' Package name where the config files are located.
     #' @return A `list()` with the parsed data.
-    read = function() {
-      # TODO: add package name as argument
+    read = function(pkg = "tidywigits") {
       pkg_config_path <- system.file(
         glue("config/tools/{self$tool}"),
-        package = "tidywigits"
+        package = pkg
+      )
+      stopifnot(
+        dir.exists(pkg_config_path),
+        file.exists(file.path(pkg_config_path, c("raw.yaml", "tidy.yaml")))
       )
       raw <- yaml::read_yaml(file.path(pkg_config_path, "raw.yaml"))
       tidy <- yaml::read_yaml(file.path(pkg_config_path, "tidy.yaml"))
