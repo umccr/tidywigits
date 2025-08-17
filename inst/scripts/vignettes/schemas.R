@@ -1,4 +1,4 @@
-reactable_schema <- function(dat) {
+reactable_schema <- function(dat, ...) {
   # button click handlers
   js_code <- "
   function toggleSchema(rowId, versionIndex) {
@@ -45,8 +45,10 @@ reactable_schema <- function(dat) {
         cellPadding = "12px 15px"
       ),
       columns = list(
+        n = reactable::colDef(maxWidth = 70),
         row_id = reactable::colDef(show = FALSE),
         schema_version = reactable::colDef(
+          minWidth = 130,
           name = "Schema",
           html = TRUE,
           cell = function(value, index) {
@@ -152,7 +154,8 @@ reactable_schema <- function(dat) {
             )
           }
         )
-      )
+      ),
+      ...
     )
   )
 }

@@ -23,10 +23,15 @@ navbar:
       menu:
         - text: Installation
           href: articles/installation.html
+        - text: Schemas Raw
+          href: articles/schemas_raw.html
+        - text: Schemas Tidy
+          href: articles/schemas_tidy.html
         - text: Structure
           href: articles/structure.html
         - text: Developers
           href: articles/developers.html
+
     news:
       text: NEWS
       href: articles/NEWS.html
@@ -71,3 +76,4 @@ reference:
       - parse_file
       - schema_guess
       - valid_out_fmt
+      - NEMO_TOOLS

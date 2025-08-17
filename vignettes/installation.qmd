@@ -21,19 +21,23 @@ dir1 <- system.file("doc-templates", "installation", package = "tidywigits")
 ### R
 
 ```{r child=file.path(dir1, "_r.qmd")}
+#| label: child-r
 ```
 
 ### Conda
 
 ```{r child=file.path(dir1, "_conda.qmd")}
+#| label: child-conda
 ```
 
 ### Docker
 
 ```{r child=file.path(dir1, "_docker.qmd")}
+#| label: child-docker
 ```
 
 ### Pixi
 
 ```{r child=file.path(dir1, "_pixi.qmd")}
+#| label: child-pixi
 ```
