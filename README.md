@@ -2,12 +2,14 @@
 
 <!-- README.md is generated from README.qmd. Please edit that file -->
 
-# 🧬✨ tidywigits: Tidy WiGiTS Outputs
+<a href="https://umccr.github.io/tidywigits"><img src="man/figures/logo.png" alt="logo" align="left" height="100" /></a>
+
+# 🧬✨ Tidy WiGiTS Outputs
 
 [![conda-latest1](https://anaconda.org/umccr/r-tidywigits/badges/latest_release_date.svg "Conda Latest Release")](https://anaconda.org/umccr/r-tidywigits)
 [![gha](https://github.com/umccr/tidywigits/actions/workflows/deploy.yaml/badge.svg "GitHub Actions")](https://github.com/umccr/tidywigits/actions/workflows/deploy.yaml)
 
-- 📚 Docs: https://umccr.github.io/tidywigits/:
+- 📚 Docs: <https://umccr.github.io/tidywigits>:
   - [Installation](https://umccr.github.io/tidywigits/articles/installation)
   - [Files/tables
     supported](https://umccr.github.io/tidywigits/articles/schemas_raw)

@@ -4,7 +4,7 @@ authors:
   Peter Diakumis:
     href: https://github.com/pdiakumis
 home:
-  title: "An R package for working with Hartwig's WiGiTS data"
+  title: "Tidy WiGiTS Outputs"
   description: >
     A tidyverse R6 approach for working with the Hartwig Medical Centre's WiGiTS data.
 template:
