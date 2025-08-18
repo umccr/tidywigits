@@ -4,7 +4,7 @@
 [ghcr-latest]: <https://ghcr-badge.egpl.dev/umccr/tidywigits/latest_tag> "GHCR latest tag"
 [ghcr-size]: <https://ghcr-badge.egpl.dev/umccr/tidywigits/size?tag=0.0.3> "GHCR image size"
 
-Docker image is available in the GitHub Container Registry at
+The Docker image is available from the GitHub Container Registry at
 <https://github.com/umccr/tidywigits/pkgs/container/tidywigits>.
 
 ```bash

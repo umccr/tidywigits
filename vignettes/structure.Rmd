@@ -162,10 +162,11 @@ that reads all the data into memory. See `?Tool`.
 
 These simple parsers are used in 80-90% of cases, so in the future we can
 optimise the parsing if needed with faster packages such as {[data.table]},
-{[duckdb-r]} or {[r-polars]}.
+{[duckdb-r]}/{[duckplyr]} or {[r-polars]}.
 
 [readr]: <https://github.com/tidyverse/readr> "readr"
 [duckdb-r]: <https://github.com/duckdb/duckdb-r> "duckdb-r"
+[duckplyr]: <https://github.com/tidyverse/duckplyr> "duckplyr"
 [data.table]: <https://github.com/Rdatatable/data.table> "data.table"
 [r-polars]: <https://github.com/pola-rs/r-polars> "r-polars"
 
@@ -244,13 +245,16 @@ from different runs in a data pipeline.
 When writing to a database like PostgreSQL, another column `nemo_pfix` is used
 to distinguish results from the same run from the same tool.
 
-```{r ppl_write, eval=FALSE}
+```{r ppl_write}
 ppl2$tidy() # first need to tidy
 outdir1 <- tempdir()
-fmt <- "tsv"
+fmt <- "csv"
 ppl2$write(odir = outdir1, format = fmt, id = "run123")
-(wfiles <- fs::dir_info(outdir1) |> dplyr::select(1:5))
-readr::read_tsv(wfiles$path[2], show_col_types = F)
+wfiles <- fs::dir_info(outdir1) |> dplyr::select(1:5)
+wfiles |>
+  dplyr::mutate(bname = basename(.data$path)) |>
+  dplyr::select("bname", "size", "type")
+# readr::read_csv(wfiles$path[1], show_col_types = F) # see bug #137
 ```
 
 ### nemofy
@@ -302,6 +306,10 @@ x <- oa$nemofy(
   id = "oa_run1",
   exclude = c("cobalt_ratiotsv", "amber_baftsv", "isofox_altsj", "isofox_transdata")
 )
-(wfiles3 <- fs::dir_info(outdir3) |> dplyr::select(1:5))
+wfiles3 <- fs::dir_info(outdir3) |>
+  dplyr::select(1:5) |>
+  dplyr::mutate(bname = basename(.data$path))
+wfiles3 |>
+  dplyr::select("bname", "size", "type")
 readr::read_tsv(wfiles3$path[5], show_col_types = F)
 ```

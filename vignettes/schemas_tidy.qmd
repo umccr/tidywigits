@@ -33,11 +33,6 @@ source(vignettes_script)
 ```
 
 ```{r}
-#| label: opts
-options(width = 120)
-```
-
-```{r}
 #| label: read_configs
 tools <- NEMO_TOOLS
 get_schemas_tidy <- function(tool) {
@@ -46,22 +41,38 @@ get_schemas_tidy <- function(tool) {
     desc <- conf$get_tidy_descriptions()
     conf$tidy_schemas_all |>
       dplyr::left_join(desc, by = "name") |>
+      dplyr::rowwise() |>
+      dplyr::mutate(
+        tbl = sub("tbl", "", .data$tbl),
+        name = dplyr::if_else(
+          .data$tbl == "1",
+          glue(.data$name),
+          glue("{.data$name}_{.data$tbl}")
+        ),
+        value = dplyr::if_else(
+          .data$tbl == "1",
+          glue(.data$value),
+          glue("{.data$value} (tbl{.data$tbl})")
+        )
+      ) |>
+      dplyr::ungroup() |>
       dplyr::select(
         tbl = "name",
         description = "value",
         "version",
-        subtbl = "tbl",
         "schema"
       )
   }
   .get_tidy()
 }
+
 d <- purrr::map(tools, get_schemas_tidy) |>
   purrr::set_names(toupper(tools)) |>
   dplyr::bind_rows(.id = "tool") |>
   tidyr::nest(schema_version = c("version", "schema")) |>
-  dplyr::mutate(row_id = row_number(), n = row_id) |>
-  dplyr::relocate(n)
+  dplyr::mutate(row_id = row_number(), n = .data$row_id) |>
+  dplyr::relocate("n") |>
+  dplyr::relocate("schema_version", .after = "tbl")
 ```
 
 ```{r}

@@ -31,10 +31,12 @@ options(width = 100)
 [gha]: <https://github.com/umccr/tidywigits/actions/workflows/deploy.yaml/badge.svg> "GitHub Actions"
 
 - 📚 Docs: https://umccr.github.io/tidywigits/:
-  - files/tables supported: <https://umccr.github.io/tidywigits/schemas>
-  - installation: <https://umccr.github.io/tidywigits/installation>
-  - R6 structure: <https://umccr.github.io/tidywigits/structure>
-  - developer notes: <https://umccr.github.io/tidywigits/developers>
+  - [Installation](https://umccr.github.io/tidywigits/articles/installation)
+  - [Files/tables supported](https://umccr.github.io/tidywigits/articles/schemas_raw)
+  - [Tidy schemas](https://umccr.github.io/tidywigits/articles/schemas_tidy)
+  - [R6 structure](https://umccr.github.io/tidywigits/articles/structure)
+  - [Developer notes](https://umccr.github.io/tidywigits/articles/developers)
+  - [Changelog](https://umccr.github.io/tidywigits/articles/NEWS)
 
 ## Overview
 
@@ -78,7 +80,7 @@ Alternatively:
 - conda package: <https://anaconda.org/umccr/r-tidywigits>
 - Docker image: <https://github.com/umccr/tidywigits/pkgs/container/tidywigits>
 
-For more details see: <https://umccr.github.io/tidywigits/installation/>
+For more details see: <https://umccr.github.io/tidywigits/articles/installation>
 
 ## 🌀 CLI
 
@@ -103,17 +105,17 @@ export PATH="${tw_cli}:${PATH}"
 tw_cli=$(Rscript -e 'x = system.file("cli", package = "tidywigits"); cat(x, "\n")' | xargs)
 export PATH="${tw_cli}:${PATH}"
 
-echo "tidywigits.R --version" & tidywigits.R --version
+echo "$ tidywigits.R --version" & tidywigits.R --version
 echo ""
 echo "#-----------------------------------#"
-echo "tidywigits.R --help" & tidywigits.R --help
-echo ""
+echo "$ tidywigits.R --help" & tidywigits.R --help
+echo "'"
 echo "#-----------------------------------#"
 echo "#------- Tidy ----------------------#"
-echo "tidywigits.R tidy --help" & tidywigits.R tidy --help
+echo "$ tidywigits.R tidy --help" & tidywigits.R tidy --help
 echo ""
 echo "#-----------------------------------#"
 echo "#------- List ----------------------#"
-echo "tidywigits.R list --help" & tidywigits.R list --help
+echo "$ tidywigits.R list --help" & tidywigits.R list --help
 echo ""
 ```

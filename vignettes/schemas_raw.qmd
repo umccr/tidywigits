@@ -53,6 +53,7 @@ get_schemas_raw <- function(tool) {
   }
   .get_raw()
 }
+
 d <- purrr::map(tools, get_schemas_raw) |>
   purrr::set_names(toupper(tools)) |>
   dplyr::bind_rows(.id = "tool") |>

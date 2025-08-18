@@ -8,10 +8,16 @@
 [![gha](https://github.com/umccr/tidywigits/actions/workflows/deploy.yaml/badge.svg "GitHub Actions")](https://github.com/umccr/tidywigits/actions/workflows/deploy.yaml)
 
 - 📚 Docs: https://umccr.github.io/tidywigits/:
-  - files/tables supported: <https://umccr.github.io/tidywigits/schemas>
-  - installation: <https://umccr.github.io/tidywigits/installation>
-  - R6 structure: <https://umccr.github.io/tidywigits/structure>
-  - developer notes: <https://umccr.github.io/tidywigits/developers>
+  - [Installation](https://umccr.github.io/tidywigits/articles/installation)
+  - [Files/tables
+    supported](https://umccr.github.io/tidywigits/articles/schemas_raw)
+  - [Tidy
+    schemas](https://umccr.github.io/tidywigits/articles/schemas_tidy)
+  - [R6
+    structure](https://umccr.github.io/tidywigits/articles/structure)
+  - [Developer
+    notes](https://umccr.github.io/tidywigits/articles/developers)
+  - [Changelog](https://umccr.github.io/tidywigits/articles/NEWS)
 
 ## Overview
 
@@ -173,7 +179,7 @@ res <- oa$nemofy(
 
 ## 🍕 Installation
 
-Install using {remotes} directly from GitHub:
+Using {remotes} directly from GitHub:
 
 ``` r
 install.packages("remotes")
@@ -187,7 +193,8 @@ Alternatively:
 - Docker image:
   <https://github.com/umccr/tidywigits/pkgs/container/tidywigits>
 
-For more details see: <https://umccr.github.io/tidywigits/installation/>
+For more details see:
+<https://umccr.github.io/tidywigits/articles/installation>
 
 ## 🌀 CLI
 
@@ -204,11 +211,11 @@ tw_cli=$(Rscript -e 'x = system.file("cli", package = "tidywigits"); cat(x, "\n"
 export PATH="${tw_cli}:${PATH}"
 ```
 
-    tidywigits.R --version
+    $ tidywigits.R --version
     tidywigits.R 0.0.3
 
     #-----------------------------------#
-    tidywigits.R --help
+    $ tidywigits.R --help
     usage: tidywigits.R [-h] [-v] {tidy,list} ...
 
     🐠 WiGiTS Output Tidying 🐢
@@ -221,10 +228,10 @@ export PATH="${tw_cli}:${PATH}"
     options:
       -h, --help     show this help message and exit
       -v, --version  show program's version number and exit
-
+    '
     #-----------------------------------#
     #------- Tidy ----------------------#
-    tidywigits.R tidy --help
+    $ tidywigits.R tidy --help
     usage: tidywigits.R tidy [-h] -d IN_DIR [-o OUT_DIR] [-f FORMAT] -i ID
                              [--dbname DBNAME] [--dbuser DBUSER]
                              [--include INCLUDE] [--exclude EXCLUDE] [-q]
@@ -239,15 +246,15 @@ export PATH="${tw_cli}:${PATH}"
                             🎨 Format of output (def: parquet). Choices: parquet,
                             db, tsv, csv, rds
       -i ID, --id ID        🚩 ID to use for this run.
-      --dbname DBNAME       🐶 Database name (def: nemo).
-      --dbuser DBUSER       🐢 Database user (def: orcabus).
+      --dbname DBNAME       🐶 Database name.
+      --dbuser DBUSER       🐢 Database user.
       --include INCLUDE     ✅ Include only these files (comma,sep).
       --exclude EXCLUDE     ❌ Exclude these files (comma,sep).
       -q, --quiet           😴 Shush all the logs.
 
     #-----------------------------------#
     #------- List ----------------------#
-    tidywigits.R list --help
+    $ tidywigits.R list --help
     usage: tidywigits.R list [-h] -d IN_DIR [-q]
 
     options:

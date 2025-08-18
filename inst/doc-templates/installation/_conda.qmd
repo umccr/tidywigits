@@ -3,7 +3,7 @@
 [conda-version]: <https://anaconda.org/umccr/r-tidywigits/badges/version.svg> "Conda package version"
 [conda-latest]: <https://anaconda.org/umccr/r-tidywigits/badges/latest_release_date.svg> "Conda package latest release date"
 
-Conda package is available from the umccr Anaconda channel at
+The conda package is available from the umccr channel at
 <https://anaconda.org/umccr/r-tidywigits>.
 
 ```bash
