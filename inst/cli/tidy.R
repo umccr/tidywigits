@@ -6,8 +6,8 @@ tidy_add_args <- function(subp) {
   tidy$add_argument("-o", "--out_dir", help = glue("{emoji('rocket')} Output directory."))
   tidy$add_argument("-f", "--format", help = glue("{emoji('art')} Format of output (def: %(default)s). Choices: {fmts}"), default = "parquet")
   tidy$add_argument("-i", "--id", help = glue("{emoji('triangular_flag_on_post')} ID to use for this run."), required = TRUE)
-  tidy$add_argument("--dbname", help = glue("{emoji('dog')} Database name (def: %(default)s)."), default = "nemo")
-  tidy$add_argument("--dbuser", help = glue("{emoji('turtle')} Database user (def: %(default)s)."), default = "orcabus")
+  tidy$add_argument("--dbname", help = glue("{emoji('dog')} Database name."))
+  tidy$add_argument("--dbuser", help = glue("{emoji('turtle')} Database user."))
   tidy$add_argument("--include", help = glue("{emoji('white_check_mark')} Include only these files (comma,sep)."))
   tidy$add_argument("--exclude", help = glue("{emoji('x')} Exclude these files (comma,sep)."))
   tidy$add_argument("-q", "--quiet", help = glue("{emoji('sleeping')} Shush all the logs."), action = "store_true")
@@ -53,6 +53,7 @@ nemo_tidy <- function(in_dir, out_dir, out_format, id, dbname, dbuser, include, 
   tidywigits::valid_out_fmt(out_format)
   dbconn <- NULL
   if (out_format == "db") {
+    stopifnot(!is.null(dbname), !is.null(dbuser))
     dbconn <- DBI::dbConnect(
       drv = RPostgres::Postgres(),
       dbname = dbname,
