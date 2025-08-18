@@ -4,11 +4,14 @@ readme-render:
 air:
 	@air format
 
+pkgdown-build:
+	@R -e "pkgdown::build_site()" --quiet --no-restore --no-save
+
+readme-pkgdown: readme-render pkgdown-build
+
 doc:
 	@R -e "devtools::document()" --quiet --no-restore --no-save
 
 build:
 	@R -e "pak::local_install(upgrade = FALSE)" --quiet --no-restore --no-save
 
-load:
-	@R -e "devtools::load_all()" --quiet --no-restore --no-save
