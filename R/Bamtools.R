@@ -3,10 +3,13 @@
 #' @description
 #' Bamtools file parsing and manipulation.
 #' @examples
-#' \dontrun{
-#' path <- here::here("nogit")
-#' b <- Bamtools$new(path)
-#' }
+#' cls <- Bamtools
+#' indir <- system.file("extdata/oa", package = "tidywigits")
+#' odir <- tempdir()
+#' id <- "bamtools_run1"
+#' obj <- cls$new(indir)
+#' obj$nemofy(odir = odir, format = "parquet", id = id)
+#' list.files(odir, pattern = "parquet", full.names = FALSE)
 #' @export
 Bamtools <- R6::R6Class(
   "Bamtools",
@@ -17,7 +20,7 @@ Bamtools <- R6::R6Class(
     #' Output directory of tool. If `files_tbl` is supplied, this basically gets
     #' ignored.
     #' @param files_tbl (`tibble(n)`)\cr
-    #' Tibble of files from `list_files_dir`.
+    #' Tibble of files from [list_files_dir()].
     initialize = function(path = NULL, files_tbl = NULL) {
       super$initialize(name = "bamtools", path = path, files_tbl = files_tbl)
     },
@@ -136,8 +139,7 @@ Bamtools <- R6::R6Class(
             "paired in sequencing" ~ "paired_in_seq",
             "with itself and mate mapped" ~ "both_map",
             "with mate mapped to a different chr" ~ "matemap_diff",
-            "with mate mapped to a different chr (mapQ>=5)" ~
-              "matemap_diff_mapq5",
+            "with mate mapped to a different chr (mapQ>=5)" ~ "matemap_diff_mapq5",
             .default = .data$metric2
           )
         )

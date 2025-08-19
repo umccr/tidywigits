@@ -1,0 +1,15 @@
+### R
+
+{{< include /inst/doc-templates/installation/_r.qmd >}}
+
+### Conda
+
+{{< include /inst/doc-templates/installation/_conda.qmd >}}
+
+### Docker
+
+{{< include /inst/doc-templates/installation/_docker.qmd >}}
+
+### Pixi
+
+{{< include /inst/doc-templates/installation/_pixi.qmd >}}

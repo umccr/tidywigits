@@ -1,5 +1,4 @@
 /nogit
-/docs
-inst/doc
 **/.quarto/
-docs
+/docs/
+/.quarto/

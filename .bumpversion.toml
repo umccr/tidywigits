@@ -39,3 +39,22 @@ filename = "deploy/conda/env/yaml/tidywigits.yaml"
 search = "r-tidywigits =={current_version}"
 replace = "r-tidywigits =={new_version}"
 
+[[tool.bumpversion.files]]
+filename = "inst/doc-templates/installation/_docker.qmd"
+search = "tidywigits:{current_version}"
+replace = "tidywigits:{new_version}"
+
+[[tool.bumpversion.files]]
+filename = "inst/doc-templates/installation/_docker.qmd"
+search = "tag={current_version}"
+replace = "tag={new_version}"
+
+[[tool.bumpversion.files]]
+filename = "inst/doc-templates/installation/_conda.qmd"
+search = "r-tidywigits=={current_version}"
+replace = "r-tidywigits=={new_version}"
+
+[[tool.bumpversion.files]]
+filename = "inst/doc-templates/installation/_r.qmd"
+search = "tidywigits@v{current_version}"
+replace = "tidywigits@v{new_version}"

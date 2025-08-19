@@ -1,0 +1,6 @@
+outs:
+- md5: 9a6876998b9935275a6d3b45a29c6ae1.dir
+  size: 1743
+  nfiles: 3
+  hash: md5
+  path: lilac

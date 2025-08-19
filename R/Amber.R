@@ -3,12 +3,13 @@
 #' @description
 #' Amber file parsing and manipulation.
 #' @examples
-#' \dontrun{
-#' path <- here::here(
-#'   "nogit/oa_v1"
-#' )
-#' a <- Amber$new(path)
-#' }
+#' cls <- Amber
+#' indir <- system.file("extdata/oa", package = "tidywigits")
+#' odir <- tempdir()
+#' id <- "amber_run1"
+#' obj <- cls$new(indir)
+#' obj$nemofy(odir = odir, format = "parquet", id = id)
+#' list.files(odir, pattern = "parquet", full.names = FALSE)
 #' @export
 Amber <- R6::R6Class(
   "Amber",
@@ -19,7 +20,7 @@ Amber <- R6::R6Class(
     #' Output directory of tool. If `files_tbl` is supplied, this basically gets
     #' ignored.
     #' @param files_tbl (`tibble(n)`)\cr
-    #' Tibble of files from `list_files_dir`.
+    #' Tibble of files from [list_files_dir()].
     initialize = function(path = NULL, files_tbl = NULL) {
       super$initialize(name = "amber", path = path, files_tbl = files_tbl)
     },

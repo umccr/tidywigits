@@ -1,0 +1,6 @@
+outs:
+- md5: 67a0c7518ebd82a0b490584c68da6c99.dir
+  size: 19819
+  nfiles: 21
+  hash: md5
+  path: linx

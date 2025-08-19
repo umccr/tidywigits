@@ -3,6 +3,10 @@ title: tidywigits
 authors:
   Peter Diakumis:
     href: https://github.com/pdiakumis
+home:
+  title: "Tidy WiGiTS Outputs"
+  description: >
+    A tidyverse R6 approach for working with the Hartwig Medical Centre's WiGiTS data.
 template:
   bootstrap: 5
   bootswatch: zephyr
@@ -17,10 +21,19 @@ navbar:
     articles:
       text: Articles
       menu:
+        - text: Installation
+          href: articles/installation.html
+        - text: Schemas Raw
+          href: articles/schemas_raw.html
+        - text: Schemas Tidy
+          href: articles/schemas_tidy.html
         - text: Structure
           href: articles/structure.html
         - text: Developers
           href: articles/developers.html
+        - text: UML
+          href: articles/uml.html
+
     news:
       text: NEWS
       href: articles/NEWS.html
@@ -65,3 +78,4 @@ reference:
       - parse_file
       - schema_guess
       - valid_out_fmt
+      - NEMO_TOOLS

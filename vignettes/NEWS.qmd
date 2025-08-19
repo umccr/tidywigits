@@ -16,8 +16,8 @@ knitr:
 #| warning: false
 #| echo: false
 {
-  require(htmltools, include.only = c("a"))
-  require(glue, include.only = "glue")
+  use("htmltools", "a")
+  use("glue", "glue")
 }
 ```
 

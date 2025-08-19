@@ -1,0 +1,6 @@
+outs:
+- md5: 8b09148e8d01b3384aa4c8f790a023e6.dir
+  size: 479
+  nfiles: 2
+  hash: md5
+  path: sigs

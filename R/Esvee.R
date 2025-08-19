@@ -3,16 +3,13 @@
 #' @description
 #' Esvee file parsing and manipulation.
 #' @examples
-#' \dontrun{
-#' path <- here::here(
-#'   "nogit"
-#' )
-#' sv <- Esvee$new(path)
-#' sv$tidy()
-#' sv$tbls$tidy |>
-#'   purrr::set_names(sv$tbls$parser) |>
-#'   purrr::map(\(x) x[["data"]][[1]])
-#' }
+#' cls <- Esvee
+#' indir <- system.file("extdata/oa", package = "tidywigits")
+#' odir <- tempdir()
+#' id <- "esvee_run1"
+#' obj <- cls$new(indir)
+#' obj$nemofy(odir = odir, format = "parquet", id = id)
+#' list.files(odir, pattern = "parquet", full.names = FALSE)
 #' @export
 Esvee <- R6::R6Class(
   "Esvee",
@@ -23,7 +20,7 @@ Esvee <- R6::R6Class(
     #' Output directory of tool. If `files_tbl` is supplied, this basically gets
     #' ignored.
     #' @param files_tbl (`tibble(n)`)\cr
-    #' Tibble of files from `list_files_dir`.
+    #' Tibble of files from [list_files_dir()].
     initialize = function(path = NULL, files_tbl = NULL) {
       super$initialize(name = "esvee", path = path, files_tbl = files_tbl)
     },

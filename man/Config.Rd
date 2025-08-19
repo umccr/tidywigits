@@ -96,9 +96,17 @@ Print details about the Tool.
 \subsection{Method \code{read()}}{
 Read YAML configs.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Config$read()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Config$read(pkg = "tidywigits")}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{pkg}}{(\code{character(1)})\cr
+Package name where the config files are located.}
+}
+\if{html}{\out{</div>}}
+}
 \subsection{Returns}{
 A \code{list()} with the parsed data.
 }

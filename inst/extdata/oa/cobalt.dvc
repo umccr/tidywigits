@@ -1,0 +1,6 @@
+outs:
+- md5: 4deaf9a5028ad62222dd35b462a461d9.dir
+  size: 1374
+  nfiles: 4
+  hash: md5
+  path: cobalt

@@ -1,0 +1,6 @@
+outs:
+- md5: 67c7cb28ecd2a4cd15cdcbed32b7d8ea.dir
+  size: 442519
+  nfiles: 3
+  hash: md5
+  path: cuppa

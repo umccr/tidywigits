@@ -1,0 +1,68 @@
+---
+title: "Schemas Raw"
+vignette: >
+  %\VignetteIndexEntry{Schemas Raw}
+  %\VignetteEngine{quarto::html}
+  %\VignetteEncoding{UTF-8}
+knitr:
+  opts_chunk:
+    collapse: true
+    comment: '#>'
+    echo: false
+---
+
+```{r}
+#| label: pkgs
+#| message: false
+{
+  use("tidywigits", c("Config", "NEMO_TOOLS"))
+  use("dplyr")
+  use("glue", "glue")
+  use("purrr", "map")
+  use("readr", "read_tsv")
+  use("tibble", "tibble")
+  use("tidyr", "unnest")
+  use("fs", "dir_info")
+  use("knitr", "kable")
+  use("reactable", "reactable")
+  use("htmltools", c("HTML", "tags"))
+}
+vignettes_script <- system.file("scripts/vignettes/schemas.R", package = "tidywigits")
+source(vignettes_script)
+```
+
+```{r}
+#| label: read_configs
+tools <- NEMO_TOOLS
+get_schemas_raw <- function(tool) {
+  conf <- Config$new(tool)
+  .get_raw <- function() {
+    pats <- conf$get_raw_patterns()
+    desc <- conf$get_raw_descriptions()
+    conf$raw_schemas_all |>
+      dplyr::left_join(desc, by = "name") |>
+      dplyr::left_join(pats, by = "name", suffix = c("_descr", "_pattern")) |>
+      dplyr::select(
+        tbl = "name",
+        description = "value_descr",
+        pattern = "value_pattern",
+        "version",
+        "schema"
+      )
+  }
+  .get_raw()
+}
+
+d <- purrr::map(tools, get_schemas_raw) |>
+  purrr::set_names(toupper(tools)) |>
+  dplyr::bind_rows(.id = "tool") |>
+  tidyr::nest(schema_version = c("version", "schema")) |>
+  dplyr::mutate(row_id = row_number(), n = .data$row_id) |>
+  dplyr::relocate("n") |>
+  dplyr::relocate("schema_version", .after = "tbl")
+```
+
+```{r}
+#| label: reactable_schema
+reactable_schema(d)
+```

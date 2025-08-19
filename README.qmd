@@ -1,66 +1,124 @@
 ---
 format: gfm
+knitr:
+  opts_chunk:
+    collapse: true
+    comment: ''
+    fig.path: "man/figures/README-"
 ---
 
 <!-- README.md is generated from README.qmd. Please edit that file -->
 
 ```{r}
-#| include: false
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "",
-  fig.path = "man/figures/README-",
-  out.width = "100%"
-)
-```
-
-```{r}
 #| label: pkg_load
 #| echo: false
 #| message: false
-#| warning: false
-require(tidywigits)
+use("tidywigits")
 ```
 
-# 🧬✨ tidywigits
+```{r}
+#| label: opts
+#| echo: false
+options(width = 100)
+```
 
-- Docs: <https://umccr.github.io/tidywigits/>
+<a href="https://umccr.github.io/tidywigits"><img src="man/figures/logo.png" alt="logo" align="left" height="100" /></a>
+
+# 🧬✨ Tidy WiGiTS Outputs
+
+
+[![conda-latest1]](https://anaconda.org/umccr/r-tidywigits)
+[![gha]](https://github.com/umccr/tidywigits/actions/workflows/deploy.yaml)
+
+[conda-latest1]: <https://anaconda.org/umccr/r-tidywigits/badges/latest_release_date.svg> "Conda Latest Release"
+[gha]: <https://github.com/umccr/tidywigits/actions/workflows/deploy.yaml/badge.svg> "GitHub Actions"
+
+- 📚 Docs: <https://umccr.github.io/tidywigits>:
+  - [Installation](https://umccr.github.io/tidywigits/articles/installation)
+  - [Files/tables supported](https://umccr.github.io/tidywigits/articles/schemas_raw)
+  - [Tidy schemas](https://umccr.github.io/tidywigits/articles/schemas_tidy)
+  - [R6 structure](https://umccr.github.io/tidywigits/articles/structure)
+  - [Developer notes](https://umccr.github.io/tidywigits/articles/developers)
+  - [Changelog](https://umccr.github.io/tidywigits/articles/NEWS)
+
+## Overview
+
+{{< include /inst/doc-templates/introduction/_overview.qmd >}}
+
+## 🎨 Quick Start
+
+The starting point of {tidywigits} is a directory with WiGiTS results. Let's
+look at some sample data (tracked via [DVC]) under
+<https://github.com/umccr/tidywigits/tree/main/inst/extdata/oa>:
+
+[DVC]: <https://dvc.org/>
+
+```{r}
+#| label: example_input_tree
+#| code-fold: true
+#| code-summary: "Click here"
+system.file("extdata/oa", package = "tidywigits") |>
+  fs::dir_tree(invert = TRUE, glob = "*.dvc")
+```
+
+We can parse, tidy up, and write the WiGiTS results into e.g. Parquet format or
+a PostgreSQL database as follows:
+
+- Parquet:
+
+{{< include /inst/doc-templates/examples/_parquet1.qmd >}}
+
+- PostgreSQL:
+
+{{< include /inst/doc-templates/examples/_postgresql1.qmd >}}
+
+**IMPORTANT**: support for VCFs is under active development.
 
 ## 🍕 Installation
 
-### R
+{{< include /inst/doc-templates/installation/_r.qmd >}}
 
-```r
-remotes::install_github("umccr/tidywigits")
+Alternatively:
+
+- conda package: <https://anaconda.org/umccr/r-tidywigits>
+- Docker image: <https://github.com/umccr/tidywigits/pkgs/container/tidywigits>
+
+For more details see: <https://umccr.github.io/tidywigits/articles/installation>
+
+## 🌀 CLI
+
+A `tidywigits.R` command line interface is available for convenience.
+
+- If you're using the conda package, the `tidywigits.R` command will already be
+  available inside the activated conda environment.
+- If you're _not_ using the conda package, you need to export the
+  `tidywigits/inst/cli/` directory to your `PATH` in order to use `tidywigits.R`.
+
+```{bash}
+#| label: cli1
+#| echo: true
+#| eval: false
+tw_cli=$(Rscript -e 'x = system.file("cli", package = "tidywigits"); cat(x, "\n")' | xargs)
+export PATH="${tw_cli}:${PATH}"
 ```
 
-### Conda
+```{bash}
+#| label: cli2
+#| echo: false
+tw_cli=$(Rscript -e 'x = system.file("cli", package = "tidywigits"); cat(x, "\n")' | xargs)
+export PATH="${tw_cli}:${PATH}"
 
-#### Linux & MacOS (non-M1)
-
-```bash
-conda create \
-  -n tidywigits_env \
-  -c umccr -c bioconda -c conda-forge \
-  r-tidywigits==X.X.X
-
-conda activate tidywigits_env
-```
-
-#### MacOS M1
-
-```bash
-CONDA_SUBDIR=osx-64 \
-  conda create \
-  -n tidywigits_env \
-  -c umccr -c bioconda -c conda-forge \
-  r-tidywigits==X.X.X
-
-conda activate tidywigits_env
-```
-
-### Docker
-
-```bash
-docker pull --platform linux/amd64 ghcr.io/umccr/tidywigits:X.X.X
+echo "$ tidywigits.R --version" & tidywigits.R --version
+echo ""
+echo "#-----------------------------------#"
+echo "$ tidywigits.R --help" & tidywigits.R --help
+echo "'"
+echo "#-----------------------------------#"
+echo "#------- Tidy ----------------------#"
+echo "$ tidywigits.R tidy --help" & tidywigits.R tidy --help
+echo ""
+echo "#-----------------------------------#"
+echo "#------- List ----------------------#"
+echo "$ tidywigits.R list --help" & tidywigits.R list --help
+echo ""
 ```

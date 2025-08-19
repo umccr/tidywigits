@@ -3,12 +3,13 @@
 #' @description
 #' Cuppa file parsing and manipulation.
 #' @examples
-#' \dontrun{
-#' path <- here::here(
-#'   "nogit"
-#' )
-#' cup <- Cuppa$new(path)
-#' }
+#' cls <- Cuppa
+#' indir <- system.file("extdata/oa", package = "tidywigits")
+#' odir <- tempdir()
+#' id <- "cuppa_run1"
+#' obj <- cls$new(indir)
+#' obj$nemofy(odir = odir, format = "parquet", id = id)
+#' list.files(odir, pattern = "parquet", full.names = FALSE)
 #' @export
 Cuppa <- R6::R6Class(
   "Cuppa",
@@ -19,7 +20,7 @@ Cuppa <- R6::R6Class(
     #' Output directory of tool. If `files_tbl` is supplied, this basically gets
     #' ignored.
     #' @param files_tbl (`tibble(n)`)\cr
-    #' Tibble of files from `list_files_dir`.
+    #' Tibble of files from [list_files_dir()].
     initialize = function(path = NULL, files_tbl = NULL) {
       super$initialize(name = "cuppa", path = path, files_tbl = files_tbl)
     },
@@ -44,12 +45,9 @@ Cuppa <- R6::R6Class(
             (.data$ResultType == "CLASSIFIER" & .data$DataType != "GENDER") |
               (.data$ResultType == "PREVALENCE" & .data$DataType == "GENDER") ~
               "classifier",
-            (.data$ResultType == "PERCENTILE" & .data$Category == "SNV") ~
-              "sigs",
-            (.data$ResultType == "PERCENTILE" & .data$Category != "SNV") ~
-              "percentiles",
-            (.data$Category == "FEATURE" & .data$ResultType == "PREVALENCE") ~
-              "features",
+            (.data$ResultType == "PERCENTILE" & .data$Category == "SNV") ~ "sigs",
+            (.data$ResultType == "PERCENTILE" & .data$Category != "SNV") ~ "percentiles",
+            (.data$Category == "FEATURE" & .data$ResultType == "PREVALENCE") ~ "features",
             .default = "other"
           )
         )

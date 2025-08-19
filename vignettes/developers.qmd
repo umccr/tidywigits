@@ -10,17 +10,16 @@ knitr:
     comment: '#>'
 ---
 
-```{r knitr_opts, include = FALSE}
+```{r}
+#| label: knitr_opts
+#| include: false
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
 ```
 
-## Development notes
-
 ### R pkg dev
-
 
 | Command                               | Comment                                                 | Shortcut          |
 | ---------                             | ---------                                               | ---------         |

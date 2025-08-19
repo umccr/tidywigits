@@ -1,0 +1,27 @@
+```{r}
+#| label: pkg_load_postgresql
+#| echo: false
+#| message: false
+#| eval: false
+use("DBI", "dbConnect")
+use("RPostgres", "Postgres")
+use("fs", "dir_create")
+```
+
+```{r}
+#| label: postgresql_example
+#| eval: false
+in_dir <- system.file("extdata/oa", package = "tidywigits")
+out_dir <- tempdir() |> fs::dir_create("parquet_example")
+oa <- Oncoanalyser$new(in_dir)
+dbconn <- DBI::dbConnect(
+  drv = RPostgres::Postgres(),
+  dbname = "nemo",
+  user = "orcabus"
+)
+res <- oa$nemofy(
+  format = "db",
+  id = "db_example",
+  dbconn = dbconn
+)
+```
