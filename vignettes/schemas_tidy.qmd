@@ -1,9 +1,8 @@
 ---
 title: "Schemas Tidy"
-output: rmarkdown::html_document
 vignette: >
   %\VignetteIndexEntry{Schemas Tidy}
-  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEngine{quarto::html}
   %\VignetteEncoding{UTF-8}
 knitr:
   opts_chunk:

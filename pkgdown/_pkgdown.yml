@@ -31,6 +31,8 @@ navbar:
           href: articles/structure.html
         - text: Developers
           href: articles/developers.html
+        - text: UML
+          href: articles/uml.html
 
     news:
       text: NEWS
