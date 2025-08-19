@@ -52,6 +52,20 @@ pr <- function(n) {
 
 ## DEV
 
+## v0.0.4 (2025-08-19)
+
+- `r vdiff("0.0.4", "0.0.3")`
+
+Major documentation update - see `r pr(138)` for details.
+
+- test data update
+- full README re-write
+- pkgdown vignette re-org
+- add vignettes for raw/tidy schemas, uml diagram
+- add `pkgdown/extra.scss` for CSS customisation
+- add logo
+
+
 ## v0.0.3 (2025-08-04)
 
 - `r vdiff("0.0.3", "0.0.2")`
