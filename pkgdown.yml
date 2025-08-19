@@ -3,9 +3,13 @@ pkgdown: 2.1.3
 pkgdown_sha: ~
 articles:
   developers: developers.html
+  installation: installation.html
   NEWS: NEWS.html
+  schemas_raw: schemas_raw.html
+  schemas_tidy: schemas_tidy.html
   structure: structure.html
-last_built: 2025-08-04T00:55Z
+  uml: uml.html
+last_built: 2025-08-19T05:28Z
 urls:
   reference: https://umccr.github.io/tidywigits/reference
   article: https://umccr.github.io/tidywigits/articles

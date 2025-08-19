@@ -6,7 +6,11 @@
 <url><loc>https://umccr.github.io/tidywigits/articles/NEWS.html</loc></url>
 <url><loc>https://umccr.github.io/tidywigits/articles/developers.html</loc></url>
 <url><loc>https://umccr.github.io/tidywigits/articles/index.html</loc></url>
+<url><loc>https://umccr.github.io/tidywigits/articles/installation.html</loc></url>
+<url><loc>https://umccr.github.io/tidywigits/articles/schemas_raw.html</loc></url>
+<url><loc>https://umccr.github.io/tidywigits/articles/schemas_tidy.html</loc></url>
 <url><loc>https://umccr.github.io/tidywigits/articles/structure.html</loc></url>
+<url><loc>https://umccr.github.io/tidywigits/articles/uml.html</loc></url>
 <url><loc>https://umccr.github.io/tidywigits/authors.html</loc></url>
 <url><loc>https://umccr.github.io/tidywigits/index.html</loc></url>
 <url><loc>https://umccr.github.io/tidywigits/reference/Alignments.html</loc></url>
@@ -21,6 +25,7 @@
 <url><loc>https://umccr.github.io/tidywigits/reference/Isofox.html</loc></url>
 <url><loc>https://umccr.github.io/tidywigits/reference/Lilac.html</loc></url>
 <url><loc>https://umccr.github.io/tidywigits/reference/Linx.html</loc></url>
+<url><loc>https://umccr.github.io/tidywigits/reference/NEMO_TOOLS.html</loc></url>
 <url><loc>https://umccr.github.io/tidywigits/reference/Oncoanalyser.html</loc></url>
 <url><loc>https://umccr.github.io/tidywigits/reference/Purple.html</loc></url>
 <url><loc>https://umccr.github.io/tidywigits/reference/Sage.html</loc></url>

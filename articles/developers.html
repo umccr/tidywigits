@@ -13,6 +13,7 @@
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><script src="developers_files/libs/quarto-html/popper.min.js"></script><script src="developers_files/libs/quarto-html/tippy.umd.min.js"></script><link href="developers_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="developers_files/libs/quarto-html/light-border.css" rel="stylesheet">
 <!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Developers">
+<meta property="og:image" content="https://umccr.github.io/tidywigits/logo.png">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -22,7 +23,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">tidywigits</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.4</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -35,8 +36,12 @@
 <li class="active nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
-<li><a class="dropdown-item" href="../articles/structure.html">Structure</a></li>
+<li><a class="dropdown-item" href="../articles/installation.html">Installation</a></li>
+    <li><a class="dropdown-item" href="../articles/schemas_raw.html">Schemas Raw</a></li>
+    <li><a class="dropdown-item" href="../articles/schemas_tidy.html">Schemas Tidy</a></li>
+    <li><a class="dropdown-item" href="../articles/structure.html">Structure</a></li>
     <li><a class="dropdown-item" href="../articles/developers.html">Developers</a></li>
+    <li><a class="dropdown-item" href="../articles/uml.html">UML</a></li>
   </ul>
 </li>
 <li class="nav-item"><a class="nav-link" href="../articles/NEWS.html">NEWS</a></li>
@@ -55,8 +60,7 @@
 </nav><div class="container template-quarto">
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-
-      <h1>Developers</h1>
+      <img src="../logo.png" class="logo" alt=""><h1>Developers</h1>
 
 
 
@@ -70,9 +74,7 @@
 
 
 
-    <section class="level2"><h2 id="development-notes">Development notes<a class="anchor" aria-label="anchor" href="#development-notes"></a>
-</h2>
-<section class="level3"><h3 id="r-pkg-dev">R pkg dev<a class="anchor" aria-label="anchor" href="#r-pkg-dev"></a>
+    <section class="level3"><h3 id="r-pkg-dev">R pkg dev<a class="anchor" aria-label="anchor" href="#r-pkg-dev"></a>
 </h3>
 <table class="table caption-top">
 <colgroup>
@@ -226,7 +228,7 @@
 <td>pulls dvc data from remote</td>
 </tr>
 </tbody>
-</table></section></section><script id="quarto-html-after-body" type="application/javascript">
+</table></section><script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
