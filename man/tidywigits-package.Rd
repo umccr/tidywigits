@@ -6,6 +6,8 @@
 \alias{tidywigits-package}
 \title{tidywigits: Tidy WiGiTS}
 \description{
+\if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
+
 Tidies outputs from The Hartwig Medical Foundation's WiGiTS suite of genome and transcriptome analysis tools. Writes to various formats for downstream ingestion into data warehouses and databases.
 }
 \seealso{

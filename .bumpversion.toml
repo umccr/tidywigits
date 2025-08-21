@@ -58,3 +58,8 @@ replace = "r-tidywigits=={new_version}"
 filename = "inst/doc-templates/installation/_r.qmd"
 search = "tidywigits@v{current_version}"
 replace = "tidywigits@v{new_version}"
+
+[[tool.bumpversion.files]]
+filename = "inst/doc-templates/installation/_pixi.qmd"
+search = "r-tidywigits=={current_version}"
+replace = "r-tidywigits=={new_version}"
