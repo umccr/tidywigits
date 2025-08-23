@@ -24,6 +24,7 @@ Imports:
     dplyr,
     fs,
     glue,
+    nemo,
     purrr,
     R6,
     RPostgres,
