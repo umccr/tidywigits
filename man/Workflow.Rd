@@ -44,7 +44,7 @@ Path(s) to workflow results.}
 List of Tools that compose a Workflow.}
 
 \item{\code{files_tbl}}{(\code{tibble(n)})\cr
-Tibble of files from \code{\link[=list_files_dir]{list_files_dir()}}.}
+Tibble of files from \code{\link[nemo:list_files_dir]{nemo::list_files_dir()}}.}
 }
 \if{html}{\out{</div>}}
 }
