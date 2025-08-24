@@ -17,6 +17,7 @@
 ^_pkgdown\.yaml$
 ^_pkgdown\.yml$
 ^air\.toml$
+^config$
 ^data-raw$
 ^deploy$
 ^docs$

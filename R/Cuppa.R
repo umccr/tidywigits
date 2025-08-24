@@ -9,7 +9,9 @@
 #' id <- "cuppa_run1"
 #' obj <- cls$new(indir)
 #' obj$nemofy(odir = odir, format = "parquet", id = id)
-#' list.files(odir, pattern = "parquet", full.names = FALSE)
+#' (lf <- list.files(odir, pattern = "cuppa.*parquet", full.names = FALSE))
+#' @testexamples
+#' expect_equal(length(lf), 3)
 #' @export
 Cuppa <- R6::R6Class(
   "Cuppa",
@@ -20,9 +22,9 @@ Cuppa <- R6::R6Class(
     #' Output directory of tool. If `files_tbl` is supplied, this basically gets
     #' ignored.
     #' @param files_tbl (`tibble(n)`)\cr
-    #' Tibble of files from [list_files_dir()].
+    #' Tibble of files from [nemo::list_files_dir()].
     initialize = function(path = NULL, files_tbl = NULL) {
-      super$initialize(name = "cuppa", path = path, files_tbl = files_tbl)
+      super$initialize(name = "cuppa", pkg = pkg_name, path = path, files_tbl = files_tbl)
     },
     #' @description Read `cup.data.csv` file.
     #' @param x (`character(1)`)\cr
@@ -54,7 +56,7 @@ Cuppa <- R6::R6Class(
       schema <- self$get_tidy_schema("datacsv")
       colnames(d) <- schema[["field"]]
       list(datacsv = d) |>
-        enframe_data()
+        nemo::enframe_data()
     },
     #' @description Read `cuppa_data.tsv.gz` file.
     #' @param x (`character(1)`)\cr
@@ -102,7 +104,7 @@ Cuppa <- R6::R6Class(
       schema <- self$get_tidy_schema("predsum")
       assertthat::assert_that(identical(colnames(d), schema[["field"]]))
       list(predsum = d) |>
-        enframe_data()
+        nemo::enframe_data()
     },
     #' @description Read `cuppa.vis_data.tsv` file.
     #' @param x (`character(1)`)\cr

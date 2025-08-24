@@ -15,7 +15,8 @@ knitr:
 #| label: pkgs
 #| message: false
 {
-  use("tidywigits", c("Config", "NEMO_TOOLS"))
+  use("tidywigits", "NEMO_TOOLS")
+  use("nemo", "Config")
   use("dplyr")
   use("glue", "glue")
   use("purrr", "map")
@@ -35,7 +36,7 @@ source(vignettes_script)
 #| label: read_configs
 tools <- NEMO_TOOLS
 get_schemas_tidy <- function(tool) {
-  conf <- Config$new(tool)
+  conf <- nemo::Config$new(tool, pkg = "tidywigits")
   .get_tidy <- function() {
     desc <- conf$get_tidy_descriptions()
     conf$tidy_schemas_all |>

@@ -29,6 +29,7 @@ Correct flex boxes from sizing based upon the largest in tabset
 ```{r pkgs, message=FALSE, warning=FALSE, echo=FALSE}
 {
   use("tidywigits")
+  use("nemo")
   use("dplyr")
   use("glue", "glue")
   use("purrr", "map")
@@ -46,7 +47,7 @@ Correct flex boxes from sizing based upon the largest in tabset
 options(width = 100)
 ```
 
-{tidywigits} is built on top of R's [R6] encapsulated object-oriented programming
+{nemo} is built on top of R's [R6] encapsulated object-oriented programming
 implementation, which helps with code organisation. It consists of several base
 classes like `Config`, `Tool`, and `Workflow` which we describe below.
 Each R6 class can contain public and private functions and non-functions (fields).
@@ -56,7 +57,9 @@ Each R6 class can contain public and private functions and non-functions (fields
 ## `Config`
 
 A `Config` object contains functionality for interacting with YAML
-configuration files that are part of {tidywigits}. These configuration files
+configuration files that are part of child nemo packages like {tidywigits} and
+{dracarys}.
+These configuration files
 (under `inst/config`) specify the schemas, types, patterns and field descriptions
 for the _raw_ input _files_ and _tidy_ output _tbls_. See `?Config`.
 
@@ -64,12 +67,13 @@ for the _raw_ input _files_ and _tidy_ output _tbls_. See `?Config`.
 
 #### intro
 
-Let's look at some of the information for the raw PURPLE config, for instance:
+Let's look at some of the information for the raw PURPLE config (from {tidywigits}),
+for instance:
 
 ```{r purple_config1}
 tool <- "purple"
 toolu <- toupper(tool)
-conf <- Config$new(tool)
+conf <- nemo::Config$new(tool, pkg = "tidywigits")
 conf
 ```
 
@@ -180,7 +184,7 @@ For example, we can create a `Tool` object for PURPLE as follows:
 
 ```{r tool_purple}
 ppl_path <- system.file("extdata/oa/purple", package = "tidywigits")
-ppl <- Purple$new(path = ppl_path)
+ppl <- tidywigits::Purple$new(path = ppl_path)
 # each class comes with a print function
 ppl
 ```
@@ -229,7 +233,7 @@ exclude in the analysis:
 
 ```{r ppl_filter}
 # create new Purple object
-ppl2 <- Purple$new(path = ppl_path)
+ppl2 <- tidywigits::Purple$new(path = ppl_path)
 ppl2$files
 ppl2$filter_files(include = c("purple_qc", "purple_cnvsomtsv"))
 ppl2$files

@@ -9,7 +9,8 @@
 #' id <- "esvee_run1"
 #' obj <- cls$new(indir)
 #' obj$nemofy(odir = odir, format = "parquet", id = id)
-#' list.files(odir, pattern = "parquet", full.names = FALSE)
+#' (lf <- list.files(odir, pattern = "cobalt.*parquet", full.names = FALSE))
+#' #TODO: add esvee test data
 #' @export
 Esvee <- R6::R6Class(
   "Esvee",
@@ -20,9 +21,9 @@ Esvee <- R6::R6Class(
     #' Output directory of tool. If `files_tbl` is supplied, this basically gets
     #' ignored.
     #' @param files_tbl (`tibble(n)`)\cr
-    #' Tibble of files from [list_files_dir()].
+    #' Tibble of files from [nemo::list_files_dir()].
     initialize = function(path = NULL, files_tbl = NULL) {
-      super$initialize(name = "esvee", path = path, files_tbl = files_tbl)
+      super$initialize(name = "esvee", pkg = pkg_name, path = path, files_tbl = files_tbl)
     },
     #' @description Read `prep.fragment_length.tsv` file.
     #' @param x (`character(1)`)\cr

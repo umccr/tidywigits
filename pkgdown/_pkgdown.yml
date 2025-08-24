@@ -33,6 +33,8 @@ navbar:
           href: articles/developers.html
         - text: UML
           href: articles/uml.html
+        - text: PostgreSQL
+          href: articles/postgresql.html
 
     news:
       text: NEWS
@@ -40,8 +42,6 @@ navbar:
 reference:
   - title: "Base Classes"
     contents:
-      - Config
-      - Tool
       - Workflow
   - title: "Tool Classes"
     contents:
@@ -64,18 +64,9 @@ reference:
   - title: "Oncoanalyser"
     contents:
       - Oncoanalyser
-  - title: "Config"
-    contents:
-      - config_prep_raw
-      - config_prep_raw_schema
   - title: "Other"
     contents:
-      - date_log
-      - empty_tbl
-      - list_files_dir
+      - NEMO_TOOLS
       - nemo_out_formats
       - nemo_write
-      - parse_file
-      - schema_guess
       - valid_out_fmt
-      - NEMO_TOOLS

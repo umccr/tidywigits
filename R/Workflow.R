@@ -40,7 +40,7 @@ Workflow <- R6::R6Class(
     #' List of Tools that compose a Workflow.
     tools = NULL,
     #' @field files_tbl (`tibble(n)`)\cr
-    #' Tibble of files from [list_files_dir()].
+    #' Tibble of files from [nemo::list_files_dir()].
     files_tbl = NULL,
 
     #' @description Create a new Workflow object.

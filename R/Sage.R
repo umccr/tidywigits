@@ -9,7 +9,9 @@
 #' id <- "sage_run1"
 #' obj <- cls$new(indir)
 #' obj$nemofy(odir = odir, format = "parquet", id = id)
-#' list.files(odir, pattern = "parquet", full.names = FALSE)
+#' (lf <- list.files(odir, pattern = "sage.*parquet", full.names = FALSE))
+#' @testexamples
+#' expect_equal(length(lf), 10)
 #' @export
 Sage <- R6::R6Class(
   "Sage",
@@ -20,9 +22,9 @@ Sage <- R6::R6Class(
     #' Output directory of tool. If `files_tbl` is supplied, this basically gets
     #' ignored.
     #' @param files_tbl (`tibble(n)`)\cr
-    #' Tibble of files from [list_files_dir()].
+    #' Tibble of files from [nemo::list_files_dir()].
     initialize = function(path = NULL, files_tbl = NULL) {
-      super$initialize(name = "sage", path = path, files_tbl = files_tbl)
+      super$initialize(name = "sage", pkg = pkg_name, path = path, files_tbl = files_tbl)
     },
     #' @description Read `bqr.tsv` file.
     #' @param x (`character(1)`)\cr
@@ -61,7 +63,7 @@ Sage <- R6::R6Class(
         ) |>
         dplyr::select("gene", "dr", "value")
       list(genes = genes, cvg = cvg) |>
-        enframe_data()
+        nemo::enframe_data()
     },
     #' @description Read `exon.medians.tsv` file.
     #' @param x (`character(1)`)\cr

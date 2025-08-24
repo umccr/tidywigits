@@ -21,22 +21,18 @@ Imports:
     arrow,
     assertthat,
     DBI,
-    dplyr,
     fs,
     glue,
     nemo,
-    purrr,
     R6,
-    RPostgres,
     readr,
     rlang,
     tibble,
-    tidyr,
-    yaml
 Suggests:
     knitr,
     quarto,
     rmarkdown,
+    RPostgres,
     testthat (>= 3.0.0)
 Roxygen: list(markdown = TRUE,
               roclets = c("namespace", "rd", "roxytest::testthat_roclet"))

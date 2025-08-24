@@ -9,7 +9,9 @@
 #' id <- "cobalt_run1"
 #' obj <- cls$new(indir)
 #' obj$nemofy(odir = odir, format = "parquet", id = id)
-#' list.files(odir, pattern = "parquet", full.names = FALSE)
+#' (lf <- list.files(odir, pattern = "cobalt.*parquet", full.names = FALSE))
+#' @testexamples
+#' expect_equal(length(lf), 5)
 #' @export
 Cobalt <- R6::R6Class(
   "Cobalt",
@@ -20,9 +22,9 @@ Cobalt <- R6::R6Class(
     #' Output directory of tool. If `files_tbl` is supplied, this basically gets
     #' ignored.
     #' @param files_tbl (`tibble(n)`)\cr
-    #' Tibble of files from [list_files_dir()].
+    #' Tibble of files from [nemo::list_files_dir()].
     initialize = function(path = NULL, files_tbl = NULL) {
-      super$initialize(name = "cobalt", path = path, files_tbl = files_tbl)
+      super$initialize(name = "cobalt", pkg = pkg_name, path = path, files_tbl = files_tbl)
     },
     #' @description Read `gc.median.tsv` file.
     #' @param x (`character(1)`)\cr
@@ -33,7 +35,7 @@ Cobalt <- R6::R6Class(
       # next rows are median per bucket
       d2 <- self$.parse_file(x, "gcmed", skip = 2)
       list(sample_stats = d1[], bucket_stats = d2) |>
-        enframe_data()
+        nemo::enframe_data()
     },
     #' @description Tidy `gc.median.tsv` file.
     #' @param x (`character(1)`)\cr
@@ -50,7 +52,7 @@ Cobalt <- R6::R6Class(
       schema <- self$get_tidy_schema("gcmed")
       colnames(d[["bucket_stats"]]) <- schema[["field"]]
       colnames(d[["sample_stats"]]) <- c("mean", "median")
-      enframe_data(d)
+      nemo::enframe_data(d)
     },
     #' @description Read `ratio.median.tsv` file.
     #' @param x (`character(1)`)\cr
@@ -95,7 +97,7 @@ Cobalt <- R6::R6Class(
       d0 <- self$.parse_file_nohead(x, "version", delim = "=")
       d0 |>
         tidyr::pivot_wider(names_from = "variable", values_from = "value") |>
-        set_tbl_version_attr(get_tbl_version_attr(d0))
+        nemo::set_tbl_version_attr(nemo::get_tbl_version_attr(d0))
     },
     #' @description Tidy `cobalt.version` file.
     #' @param x (`character(1)`)\cr
