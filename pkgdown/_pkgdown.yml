@@ -40,9 +40,6 @@ navbar:
       text: NEWS
       href: articles/NEWS.html
 reference:
-  - title: "Base Classes"
-    contents:
-      - Workflow
   - title: "Tool Classes"
     contents:
       - Alignments
@@ -61,12 +58,9 @@ reference:
       - Sigs
       - Virusbreakend
       - Virusinterpreter
-  - title: "Oncoanalyser"
+  - title: "Workflows"
     contents:
-      - Oncoanalyser
+      - Wigits
   - title: "Other"
     contents:
-      - NEMO_TOOLS
-      - nemo_out_formats
-      - nemo_write
-      - valid_out_fmt
+      - WIGITS_TOOLS

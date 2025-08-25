@@ -15,7 +15,7 @@ knitr:
 #| label: pkgs
 #| message: false
 {
-  use("tidywigits", "NEMO_TOOLS")
+  use("tidywigits", "WIGITS_TOOLS")
   use("nemo", "Config")
   use("dplyr")
   use("glue", "glue")
@@ -24,17 +24,16 @@ knitr:
   use("tibble", "tibble")
   use("tidyr", "unnest")
   use("fs", "dir_info")
-  use("knitr", "kable")
   use("reactable", "reactable")
   use("htmltools", c("HTML", "tags"))
 }
-vignettes_script <- system.file("scripts/vignettes/schemas.R", package = "tidywigits")
+vignettes_script <- system.file("scripts/vignettes/schemas.R", package = "nemo")
 source(vignettes_script)
 ```
 
 ```{r}
 #| label: read_configs
-tools <- NEMO_TOOLS
+tools <- WIGITS_TOOLS
 get_schemas_tidy <- function(tool) {
   conf <- nemo::Config$new(tool, pkg = "tidywigits")
   .get_tidy <- function() {

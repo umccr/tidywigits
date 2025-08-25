@@ -18,21 +18,20 @@ License: MIT + file LICENSE
 Depends:
     R (>= 4.4)
 Imports:
-    arrow,
+    argparse,
     assertthat,
-    DBI,
-    fs,
+    dplyr,
     glue,
     nemo,
     R6,
     readr,
     rlang,
     tibble,
+    tidyr
 Suggests:
     knitr,
     quarto,
     rmarkdown,
-    RPostgres,
     testthat (>= 3.0.0)
 Roxygen: list(markdown = TRUE,
               roclets = c("namespace", "rd", "roxytest::testthat_roclet"))
@@ -41,6 +40,5 @@ ByteCompile: true
 Config/testthat/edition: 3
 Config/Needs/website: htmltools, reactable
 Encoding: UTF-8
-LazyData: true
 RoxygenNote: 7.3.2
 VignetteBuilder: quarto

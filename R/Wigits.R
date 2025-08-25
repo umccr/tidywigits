@@ -1,13 +1,13 @@
-#' @title Oncoanalyser Object
+#' @title Wigits Object
 #'
 #' @description
-#' Oncoanalyser file parsing and manipulation.
+#' WiGiTS file parsing and manipulation.
 #' @examples
 #' \dontrun{
 #' path <- here::here("nogit/oa_v2")
-#' oa <- Oncoanalyser$new(path)
+#' w <- Wigits$new(path)
 #' x <-
-#'   oa$nemofy(
+#'   w$nemofy(
 #'     odir = "nogit/test_data",
 #'     format = "parquet",
 #'     id = "run1"
@@ -18,20 +18,20 @@
 #'   user = "orcabus"
 #' )
 #' x <-
-#'   oa$nemofy(
+#'   w$nemofy(
 #'     format = "db",
 #'     id = "runABC456",
 #'     dbconn = dbconn
 #' )
 #' }
 #' @export
-Oncoanalyser <- R6::R6Class(
-  "Oncoanalyser",
+Wigits <- R6::R6Class(
+  "Wigits",
   inherit = Workflow,
   public = list(
-    #' @description Create a new Oncoanalyser object.
+    #' @description Create a new Wigits object.
     #' @param path (`character(n)`)\cr
-    #' Path(s) to Oncoanalyser results.
+    #' Path(s) to Wigits results.
     initialize = function(path = NULL) {
       tools <- list(
         alignments = Alignments,
@@ -50,7 +50,31 @@ Oncoanalyser <- R6::R6Class(
         virusbreakend = Virusbreakend,
         virusinterpreter = Virusinterpreter
       )
-      super$initialize(name = "Oncoanalyser", path = path, tools = tools)
+      super$initialize(name = "Wigits", path = path, tools = tools)
     }
   ) # public end
+)
+
+#' WiGiTS Tool Names
+#'
+#' Vector of all supported WiGiTS tool names.
+#'
+#' @export
+WIGITS_TOOLS <- c(
+  "alignments",
+  "amber",
+  "bamtools",
+  "chord",
+  "cobalt",
+  "cuppa",
+  "esvee",
+  "flagstats",
+  "isofox",
+  "lilac",
+  "linx",
+  "purple",
+  "sage",
+  "sigs",
+  "virusbreakend",
+  "virusinterpreter"
 )

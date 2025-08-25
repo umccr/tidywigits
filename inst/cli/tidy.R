@@ -1,6 +1,6 @@
 # fmt: skip
 tidy_add_args <- function(subp) {
-  fmts <- nemo_out_formats() |> glue::glue_collapse(sep = ", ")
+  fmts <- nemo::nemo_out_formats() |> glue::glue_collapse(sep = ", ")
   tidy <- subp$add_parser("tidy", help = "Tidy WiGiTS Workflow Outputs")
   tidy$add_argument("-d", "--in_dir", help = glue("{emoji('ambulance')} Input directory."), required = TRUE)
   tidy$add_argument("-o", "--out_dir", help = glue("{emoji('rocket')} Output directory."))

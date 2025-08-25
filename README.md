@@ -138,8 +138,8 @@ format or a PostgreSQL database as follows:
 ``` r
 in_dir <- system.file("extdata/oa", package = "tidywigits")
 out_dir <- tempdir() |> fs::dir_create("parquet_example")
-oa <- Oncoanalyser$new(in_dir)
-res <- oa$nemofy(odir = out_dir, format = "parquet", id = "parquet_example")
+w <- Wigits$new(in_dir)
+res <- w$nemofy(odir = out_dir, format = "parquet", id = "parquet_example")
 fs::dir_info(out_dir) |>
   dplyr::mutate(bname = basename(.data$path)) |>
   dplyr::select("bname", "size", "type")
@@ -164,13 +164,13 @@ fs::dir_info(out_dir) |>
 ``` r
 in_dir <- system.file("extdata/oa", package = "tidywigits")
 out_dir <- tempdir() |> fs::dir_create("parquet_example")
-oa <- Oncoanalyser$new(in_dir)
+w <- Wigits$new(in_dir)
 dbconn <- DBI::dbConnect(
   drv = RPostgres::Postgres(),
   dbname = "nemo",
   user = "orcabus"
 )
-res <- oa$nemofy(
+res <- w$nemofy(
   format = "db",
   id = "db_example",
   dbconn = dbconn
@@ -186,7 +186,7 @@ Using {remotes} directly from GitHub:
 ``` r
 install.packages("remotes")
 remotes::install_github("umccr/tidywigits") # latest main commit
-remotes::install_github("umccr/tidywigits@v0.0.3") # released version
+remotes::install_github("umccr/tidywigits@v0.0.4") # released version
 ```
 
 Alternatively:
@@ -214,7 +214,7 @@ export PATH="${tw_cli}:${PATH}"
 ```
 
     $ tidywigits.R --version
-    tidywigits.R 0.0.3
+    tidywigits.R 0.0.4
 
     #-----------------------------------#
     $ tidywigits.R --help

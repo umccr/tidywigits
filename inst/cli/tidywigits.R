@@ -1,12 +1,13 @@
 #!/usr/bin/env Rscript
 
 {
-  suppressPackageStartupMessages(require(argparse, include.only = "ArgumentParser"))
-  suppressPackageStartupMessages(require(cli))
-  suppressPackageStartupMessages(require(emojifont, include.only = "emoji"))
-  suppressPackageStartupMessages(require(tidywigits))
-  suppressPackageStartupMessages(require(fs, include.only = c("dir_create")))
-  suppressPackageStartupMessages(require(glue, include.only = "glue"))
+  suppressPackageStartupMessages(use("argparse", "ArgumentParser"))
+  suppressPackageStartupMessages(use("cli"))
+  suppressPackageStartupMessages(use("emojifont", "emoji"))
+  suppressPackageStartupMessages(use("tidywigits"))
+  suppressPackageStartupMessages(use("nemo"))
+  suppressPackageStartupMessages(use("fs", "dir_create"))
+  suppressPackageStartupMessages(use("glue", "glue"))
 }
 
 pkg <- "tidywigits"

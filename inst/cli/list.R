@@ -18,7 +18,7 @@ list_parse_args <- function(args) {
 }
 
 nemo_list <- function(in_dir) {
-  oa <- tidywigits::Oncoanalyser$new(in_dir)
+  oa <- tidywigits::Wigits$new(in_dir)
   d <- oa$list_files()
   res <- d |>
     dplyr::select("tool_parser", "prefix", "bname", "size", "lastmodified", "path")
