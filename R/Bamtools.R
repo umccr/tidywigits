@@ -45,7 +45,7 @@ Bamtools <- R6::R6Class(
       schema2 <- self$get_tidy_schema("summary", subtbl = "tbl2")
       d1 <- d |>
         dplyr::select(!dplyr::contains("DepthCoverage_"))
-      assertthat::assert_that(ncol(d1) == nrow(schema1))
+      stopifnot(ncol(d1) == nrow(schema1))
       colnames(d1) <- schema1[["field"]]
       d2 <- d |>
         dplyr::select(dplyr::contains("DepthCoverage_")) |>
@@ -57,7 +57,7 @@ Bamtools <- R6::R6Class(
         ) |>
         dplyr::mutate(covx = as.numeric(.data$covdp)) |>
         dplyr::select("covx", "value")
-      assertthat::assert_that(identical(colnames(d2), schema2[["field"]]))
+      stopifnot(identical(colnames(d2), schema2[["field"]]))
       list(summary = d1, covx = d2) |>
         nemo::enframe_data()
     },
@@ -69,11 +69,9 @@ Bamtools <- R6::R6Class(
       schema <- self$get_raw_schema("wgsmetrics")
       # first make sure colnames are as expected
       hdr1 <- nemo::file_hdr(x, comment = "#")
-      assertthat::assert_that(identical(hdr1, schema[["field"]]))
+      stopifnot(identical(hdr1, schema[["field"]]))
       hdr2 <- nemo::file_hdr(x, comment = "#", skip = 3)
-      assertthat::assert_that(
-        identical(hdr2, c("coverage", "high_quality_coverage_count"))
-      )
+      stopifnot(identical(hdr2, c("coverage", "high_quality_coverage_count")))
       # now parse with proper classes
       d1 <- self$.parse_file(
         x = x,
@@ -195,7 +193,7 @@ Bamtools <- R6::R6Class(
       }
       d <- x
       schema <- self$get_tidy_schema("flagstats")
-      assertthat::assert_that(identical(colnames(d), schema[["field"]]))
+      stopifnot(identical(colnames(d), schema[["field"]]))
       list(flagstats = d) |>
         nemo::enframe_data()
     },

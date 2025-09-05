@@ -121,7 +121,7 @@ Flagstats <- R6::R6Class(
       }
       d <- x
       schema <- self$get_tidy_schema("flagstats")
-      assertthat::assert_that(identical(colnames(d), schema[["field"]]))
+      stopifnot(identical(colnames(d), schema[["field"]]))
       list(flagstats = d) |>
         nemo::enframe_data()
     }

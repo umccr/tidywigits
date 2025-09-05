@@ -16,18 +16,11 @@ build:
 requirements:
   host:
     - r-base
-    - r-argparse
-    - r-arrow
-    - r-assertthat
-    - r-dbi
     - r-dplyr
-    - r-fs
     - r-glue
-    - r-here
     - r-knitr
-    - r-purrr
+    - r-nemo
     - r-r6
-    - r-rpostgres
     - r-readr
     - r-rlang
     - r-rmarkdown
@@ -35,18 +28,11 @@ requirements:
     - r-tidyr
   run:
     - r-base
-    - r-argparse
-    - r-arrow
-    - r-assertthat
-    - r-dbi
     - r-dplyr
-    - r-fs
     - r-glue
-    - r-here
     - r-knitr
-    - r-purrr
+    - r-nemo
     - r-r6
-    - r-rpostgres
     - r-readr
     - r-rlang
     - r-rmarkdown

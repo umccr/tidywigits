@@ -48,11 +48,11 @@ Alignments <- R6::R6Class(
       hdr1 <- nemo::file_hdr(x, comment = "#")
       hdr2 <- nemo::file_hdr(x, comment = "#", skip = 10)
       schema_splitter <- which(schema$field == "SPLIT_HERE")
-      assertthat::assert_that(schema_splitter == 11)
+      stopifnot(schema_splitter == 11)
       s1 <- dplyr::slice(schema, 1:(schema_splitter - 1))
       s2 <- dplyr::slice(schema, (schema_splitter + 1):nrow(schema))
-      assertthat::assert_that(identical(hdr1, s1[["field"]]))
-      assertthat::assert_that(identical(hdr2, s2[["field"]]))
+      stopifnot(identical(hdr1, s1[["field"]]))
+      stopifnot(identical(hdr2, s2[["field"]]))
       # just hard-code the classes in this case, pretty straightforward
       d1 <- readr::read_tsv(
         x,

@@ -7,7 +7,7 @@ LABEL org.opencontainers.image.authors="peterdiakumis@gmail.com" \
       org.opencontainers.image.licenses="MIT"
 
 ARG MINIF="miniforge"
-ARG MINIF_VERSION="25.3.0-3"
+ARG MINIF_VERSION="25.3.1-0"
 ARG MINIF_URL="https://github.com/conda-forge/${MINIF}/releases/download/${MINIF_VERSION}/Miniforge3-${MINIF_VERSION}-Linux-x86_64.sh"
 
 # install core pkgs, miniforge

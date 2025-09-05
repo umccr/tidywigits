@@ -48,10 +48,10 @@ Chord <- R6::R6Class(
 
       # header contains sample column in latest version
       if (hdr[1] != "sample_id") {
-        assertthat::assert_that(identical(hdr, names(schema)[-1]))
+        stopifnot(identical(hdr, names(schema)[-1]))
         cnames <- c("sample_id", hdr)
       } else {
-        assertthat::assert_that(identical(hdr, names(schema)))
+        stopifnot(identical(hdr, names(schema)))
         cnames <- hdr
       }
       d <- readr::read_tsv(x, col_names = cnames, col_types = schema, skip = 1)
@@ -73,7 +73,7 @@ Chord <- R6::R6Class(
         ) |>
         dplyr::select("signature", "count")
       schema <- self$get_tidy_schema("signatures")
-      assertthat::assert_that(identical(colnames(d), schema[["field"]]))
+      stopifnot(identical(colnames(d), schema[["field"]]))
       list(signatures = d) |>
         nemo::enframe_data()
     }
