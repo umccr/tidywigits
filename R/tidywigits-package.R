@@ -8,8 +8,7 @@
 #' @noRd
 dummy1 <- function() {
   # Solves R CMD check: Namespaces in Imports field not imported from
-  argparse::ArgumentParser
-  assertthat::assert_that
+  # most are in R6 classes and thus not detected by R CMD check
   dplyr::filter
   readr::read_tsv
   tibble::tibble

@@ -102,7 +102,7 @@ Cuppa <- R6::R6Class(
         dplyr::relocate("extra_info", .after = dplyr::last_col()) |>
         dplyr::relocate("extra_info_format", .after = dplyr::last_col())
       schema <- self$get_tidy_schema("predsum")
-      assertthat::assert_that(identical(colnames(d), schema[["field"]]))
+      stopifnot(identical(colnames(d), schema[["field"]]))
       list(predsum = d) |>
         nemo::enframe_data()
     },

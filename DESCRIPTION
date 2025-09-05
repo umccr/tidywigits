@@ -20,10 +20,7 @@ Depends:
 Remotes:
     umccr/nemo
 Imports:
-    argparse,
-    assertthat,
     dplyr,
-    fs,
     glue,
     nemo,
     R6,

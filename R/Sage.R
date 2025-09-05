@@ -52,7 +52,7 @@ Sage <- R6::R6Class(
         dplyr::select("data") |>
         tidyr::unnest("data")
       # make sure genes are unique
-      assertthat::assert_that(nrow(d) == nrow(dplyr::distinct(d, .data$gene)))
+      stopifnot(nrow(d) == nrow(dplyr::distinct(d, .data$gene)))
       genes <- d |>
         dplyr::select(!dplyr::starts_with("dr_"))
       cvg <- d |>
