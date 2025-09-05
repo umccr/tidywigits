@@ -9,7 +9,9 @@
 #' id <- "bamtools_run1"
 #' obj <- cls$new(indir)
 #' obj$nemofy(odir = odir, format = "parquet", id = id)
-#' list.files(odir, pattern = "parquet", full.names = FALSE)
+#' (lf <- list.files(odir, pattern = "bamtools.*parquet", full.names = FALSE))
+#' @testexamples
+#' expect_equal(length(lf), 2)
 #' @export
 Bamtools <- R6::R6Class(
   "Bamtools",
@@ -20,9 +22,9 @@ Bamtools <- R6::R6Class(
     #' Output directory of tool. If `files_tbl` is supplied, this basically gets
     #' ignored.
     #' @param files_tbl (`tibble(n)`)\cr
-    #' Tibble of files from [list_files_dir()].
+    #' Tibble of files from [nemo::list_files_dir()].
     initialize = function(path = NULL, files_tbl = NULL) {
-      super$initialize(name = "bamtools", path = path, files_tbl = files_tbl)
+      super$initialize(name = "bamtools", pkg = pkg_name, path = path, files_tbl = files_tbl)
     },
     #' @description Read `summary.tsv` file.
     #' @param x (`character(1)`)\cr
@@ -57,7 +59,7 @@ Bamtools <- R6::R6Class(
         dplyr::select("covx", "value")
       assertthat::assert_that(identical(colnames(d2), schema2[["field"]]))
       list(summary = d1, covx = d2) |>
-        enframe_data()
+        nemo::enframe_data()
     },
     #' @description Read `wgsmetrics` file.
     #' @param x (`character(1)`)\cr
@@ -66,9 +68,9 @@ Bamtools <- R6::R6Class(
       # handle two different sections
       schema <- self$get_raw_schema("wgsmetrics")
       # first make sure colnames are as expected
-      hdr1 <- file_hdr(x, comment = "#")
+      hdr1 <- nemo::file_hdr(x, comment = "#")
       assertthat::assert_that(identical(hdr1, schema[["field"]]))
-      hdr2 <- file_hdr(x, comment = "#", skip = 3)
+      hdr2 <- nemo::file_hdr(x, comment = "#", skip = 3)
       assertthat::assert_that(
         identical(hdr2, c("coverage", "high_quality_coverage_count"))
       )
@@ -80,9 +82,9 @@ Bamtools <- R6::R6Class(
         comment = "#"
       )
       d2 <- readr::read_tsv(x, col_types = "ci", comment = "#", skip = 3) |>
-        set_tbl_version_attr(get_tbl_version_attr(d1))
+        nemo::set_tbl_version_attr(nemo::get_tbl_version_attr(d1))
       list(metrics = d1[], histo = d2[]) |>
-        enframe_data()
+        nemo::enframe_data()
     },
     #' @description Tidy `wgsmetrics` file.
     #' @param x (`character(1)`)\cr
@@ -95,7 +97,7 @@ Bamtools <- R6::R6Class(
       d <- x |> tibble::deframe()
       schema <- self$get_tidy_schema("wgsmetrics")
       colnames(d[["metrics"]]) <- schema[["field"]]
-      enframe_data(d)
+      nemo::enframe_data(d)
     },
 
     #' @description Read `flag_counts.tsv` file.
@@ -195,7 +197,7 @@ Bamtools <- R6::R6Class(
       schema <- self$get_tidy_schema("flagstats")
       assertthat::assert_that(identical(colnames(d), schema[["field"]]))
       list(flagstats = d) |>
-        enframe_data()
+        nemo::enframe_data()
     },
     #' @description Read `coverage.tsv` file.
     #' @param x (`character(1)`)\cr

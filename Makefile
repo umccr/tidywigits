@@ -9,7 +9,7 @@ pkgdown-build:
 
 readme-pkgdown: readme-render pkgdown-build
 
-doc:
+roxydoc:
 	@R -e "devtools::document()" --quiet --no-restore --no-save
 
 build:

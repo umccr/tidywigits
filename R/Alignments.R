@@ -9,7 +9,9 @@
 #' id <- "alignments_run1"
 #' obj <- cls$new(indir)
 #' obj$nemofy(odir = odir, format = "parquet", id = id)
-#' list.files(odir, pattern = "parquet", full.names = FALSE)
+#' (lf <- list.files(odir, pattern = "alignments.*parquet", full.names = FALSE))
+#' @testexamples
+#' expect_equal(grepv("parquet", lf), "sample1_alignments_dupfreq.parquet")
 #' @export
 Alignments <- R6::R6Class(
   "Alignments",
@@ -20,9 +22,9 @@ Alignments <- R6::R6Class(
     #' Output directory of tool. If `files_tbl` is supplied, this basically gets
     #' ignored.
     #' @param files_tbl (`tibble(n)`)\cr
-    #' Tibble of files from [list_files_dir()].
+    #' Tibble of files from [nemo::list_files_dir()].
     initialize = function(path = NULL, files_tbl = NULL) {
-      super$initialize(name = "alignments", path = path, files_tbl = files_tbl)
+      super$initialize(name = "alignments", pkg = pkg_name, path = path, files_tbl = files_tbl)
     },
     #' @description Read `duplicate_freq.tsv` file.
     #' @param x (`character(1)`)\cr
@@ -43,8 +45,8 @@ Alignments <- R6::R6Class(
       # handle two different sections
       schema <- self$get_raw_schema("markdup")
       # first make sure colnames are as expected
-      hdr1 <- file_hdr(x, comment = "#")
-      hdr2 <- file_hdr(x, comment = "#", skip = 10)
+      hdr1 <- nemo::file_hdr(x, comment = "#")
+      hdr2 <- nemo::file_hdr(x, comment = "#", skip = 10)
       schema_splitter <- which(schema$field == "SPLIT_HERE")
       assertthat::assert_that(schema_splitter == 11)
       s1 <- dplyr::slice(schema, 1:(schema_splitter - 1))
@@ -58,16 +60,16 @@ Alignments <- R6::R6Class(
         n_max = 1,
         col_types = readr::cols(.default = "d", LIBRARY = "c")
       ) |>
-        set_tbl_version_attr("latest")
+        nemo::set_tbl_version_attr("latest")
       d2 <- readr::read_tsv(
         x,
         col_types = readr::cols(.default = "d"),
         comment = "#",
         skip = 10
       ) |>
-        set_tbl_version_attr("latest")
+        nemo::set_tbl_version_attr("latest")
       list(metrics = d1[], histo = d2[]) |>
-        enframe_data()
+        nemo::enframe_data()
     },
     #' @description Tidy `md.metrics` file.
     #' @param x (`character(1)`)\cr
@@ -84,7 +86,7 @@ Alignments <- R6::R6Class(
       s2 <- dplyr::slice(schema, (schema_splitter + 1):nrow(schema))
       colnames(d[["metrics"]]) <- s1[["field"]]
       colnames(d[["histo"]]) <- s2[["field"]]
-      enframe_data(d)
+      nemo::enframe_data(d)
     }
   )
 )

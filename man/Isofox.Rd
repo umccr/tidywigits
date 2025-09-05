@@ -13,10 +13,11 @@ odir <- tempdir()
 id <- "isofox_run1"
 obj <- cls$new(indir)
 obj$nemofy(odir = odir, format = "parquet", id = id)
-list.files(odir, pattern = "parquet", full.names = FALSE)
+(lf <- list.files(odir, pattern = "parquet", full.names = FALSE))
+#TODO: add isofox test data
 }
 \section{Super class}{
-\code{\link[tidywigits:Tool]{tidywigits::Tool}} -> \code{Isofox}
+\code{\link[nemo:Tool]{nemo::Tool}} -> \code{Isofox}
 }
 \section{Methods}{
 \subsection{Public methods}{
@@ -44,16 +45,16 @@ list.files(odir, pattern = "parquet", full.names = FALSE)
 \if{html}{\out{
 <details><summary>Inherited methods</summary>
 <ul>
-<li><span class="pkg-link" data-pkg="tidywigits" data-topic="Tool" data-id=".eval_func"><a href='../../tidywigits/html/Tool.html#method-Tool-.eval_func'><code>tidywigits::Tool$.eval_func()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="tidywigits" data-topic="Tool" data-id=".parse_file"><a href='../../tidywigits/html/Tool.html#method-Tool-.parse_file'><code>tidywigits::Tool$.parse_file()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="tidywigits" data-topic="Tool" data-id=".parse_file_nohead"><a href='../../tidywigits/html/Tool.html#method-Tool-.parse_file_nohead'><code>tidywigits::Tool$.parse_file_nohead()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="tidywigits" data-topic="Tool" data-id=".tidy_file"><a href='../../tidywigits/html/Tool.html#method-Tool-.tidy_file'><code>tidywigits::Tool$.tidy_file()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="tidywigits" data-topic="Tool" data-id="filter_files"><a href='../../tidywigits/html/Tool.html#method-Tool-filter_files'><code>tidywigits::Tool$filter_files()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="tidywigits" data-topic="Tool" data-id="list_files"><a href='../../tidywigits/html/Tool.html#method-Tool-list_files'><code>tidywigits::Tool$list_files()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="tidywigits" data-topic="Tool" data-id="nemofy"><a href='../../tidywigits/html/Tool.html#method-Tool-nemofy'><code>tidywigits::Tool$nemofy()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="tidywigits" data-topic="Tool" data-id="print"><a href='../../tidywigits/html/Tool.html#method-Tool-print'><code>tidywigits::Tool$print()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="tidywigits" data-topic="Tool" data-id="tidy"><a href='../../tidywigits/html/Tool.html#method-Tool-tidy'><code>tidywigits::Tool$tidy()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="tidywigits" data-topic="Tool" data-id="write"><a href='../../tidywigits/html/Tool.html#method-Tool-write'><code>tidywigits::Tool$write()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="nemo" data-topic="Tool" data-id=".eval_func"><a href='../../nemo/html/Tool.html#method-Tool-.eval_func'><code>nemo::Tool$.eval_func()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="nemo" data-topic="Tool" data-id=".parse_file"><a href='../../nemo/html/Tool.html#method-Tool-.parse_file'><code>nemo::Tool$.parse_file()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="nemo" data-topic="Tool" data-id=".parse_file_nohead"><a href='../../nemo/html/Tool.html#method-Tool-.parse_file_nohead'><code>nemo::Tool$.parse_file_nohead()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="nemo" data-topic="Tool" data-id=".tidy_file"><a href='../../nemo/html/Tool.html#method-Tool-.tidy_file'><code>nemo::Tool$.tidy_file()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="nemo" data-topic="Tool" data-id="filter_files"><a href='../../nemo/html/Tool.html#method-Tool-filter_files'><code>nemo::Tool$filter_files()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="nemo" data-topic="Tool" data-id="list_files"><a href='../../nemo/html/Tool.html#method-Tool-list_files'><code>nemo::Tool$list_files()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="nemo" data-topic="Tool" data-id="nemofy"><a href='../../nemo/html/Tool.html#method-Tool-nemofy'><code>nemo::Tool$nemofy()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="nemo" data-topic="Tool" data-id="print"><a href='../../nemo/html/Tool.html#method-Tool-print'><code>nemo::Tool$print()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="nemo" data-topic="Tool" data-id="tidy"><a href='../../nemo/html/Tool.html#method-Tool-tidy'><code>nemo::Tool$tidy()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="nemo" data-topic="Tool" data-id="write"><a href='../../nemo/html/Tool.html#method-Tool-write'><code>nemo::Tool$write()</code></a></span></li>
 </ul>
 </details>
 }}
@@ -74,7 +75,7 @@ Output directory of tool. If \code{files_tbl} is supplied, this basically gets
 ignored.}
 
 \item{\code{files_tbl}}{(\code{tibble(n)})\cr
-Tibble of files from \code{\link[=list_files_dir]{list_files_dir()}}.}
+Tibble of files from \code{\link[nemo:list_files_dir]{nemo::list_files_dir()}}.}
 }
 \if{html}{\out{</div>}}
 }

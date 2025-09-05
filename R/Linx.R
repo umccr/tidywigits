@@ -9,7 +9,9 @@
 #' id <- "linx_run1"
 #' obj <- cls$new(indir)
 #' obj$nemofy(odir = odir, format = "parquet", id = id)
-#' list.files(odir, pattern = "parquet", full.names = FALSE)
+#' (lf <- list.files(odir, pattern = "linx.*parquet", full.names = FALSE))
+#' @testexamples
+#' expect_equal(length(lf), 20)
 #' @export
 Linx <- R6::R6Class(
   "Linx",
@@ -20,9 +22,9 @@ Linx <- R6::R6Class(
     #' Output directory of tool. If `files_tbl` is supplied, this basically gets
     #' ignored.
     #' @param files_tbl (`tibble(n)`)\cr
-    #' Tibble of files from [list_files_dir()].
+    #' Tibble of files from [nemo::list_files_dir()].
     initialize = function(path = NULL, files_tbl = NULL) {
-      super$initialize(name = "linx", path = path, files_tbl = files_tbl)
+      super$initialize(name = "linx", pkg = pkg_name, path = path, files_tbl = files_tbl)
     },
     #' @description List files in given linx directory. Overwrites parent class
     #' to handle germline LINX files.
@@ -219,7 +221,7 @@ Linx <- R6::R6Class(
       d0 <- self$.parse_file_nohead(x, "version", delim = "=")
       d0 |>
         tidyr::pivot_wider(names_from = "variable", values_from = "value") |>
-        set_tbl_version_attr(get_tbl_version_attr(d0))
+        nemo::set_tbl_version_attr(nemo::get_tbl_version_attr(d0))
     },
     #' @description Tidy `linx.version` file.
     #' @param x (`character(1)`)\cr

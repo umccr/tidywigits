@@ -27,22 +27,17 @@ navbar:
           href: articles/schemas_raw.html
         - text: Schemas Tidy
           href: articles/schemas_tidy.html
-        - text: Structure
-          href: articles/structure.html
         - text: Developers
           href: articles/developers.html
         - text: UML
           href: articles/uml.html
+        - text: PostgreSQL
+          href: articles/postgresql.html
 
     news:
       text: NEWS
       href: articles/NEWS.html
 reference:
-  - title: "Base Classes"
-    contents:
-      - Config
-      - Tool
-      - Workflow
   - title: "Tool Classes"
     contents:
       - Alignments
@@ -61,21 +56,9 @@ reference:
       - Sigs
       - Virusbreakend
       - Virusinterpreter
-  - title: "Oncoanalyser"
+  - title: "Workflows"
     contents:
-      - Oncoanalyser
-  - title: "Config"
-    contents:
-      - config_prep_raw
-      - config_prep_raw_schema
+      - Wigits
   - title: "Other"
     contents:
-      - date_log
-      - empty_tbl
-      - list_files_dir
-      - nemo_out_formats
-      - nemo_write
-      - parse_file
-      - schema_guess
-      - valid_out_fmt
-      - NEMO_TOOLS
+      - WIGITS_TOOLS

@@ -15,8 +15,6 @@
     supported](https://umccr.github.io/tidywigits/articles/schemas_raw)
   - [Tidy
     schemas](https://umccr.github.io/tidywigits/articles/schemas_tidy)
-  - [R6
-    structure](https://umccr.github.io/tidywigits/articles/structure)
   - [Developer
     notes](https://umccr.github.io/tidywigits/articles/developers)
   - [Changelog](https://umccr.github.io/tidywigits/articles/NEWS)
@@ -138,8 +136,8 @@ format or a PostgreSQL database as follows:
 ``` r
 in_dir <- system.file("extdata/oa", package = "tidywigits")
 out_dir <- tempdir() |> fs::dir_create("parquet_example")
-oa <- Oncoanalyser$new(in_dir)
-res <- oa$nemofy(odir = out_dir, format = "parquet", id = "parquet_example")
+w <- Wigits$new(in_dir)
+res <- w$nemofy(odir = out_dir, format = "parquet", id = "parquet_example")
 fs::dir_info(out_dir) |>
   dplyr::mutate(bname = basename(.data$path)) |>
   dplyr::select("bname", "size", "type")
@@ -164,20 +162,20 @@ fs::dir_info(out_dir) |>
 ``` r
 in_dir <- system.file("extdata/oa", package = "tidywigits")
 out_dir <- tempdir() |> fs::dir_create("parquet_example")
-oa <- Oncoanalyser$new(in_dir)
+w <- Wigits$new(in_dir)
 dbconn <- DBI::dbConnect(
   drv = RPostgres::Postgres(),
   dbname = "nemo",
   user = "orcabus"
 )
-res <- oa$nemofy(
+res <- w$nemofy(
   format = "db",
   id = "db_example",
   dbconn = dbconn
 )
 ```
 
-**IMPORTANT**: support for VCFs is under active development.
+**IMPORTANT**: support for VCFs is still under development.
 
 ## 🍕 Installation
 
@@ -186,7 +184,7 @@ Using {remotes} directly from GitHub:
 ``` r
 install.packages("remotes")
 remotes::install_github("umccr/tidywigits") # latest main commit
-remotes::install_github("umccr/tidywigits@v0.0.3") # released version
+remotes::install_github("umccr/tidywigits@v0.0.4") # released version
 ```
 
 Alternatively:
@@ -214,18 +212,18 @@ export PATH="${tw_cli}:${PATH}"
 ```
 
     $ tidywigits.R --version
-    tidywigits.R 0.0.3
+    tidywigits 0.0.4
 
     #-----------------------------------#
     $ tidywigits.R --help
     usage: tidywigits.R [-h] [-v] {tidy,list} ...
 
-    🐠 WiGiTS Output Tidying 🐢
+    ✨ WiGiTS Output Tidying ✨
 
     positional arguments:
       {tidy,list}    sub-command help
-        tidy         Tidy WiGiTS Workflow Outputs
-        list         List Parsable WiGiTS Workflow Outputs
+        tidy         Tidy Workflow Outputs
+        list         List Parsable Workflow Outputs
 
     options:
       -h, --help     show this help message and exit
@@ -241,26 +239,28 @@ export PATH="${tw_cli}:${PATH}"
     options:
       -h, --help            show this help message and exit
       -d IN_DIR, --in_dir IN_DIR
-                            🚑 Input directory.
+                            Input directory.
       -o OUT_DIR, --out_dir OUT_DIR
-                            🚀 Output directory.
+                            Output directory.
       -f FORMAT, --format FORMAT
-                            🎨 Format of output (def: parquet). Choices: parquet,
-                            db, tsv, csv, rds
-      -i ID, --id ID        🚩 ID to use for this run.
-      --dbname DBNAME       🐶 Database name.
-      --dbuser DBUSER       🐢 Database user.
-      --include INCLUDE     ✅ Include only these files (comma,sep).
-      --exclude EXCLUDE     ❌ Exclude these files (comma,sep).
-      -q, --quiet           😴 Shush all the logs.
+                            Format of output [def: parquet] (parquet, db, tsv,
+                            csv, rds)
+      -i ID, --id ID        ID to use for this run.
+      --dbname DBNAME       Database name.
+      --dbuser DBUSER       Database user.
+      --include INCLUDE     Include only these files (comma,sep).
+      --exclude EXCLUDE     Exclude these files (comma,sep).
+      -q, --quiet           Shush all the logs.
 
     #-----------------------------------#
     #------- List ----------------------#
     $ tidywigits.R list --help
-    usage: tidywigits.R list [-h] -d IN_DIR [-q]
+    usage: tidywigits.R list [-h] -d IN_DIR [-f FORMAT] [-q]
 
     options:
       -h, --help            show this help message and exit
       -d IN_DIR, --in_dir IN_DIR
-                            🚑 Input directory.
-      -q, --quiet           😴 Shush all the logs.
+                            Input directory.
+      -f FORMAT, --format FORMAT
+                            Format of list output [def: pretty] (tsv, pretty)
+      -q, --quiet           Shush all the logs.

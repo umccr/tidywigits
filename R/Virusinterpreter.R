@@ -9,7 +9,9 @@
 #' id <- "virusinterpreter_run1"
 #' obj <- cls$new(indir)
 #' obj$nemofy(odir = odir, format = "parquet", id = id)
-#' list.files(odir, pattern = "parquet", full.names = FALSE)
+#' (lf <- list.files(odir, pattern = "virusinterpreter.*parquet", full.names = FALSE))
+#' @testexamples
+#' expect_equal(length(lf), 1)
 #' @export
 Virusinterpreter <- R6::R6Class(
   "Virusinterpreter",
@@ -20,13 +22,18 @@ Virusinterpreter <- R6::R6Class(
     #' Output directory of tool. If `files_tbl` is supplied, this basically gets
     #' ignored.
     #' @param files_tbl (`tibble(n)`)\cr
-    #' Tibble of files from [list_files_dir()].
+    #' Tibble of files from [nemo::list_files_dir()].
     #' @param tidy (`logical(1)`)\cr
     #' Should the raw parsed tibbles get tidied?
     #' @param keep_raw (`logical(1)`)\cr
     #' Should the raw parsed tibbles be kept in the final output?
     initialize = function(path = NULL, files_tbl = NULL, tidy = TRUE, keep_raw = FALSE) {
-      super$initialize(name = "virusinterpreter", path = path, files_tbl = files_tbl)
+      super$initialize(
+        name = "virusinterpreter",
+        pkg = pkg_name,
+        path = path,
+        files_tbl = files_tbl
+      )
     },
 
     #' @description Read `virus.annotated.tsv` file.

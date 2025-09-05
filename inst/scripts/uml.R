@@ -5,9 +5,9 @@
 # dput(ls("package:tidywigits", pattern = "[A-Z].*")) # note: load pkg prior
 fun_char <- c(
   "Alignments", "Amber", "Bamtools", "Chord", "Cobalt", "Config", "Cuppa",
-  "Esvee", "Flagstats", "Isofox", "Lilac", "Linx", "Oncoanalyser",
+  "Esvee", "Flagstats", "Isofox", "Lilac", "Linx",
   "Purple", "Sage", "Sigs", "Tool", "Virusbreakend", "Virusinterpreter",
-  "Workflow"
+  "Wigits", "Workflow"
 )
 # remotes::install_gitlab("b-rowlingson/R6toPlant")
 use("R6toPlant", "make_plant")

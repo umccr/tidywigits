@@ -9,7 +9,8 @@
 #' id <- "flagstats_run1"
 #' obj <- cls$new(indir)
 #' obj$nemofy(odir = odir, format = "parquet", id = id)
-#' list.files(odir, pattern = "parquet", full.names = FALSE)
+#' (lf <- list.files(odir, pattern = "parquet", full.names = FALSE))
+#' #TODO: add flagstats test data
 #' @export
 Flagstats <- R6::R6Class(
   "Flagstats",
@@ -20,9 +21,9 @@ Flagstats <- R6::R6Class(
     #' Output directory of tool. If `files_tbl` is supplied, this basically gets
     #' ignored.
     #' @param files_tbl (`tibble(n)`)\cr
-    #' Tibble of files from [list_files_dir()].
+    #' Tibble of files from [nemo::list_files_dir()].
     initialize = function(path = NULL, files_tbl = NULL) {
-      super$initialize(name = "flagstats", path = path, files_tbl = files_tbl)
+      super$initialize(name = "flagstats", pkg = pkg_name, path = path, files_tbl = files_tbl)
     },
     #' @description Read `flagstat` file.
     #' @param x (`character(1)`)\cr
@@ -122,7 +123,7 @@ Flagstats <- R6::R6Class(
       schema <- self$get_tidy_schema("flagstats")
       assertthat::assert_that(identical(colnames(d), schema[["field"]]))
       list(flagstats = d) |>
-        enframe_data()
+        nemo::enframe_data()
     }
   )
 )

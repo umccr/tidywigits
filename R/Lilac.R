@@ -9,7 +9,9 @@
 #' id <- "lilac_run1"
 #' obj <- cls$new(indir)
 #' obj$nemofy(odir = odir, format = "parquet", id = id)
-#' list.files(odir, pattern = "parquet", full.names = FALSE)
+#' (lf <- list.files(odir, pattern = "lilac.*parquet", full.names = FALSE))
+#' @testexamples
+#' expect_equal(length(lf), 2)
 #' @export
 Lilac <- R6::R6Class(
   "Lilac",
@@ -20,9 +22,9 @@ Lilac <- R6::R6Class(
     #' Output directory of tool. If `files_tbl` is supplied, this basically gets
     #' ignored.
     #' @param files_tbl (`tibble(n)`)\cr
-    #' Tibble of files from [list_files_dir()].
+    #' Tibble of files from [nemo::list_files_dir()].
     initialize = function(path = NULL, files_tbl = NULL) {
-      super$initialize(name = "lilac", path = path, files_tbl = files_tbl)
+      super$initialize(name = "lilac", pkg = pkg_name, path = path, files_tbl = files_tbl)
     },
     #' @description Read `lilac.tsv` file.
     #' @param x (`character(1)`)\cr

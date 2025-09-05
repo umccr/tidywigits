@@ -19,10 +19,8 @@ requirements:
     - r-argparse
     - r-arrow
     - r-assertthat
-    - r-cli
     - r-dbi
     - r-dplyr
-    - r-emojifont
     - r-fs
     - r-glue
     - r-here
@@ -35,16 +33,13 @@ requirements:
     - r-rmarkdown
     - r-tibble
     - r-tidyr
-    - r-yaml
   run:
     - r-base
     - r-argparse
     - r-arrow
     - r-assertthat
-    - r-cli
     - r-dbi
     - r-dplyr
-    - r-emojifont
     - r-fs
     - r-glue
     - r-here
@@ -57,7 +52,6 @@ requirements:
     - r-rmarkdown
     - r-tibble
     - r-tidyr
-    - r-yaml
 
 tests:
   - r:
