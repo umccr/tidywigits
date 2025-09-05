@@ -37,7 +37,6 @@ options(width = 100)
   - [Installation](https://umccr.github.io/tidywigits/articles/installation)
   - [Files/tables supported](https://umccr.github.io/tidywigits/articles/schemas_raw)
   - [Tidy schemas](https://umccr.github.io/tidywigits/articles/schemas_tidy)
-  - [R6 structure](https://umccr.github.io/tidywigits/articles/structure)
   - [Developer notes](https://umccr.github.io/tidywigits/articles/developers)
   - [Changelog](https://umccr.github.io/tidywigits/articles/NEWS)
 
@@ -72,7 +71,7 @@ a PostgreSQL database as follows:
 
 {{< include /inst/doc-templates/examples/_postgresql1.qmd >}}
 
-**IMPORTANT**: support for VCFs is under active development.
+**IMPORTANT**: support for VCFs is still under development.
 
 ## 🍕 Installation
 

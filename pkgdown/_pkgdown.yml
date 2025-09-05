@@ -27,8 +27,6 @@ navbar:
           href: articles/schemas_raw.html
         - text: Schemas Tidy
           href: articles/schemas_tidy.html
-        - text: Structure
-          href: articles/structure.html
         - text: Developers
           href: articles/developers.html
         - text: UML

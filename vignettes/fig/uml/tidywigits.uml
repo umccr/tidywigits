@@ -70,7 +70,7 @@ class Config {
 +config
 +raw_schemas_all
 +tidy_schemas_all
-+initialize(tool)
++initialize(tool,\n  pkg)
 +print(...)
 +read(pkg)
 +get_raw_patterns()
@@ -190,11 +190,6 @@ class Linx {
 +clone(deep)
 }
 
-class Oncoanalyser {
-+initialize(path)
-+clone(deep)
-}
-
 class Purple {
 +initialize(path,\n  files_tbl)
 +list_files(type)
@@ -253,7 +248,7 @@ class Tool {
 +get_tidy_schema
 +get_raw_schema
 +files_tbl
-+initialize(name,\n  path,\n  files_tbl)
++initialize(name,\n  pkg,\n  path,\n  files_tbl)
 +print(...)
 +filter_files(include,\n  exclude)
 +list_files(type)
@@ -278,6 +273,11 @@ class Virusinterpreter {
 +initialize(path,\n  files_tbl,\n  tidy,\n  keep_raw)
 +parse_annotated(x)
 +tidy_annotated(x)
++clone(deep)
+}
+
+class Wigits {
++initialize(path)
 +clone(deep)
 }
 
@@ -310,10 +310,10 @@ Flagstats <|-- Tool
 Isofox <|-- Tool
 Lilac <|-- Tool
 Linx <|-- Tool
-Oncoanalyser <|-- Workflow
 Purple <|-- Tool
 Sage <|-- Tool
 Sigs <|-- Tool
 Virusbreakend <|-- Tool
 Virusinterpreter <|-- Tool
+Wigits <|-- Workflow
 @enduml
