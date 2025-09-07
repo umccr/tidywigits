@@ -6,6 +6,11 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Tidy WiGiTS Outputs • tidywigits</title>
+<!-- favicons --><link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png">
+<link rel="icon" type="”image/svg+xml”" href="favicon.svg">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<link rel="icon" sizes="any" href="favicon.ico">
+<link rel="manifest" href="site.webmanifest">
 <script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
@@ -25,7 +30,7 @@
 
     <a class="navbar-brand me-2" href="index.html">tidywigits</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.4</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.4.9002</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -41,9 +46,9 @@
 <li><a class="dropdown-item" href="articles/installation.html">Installation</a></li>
     <li><a class="dropdown-item" href="articles/schemas_raw.html">Schemas Raw</a></li>
     <li><a class="dropdown-item" href="articles/schemas_tidy.html">Schemas Tidy</a></li>
-    <li><a class="dropdown-item" href="articles/structure.html">Structure</a></li>
     <li><a class="dropdown-item" href="articles/developers.html">Developers</a></li>
     <li><a class="dropdown-item" href="articles/uml.html">UML</a></li>
+    <li><a class="dropdown-item" href="articles/postgresql.html">PostgreSQL</a></li>
   </ul>
 </li>
 <li class="nav-item"><a class="nav-link" href="articles/NEWS.html">NEWS</a></li>
@@ -64,7 +69,7 @@
   <main id="main" class="col-md-9">
 <div class="section level1">
 <div class="page-header">
-<img src="logo.png" class="logo" alt=""><h1 id="id_-tidy-wigits-outputs">🧬✨ Tidy WiGiTS Outputs<a class="anchor" aria-label="anchor" href="#id_-tidy-wigits-outputs"></a>
+<img src="logo.png" class="logo" alt=""><h1 id="dnasparkles-tidy-wigits-outputs">🧬✨ Tidy WiGiTS Outputs<a class="anchor" aria-label="anchor" href="#dnasparkles-tidy-wigits-outputs"></a>
 </h1>
 </div>
 <p><a href="https://anaconda.org/umccr/r-tidywigits" class="external-link"><img src="https://anaconda.org/umccr/r-tidywigits/badges/latest_release_date.svg" title="Conda Latest Release" alt="conda-latest1"></a> <a href="https://github.com/umccr/tidywigits/actions/workflows/deploy.yaml" class="external-link"><img src="https://github.com/umccr/tidywigits/actions/workflows/deploy.yaml/badge.svg" title="GitHub Actions" alt="gha"></a></p>
@@ -74,7 +79,6 @@
 <li><a href="https://umccr.github.io/tidywigits/articles/installation">Installation</a></li>
 <li><a href="https://umccr.github.io/tidywigits/articles/schemas_raw">Files/tables supported</a></li>
 <li><a href="https://umccr.github.io/tidywigits/articles/schemas_tidy">Tidy schemas</a></li>
-<li><a href="https://umccr.github.io/tidywigits/articles/structure">R6 structure</a></li>
 <li><a href="https://umccr.github.io/tidywigits/articles/developers">Developer notes</a></li>
 <li><a href="https://umccr.github.io/tidywigits/articles/NEWS">Changelog</a></li>
 </ul>
@@ -87,7 +91,7 @@
 <p>In short, it traverses through a directory containing results from one or more runs of WiGiTS tools, parses any files it recognises, tidies them up (which includes data reshaping, normalisation, column name cleanup etc.), and writes them to the output format of choice e.g. Apache Parquet, PostgreSQL, TSV, RDS.</p>
 </div>
 <div class="section level2">
-<h2 id="id_-quick-start">🎨 Quick Start<a class="anchor" aria-label="anchor" href="#id_-quick-start"></a>
+<h2 id="art-quick-start">🎨 Quick Start<a class="anchor" aria-label="anchor" href="#art-quick-start"></a>
 </h2>
 <p>The starting point of {tidywigits} is a directory with WiGiTS results. Let’s look at some sample data (tracked via <a href="https://dvc.org/" class="external-link">DVC</a>) under <a href="https://github.com/umccr/tidywigits/tree/main/inst/extdata/oa" class="external-link uri">https://github.com/umccr/tidywigits/tree/main/inst/extdata/oa</a>:</p>
 <details class="code-fold"><summary>
@@ -180,8 +184,8 @@ Click here
 </ul>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>in_dir <span class="ot">&lt;-</span> <span class="fu">system.file</span>(<span class="st">"extdata/oa"</span>, <span class="at">package =</span> <span class="st">"tidywigits"</span>)</span>
 <span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>out_dir <span class="ot">&lt;-</span> <span class="fu">tempdir</span>() <span class="sc">|&gt;</span> fs<span class="sc">::</span><span class="fu">dir_create</span>(<span class="st">"parquet_example"</span>)</span>
-<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>oa <span class="ot">&lt;-</span> Oncoanalyser<span class="sc">$</span><span class="fu">new</span>(in_dir)</span>
-<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>res <span class="ot">&lt;-</span> oa<span class="sc">$</span><span class="fu">nemofy</span>(<span class="at">odir =</span> out_dir, <span class="at">format =</span> <span class="st">"parquet"</span>, <span class="at">id =</span> <span class="st">"parquet_example"</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>w <span class="ot">&lt;-</span> Wigits<span class="sc">$</span><span class="fu">new</span>(in_dir)</span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>res <span class="ot">&lt;-</span> w<span class="sc">$</span><span class="fu">nemofy</span>(<span class="at">odir =</span> out_dir, <span class="at">format =</span> <span class="st">"parquet"</span>, <span class="at">id =</span> <span class="st">"parquet_example"</span>)</span>
 <span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>fs<span class="sc">::</span><span class="fu">dir_info</span>(out_dir) <span class="sc">|&gt;</span></span>
 <span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">bname =</span> <span class="fu">basename</span>(.data<span class="sc">$</span>path)) <span class="sc">|&gt;</span></span>
 <span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="st">"bname"</span>, <span class="st">"size"</span>, <span class="st">"type"</span>)</span>
@@ -205,27 +209,27 @@ Click here
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">in_dir</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata/oa"</span>, package <span class="op">=</span> <span class="st">"tidywigits"</span><span class="op">)</span></span>
 <span><span class="va">out_dir</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="https://fs.r-lib.org/reference/create.html" class="external-link">dir_create</a></span><span class="op">(</span><span class="st">"parquet_example"</span><span class="op">)</span></span>
-<span><span class="va">oa</span> <span class="op">&lt;-</span> <span class="va"><a href="reference/Oncoanalyser.html">Oncoanalyser</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">in_dir</span><span class="op">)</span></span>
+<span><span class="va">w</span> <span class="op">&lt;-</span> <span class="va"><a href="reference/Wigits.html">Wigits</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">in_dir</span><span class="op">)</span></span>
 <span><span class="va">dbconn</span> <span class="op">&lt;-</span> <span class="fu">DBI</span><span class="fu">::</span><span class="fu"><a href="https://dbi.r-dbi.org/reference/dbConnect.html" class="external-link">dbConnect</a></span><span class="op">(</span></span>
 <span>  drv <span class="op">=</span> <span class="fu">RPostgres</span><span class="fu">::</span><span class="fu"><a href="https://rpostgres.r-dbi.org/reference/Postgres.html" class="external-link">Postgres</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  dbname <span class="op">=</span> <span class="st">"nemo"</span>,</span>
 <span>  user <span class="op">=</span> <span class="st">"orcabus"</span></span>
 <span><span class="op">)</span></span>
-<span><span class="va">res</span> <span class="op">&lt;-</span> <span class="va">oa</span><span class="op">$</span><span class="fu">nemofy</span><span class="op">(</span></span>
+<span><span class="va">res</span> <span class="op">&lt;-</span> <span class="va">w</span><span class="op">$</span><span class="fu">nemofy</span><span class="op">(</span></span>
 <span>  format <span class="op">=</span> <span class="st">"db"</span>,</span>
 <span>  id <span class="op">=</span> <span class="st">"db_example"</span>,</span>
 <span>  dbconn <span class="op">=</span> <span class="va">dbconn</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p><strong>IMPORTANT</strong>: support for VCFs is under active development.</p>
+<p><strong>IMPORTANT</strong>: support for VCFs is still under development.</p>
 </div>
 <div class="section level2">
-<h2 id="id_-installation">🍕 Installation<a class="anchor" aria-label="anchor" href="#id_-installation"></a>
+<h2 id="pizza-installation">🍕 Installation<a class="anchor" aria-label="anchor" href="#pizza-installation"></a>
 </h2>
 <p>Using {remotes} directly from GitHub:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"remotes"</span><span class="op">)</span></span>
 <span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"umccr/tidywigits"</span><span class="op">)</span> <span class="co"># latest main commit</span></span>
-<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"umccr/tidywigits@v0.0.3"</span><span class="op">)</span> <span class="co"># released version</span></span></code></pre></div>
+<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"umccr/tidywigits@v0.0.4"</span><span class="op">)</span> <span class="co"># released version</span></span></code></pre></div>
 <p>Alternatively:</p>
 <ul>
 <li>conda package: <a href="https://anaconda.org/umccr/r-tidywigits" class="external-link uri">https://anaconda.org/umccr/r-tidywigits</a>
@@ -236,7 +240,7 @@ Click here
 <p>For more details see: <a href="https://umccr.github.io/tidywigits/articles/installation" class="uri">https://umccr.github.io/tidywigits/articles/installation</a></p>
 </div>
 <div class="section level2">
-<h2 id="id_-cli">🌀 CLI<a class="anchor" aria-label="anchor" href="#id_-cli"></a>
+<h2 id="cyclone-cli">🌀 CLI<a class="anchor" aria-label="anchor" href="#cyclone-cli"></a>
 </h2>
 <p>A <code>tidywigits.R</code> command line interface is available for convenience.</p>
 <ul>
@@ -246,18 +250,18 @@ Click here
 <div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="va">tw_cli</span><span class="op">=</span><span class="va">$(</span><span class="ex">Rscript</span> <span class="at">-e</span> <span class="st">'x = system.file("cli", package = "tidywigits"); cat(x, "\n")'</span> <span class="kw">|</span> <span class="fu">xargs</span><span class="va">)</span></span>
 <span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a><span class="bu">export</span> <span class="va">PATH</span><span class="op">=</span><span class="st">"</span><span class="va">${tw_cli}</span><span class="st">:</span><span class="va">${PATH}</span><span class="st">"</span></span></code></pre></div>
 <div class="sourceCode" id="cb6"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="sc">$</span> tidywigits.R <span class="sc">--</span>version</span>
-<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>tidywigits.R <span class="dv">0</span>.<span class="fl">0.3</span></span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>tidywigits <span class="dv">0</span>.<span class="fl">0.4</span></span>
 <span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a></span>
 <span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a><span class="co">#-----------------------------------#</span></span>
 <span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a><span class="sc">$</span> tidywigits.R <span class="sc">--</span>help</span>
 <span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a>usage<span class="sc">:</span> tidywigits.R [<span class="sc">-</span>h] [<span class="sc">-</span>v] {tidy,list} ...</span>
 <span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a></span>
-<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a>🐠 WiGiTS Output Tidying 🐢</span>
+<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a>✨ WiGiTS Output Tidying ✨</span>
 <span id="cb6-9"><a href="#cb6-9" tabindex="-1"></a></span>
 <span id="cb6-10"><a href="#cb6-10" tabindex="-1"></a>positional arguments<span class="sc">:</span></span>
 <span id="cb6-11"><a href="#cb6-11" tabindex="-1"></a>  {tidy,list}    sub<span class="sc">-</span>command help</span>
-<span id="cb6-12"><a href="#cb6-12" tabindex="-1"></a>    tidy         Tidy WiGiTS Workflow Outputs</span>
-<span id="cb6-13"><a href="#cb6-13" tabindex="-1"></a>    list         List Parsable WiGiTS Workflow Outputs</span>
+<span id="cb6-12"><a href="#cb6-12" tabindex="-1"></a>    tidy         Tidy Workflow Outputs</span>
+<span id="cb6-13"><a href="#cb6-13" tabindex="-1"></a>    list         List Parsable Workflow Outputs</span>
 <span id="cb6-14"><a href="#cb6-14" tabindex="-1"></a></span>
 <span id="cb6-15"><a href="#cb6-15" tabindex="-1"></a>options<span class="sc">:</span></span>
 <span id="cb6-16"><a href="#cb6-16" tabindex="-1"></a>  <span class="sc">-</span>h, <span class="sc">--</span>help     show this help message and exit</span>
@@ -273,29 +277,31 @@ Click here
 <span id="cb6-26"><a href="#cb6-26" tabindex="-1"></a>options<span class="sc">:</span></span>
 <span id="cb6-27"><a href="#cb6-27" tabindex="-1"></a>  <span class="sc">-</span>h, <span class="sc">--</span>help            show this help message and exit</span>
 <span id="cb6-28"><a href="#cb6-28" tabindex="-1"></a>  <span class="sc">-</span>d IN_DIR, <span class="sc">--</span>in_dir IN_DIR</span>
-<span id="cb6-29"><a href="#cb6-29" tabindex="-1"></a>                        🚑 Input directory.</span>
+<span id="cb6-29"><a href="#cb6-29" tabindex="-1"></a>                        Input directory.</span>
 <span id="cb6-30"><a href="#cb6-30" tabindex="-1"></a>  <span class="sc">-</span>o OUT_DIR, <span class="sc">--</span>out_dir OUT_DIR</span>
-<span id="cb6-31"><a href="#cb6-31" tabindex="-1"></a>                        🚀 Output directory.</span>
+<span id="cb6-31"><a href="#cb6-31" tabindex="-1"></a>                        Output directory.</span>
 <span id="cb6-32"><a href="#cb6-32" tabindex="-1"></a>  <span class="sc">-</span>f FORMAT, <span class="sc">--</span>format FORMAT</span>
-<span id="cb6-33"><a href="#cb6-33" tabindex="-1"></a>                        🎨 Format of <span class="fu">output</span> (def<span class="sc">:</span> parquet). Choices<span class="sc">:</span> parquet,</span>
-<span id="cb6-34"><a href="#cb6-34" tabindex="-1"></a>                        db, tsv, csv, rds</span>
-<span id="cb6-35"><a href="#cb6-35" tabindex="-1"></a>  <span class="sc">-</span>i ID, <span class="sc">--</span>id ID        🚩 ID to use <span class="cf">for</span> this run.</span>
-<span id="cb6-36"><a href="#cb6-36" tabindex="-1"></a>  <span class="sc">--</span>dbname DBNAME       🐶 Database name.</span>
-<span id="cb6-37"><a href="#cb6-37" tabindex="-1"></a>  <span class="sc">--</span>dbuser DBUSER       🐢 Database user.</span>
-<span id="cb6-38"><a href="#cb6-38" tabindex="-1"></a>  <span class="sc">--</span>include INCLUDE     ✅ Include only these <span class="fu">files</span> (comma,sep).</span>
-<span id="cb6-39"><a href="#cb6-39" tabindex="-1"></a>  <span class="sc">--</span>exclude EXCLUDE     ❌ Exclude these <span class="fu">files</span> (comma,sep).</span>
-<span id="cb6-40"><a href="#cb6-40" tabindex="-1"></a>  <span class="sc">-</span>q, <span class="sc">--</span>quiet           😴 Shush all the logs.</span>
+<span id="cb6-33"><a href="#cb6-33" tabindex="-1"></a>                        Format of output [def<span class="sc">:</span> parquet] (parquet, db, tsv,</span>
+<span id="cb6-34"><a href="#cb6-34" tabindex="-1"></a>                        csv, rds)</span>
+<span id="cb6-35"><a href="#cb6-35" tabindex="-1"></a>  <span class="sc">-</span>i ID, <span class="sc">--</span>id ID        ID to use <span class="cf">for</span> this run.</span>
+<span id="cb6-36"><a href="#cb6-36" tabindex="-1"></a>  <span class="sc">--</span>dbname DBNAME       Database name.</span>
+<span id="cb6-37"><a href="#cb6-37" tabindex="-1"></a>  <span class="sc">--</span>dbuser DBUSER       Database user.</span>
+<span id="cb6-38"><a href="#cb6-38" tabindex="-1"></a>  <span class="sc">--</span>include INCLUDE     Include only these <span class="fu">files</span> (comma,sep).</span>
+<span id="cb6-39"><a href="#cb6-39" tabindex="-1"></a>  <span class="sc">--</span>exclude EXCLUDE     Exclude these <span class="fu">files</span> (comma,sep).</span>
+<span id="cb6-40"><a href="#cb6-40" tabindex="-1"></a>  <span class="sc">-</span>q, <span class="sc">--</span>quiet           Shush all the logs.</span>
 <span id="cb6-41"><a href="#cb6-41" tabindex="-1"></a></span>
 <span id="cb6-42"><a href="#cb6-42" tabindex="-1"></a><span class="co">#-----------------------------------#</span></span>
 <span id="cb6-43"><a href="#cb6-43" tabindex="-1"></a><span class="co">#------- List ----------------------#</span></span>
 <span id="cb6-44"><a href="#cb6-44" tabindex="-1"></a><span class="sc">$</span> tidywigits.R list <span class="sc">--</span>help</span>
-<span id="cb6-45"><a href="#cb6-45" tabindex="-1"></a>usage<span class="sc">:</span> tidywigits.R list [<span class="sc">-</span>h] <span class="sc">-</span>d IN_DIR [<span class="sc">-</span>q]</span>
+<span id="cb6-45"><a href="#cb6-45" tabindex="-1"></a>usage<span class="sc">:</span> tidywigits.R list [<span class="sc">-</span>h] <span class="sc">-</span>d IN_DIR [<span class="sc">-</span>f FORMAT] [<span class="sc">-</span>q]</span>
 <span id="cb6-46"><a href="#cb6-46" tabindex="-1"></a></span>
 <span id="cb6-47"><a href="#cb6-47" tabindex="-1"></a>options<span class="sc">:</span></span>
 <span id="cb6-48"><a href="#cb6-48" tabindex="-1"></a>  <span class="sc">-</span>h, <span class="sc">--</span>help            show this help message and exit</span>
 <span id="cb6-49"><a href="#cb6-49" tabindex="-1"></a>  <span class="sc">-</span>d IN_DIR, <span class="sc">--</span>in_dir IN_DIR</span>
-<span id="cb6-50"><a href="#cb6-50" tabindex="-1"></a>                        🚑 Input directory.</span>
-<span id="cb6-51"><a href="#cb6-51" tabindex="-1"></a>  <span class="sc">-</span>q, <span class="sc">--</span>quiet           😴 Shush all the logs.</span></code></pre></div>
+<span id="cb6-50"><a href="#cb6-50" tabindex="-1"></a>                        Input directory.</span>
+<span id="cb6-51"><a href="#cb6-51" tabindex="-1"></a>  <span class="sc">-</span>f FORMAT, <span class="sc">--</span>format FORMAT</span>
+<span id="cb6-52"><a href="#cb6-52" tabindex="-1"></a>                        Format of list output [def<span class="sc">:</span> pretty] (tsv, pretty)</span>
+<span id="cb6-53"><a href="#cb6-53" tabindex="-1"></a>  <span class="sc">-</span>q, <span class="sc">--</span>quiet           Shush all the logs.</span></code></pre></div>
 </div>
 </div>
 
