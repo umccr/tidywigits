@@ -1,6 +1,6 @@
 Package: tidywigits
 Title: Tidy WiGiTS
-Version: 0.0.4
+Version: 0.0.4.9002
 Description: Tidies outputs from The Hartwig Medical Foundation's WiGiTS
              suite of genome and transcriptome analysis tools.
              Writes to various formats for downstream ingestion
@@ -38,7 +38,6 @@ Roxygen: list(markdown = TRUE,
 biocViews:
 ByteCompile: true
 Config/testthat/edition: 3
-Config/Needs/website: htmltools, reactable
 Encoding: UTF-8
 RoxygenNote: 7.3.2
 VignetteBuilder: quarto

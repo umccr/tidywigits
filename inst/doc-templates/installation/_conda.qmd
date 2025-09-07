@@ -10,7 +10,7 @@ The conda package is available from the umccr channel at
 conda create \
   -n tidywigits_env \
   -c umccr -c conda-forge \
-  r-tidywigits==0.0.4
+  r-tidywigits==0.0.4.9002
 
 conda activate tidywigits_env
 ```

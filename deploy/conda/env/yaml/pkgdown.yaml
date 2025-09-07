@@ -1,0 +1,11 @@
+name: pkgdown_env
+channels:
+  - umccr
+  - conda-forge
+dependencies:
+  - umccr::r-tidywigits
+  - r-pkgdown
+  - r-quarto
+  - quarto
+  - r-htmltools
+  - r-reactable
