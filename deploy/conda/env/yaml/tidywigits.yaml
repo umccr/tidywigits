@@ -3,4 +3,4 @@ channels:
   - umccr
   - conda-forge
 dependencies:
-  - r-tidywigits ==0.0.4.9002 # bump
+  - r-tidywigits ==0.0.5 # bump
