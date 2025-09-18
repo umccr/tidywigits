@@ -132,3 +132,14 @@ tidy:
           - field: 'uniparental_disomy'
             type: 'char'
             description: 'uniparental disomy'
+  version:
+    description: 'Version of the tool.'
+    schema:
+      latest:
+        tbl1:
+          - field: 'version'
+            type: 'char'
+            description: 'version of the tool'
+          - field: 'date_build'
+            type: 'char'
+            description: 'build date'

@@ -96,7 +96,21 @@ raw:
     ftype: 'txt-nohead'
     schema:
       latest:
-        - field: 'variable'
+        - field: 'QCStatus'
           type: 'char'
-        - field: 'value'
+        - field: 'Contamination'
+          type: 'float'
+        - field: 'ConsanguinityProportion'
+          type: 'float'
+        - field: 'UniparentalDisomy'
+          type: 'char'
+  version:
+    description: 'Version of the tool.'
+    pattern: "^amber\\.version$"
+    ftype: 'txt'
+    schema:
+      latest:
+        - field: 'version'
+          type: 'char'
+        - field: 'build.date'
           type: 'char'
