@@ -34,6 +34,10 @@ obj$nemofy(odir = odir, format = "parquet", id = id)
 \item \href{#method-Bamtools-tidy_fraglength}{\code{Bamtools$tidy_fraglength()}}
 \item \href{#method-Bamtools-parse_partitionstats}{\code{Bamtools$parse_partitionstats()}}
 \item \href{#method-Bamtools-tidy_partitionstats}{\code{Bamtools$tidy_partitionstats()}}
+\item \href{#method-Bamtools-parse_genecvg}{\code{Bamtools$parse_genecvg()}}
+\item \href{#method-Bamtools-tidy_genecvg}{\code{Bamtools$tidy_genecvg()}}
+\item \href{#method-Bamtools-parse_exoncvg}{\code{Bamtools$parse_exoncvg()}}
+\item \href{#method-Bamtools-tidy_exoncvg}{\code{Bamtools$tidy_exoncvg()}}
 \item \href{#method-Bamtools-clone}{\code{Bamtools$clone()}}
 }
 }
@@ -281,6 +285,78 @@ Path to file.}
 Tidy \code{partition_stats.tsv} file.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Bamtools$tidy_partitionstats(x)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{x}}{(\code{character(1)})\cr
+Path to file.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Bamtools-parse_genecvg"></a>}}
+\if{latex}{\out{\hypertarget{method-Bamtools-parse_genecvg}{}}}
+\subsection{Method \code{parse_genecvg()}}{
+Read \code{gene_coverage.tsv} file.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Bamtools$parse_genecvg(x)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{x}}{(\code{character(1)})\cr
+Path to file.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Bamtools-tidy_genecvg"></a>}}
+\if{latex}{\out{\hypertarget{method-Bamtools-tidy_genecvg}{}}}
+\subsection{Method \code{tidy_genecvg()}}{
+Tidy \code{gene_coverage.tsv} file.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Bamtools$tidy_genecvg(x)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{x}}{(\code{character(1)})\cr
+Path to file.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Bamtools-parse_exoncvg"></a>}}
+\if{latex}{\out{\hypertarget{method-Bamtools-parse_exoncvg}{}}}
+\subsection{Method \code{parse_exoncvg()}}{
+Read \code{exon_medians.tsv} file.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Bamtools$parse_exoncvg(x)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{x}}{(\code{character(1)})\cr
+Path to file.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Bamtools-tidy_exoncvg"></a>}}
+\if{latex}{\out{\hypertarget{method-Bamtools-tidy_exoncvg}{}}}
+\subsection{Method \code{tidy_exoncvg()}}{
+Tidy \code{exon_medians.tsv} file.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Bamtools$tidy_exoncvg(x)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{

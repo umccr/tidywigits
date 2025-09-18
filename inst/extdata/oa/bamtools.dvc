@@ -1,6 +1,6 @@
 outs:
-- md5: 28ee53934175cb4c7efd06ecea763058.dir
-  size: 3271
-  nfiles: 1
+- md5: 82d3c90874cd36d3db85d980590e41d9.dir
+  size: 8327
+  nfiles: 8
   hash: md5
   path: bamtools
