@@ -345,6 +345,56 @@ CREATE TABLE public.bamtools_wgsmetrics_metrics (
 
 ALTER TABLE public.bamtools_wgsmetrics_metrics OWNER TO orcabus;
 
+-- Name: bamtools_exoncvg; Type: TABLE; Schema: public; Owner: orcabus
+--
+
+CREATE TABLE public.bamtools_exoncvg (
+    nemo_id text,
+    nemo_pfix text,
+    gene text,
+    chromosome text,
+    start double precision,
+    "end" double precision,
+    exon double precision,
+    dp_med double precision
+);
+
+
+ALTER TABLE public.bamtools_exoncvg OWNER TO orcabus;
+
+--
+-- Name: bamtools_genecvg_cvg; Type: TABLE; Schema: public; Owner: orcabus
+--
+
+CREATE TABLE public.bamtools_genecvg_cvg (
+    nemo_id text,
+    nemo_pfix text,
+    gene text,
+    dr text,
+    value double precision
+);
+
+
+ALTER TABLE public.bamtools_genecvg_cvg OWNER TO orcabus;
+
+--
+-- Name: bamtools_genecvg_genes; Type: TABLE; Schema: public; Owner: orcabus
+--
+
+CREATE TABLE public.bamtools_genecvg_genes (
+    nemo_id text,
+    nemo_pfix text,
+    gene text,
+    chromosome text,
+    pos_start double precision,
+    pos_end double precision,
+    missed_var_likelihood double precision
+);
+
+
+ALTER TABLE public.bamtools_genecvg_genes OWNER TO orcabus;
+
+
 --
 -- Name: chord_prediction; Type: TABLE; Schema: public; Owner: orcabus
 --
