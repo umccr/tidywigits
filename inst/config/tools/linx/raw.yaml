@@ -655,7 +655,7 @@ raw:
     ftype: 'txt'
     schema:
       latest:
-        - field: 'variable'
+        - field: 'version'
           type: 'char'
-        - field: 'value'
+        - field: 'build.date'
           type: 'char'
