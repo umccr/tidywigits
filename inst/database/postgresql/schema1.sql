@@ -1305,7 +1305,8 @@ CREATE TABLE public.purple_cnvgenetsv (
     min_region_end_support text,
     min_region_method text,
     min_minor_allele_cn double precision,
-    depth_window_count double precision
+    depth_window_count double precision,
+    gc_content double precision
 );
 
 
@@ -1469,7 +1470,9 @@ CREATE TABLE public.purple_qc (
     contamination double precision,
     germline_aberrations text,
     mean_depth_amber double precision,
-    loh_percent double precision
+    loh_percent double precision,
+    tinc_level double precision,
+    chimerism_percent double precision
 );
 
 
