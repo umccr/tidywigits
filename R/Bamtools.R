@@ -11,7 +11,7 @@
 #' obj$nemofy(odir = odir, format = "parquet", id = id)
 #' (lf <- list.files(odir, pattern = "bamtools.*parquet", full.names = FALSE))
 #' @testexamples
-#' expect_equal(length(lf), 2)
+#' expect_equal(length(lf), 11)
 #' @export
 Bamtools <- R6::R6Class(
   "Bamtools",
