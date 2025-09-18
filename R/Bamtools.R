@@ -232,6 +232,45 @@ Bamtools <- R6::R6Class(
     #' Path to file.
     tidy_partitionstats = function(x) {
       self$.tidy_file(x, "partitionstats")
+    },
+    #' @description Read `gene_coverage.tsv` file.
+    #' @param x (`character(1)`)\cr
+    #' Path to file.
+    parse_genecvg = function(x) {
+      self$.parse_file(x, "genecvg")
+    },
+    #' @description Tidy `gene_coverage.tsv` file.
+    #' @param x (`character(1)`)\cr
+    #' Path to file.
+    tidy_genecvg = function(x) {
+      d <- self$.tidy_file(x, "genecvg") |>
+        dplyr::select("data") |>
+        tidyr::unnest("data")
+      # make sure genes are unique
+      stopifnot(nrow(d) == nrow(dplyr::distinct(d, .data$gene)))
+      genes <- d |>
+        dplyr::select(!dplyr::starts_with("dr_"))
+      cvg <- d |>
+        tidyr::pivot_longer(
+          dplyr::starts_with("dr_"),
+          names_to = "dr",
+          values_to = "value"
+        ) |>
+        dplyr::select("gene", "dr", "value")
+      list(genes = genes, cvg = cvg) |>
+        nemo::enframe_data()
+    },
+    #' @description Read `exon_medians.tsv` file.
+    #' @param x (`character(1)`)\cr
+    #' Path to file.
+    parse_exoncvg = function(x) {
+      self$.parse_file(x, "exoncvg")
+    },
+    #' @description Tidy `exon_medians.tsv` file.
+    #' @param x (`character(1)`)\cr
+    #' Path to file.
+    tidy_exoncvg = function(x) {
+      self$.tidy_file(x, "exoncvg")
     }
   )
 )
