@@ -52,6 +52,8 @@ pr <- function(n) {
 
 ## DEV
 
+- Purple: handle v4.1 (`r pr(150)`, `r iss(141)`)
+
 ## v0.0.5 (2025-09-07)
 
 - `r vdiff("0.0.5", "0.0.4")`
