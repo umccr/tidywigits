@@ -71,9 +71,6 @@ tidy:
           - field: 'depth_window_count'
             type: 'float'
             description: 'count of cobalt windows covered by this segment'
-          - field: 'depth_window_count'
-            type: 'float'
-            description: 'count of cobalt windows covered by this segment'
       latest:
         tbl1:
           - field: 'chromosome'
