@@ -378,6 +378,52 @@ tidy:
   qc:
     description: 'QC metrics.'
     schema:
+      v4.0:
+        tbl1:
+          - field: 'qc_status'
+            type: 'char'
+            description: 'QC status'
+          - field: 'method'
+            type: 'char'
+            description:
+              'method used to determine the cn of the region (NORMAL,
+              HIGHLY_DIPLOID, SOMATIC or NO_TUMOR)'
+          - field: 'cn_segments'
+            type: 'int'
+            description: 'total number of cn segments in sample'
+          - field: 'unsupported_cn_segments'
+            type: 'int'
+            description:
+              'count of cn segments with no SV support on either side. A high
+              number is an indicator of poor sample quality'
+          - field: 'purity'
+            type: 'float'
+            description: 'purity of tumor in the sample'
+          - field: 'gender_amber'
+            type: 'char'
+            description: 'gender from amber data'
+          - field: 'gender_cobalt'
+            type: 'char'
+            description: 'gender from cobalt data'
+          - field: 'deleted_genes'
+            type: 'int'
+            description: 'number of genes with cn < 0.5'
+          - field: 'contamination'
+            type: 'float'
+            description:
+              'rate of contamination in tumor sample as determined by Amber'
+          - field: 'germline_aberrations'
+            type: 'char'
+            description:
+              'any germline chromosomal aberrations detected (KLINEFELTER,
+              TRISOMY_X, TRISOMY_21, TRISOMY_13, TRISOMY_18, TRISOMY_15, XYY,
+              MOSAIC_X)'
+          - field: 'mean_depth_amber'
+            type: 'float'
+            description: 'as calculated by Amber'
+          - field: 'loh_percent'
+            type: 'float'
+            description: 'LOH percentage'
       latest:
         tbl1:
           - field: 'qc_status'
@@ -424,6 +470,12 @@ tidy:
           - field: 'loh_percent'
             type: 'float'
             description: 'LOH percentage'
+          - field: 'tinc_level'
+            type: 'float'
+            description: 'tumor in normal contamination level'
+          - field: 'chimerism_percent'
+            type: 'float'
+            description: 'chimerism percentage (presence of a donor sample)'
   somclonality:
     description: 'Clonality peak model data.'
     schema:
