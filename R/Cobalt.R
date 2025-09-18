@@ -92,10 +92,7 @@ Cobalt <- R6::R6Class(
     #' @param x (`character(1)`)\cr
     #' Path to file.
     parse_version = function(x) {
-      d0 <- self$.parse_file_nohead(x, "version", delim = "=")
-      d0 |>
-        tidyr::pivot_wider(names_from = "variable", values_from = "value") |>
-        nemo::set_tbl_version_attr(nemo::get_tbl_version_attr(d0))
+      self$.parse_file_keyvalue(x, "version", delim = "=")
     },
     #' @description Tidy `cobalt.version` file.
     #' @param x (`character(1)`)\cr

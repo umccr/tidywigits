@@ -78,16 +78,25 @@ Amber <- R6::R6Class(
     #' @param x (`character(1)`)\cr
     #' Path to file.
     parse_qc = function(x) {
-      d0 <- self$.parse_file_nohead(x, "qc")
-      d0 |>
-        tidyr::pivot_wider(names_from = "variable", values_from = "value") |>
-        nemo::set_tbl_version_attr(nemo::get_tbl_version_attr(d0))
+      self$.parse_file_keyvalue(x, "qc")
     },
     #' @description Tidy `qc` file.
     #' @param x (`character(1)`)\cr
     #' Path to file.
     tidy_qc = function(x) {
       self$.tidy_file(x, "qc", convert_types = TRUE)
+    },
+    #' @description Read `amber.version` file.
+    #' @param x (`character(1)`)\cr
+    #' Path to file.
+    parse_version = function(x) {
+      self$.parse_file_keyvalue(x, "version", delim = "=")
+    },
+    #' @description Tidy `amber.version` file.
+    #' @param x (`character(1)`)\cr
+    #' Path to file.
+    tidy_version = function(x) {
+      self$.tidy_file(x, "version")
     }
   )
 )

@@ -32,6 +32,8 @@ obj$nemofy(odir = odir, format = "parquet", id = id)
 \item \href{#method-Amber-tidy_homozygousregion}{\code{Amber$tidy_homozygousregion()}}
 \item \href{#method-Amber-parse_qc}{\code{Amber$parse_qc()}}
 \item \href{#method-Amber-tidy_qc}{\code{Amber$tidy_qc()}}
+\item \href{#method-Amber-parse_version}{\code{Amber$parse_version()}}
+\item \href{#method-Amber-tidy_version}{\code{Amber$tidy_version()}}
 \item \href{#method-Amber-clone}{\code{Amber$clone()}}
 }
 }
@@ -40,6 +42,7 @@ obj$nemofy(odir = odir, format = "parquet", id = id)
 <ul>
 <li><span class="pkg-link" data-pkg="nemo" data-topic="Tool" data-id=".eval_func"><a href='../../nemo/html/Tool.html#method-Tool-.eval_func'><code>nemo::Tool$.eval_func()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="nemo" data-topic="Tool" data-id=".parse_file"><a href='../../nemo/html/Tool.html#method-Tool-.parse_file'><code>nemo::Tool$.parse_file()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="nemo" data-topic="Tool" data-id=".parse_file_keyvalue"><a href='../../nemo/html/Tool.html#method-Tool-.parse_file_keyvalue'><code>nemo::Tool$.parse_file_keyvalue()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="nemo" data-topic="Tool" data-id=".parse_file_nohead"><a href='../../nemo/html/Tool.html#method-Tool-.parse_file_nohead'><code>nemo::Tool$.parse_file_nohead()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="nemo" data-topic="Tool" data-id=".tidy_file"><a href='../../nemo/html/Tool.html#method-Tool-.tidy_file'><code>nemo::Tool$.tidy_file()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="nemo" data-topic="Tool" data-id="filter_files"><a href='../../nemo/html/Tool.html#method-Tool-filter_files'><code>nemo::Tool$filter_files()</code></a></span></li>
@@ -242,6 +245,42 @@ Path to file.}
 Tidy \code{qc} file.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Amber$tidy_qc(x)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{x}}{(\code{character(1)})\cr
+Path to file.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Amber-parse_version"></a>}}
+\if{latex}{\out{\hypertarget{method-Amber-parse_version}{}}}
+\subsection{Method \code{parse_version()}}{
+Read \code{amber.version} file.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Amber$parse_version(x)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{x}}{(\code{character(1)})\cr
+Path to file.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Amber-tidy_version"></a>}}
+\if{latex}{\out{\hypertarget{method-Amber-tidy_version}{}}}
+\subsection{Method \code{tidy_version()}}{
+Tidy \code{amber.version} file.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Amber$tidy_version(x)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
