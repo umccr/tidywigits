@@ -1,0 +1,6 @@
+outs:
+- md5: 9911c10b468249098a8e7db2e722393b.dir
+  size: 8375
+  nfiles: 2
+  hash: md5
+  path: neo
