@@ -1,6 +1,6 @@
 description: 'Neoepitope prediction.'
 raw:
-  neocand:
+  candidates:
     description: 'Neoepitope candidates.'
     pattern: "\\.neo\\.neo_data\\.tsv$"
     ftype: 'tsv'
@@ -76,7 +76,7 @@ raw:
           type: 'char'
         - field: 'CodingBaseCigarDown'
           type: 'char'
-  neopred:
+  predictions:
     description: 'Neoepitope predictions.'
     pattern: "\\.neo\\.neoepitope\\.tsv$"
     ftype: 'tsv'

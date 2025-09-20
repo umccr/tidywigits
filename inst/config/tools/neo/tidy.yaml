@@ -1,5 +1,5 @@
 tidy:
-  neocand:
+  candidates:
     description: 'Neoepitope candidates.'
     schema:
       latest:
@@ -109,7 +109,7 @@ tidy:
           - field: 'coding_base_cigar_down'
             type: 'char'
             description: 'CIGAR string for coding bases in downstream transcript'
-  neopred:
+  predictions:
     schema:
       latest:
         tbl1:
@@ -179,10 +179,10 @@ tidy:
           - field: 'nmd_max'
             type: 'float'
             description: 'Largest # of coding bases from stop codon to exon splice junction across all downstream transcripts'
-          - field: 'coding_bases_min_length'
+          - field: 'coding_bases_length_min'
             type: 'float'
             description: '# of coding bases for shortest fused transcript combination (not presently used)'
-          - field: 'coding_bases_max_length'
+          - field: 'coding_bases_length_max'
             type: 'float'
             description: '# of coding bases for longest fused transcript combination (not presently used)'
           - field: 'fused_intron_length'
