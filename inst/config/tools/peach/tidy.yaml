@@ -22,7 +22,7 @@ tidy:
             type: 'char'
             description: 'ID of event linked to gene'
           - field: 'count'
-            type: 'char'
+            type: 'float'
             description: 'Number of times event was observed'
   hapall:
     description: 'All haplotypes.'
@@ -36,7 +36,7 @@ tidy:
             type: 'char'
             description: 'Combination of haplotypes that could explain the observed events for this gene. ; separated list of pairs of haplotype names and number of times the haplotype is called.'
           - field: 'count'
-            type: 'char'
+            type: 'float'
             description: 'Number of haplotypes in the combination'
           - field: 'count_non_wildtype'
             type: 'float'
