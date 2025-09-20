@@ -1,0 +1,66 @@
+description: 'Pharmacogenomic evaluator and caller of haplotypes.'
+raw:
+  events:
+    description: 'Variant events.'
+    pattern: "\\peach\\.events\\.tsv$"
+    ftype: 'tsv'
+    schema:
+      latest:
+      - field: 'event'
+        type: 'char'
+      - field: 'count'
+        type: 'float'
+  eventsg:
+    description: 'Variant events linked to gene.'
+    pattern: "\\peach\\.gene\\.events\\.tsv$"
+    ftype: 'tsv'
+    schema:
+      latest:
+      - field: 'gene'
+        type: 'char'
+      - field: 'event'
+        type: 'char'
+      - field: 'count'
+        type: 'float'
+  hapall:
+    description: 'All haplotypes.'
+    pattern: "\\peach\\.haplotypes\\.all\\.tsv$"
+    ftype: 'tsv'
+    schema:
+      latest:
+      - field: 'gene'
+        type: 'char'
+      - field: 'combination'
+        type: 'char'
+      - field: 'count'
+        type: 'float'
+      - field: 'nonWildTypeCount'
+        type: 'float'
+  hapbest:
+    description: 'Best haplotypes.'
+    pattern: "\\peach\\.haplotypes\\.best\\.tsv$"
+    ftype: 'tsv'
+    schema:
+      latest:
+      - field: 'gene'
+        type: 'char'
+      - field: 'haplotype'
+        type: 'char'
+      - field: 'count'
+        type: 'float'
+      - field: 'function'
+        type: 'char'
+      - field: 'linkedDrugs'
+        type: 'char'
+      - field: 'prescriptionUrls'
+        type: 'char'
+  qc:
+    description: 'QC metrics.'
+    pattern: "\\peach\\.qc\\.tsv$"
+    ftype: 'tsv'
+    schema:
+      latest:
+      - field: 'gene'
+        type: 'char'
+      - field: 'status'
+        type: 'char'

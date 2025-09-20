@@ -1,0 +1,6 @@
+outs:
+- md5: d49abb183d87b5af76c9c6058100b550.dir
+  size: 692
+  nfiles: 5
+  hash: md5
+  path: peach

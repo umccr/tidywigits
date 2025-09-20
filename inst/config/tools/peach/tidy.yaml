@@ -1,0 +1,77 @@
+tidy:
+  events:
+    description: 'Variant events.'
+    schema:
+      latest:
+        tbl1:
+          - field: 'event'
+            type: 'char'
+            description: 'Event ID'
+          - field: 'count'
+            type: 'float'
+            description: 'Number of times event was observed'
+  eventsg:
+    description: 'Variant events linked to gene.'
+    schema:
+      latest:
+        tbl1:
+          - field: 'gene'
+            type: 'char'
+            description: 'Gene name'
+          - field: 'event'
+            type: 'char'
+            description: 'ID of event linked to gene'
+          - field: 'count'
+            type: 'char'
+            description: 'Number of times event was observed'
+  hapall:
+    description: 'All haplotypes.'
+    schema:
+      latest:
+        tbl1:
+          - field: 'gene'
+            type: 'char'
+            description: 'Gene name'
+          - field: 'combination'
+            type: 'char'
+            description: 'Combination of haplotypes that could explain the observed events for this gene. ; separated list of pairs of haplotype names and number of times the haplotype is called.'
+          - field: 'count'
+            type: 'char'
+            description: 'Number of haplotypes in the combination'
+          - field: 'count_non_wildtype'
+            type: 'float'
+            description: 'Number of non-wild-type haplotypes in the combination'
+  hapbest:
+    description: 'Best haplotypes.'
+    schema:
+      latest:
+        tbl1:
+          - field: 'gene'
+            type: 'char'
+            description: 'Gene name'
+          - field: 'haplotype'
+            type: 'char'
+            description: 'Haplotype name'
+          - field: 'count'
+            type: 'float'
+            description: 'Number of times haplotype was called for this gene'
+          - field: 'function'
+            type: 'char'
+            description: 'Haplotype function'
+          - field: 'linked_drugs'
+            type: 'char'
+            description: 'List of drugs for which this gene is relevant'
+          - field: 'prescription_urls'
+            type: 'char'
+            description: 'List of urls to prescription advice for related drugs'
+  qc:
+    description: 'QC metrics.'
+    schema:
+      latest:
+        tbl1:
+          - field: 'gene'
+            type: 'char'
+            description: 'Gene name'
+          - field: 'status'
+            type: 'char'
+            description: 'QC status of calls for this gene.'

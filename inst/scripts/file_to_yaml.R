@@ -1,16 +1,26 @@
-d1 <- here::here(
-  "../biodaily/pdiakumis/nemo/accreditation_wgs/nogit/oncoanalyser-wgts-dna/202509100539df0e/L2101100__L2101099/neo"
-)
-pref <- "L2101100.neo"
-tool <- "neo"
-descr <- "Neoepitope prediction."
+# Script to convert output files to yaml configs
+{
+  use("glue", "glue")
+  use("tibble", "tribble")
+  use("dplyr", c("mutate"))
+  use("here", "here")
+  use("nemo", c("config_prep_multi", "config_prep_write"))
+}
+
+d1 <- here("inst/extdata/oa/peach")
+pref <- "sample1"
+tool <- "peach"
+descr <- "Pharmacogenomic evaluator and caller of haplotypes."
 # fmt: skip
-d <- tibble::tribble(
+d <- tribble(
     ~name,               ~descr,                   ~pat,                                       ~path,
-    "neocand", "Neoepitope candidates.", "\\.neo\\.neo_data\\.tsv$", glue("finder/{pref}.neo_data.tsv"),
-    "neopred", "Neoepitope predictions.", "\\.neo\\.neoepitope\\.tsv$", glue("scorer/{pref}.neoepitope.tsv")
+    "events", ".", "\\peach\\.events\\.tsv$", glue("{pref}.peach.events.tsv"),
+    "eventsg", ".", "\\peach\\.gene\\.events\\.tsv$", glue("{pref}.peach.gene.events.tsv"),
+    "hapall", ".", "\\peach\\.haplotypes\\.all\\.tsv$", glue("{pref}.peach.haplotypes.all.tsv"),
+    "hapbest", ".", "\\peach\\.haplotypes\\.best\\.tsv$", glue("{pref}.peach.haplotypes.best.tsv"),
+    "qc", ".", "\\peach\\.qc\\.tsv$", glue("{pref}.peach.qc.tsv"),
   ) |>
-  dplyr::mutate(type = "tsv", path = file.path(d1, .data$path))
+  mutate(type = "tsv", path = file.path(d1, .data$path))
 nemo::config_prep_multi(d, tool_descr = descr) |>
   nemo::config_prep_write(
     here::here(glue::glue("inst/config/tools/{tool}/raw.yaml"))
