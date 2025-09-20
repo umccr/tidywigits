@@ -2,7 +2,7 @@ description: 'Pharmacogenomic evaluator and caller of haplotypes.'
 raw:
   events:
     description: 'Variant events.'
-    pattern: "\\peach\\.events\\.tsv$"
+    pattern: "\\.peach\\.events\\.tsv$"
     ftype: 'tsv'
     schema:
       latest:
@@ -12,7 +12,7 @@ raw:
         type: 'float'
   eventsg:
     description: 'Variant events linked to gene.'
-    pattern: "\\peach\\.gene\\.events\\.tsv$"
+    pattern: "\\.peach\\.gene\\.events\\.tsv$"
     ftype: 'tsv'
     schema:
       latest:
@@ -24,7 +24,7 @@ raw:
         type: 'float'
   hapall:
     description: 'All haplotypes.'
-    pattern: "\\peach\\.haplotypes\\.all\\.tsv$"
+    pattern: "\\.peach\\.haplotypes\\.all\\.tsv$"
     ftype: 'tsv'
     schema:
       latest:
@@ -38,7 +38,7 @@ raw:
         type: 'float'
   hapbest:
     description: 'Best haplotypes.'
-    pattern: "\\peach\\.haplotypes\\.best\\.tsv$"
+    pattern: "\\.peach\\.haplotypes\\.best\\.tsv$"
     ftype: 'tsv'
     schema:
       latest:
@@ -56,7 +56,7 @@ raw:
         type: 'char'
   qc:
     description: 'QC metrics.'
-    pattern: "\\peach\\.qc\\.tsv$"
+    pattern: "\\.peach\\.qc\\.tsv$"
     ftype: 'tsv'
     schema:
       latest:

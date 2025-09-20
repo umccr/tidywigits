@@ -55,6 +55,7 @@ pr <- function(n) {
 - Purple: handle v4.1 (`r pr(150)`, `r iss(141)`)
 - Bamtools: support gene/exon coverage files (`r pr(151)`, `r iss(149)`)
 - Add Neo support (`r pr(152)`, `r iss(144)`)
+- Add Peach support (`r pr(153)`, `r iss(145)`)
 
 ## v0.0.5 (2025-09-07)
 

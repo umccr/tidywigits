@@ -14,11 +14,11 @@ descr <- "Pharmacogenomic evaluator and caller of haplotypes."
 # fmt: skip
 d <- tribble(
     ~name,               ~descr,                   ~pat,                                       ~path,
-    "events", ".", "\\peach\\.events\\.tsv$", glue("{pref}.peach.events.tsv"),
-    "eventsg", ".", "\\peach\\.gene\\.events\\.tsv$", glue("{pref}.peach.gene.events.tsv"),
-    "hapall", ".", "\\peach\\.haplotypes\\.all\\.tsv$", glue("{pref}.peach.haplotypes.all.tsv"),
-    "hapbest", ".", "\\peach\\.haplotypes\\.best\\.tsv$", glue("{pref}.peach.haplotypes.best.tsv"),
-    "qc", ".", "\\peach\\.qc\\.tsv$", glue("{pref}.peach.qc.tsv"),
+    "events", ".", "\\.peach\\.events\\.tsv$", glue("{pref}.peach.events.tsv"),
+    "eventsg", ".", "\\.peach\\.gene\\.events\\.tsv$", glue("{pref}.peach.gene.events.tsv"),
+    "hapall", ".", "\\.peach\\.haplotypes\\.all\\.tsv$", glue("{pref}.peach.haplotypes.all.tsv"),
+    "hapbest", ".", "\\.peach\\.haplotypes\\.best\\.tsv$", glue("{pref}.peach.haplotypes.best.tsv"),
+    "qc", ".", "\\.peach\\.qc\\.tsv$", glue("{pref}.peach.qc.tsv"),
   ) |>
   mutate(type = "tsv", path = file.path(d1, .data$path))
 nemo::config_prep_multi(d, tool_descr = descr) |>
