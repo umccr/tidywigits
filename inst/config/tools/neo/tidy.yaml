@@ -110,6 +110,7 @@ tidy:
             type: 'char'
             description: 'CIGAR string for coding bases in downstream transcript'
   predictions:
+    description: 'Neoepitope predictions.'
     schema:
       latest:
         tbl1:
