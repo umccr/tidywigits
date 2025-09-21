@@ -1,0 +1,6 @@
+outs:
+- md5: 32790a9b5fe657b6ad931ce8513ffdc2.dir
+  size: 768
+  nfiles: 2
+  hash: md5
+  path: teal
