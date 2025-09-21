@@ -1,0 +1,6 @@
+outs:
+- md5: 899c6f09d7c563fc6897839bbfbfb6ca.dir
+  size: 3983
+  nfiles: 3
+  hash: md5
+  path: cider
