@@ -49,6 +49,7 @@ Wigits <- R6::R6Class(
         purple = Purple,
         sage = Sage,
         sigs = Sigs,
+        teal = Teal,
         virusbreakend = Virusbreakend,
         virusinterpreter = Virusinterpreter
       )
@@ -79,6 +80,7 @@ WIGITS_TOOLS <- c(
   "purple",
   "sage",
   "sigs",
+  "teal",
   "virusbreakend",
   "virusinterpreter"
 )

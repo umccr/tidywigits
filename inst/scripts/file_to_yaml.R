@@ -2,26 +2,24 @@
 {
   use("glue", "glue")
   use("tibble", "tribble")
-  use("dplyr", c("mutate"))
+  use("dplyr")
   use("here", "here")
   use("nemo", c("config_prep_multi", "config_prep_write"))
 }
 
-d1 <- here("inst/extdata/oa/peach")
+tool <- "teal"
 pref <- "sample1"
-tool <- "peach"
-descr <- "Pharmacogenomic evaluator and caller of haplotypes."
+descr <- "Telomere characterisation."
+d1 <- here(glue("inst/extdata/oa/{tool}"))
 # fmt: skip
 d <- tribble(
-    ~name,               ~descr,                   ~pat,                                       ~path,
-    "events", ".", "\\.peach\\.events\\.tsv$", glue("{pref}.peach.events.tsv"),
-    "eventsg", ".", "\\.peach\\.gene\\.events\\.tsv$", glue("{pref}.peach.gene.events.tsv"),
-    "hapall", ".", "\\.peach\\.haplotypes\\.all\\.tsv$", glue("{pref}.peach.haplotypes.all.tsv"),
-    "hapbest", ".", "\\.peach\\.haplotypes\\.best\\.tsv$", glue("{pref}.peach.haplotypes.best.tsv"),
-    "qc", ".", "\\.peach\\.qc\\.tsv$", glue("{pref}.peach.qc.tsv"),
+    ~name,    ~descr,                  ~pat,               ~path,
+    "breakend", "Telomeric rearrangements.", "\\.teal\\.breakend\\.tsv\\.gz$", glue("{pref}.teal.breakend.tsv.gz"),
+    "tellength", "Telomeric length and content.", "\\.teal\\.tellength\\.tsv$", glue("{pref}.teal.tellength.tsv"),
   ) |>
   mutate(type = "tsv", path = file.path(d1, .data$path))
+stopifnot(all(file.exists(d$path)))
 nemo::config_prep_multi(d, tool_descr = descr) |>
   nemo::config_prep_write(
-    here::here(glue::glue("inst/config/tools/{tool}/raw.yaml"))
+    here(glue("inst/config/tools/{tool}/raw.yaml"))
   )
