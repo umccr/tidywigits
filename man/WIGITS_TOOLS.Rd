@@ -5,7 +5,7 @@
 \alias{WIGITS_TOOLS}
 \title{WiGiTS Tool Names}
 \format{
-An object of class \code{character} of length 19.
+An object of class \code{character} of length 20.
 }
 \usage{
 WIGITS_TOOLS

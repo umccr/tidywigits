@@ -43,7 +43,8 @@ Alignments <- R6::R6Class(
     #' Path to file.
     parse_markdup = function(x) {
       # handle two different sections
-      schema <- self$get_raw_schema("markdup")
+      schema <- self$get_raw_schema("markdup", v = "latest") |>
+        dplyr::select("field", "type")
       # first make sure colnames are as expected
       hdr1 <- nemo::file_hdr(x, comment = "#")
       hdr2 <- nemo::file_hdr(x, comment = "#", skip = 10)

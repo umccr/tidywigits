@@ -66,7 +66,8 @@ Bamtools <- R6::R6Class(
     #' Path to file.
     parse_wgsmetrics = function(x) {
       # handle two different sections
-      schema <- self$get_raw_schema("wgsmetrics")
+      schema <- self$get_raw_schema("wgsmetrics", v = "latest") |>
+        dplyr::select("field", "type")
       # first make sure colnames are as expected
       hdr1 <- nemo::file_hdr(x, comment = "#")
       stopifnot(identical(hdr1, schema[["field"]]))
