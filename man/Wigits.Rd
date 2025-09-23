@@ -27,6 +27,7 @@ x <-
     id = "runABC456",
     dbconn = dbconn
 )
+DBI::dbDisconnect(dbconn)
 }
 }
 \section{Super class}{
