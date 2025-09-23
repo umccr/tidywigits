@@ -178,3 +178,27 @@ Purple <- R6::R6Class(
     }
   ) # end public
 )
+
+#' Retrieve PURPLE Plots
+#'
+#' @param x (`character(1)`)\cr
+#' Path to recursively look for PURPLE plots.
+#' @returns Tibble with plot alias, basename, path, size, title and description.
+#'
+#' @examples
+#' x <- tempdir()
+#' file.create(file.path(x, paste0("sample1.", c("circos", "copynumber", "map"), ".png")))
+#' (d <- purple_plot_getter(x))
+#' @testexamples
+#' expect_equal(nrow(d), 3)
+#' @export
+purple_plot_getter <- function(x) {
+  y <- system.file("config/tools/purple/plots.yaml", package = "tidywigits") |>
+    yaml::read_yaml() |>
+    purrr::map(tibble::as_tibble_row) |>
+    dplyr::bind_rows(.id = "name")
+  nemo::list_files_dir(x) |>
+    tidyr::crossing(y) |>
+    dplyr::filter(stringr::str_detect(.data$bname, .data$pattern)) |>
+    dplyr::select(alias = "name", "bname", "path", "size", "title", "description")
+}

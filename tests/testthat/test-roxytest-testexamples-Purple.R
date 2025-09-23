@@ -14,3 +14,12 @@ test_that("Function Purple() @ L16", {
   expect_equal(length(lf), 11)
 })
 
+
+test_that("Function purple_plot_getter() @ L195", {
+  
+  x <- tempdir()
+  file.create(file.path(x, paste0("sample1.", c("circos", "copynumber", "map"), ".png")))
+  (d <- purple_plot_getter(x))
+  expect_equal(nrow(d), 3)
+})
+
