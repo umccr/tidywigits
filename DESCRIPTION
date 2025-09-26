@@ -21,6 +21,7 @@ Remotes:
     umccr/nemo
 Imports:
     dplyr,
+    fs,
     glue,
     nemo,
     R6,

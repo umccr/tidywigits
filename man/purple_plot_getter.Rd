@@ -4,11 +4,15 @@
 \alias{purple_plot_getter}
 \title{Retrieve PURPLE Plots}
 \usage{
-purple_plot_getter(x)
+purple_plot_getter(x, cp_dir = NULL)
 }
 \arguments{
 \item{x}{(\code{character(1)})\cr
 Path to recursively look for PURPLE plots.}
+
+\item{cp_dir}{(\code{character(1)})\cr
+If provided, copies the plots from \code{x} into \code{cp_dir} for use in reports, and
+adds a 'copied' boolean column at the end.}
 }
 \value{
 Tibble with plot alias, basename, path, size, title and description.
@@ -18,6 +22,8 @@ Retrieve PURPLE Plots
 }
 \examples{
 x <- tempdir()
+cp_dir <- file.path(tempdir(), "cpdir")
 file.create(file.path(x, paste0("sample1.", c("circos", "copynumber", "map"), ".png")))
-(d <- purple_plot_getter(x))
+(d1 <- purple_plot_getter(x))
+(d2 <- purple_plot_getter(x, cp_dir))
 }
