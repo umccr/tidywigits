@@ -15,3 +15,5 @@ roxydoc:
 build:
 	@R -e "pak::local_install(upgrade = FALSE)" --quiet --no-restore --no-save
 
+web-preview:
+	@quarto preview inst/website/index.qmd --port 4242 --no-browser --no-watch-inputs --output-dir nogit/website-tmp --embed-resources

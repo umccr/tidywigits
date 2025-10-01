@@ -1,0 +1,52 @@
+---
+title: "Summary"
+lightbox:
+  match: auto
+  effect: fade
+execute: 
+  echo: false
+---
+
+```{r}
+#| label: pkg_load
+#| message: false
+{
+  use("dplyr")
+  use("here", "here")
+}
+source(here("inst/website/scripts/1-funcs.R"))
+```
+
+```{r}
+#| label: data_setup
+dat <- funcs$get_data()
+```
+
+```{r}
+#| label: ppl_plotprep
+relpath <- "nogit/seqc100/purple/plot"
+p <- dat$ppl_plots |>
+  mutate(path = paste(relpath, .data$bname, sep = "/"))
+```
+
+## Circos
+
+::: {layout-nrow=1}
+
+```{r}
+#| label: ppl_plots_circos
+#| results: asis
+funcs$cat_plot(p, "circos_baf_ar", group = "ppl_circos")
+funcs$cat_plot(p, "circos_snv_indel_cn_sv", group = "ppl_circos")
+```
+
+:::
+
+## QC Summary
+
+
+```{r}
+#| label: ppl_qc
+dat$data |>
+  funcs$unnest_data("purple_qc", schemas_all = dat$schemas)
+```
