@@ -49,5 +49,6 @@ funcs$cat_plot(p, "circos_snv_indel_cn_sv", group = "ppl_circos")
 
 ```{r}
 #| label: ppl_qc
+#| classes: plain
 funcs$purple$qc(dat)
 ```

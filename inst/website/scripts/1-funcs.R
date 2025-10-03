@@ -75,6 +75,21 @@ funcs <- list(
       stopifnot(all(c("data", "schemas") %in% names(dat)))
       d <- dat$data |>
         funcs$unnest_data("purple_qc", schemas_all = dat$schemas)
+      cols_sel <- c(
+        "qc_status",
+        "gender",
+        "purity",
+        "contamination",
+        "tinc_level",
+        "loh_percent",
+        "chimerism_percent",
+        "method",
+        "germline_aberrations",
+        "deleted_genes",
+        "cn_segments",
+        "unsupported_cn_segments",
+        "foobar"
+      )
       d1 <- d$res |>
         dplyr::mutate(
           gender = dplyr::if_else(
@@ -85,6 +100,10 @@ funcs <- list(
         ) |>
         dplyr::mutate(dplyr::across(dplyr::everything(), as.character)) |>
         dplyr::select(-c("gender_amber", "gender_cobalt")) |>
+        dplyr::select(
+          dplyr::any_of(cols_sel),
+          dplyr::everything()
+        ) |>
         tidyr::pivot_longer(dplyr::everything(), names_to = "field") |>
         dplyr::mutate(fill_colour = purrr::map2_chr(field, value, get_fill_colour))
       d2 <- d$schema$schema |>
@@ -95,17 +114,39 @@ funcs <- list(
             description = "gender according to AMBER/COBALT"
           )
         )
+      # fmt: skip
+      thresh <- tibble::tribble(
+        ~field, ~threshold,
+        "qc_status", "Green: PASS; Orange: WARN; Red: FAIL",
+        "method", "Green: NORMAL; Orange: HIGHLY_DIPLOID or SOMATIC; Red: NO_TUMOR",
+        "cn_segments", "No colour thresholds",
+        "unsupported_cn_segments", "Green: 0; Orange: 1-10; Red: >10",
+        "purity", "Green: 0.8-1.0; Orange: 0.25-0.80; Red: 0-0.25",
+        "gender", "Green: matching values; Red: mismatched values",
+        "deleted_genes", "Green: 0-99; Orange: 100-199; Red: >=200",
+        "contamination", "Green: 0; Red: >0",
+        "germline_aberrations", "Green: NONE; Red: any aberration detected",
+        "mean_depth_amber", "Green: 25-150; Orange: >150; Red: 0-25",
+        "loh_percent", "Green: 0-0.5; Orange: 0.5-0.8; Red: >0.8",
+        "tinc_level", "Green: 0; Red: >0",
+        "chimerism_percent", "Green: 0; Red: >0"
+      )
       d3 <- dplyr::left_join(d1, d2, by = "field") |>
-        dplyr::select("field", "value", "fill_colour", "description")
+        dplyr::select("field", "value", "fill_colour", "description") |>
+        dplyr::left_join(thresh, by = "field") |>
+        tidyr::unite("description", c("description", "threshold"), sep = "\n")
       down <- funcs$down_button(d3, "purple_qc")
       tab <- d3 |>
-        gt::gt(rowname_col = "field") |>
+        gt::gt() |>
         gt::cols_label(value = "Value", description = "Description") |>
+        # not needed
         gt::cols_hide(columns = c("fill_colour", "description")) |>
+        # value colour fill
         gt::tab_style(
           style = gt::cell_fill(color = gt::from_column("fill_colour")),
           locations = gt::cells_body(columns = value)
         ) |>
+        # field name with hover description
         gt::fmt(
           columns = field,
           fns = function(x) {
@@ -117,19 +158,16 @@ funcs <- list(
             )
           }
         ) |>
-        gt::tab_style(
-          style = list(gt::cell_text(align = "left")),
-          locations = gt::cells_stub(rows = TRUE)
-        ) |>
+        # bold field and value text
         gt::tab_style(
           style = list(gt::cell_text(weight = "bold")),
-          locations = list(gt::cells_stub(rows = TRUE), gt::cells_body(columns = value))
+          locations = list(gt::cells_body(columns = c("field", "value")))
         ) |>
         gt::cols_align("left") |>
         gt::tab_options(
           table.width = gt::px(700),
           table.align = "left",
-          column_labels.font.weight = "bold"
+          column_labels.hidden = TRUE
         ) |>
         gt::tab_source_note(down)
       return(tab)
