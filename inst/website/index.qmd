@@ -12,7 +12,10 @@ execute:
 #| message: false
 {
   use("dplyr")
+  use("tidyr", "pivot_longer")
   use("here", "here")
+  use("gt")
+  use("downloadthis")
 }
 source(here("inst/website/scripts/1-funcs.R"))
 ```
@@ -44,9 +47,7 @@ funcs$cat_plot(p, "circos_snv_indel_cn_sv", group = "ppl_circos")
 
 ## QC Summary
 
-
 ```{r}
 #| label: ppl_qc
-dat$data |>
-  funcs$unnest_data("purple_qc", schemas_all = dat$schemas)
+funcs$purple$qc(dat)
 ```

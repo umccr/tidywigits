@@ -36,6 +36,7 @@ p <- dat$ppl_plots |>
 ```{r}
 #| label: ppl_plots_other
 #| results: asis
+#| eval: false
 cat_plot(p, "purity_range", group = "ppl_other")
 cat_plot(p, "cn_distro", group = "ppl_other")
 cat_plot(p, "map_distro", group = "ppl_other")
