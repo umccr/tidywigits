@@ -11,17 +11,21 @@ execute:
 #| label: pkg_load
 #| warning: false
 #| message: false
-{
-  use("dplyr")
-  use("here", "here")
-  use("glue", "glue")
-}
-source(here::here("inst/website/scripts/1-funcs.R"))
+box::use(
+  dplyr[mutate, filter, select],
+  tibble[tibble] # needed for tbl print
+)
+box_path <- system.file("website/boxbox", package = "tidywigits")
+options(box.path = box_path)
+box::use(
+  wigits/plot[cat_plot],
+  wigits/utils[get_data],
+)
 ```
 
 ```{r}
 #| label: data_setup
-dat <- funcs$get_data()
+dat <- get_data()
 ```
 
 ```{r}
@@ -36,7 +40,6 @@ p <- dat$ppl_plots |>
 ```{r}
 #| label: ppl_plots_other
 #| results: asis
-#| eval: false
 cat_plot(p, "purity_range", group = "ppl_other")
 cat_plot(p, "cn_distro", group = "ppl_other")
 cat_plot(p, "map_distro", group = "ppl_other")

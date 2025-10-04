@@ -10,19 +10,22 @@ execute:
 ```{r}
 #| label: pkg_load
 #| message: false
-{
-  use("dplyr")
-  use("tidyr", "pivot_longer")
-  use("here", "here")
-  use("gt")
-  use("downloadthis")
-}
-source(here("inst/website/scripts/1-funcs.R"))
+box::use(
+  here[here],
+  dplyr[mutate, filter, select],
+  tibble[tibble] # needed for tbl print
+)
+options(box.path = here("inst/website/boxbox"))
+box::use(
+  wigits/plot[cat_plot],
+  wigits/utils[get_data],
+  purple/qc[qc_tab = qc]
+)
 ```
 
 ```{r}
 #| label: data_setup
-dat <- funcs$get_data()
+dat <- get_data()
 ```
 
 ```{r}
@@ -39,8 +42,8 @@ p <- dat$ppl_plots |>
 ```{r}
 #| label: ppl_plots_circos
 #| results: asis
-funcs$cat_plot(p, "circos_baf_ar", group = "ppl_circos")
-funcs$cat_plot(p, "circos_snv_indel_cn_sv", group = "ppl_circos")
+cat_plot(p, "circos_baf_ar", group = "ppl_circos")
+cat_plot(p, "circos_snv_indel_cn_sv", group = "ppl_circos")
 ```
 
 :::
@@ -50,5 +53,5 @@ funcs$cat_plot(p, "circos_snv_indel_cn_sv", group = "ppl_circos")
 ```{r}
 #| label: ppl_qc
 #| classes: plain
-funcs$purple$qc(dat)
+qc_tab(dat)
 ```
