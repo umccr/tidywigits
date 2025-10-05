@@ -29,7 +29,7 @@ dat <- get_data()
 ```
 
 ```{r}
-#| label: ppl_plotprep
+#| label: purple_plotprep
 relpath <- "nogit/seqc100/purple/plot"
 p <- dat$ppl_plots |>
   mutate(path = paste(relpath, .data$bname, sep = "/"))
@@ -40,7 +40,7 @@ p <- dat$ppl_plots |>
 ::: {layout-nrow=1}
 
 ```{r}
-#| label: ppl_plots_circos
+#| label: purple_plots_circos
 #| results: asis
 cat_plot(p, "circos_baf_ar", group = "ppl_circos")
 cat_plot(p, "circos_snv_indel_cn_sv", group = "ppl_circos")
@@ -51,7 +51,7 @@ cat_plot(p, "circos_snv_indel_cn_sv", group = "ppl_circos")
 ## QC Summary
 
 ```{r}
-#| label: ppl_qc
+#| label: purple_qc
 #| classes: plain
 qc_tab(dat)
 ```

@@ -1,6 +1,12 @@
 project:
   type: website
-
+format:
+  html:
+    theme:
+      - cosmo
+      - brand
+    css: styles.css
+    toc: true
 website:
   title: "tidywigits"
   navbar:
@@ -11,11 +17,11 @@ website:
         text: PURPLE
       - href: amber.qmd
         text: AMBER
-
-format:
-  html:
-    theme:
-      - cosmo
-      - brand
-    css: styles.css
-    toc: true
+  sidebar:
+    style: "docked"
+    search: true
+    contents:
+      - index.qmd
+      - purple.qmd
+      - amber.qmd
+      # - bamtools.qmd

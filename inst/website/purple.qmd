@@ -12,33 +12,36 @@ execute:
 #| warning: false
 #| message: false
 box::use(
-  dplyr[mutate, filter, select],
+  dplyr[...],
   tibble[tibble] # needed for tbl print
 )
 box_path <- system.file("website/boxbox", package = "tidywigits")
 options(box.path = box_path)
 box::use(
   wigits/plot[cat_plot],
-  wigits/utils[get_data],
+  wigits/utils,
+  wigits/table[view_tbl]
 )
 ```
 
 ```{r}
 #| label: data_setup
-dat <- get_data()
+dat <- utils$get_data()
 ```
 
 ```{r}
-#| label: ppl_plotprep
+#| label: purple_plotprep
 relpath <- "nogit/seqc100/purple/plot"
 p <- dat$ppl_plots |>
   mutate(path = paste(relpath, .data$bname, sep = "/"))
 ```
 
+## Plots
+
 ::: {layout-nrow=3}
 
 ```{r}
-#| label: ppl_plots_other
+#| label: purple_plots_other
 #| results: asis
 cat_plot(p, "purity_range", group = "ppl_other")
 cat_plot(p, "cn_distro", group = "ppl_other")
@@ -50,3 +53,33 @@ cat_plot(p, "somatic_cnpdf", group = "ppl_other")
 ```
 
 :::
+
+## Data
+
+```{r}
+#| label: count_rows
+#| eval: false
+dat$data |>
+  dplyr::select(tool_parser, tidy) |>
+  tidyr::unnest(tidy) |>
+  dplyr::mutate(nr = purrr::map_int(data, nrow)) |>
+  dplyr::arrange(dplyr::desc(nr)) |>
+  print(n = 30)
+```
+
+### cnvgenetsv
+
+```{r}
+#| label: purple_cnvgenetsv
+tbl_nm <- "purple_cnvgenetsv"
+d <- dat$data |>
+  utils$unnest_data(tbl_nm, schemas_all = dat$schemas)
+#  just keep a subset of genes for display
+# https://raw.githubusercontent.com/umccr/gene_panels/v24.03.0/somatic_panel/3_final_panel/final_panel.tsv
+genes <- system.file("website/boxbox/purple/genes.tsv", package = "tidywigits") |>
+  readr::read_tsv(col_types = "c") |>
+  dplyr::pull("gene_symbol")
+d$res |>
+  dplyr::filter(gene %in% genes) |>
+  view_tbl()
+```
