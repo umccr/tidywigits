@@ -11,16 +11,18 @@ execute:
 #| label: pkg_load
 #| warning: false
 #| message: false
-box::use(
-  dplyr[...],
-  tibble[tibble] # needed for tbl print
-)
-box_path <- system.file("website/boxbox", package = "tidywigits")
+{
+  use("dplyr")
+  use("tibble", "tibble") # needed for tbl print
+}
+# box_path <- system.file("website/boxbox", package = "tidywigits")
+box_path <- here::here("inst/website/boxbox")
 options(box.path = box_path)
 box::use(
   wigits/plot[cat_plot],
   wigits/utils,
-  wigits/table[view_tbl]
+  wigits/table[reactable_wrapdown],
+  ppl_utils = purple/utils
 )
 ```
 
@@ -38,18 +40,18 @@ p <- dat$ppl_plots |>
 
 ## Plots
 
-::: {layout-nrow=3}
+::: {layout="[ [1,1,1], [1,1,1], [1] ]"}
 
 ```{r}
 #| label: purple_plots_other
 #| results: asis
 cat_plot(p, "purity_range", group = "ppl_other")
-cat_plot(p, "cn_distro", group = "ppl_other")
-cat_plot(p, "map_distro", group = "ppl_other")
-cat_plot(p, "rainfall", group = "ppl_other")
 cat_plot(p, "segment", group = "ppl_other")
 cat_plot(p, "clonality", group = "ppl_other")
+cat_plot(p, "cn_distro", group = "ppl_other")
+cat_plot(p, "map_distro", group = "ppl_other")
 cat_plot(p, "somatic_cnpdf", group = "ppl_other")
+cat_plot(p, "rainfall", group = "ppl_other")
 ```
 
 :::
@@ -64,13 +66,19 @@ dat$data |>
   tidyr::unnest(tidy) |>
   dplyr::mutate(nr = purrr::map_int(data, nrow)) |>
   dplyr::arrange(dplyr::desc(nr)) |>
+  dplyr::filter(grepl("purple", tool_parser)) |>
   print(n = 30)
 ```
 
-### cnvgenetsv
+### Copy Number Alterations
+
+::: {.panel-tabset .nav-pills}
+
+#### Genes
 
 ```{r}
 #| label: purple_cnvgenetsv
+#| column: screen-inset
 tbl_nm <- "purple_cnvgenetsv"
 d <- dat$data |>
   utils$unnest_data(tbl_nm, schemas_all = dat$schemas)
@@ -81,5 +89,85 @@ genes <- system.file("website/boxbox/purple/genes.tsv", package = "tidywigits") 
   dplyr::pull("gene_symbol")
 d$res |>
   dplyr::filter(gene %in% genes) |>
-  view_tbl()
+  reactable_wrapdown(
+    descriptions = d$schema$schema[c("field", "description")],
+    id = tbl_nm,
+    pagination = TRUE
+  )
 ```
+
+#### Segments
+
+```{r}
+#| label: purple_cnvsomtsv
+#| column: screen-inset
+tbl_nm <- "purple_cnvsomtsv"
+d <- dat$data |>
+  utils$unnest_data(tbl_nm, schemas_all = dat$schemas)
+d$res |>
+  reactable_wrapdown(
+    descriptions = d$schema$schema[c("field", "description")],
+    id = tbl_nm,
+    pagination = TRUE
+  )
+```
+
+#### Germline Deletions
+
+```{r}
+#| label: purple_germdeltsv
+#| column: screen-inset
+tbl_nm <- "purple_germdeltsv"
+d <- dat$data |>
+  utils$unnest_data(tbl_nm, schemas_all = dat$schemas)
+d$res |>
+  reactable_wrapdown(
+    descriptions = d$schema$schema[c("field", "description")],
+    id = tbl_nm,
+    pagination = TRUE
+  )
+```
+
+:::
+
+### Driver Catalogs
+
+```{r}
+#| label: purple_drivercatalog_prep
+tbl_nm <- "purple_drivercatalog"
+d <- dat$data
+```
+
+::: {.panel-tabset .nav-pills}
+
+#### Somatic
+
+```{r}
+#| label: purple_drivercatalog_somatic
+#| column: screen-inset
+d_som <- d |>
+  ppl_utils$unnest_data_drivercatalog(schemas_all = dat$schemas, get_germline = FALSE)
+d_som$res |>
+  reactable_wrapdown(
+    descriptions = d_som$schema$schema[c("field", "description")],
+    id = paste0(tbl_nm, "_somatic"),
+    pagination = TRUE
+  )
+```
+
+#### Germline
+
+```{r}
+#| label: purple_drivercatalog_germline
+#| column: screen-inset
+d_germ <- d |>
+  ppl_utils$unnest_data_drivercatalog(schemas_all = dat$schemas, get_germline = TRUE)
+d_germ$res |>
+  reactable_wrapdown(
+    descriptions = d_germ$schema$schema[c("field", "description")],
+    id = paste0(tbl_nm, "_germline"),
+    pagination = TRUE
+  )
+```
+
+:::

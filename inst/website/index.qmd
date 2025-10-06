@@ -10,12 +10,14 @@ execute:
 ```{r}
 #| label: pkg_load
 #| message: false
-box::use(
-  here[here],
-  dplyr[mutate, filter, select],
-  tibble[tibble] # needed for tbl print
-)
-options(box.path = here("inst/website/boxbox"))
+{
+  use("here", "here")
+  use("dplyr")
+  use("tibble", "tibble") # needed for tbl print
+}
+# box_path <- system.file("website/boxbox", package = "tidywigits")
+box_path <- here::here("inst/website/boxbox")
+options(box.path = box_path)
 box::use(
   wigits/plot[cat_plot],
   wigits/utils[get_data],

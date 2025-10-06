@@ -2,6 +2,7 @@ project:
   type: website
 format:
   html:
+    page-layout: full
     theme:
       - cosmo
       - brand
@@ -9,6 +10,9 @@ format:
     toc: true
 website:
   title: "tidywigits"
+  back-to-top-navigation: true
+  reader-mode: true
+  page-navigation: true
   navbar:
     left:
       - href: index.qmd
@@ -17,11 +21,10 @@ website:
         text: PURPLE
       - href: amber.qmd
         text: AMBER
-  sidebar:
-    style: "docked"
-    search: true
-    contents:
-      - index.qmd
-      - purple.qmd
-      - amber.qmd
-      # - bamtools.qmd
+#  sidebar:
+#    style: floating
+#    search: true
+#    contents:
+#      - index.qmd
+#      - purple.qmd
+#      - amber.qmd

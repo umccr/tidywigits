@@ -5,12 +5,13 @@ down_button <- function(d, nm) {
     output_name = nm,
     output_extension = ".csv",
     button_label = "CSV Download",
-    button_type = "primary"
+    button_type = "primary",
+    icon = "fa fa-download"
   )
 }
 
 #' @export
-view_tbl <- function(x, pagination = FALSE, ...) {
+reactable_wrap <- function(x, pagination = FALSE, id, ...) {
   reactable::reactable(
     x,
     sortable = TRUE,
@@ -21,9 +22,9 @@ view_tbl <- function(x, pagination = FALSE, ...) {
     striped = TRUE,
     highlight = TRUE,
     bordered = TRUE,
-    showSortable = TRUE,
     showPageSizeOptions = TRUE,
     showPagination = TRUE,
+    elementId = id,
     theme = reactable::reactableTheme(
       borderColor = "#dfe2e5",
       stripedColor = "#f8f9fa",
@@ -31,5 +32,50 @@ view_tbl <- function(x, pagination = FALSE, ...) {
       cellPadding = "12px 15px"
     ),
     ...
+  )
+}
+
+#' @export
+reactable_wrapdown <- function(x, descriptions, id = "table", ...) {
+  stopifnot(all(c("field", "description") == colnames(descriptions)))
+  field2desc <- tibble::deframe(descriptions)
+
+  # column formatting and tooltips
+  col_defs <- colnames(x) |>
+    purrr::map(function(col_name) {
+      col_def <- reactable::colDef(
+        name = gsub("_", " ", col_name),
+        header = function(value) {
+          # header tooltip
+          tooltip_text <- field2desc[[col_name]]
+          if (!is.null(tooltip_text)) {
+            htmltools::div(title = tooltip_text, style = "cursor: help;", value)
+          } else {
+            value
+          }
+        }
+      )
+
+      # numeric formatting
+      if (is.numeric(x[[col_name]])) {
+        col_def$format <- reactable::colFormat(separators = TRUE, digits = 2)
+      }
+      col_def
+    })
+  names(col_defs) <- names(x)
+  table <- reactable_wrap(x, columns = col_defs, id = id, ...)
+
+  dbutton <- htmltools::tags$button(
+    htmltools::tagList(fontawesome::fa("download"), "CSV Download"),
+    class = "btn btn-primary",
+    onclick = sprintf("Reactable.downloadDataCSV('%s', '%s.csv')", id, id),
+    style = "margin-top: 10px; margin-bottom: 5px;"
+  )
+
+  htmltools::browsable(
+    htmltools::tagList(
+      dbutton,
+      table
+    )
   )
 }
