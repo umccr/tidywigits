@@ -15,7 +15,7 @@ tidy:
     schema:
       latest:
         tbl1:
-          - field: 'chromosome'
+          - field: 'chrom'
             type: 'char'
             description: 'chromosome'
           - field: 'median_ratio'
@@ -30,7 +30,7 @@ tidy:
 #    schema:
 #      latest:
 #        tbl1:
-#          - field: 'chromosome'
+#          - field: 'chrom'
 #            type: 'char'
 #            description: 'chromosome'
 #          - field: 'position'

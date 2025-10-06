@@ -36,7 +36,7 @@ tidy:
     schema:
       latest:
         tbl1:
-          - field: 'chromosome'
+          - field: 'chrom'
             type: 'char'
           - field: 'position'
             type: 'float'
@@ -84,7 +84,7 @@ tidy:
         tbl1:
           - field: 'id'
             type: 'char'
-          - field: 'chromosome'
+          - field: 'chrom'
             type: 'char'
           - field: 'junc_position'
             type: 'float'
@@ -225,7 +225,7 @@ tidy:
             type: 'char'
           - field: 'type'
             type: 'char'
-          - field: 'chromosome'
+          - field: 'chrom'
             type: 'char'
           - field: 'position'
             type: 'float'

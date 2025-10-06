@@ -4,7 +4,7 @@ tidy:
     schema:
       latest:
         tbl1:
-        - field: 'chromosome'
+        - field: 'chrom'
           type: 'char'
           description: 'Chromosome of breakend'
         - field: 'position'

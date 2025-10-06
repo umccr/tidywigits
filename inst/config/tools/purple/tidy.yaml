@@ -4,7 +4,7 @@ tidy:
     schema:
       v4.0:
         tbl1:
-          - field: 'chromosome'
+          - field: 'chrom'
             type: 'char'
             description: 'chromosome of gene'
           - field: 'start'
@@ -73,7 +73,7 @@ tidy:
             description: 'count of cobalt windows covered by this segment'
       latest:
         tbl1:
-          - field: 'chromosome'
+          - field: 'chrom'
             type: 'char'
             description: 'chromosome of gene'
           - field: 'start'
@@ -149,7 +149,7 @@ tidy:
     schema:
       latest:
         tbl1:
-          - field: 'chromosome'
+          - field: 'chrom'
             type: 'char'
             description: 'chromosome of cn segment'
           - field: 'start'
@@ -215,7 +215,7 @@ tidy:
     schema:
       latest:
         tbl1:
-          - field: 'chromosome'
+          - field: 'chrom'
             type: 'char'
             description: 'chromosome of the gene'
           - field: 'chromosome_band'
@@ -274,7 +274,7 @@ tidy:
           - field: 'gene'
             type: 'char'
             description: 'name of gene as per Ensembl and HGNC'
-          - field: 'chromosome'
+          - field: 'chrom'
             type: 'char'
             description: 'chromosome of gene'
           - field: 'chromosome_band'
