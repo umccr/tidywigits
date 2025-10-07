@@ -1,9 +1,9 @@
 #' @export
-unnest_data <- function(d, x, schemas_all) {
+unnest_data <- function(d, tool_parser, schemas_all) {
   tp <- list(
-    tp = x,
-    t = strsplit(x, "_")[[1]][1],
-    p = strsplit(x, "_")[[1]][2]
+    tp = tool_parser,
+    t = strsplit(tool_parser, "_")[[1]][1],
+    p = strsplit(tool_parser, "_")[[1]][2]
   )
   res <- d |>
     dplyr::filter(tool_parser == tp$tp) |>

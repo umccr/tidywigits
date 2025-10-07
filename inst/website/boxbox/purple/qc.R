@@ -1,10 +1,7 @@
 box::use(wigits/utils, wigits/table)
 
 #' @export
-qc <- function(dat) {
-  stopifnot(all(c("data", "schemas") %in% names(dat)))
-  d <- dat$data |>
-    utils$unnest_data("purple_qc", schemas_all = dat$schemas)
+gt_tab <- function(d, schemas_all) {
   cols_sel <- c(
     "qc_status",
     "gender",
@@ -17,7 +14,7 @@ qc <- function(dat) {
     "germline_aberrations",
     "deleted_genes",
     "cn_segments",
-    "unsupported_cn_segments",
+    "cn_segments_unsupported",
     "foobar"
   )
   d1 <- d$res |>
@@ -44,13 +41,12 @@ qc <- function(dat) {
         description = "gender according to AMBER/COBALT"
       )
     )
-  # fmt: skip
   thresh <- tibble::tribble(
         ~field, ~threshold,
         "qc_status", "Green: PASS; Orange: WARN; Red: FAIL",
         "method", "Green: NORMAL; Orange: HIGHLY_DIPLOID or SOMATIC; Red: NO_TUMOR",
         "cn_segments", "No colour thresholds",
-        "unsupported_cn_segments", "Green: 0; Orange: 1-10; Red: >10",
+        "cn_segments_unsupported", "Green: 0; Orange: 1-10; Red: >10",
         "purity", "Green: 0.8-1.0; Orange: 0.25-0.80; Red: 0-0.25",
         "gender", "Green: matching values; Red: mismatched values",
         "deleted_genes", "Green: 0-99; Orange: 100-199; Red: >=200",
