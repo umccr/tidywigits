@@ -82,7 +82,7 @@ qc <- function(dat) {
       fns = function(x) {
         desc <- d3$description[match(x, d3$field)]
         sprintf(
-          '<span title="%s" style="cursor: help; border-bottom: 1px dotted #999;">%s</span>',
+          '<span title="%s" style="cursor: help;">%s</span>',
           desc,
           x
         )

@@ -112,7 +112,7 @@ d$res |>
   )
 ```
 
-#### Germline Deletions
+#### GermDels
 
 ```{r}
 #| label: purple_germdeltsv

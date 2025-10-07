@@ -14,6 +14,10 @@ down_button <- function(d, nm) {
 reactable_wrap <- function(x, pagination = FALSE, id, ...) {
   reactable::reactable(
     x,
+    defaultColDef = reactable::colDef(
+      format = reactable::colFormat(separators = TRUE),
+      minWidth = 70
+    ),
     sortable = TRUE,
     searchable = TRUE,
     pagination = pagination,
@@ -25,11 +29,15 @@ reactable_wrap <- function(x, pagination = FALSE, id, ...) {
     showPageSizeOptions = TRUE,
     showPagination = TRUE,
     elementId = id,
+    resizable = TRUE,
     theme = reactable::reactableTheme(
       borderColor = "#dfe2e5",
       stripedColor = "#f8f9fa",
       highlightColor = "#f0f5ff",
-      cellPadding = "12px 15px"
+      style = list(
+        fontFamily = "Monaco",
+        fontSize = "12px"
+      )
     ),
     ...
   )
@@ -40,6 +48,13 @@ reactable_wrapdown <- function(x, descriptions, id = "table", ...) {
   stopifnot(all(c("field", "description") == colnames(descriptions)))
   field2desc <- tibble::deframe(descriptions)
 
+  # note that tippy has been deprecated...
+  with_tooltip <- function(value, tooltip, ...) {
+    htmltools::div(
+      style = "cursor: help",
+      tippy::tippy(value, tooltip, ...)
+    )
+  }
   # column formatting and tooltips
   col_defs <- colnames(x) |>
     purrr::map(function(col_name) {
@@ -49,17 +64,12 @@ reactable_wrapdown <- function(x, descriptions, id = "table", ...) {
           # header tooltip
           tooltip_text <- field2desc[[col_name]]
           if (!is.null(tooltip_text)) {
-            htmltools::div(title = tooltip_text, style = "cursor: help;", value)
+            with_tooltip(value, tooltip_text, placement = "bottom", theme = "light")
           } else {
             value
           }
         }
       )
-
-      # numeric formatting
-      if (is.numeric(x[[col_name]])) {
-        col_def$format <- reactable::colFormat(separators = TRUE, digits = 2)
-      }
       col_def
     })
   names(col_defs) <- names(x)
