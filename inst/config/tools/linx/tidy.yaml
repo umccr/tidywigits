@@ -225,7 +225,7 @@ tidy:
           - field: 'chrom'
             type: 'char'
             description: 'Chromosome of gene'
-          - field: 'chromosome_band'
+          - field: 'chrom_band'
             type: 'char'
             description: 'Chromosome band of driver'
           - field: 'gene'

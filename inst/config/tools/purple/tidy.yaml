@@ -16,10 +16,10 @@ tidy:
           - field: 'gene'
             type: 'char'
             description: 'name of gene as per Ensembl and HGNC'
-          - field: 'min_cn'
+          - field: 'cn_min'
             type: 'float'
             description: 'minimum cn found in the gene exons'
-          - field: 'max_cn'
+          - field: 'cn_max'
             type: 'float'
             description: 'maximum cn found in the gene exons'
           - field: 'somatic_regions'
@@ -31,44 +31,44 @@ tidy:
           - field: 'is_canonical'
             type: 'char'
             description: 'is canonical'
-          - field: 'chromosome_band'
+          - field: 'chrom_band'
             type: 'char'
             description: 'chromosome band of the gene'
-          - field: 'min_regions'
+          - field: 'regions_min'
             type: 'float'
             description:
               'number of somatic regions inside the gene that share the min cn'
-          - field: 'min_region_start'
+          - field: 'start_region_min'
             type: 'float'
             description:
               'start base of the cn region overlapping the gene with the minimum
               cn'
-          - field: 'min_region_end'
+          - field: 'end_region_min'
             type: 'float'
             description:
               'end base of the cn region overlapping the gene with the minimum
               cn'
-          - field: 'min_region_start_support'
+          - field: 'start_region_min_support'
             type: 'char'
             description:
               'start support of the cn region overlapping the gene with the
               minimum cn'
-          - field: 'min_region_end_support'
+          - field: 'end_region_min_support'
             type: 'char'
             description:
               'end support of the cn region overlapping the gene with the
               minimum cn'
-          - field: 'min_region_method'
+          - field: 'region_min_method'
             type: 'char'
             description:
               'method used to determine cn of the cn region overlapping the gene
               with the minimum cn'
-          - field: 'min_minor_allele_cn'
+          - field: 'cn_minor_allele_min'
             type: 'float'
             description:
               'minimum allele cn found over the gene exons - useful for
               identifying LOH events'
-          - field: 'depth_window_count'
+          - field: 'window_count_depth'
             type: 'float'
             description: 'count of cobalt windows covered by this segment'
       latest:
@@ -85,10 +85,10 @@ tidy:
           - field: 'gene'
             type: 'char'
             description: 'name of gene as per Ensembl and HGNC'
-          - field: 'min_cn'
+          - field: 'cn_min'
             type: 'float'
             description: 'minimum cn found in the gene exons'
-          - field: 'max_cn'
+          - field: 'cn_max'
             type: 'float'
             description: 'maximum cn found in the gene exons'
           - field: 'somatic_regions'
@@ -100,44 +100,44 @@ tidy:
           - field: 'is_canonical'
             type: 'char'
             description: 'is canonical'
-          - field: 'chromosome_band'
+          - field: 'chrom_band'
             type: 'char'
             description: 'chromosome band of the gene'
-          - field: 'min_regions'
+          - field: 'regions_min'
             type: 'float'
             description:
               'number of somatic regions inside the gene that share the min cn'
-          - field: 'min_region_start'
+          - field: 'start_region_min'
             type: 'float'
             description:
               'start base of the cn region overlapping the gene with the minimum
               cn'
-          - field: 'min_region_end'
+          - field: 'end_region_min'
             type: 'float'
             description:
               'end base of the cn region overlapping the gene with the minimum
               cn'
-          - field: 'min_region_start_support'
+          - field: 'start_region_min_support'
             type: 'char'
             description:
               'start support of the cn region overlapping the gene with the
               minimum cn'
-          - field: 'min_region_end_support'
+          - field: 'end_region_min_support'
             type: 'char'
             description:
               'end support of the cn region overlapping the gene with the
               minimum cn'
-          - field: 'min_region_method'
+          - field: 'region_min_method'
             type: 'char'
             description:
               'method used to determine cn of the cn region overlapping the gene
               with the minimum cn'
-          - field: 'min_minor_allele_cn'
+          - field: 'cn_minor_allele_min'
             type: 'float'
             description:
               'minimum allele cn found over the gene exons - useful for
               identifying LOH events'
-          - field: 'depth_window_count'
+          - field: 'window_count_depth'
             type: 'float'
             description: 'count of cobalt windows covered by this segment'
           - field: 'gc_content'
@@ -165,7 +165,7 @@ tidy:
           - field: 'baf_count'
             type: 'float'
             description: 'count of amber baf points covered by this segment'
-          - field: 'observed_baf'
+          - field: 'baf_observed'
             type: 'float'
             description:
               'combined reference and tumor BAF in tumor sample unadjusted for
@@ -173,12 +173,12 @@ tidy:
           - field: 'baf'
             type: 'float'
             description: 'tumor BAF after adjusted for purity and ploidy'
-          - field: 'segment_start_support'
+          - field: 'start_segment_support'
             type: 'char'
             description:
               'type of structural variant support for the cn breakpoint at start
               of region'
-          - field: 'segment_end_support'
+          - field: 'end_segment_support'
             type: 'char'
             description:
               'type of structural variant support for the cn breakpoint at end
@@ -186,26 +186,26 @@ tidy:
           - field: 'method'
             type: 'char'
             description: 'method used to determine the cn of the region'
-          - field: 'depth_window_count'
+          - field: 'window_count_depth'
             type: 'float'
             description: 'count of cobalt windows covered by this segment'
           - field: 'gc_content'
             type: 'float'
             description: 'proportion of segment that is G or C'
-          - field: 'min_start'
+          - field: 'start_min'
             type: 'float'
             description:
               'minimum start location of this segment if there is any
               uncertainty'
-          - field: 'max_start'
+          - field: 'start_max'
             type: 'float'
             description:
               'maximum start location of this segment if there is any
               uncertainty'
-          - field: 'minor_allele_cn'
+          - field: 'cn_minor_allele'
             type: 'float'
             description: 'cn of minor allele adjusted for purity'
-          - field: 'major_allele_cn'
+          - field: 'cn_major_allele'
             type: 'float'
             description: 'cn of major allele adjusted for purity'
   drivercatalog:
@@ -218,7 +218,7 @@ tidy:
           - field: 'chrom'
             type: 'char'
             description: 'chromosome of the gene'
-          - field: 'chromosome_band'
+          - field: 'chrom_band'
             type: 'char'
             description: 'chromosome band of driver'
           - field: 'gene'
@@ -260,10 +260,10 @@ tidy:
           - field: 'biallelic'
             type: 'char'
             description: 'true if any variants in the gene are biallelic'
-          - field: 'min_cn'
+          - field: 'cn_min'
             type: 'float'
             description: 'minimum cn found in the gene exons'
-          - field: 'max_cn'
+          - field: 'cn_max'
             type: 'float'
             description: 'maximum cn found in the gene exons'
   germdeltsv:
@@ -277,37 +277,37 @@ tidy:
           - field: 'chrom'
             type: 'char'
             description: 'chromosome of gene'
-          - field: 'chromosome_band'
+          - field: 'chrom_band'
             type: 'char'
             description: 'chromosome band of gene'
-          - field: 'region_start'
+          - field: 'start_region'
             type: 'float'
             description: 'start base of deletion'
-          - field: 'region_end'
+          - field: 'end_region'
             type: 'float'
             description: 'end base of deletion'
-          - field: 'depth_window_count'
+          - field: 'window_count_depth'
             type: 'float'
             description: 'count of cobalt windows covered by this segment'
-          - field: 'exon_start'
+          - field: 'start_exon'
             type: 'float'
             description: 'start base of deletion'
-          - field: 'exon_end'
+          - field: 'end_exon'
             type: 'float'
             description: 'end base of deletion'
           - field: 'detection_method'
             type: 'char'
             description: 'method used to determine the cn of the region'
-          - field: 'germline_status'
+          - field: 'status_germline'
             type: 'char'
             description: 'germline status of the deletion'
-          - field: 'tumor_status'
+          - field: 'status_tumor'
             type: 'char'
             description: 'tumor status of the deletion'
-          - field: 'germline_cn'
+          - field: 'cn_germline'
             type: 'float'
             description: 'germline cn of the deletion'
-          - field: 'tumor_cn'
+          - field: 'cn_tumor'
             type: 'float'
             description: 'tumor cn of the deletion'
           - field: 'filter'
@@ -381,22 +381,22 @@ tidy:
             description:
               'proportion of copy number regions that are more than 0.25 from a
               whole cn'
-          - field: 'min_purity'
+          - field: 'purity_min'
             type: 'float'
             description: 'minimum purity with score within 10% of best'
-          - field: 'max_purity'
+          - field: 'purity_max'
             type: 'float'
             description: 'maximum purity with score within 10% of best'
-          - field: 'min_ploidy'
+          - field: 'ploidy_min'
             type: 'float'
             description: 'minimum ploidy with score within 10% of best'
-          - field: 'max_ploidy'
+          - field: 'ploidy_max'
             type: 'float'
             description: 'maximum ploidy with score within 10% of best'
-          - field: 'min_diploid_proportion'
+          - field: 'diploid_proportion_min'
             type: 'float'
             description: 'min estimation for diploid proportion'
-          - field: 'max_diploid_proportion'
+          - field: 'diploid_proportion_max'
             type: 'float'
             description: 'max estimation for diploid proportion'
           - field: 'somatic_penalty'
@@ -434,7 +434,7 @@ tidy:
             description:
               'tumor mutational burden status (high, low or unknown if somatic
               variants not supplied)'
-          - field: 'sv_tumor_mutational_burden'
+          - field: 'tmb_sv'
             type: 'float'
             description:
               'total number of non inferred, non single passing structural
@@ -463,7 +463,7 @@ tidy:
           - field: 'cn_segments'
             type: 'int'
             description: 'total number of cn segments in sample'
-          - field: 'unsupported_cn_segments'
+          - field: 'cn_segments_unsupported'
             type: 'int'
             description:
               'count of cn segments with no SV support on either side. A high
@@ -509,7 +509,7 @@ tidy:
           - field: 'cn_segments'
             type: 'int'
             description: 'total number of cn segments in sample'
-          - field: 'unsupported_cn_segments'
+          - field: 'cn_segments_unsupported'
             type: 'int'
             description:
               'count of cn segments with no SV support on either side. A high
