@@ -1,5 +1,6 @@
 #' @export
 unnest_data <- function(d, tool_parser, schemas_all) {
+  box::use(./utils)
   tp <- list(
     tp = tool_parser,
     t = strsplit(tool_parser, "_")[[1]][1],
@@ -12,7 +13,7 @@ unnest_data <- function(d, tool_parser, schemas_all) {
     dplyr::select("data") |>
     _$data[[1]]
   version <- nemo::get_tbl_version_attr(res)
-  schema <- get_schema(x = schemas_all, tl = tp$t, nm = tp$p, v = version)
+  schema <- utils$get_schema(x = schemas_all, tl = tp$t, nm = tp$p, v = version)
   list(res = res, schema = schema)
 }
 

@@ -19,15 +19,15 @@ execute:
 box_path <- here::here("inst/website/boxbox")
 options(box.path = box_path)
 box::use(
-  wigits/plot,
-  wigits/utils,
-  purple/qc
+  wigits/plot[cat_plot],
+  wigits/utils[get_data, unnest_data],
+  ppl_qc = purple/qc
 )
 ```
 
 ```{r}
 #| label: data_setup
-dat <- utils$get_data()
+dat <- get_data()
 ```
 
 ```{r}
@@ -44,8 +44,8 @@ p <- dat$ppl_plots |>
 ```{r}
 #| label: purple_plots_circos
 #| results: asis
-plot$cat_plot(p, "circos_baf_ar", group = "ppl_circos")
-plot$cat_plot(p, "circos_snv_indel_cn_sv", group = "ppl_circos")
+cat_plot(p, "circos_baf_ar", group = "ppl_circos")
+cat_plot(p, "circos_snv_indel_cn_sv", group = "ppl_circos")
 ```
 
 :::
@@ -56,6 +56,6 @@ plot$cat_plot(p, "circos_snv_indel_cn_sv", group = "ppl_circos")
 #| label: purple_qc
 #| classes: plain
 d <- dat$data |>
-  utils$unnest_data("purple_qc", schemas_all = dat$schemas)
-qc$gt_tab(d, dat$schemas)
+  unnest_data("purple_qc", schemas_all = dat$schemas)
+ppl_qc$gt_tab(d, dat$schemas)
 ```

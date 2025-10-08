@@ -1,6 +1,6 @@
 #' @export
 unnest_data_drivercatalog <- function(d, schemas_all, get_germline = FALSE) {
-  box::use(wigits/utils[get_schema])
+  box::use(../wigits/utils)
   x <- "purple_drivercatalog"
   tp <- list(
     tp = x,
@@ -14,7 +14,7 @@ unnest_data_drivercatalog <- function(d, schemas_all, get_germline = FALSE) {
     tidyr::unnest("tidy") |>
     dplyr::select("data", "germline_file")
   version <- nemo::get_tbl_version_attr(res[["data"]][[1]])
-  schema <- get_schema(x = schemas_all, tl = tp$t, nm = tp$p, v = version)
+  schema <- utils$get_schema(x = schemas_all, tl = tp$t, nm = tp$p, v = version)
   res <- res |>
     dplyr::filter(.data$germline_file == get_germline) |>
     dplyr::select(-"germline_file") |>

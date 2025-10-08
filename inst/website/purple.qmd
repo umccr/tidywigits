@@ -20,16 +20,39 @@ box_path <- here::here("inst/website/boxbox")
 options(box.path = box_path)
 box::use(
   wigits/plot[cat_plot],
-  wigits/utils,
+  wigits/utils[get_data, unnest_data],
   wigits/table[reactable_wrapdown],
+  ppl_purity = purple/purity,
+  ppl_qc = purple/qc,
   ppl_utils = purple/utils
 )
 ```
 
 ```{r}
 #| label: data_setup
-dat <- utils$get_data()
+dat <- get_data()
 ```
+
+## QC
+
+```{r}
+#| label: purple_qc
+#| #classes: plain
+#| html-table-processing: none
+#| layout-nrow: 1
+tbl_nm <- "purple_qc"
+d <- dat$data |>
+  unnest_data(tbl_nm, schemas_all = dat$schemas)
+qc_tab <- ppl_qc$gt_tab(d, dat$schemas)
+
+tbl_nm <- "purple_puritytsv"
+d <- dat$data |>
+  unnest_data(tbl_nm, schemas_all = dat$schemas)
+purity_tab <- ppl_purity$gt_tab(d, dat$schemas)
+qc_tab
+purity_tab
+```
+
 
 ```{r}
 #| label: purple_plotprep
@@ -56,7 +79,6 @@ cat_plot(p, "rainfall", group = "ppl_other")
 
 :::
 
-## Data
 
 ```{r}
 #| label: count_rows
@@ -70,18 +92,19 @@ dat$data |>
   print(n = 30)
 ```
 
-### Copy Number Alterations
+
+## Copy Number Alterations
 
 ::: {.panel-tabset .nav-pills}
 
-#### Genes
+### Genes
 
 ```{r}
 #| label: purple_cnvgenetsv
 #| column: screen-inset
 tbl_nm <- "purple_cnvgenetsv"
 d <- dat$data |>
-  utils$unnest_data(tbl_nm, schemas_all = dat$schemas)
+  unnest_data(tbl_nm, schemas_all = dat$schemas)
 #  just keep a subset of genes for display
 # https://raw.githubusercontent.com/umccr/gene_panels/v24.03.0/somatic_panel/3_final_panel/final_panel.tsv
 genes <- system.file("website/boxbox/purple/genes.tsv", package = "tidywigits") |>
@@ -96,14 +119,14 @@ d$res |>
   )
 ```
 
-#### Segments
+### Segments
 
 ```{r}
 #| label: purple_cnvsomtsv
 #| column: screen-inset
 tbl_nm <- "purple_cnvsomtsv"
 d <- dat$data |>
-  utils$unnest_data(tbl_nm, schemas_all = dat$schemas)
+  unnest_data(tbl_nm, schemas_all = dat$schemas)
 d$res |>
   reactable_wrapdown(
     descriptions = d$schema$schema[c("field", "description")],
@@ -112,25 +135,7 @@ d$res |>
   )
 ```
 
-#### GermDels
-
-```{r}
-#| label: purple_germdeltsv
-#| column: screen-inset
-tbl_nm <- "purple_germdeltsv"
-d <- dat$data |>
-  utils$unnest_data(tbl_nm, schemas_all = dat$schemas)
-d$res |>
-  reactable_wrapdown(
-    descriptions = d$schema$schema[c("field", "description")],
-    id = tbl_nm,
-    pagination = TRUE
-  )
-```
-
-:::
-
-### Driver Catalogs
+### Drivers
 
 ```{r}
 #| label: purple_drivercatalog_prep
@@ -138,7 +143,7 @@ tbl_nm <- "purple_drivercatalog"
 d <- dat$data
 ```
 
-::: {.panel-tabset .nav-pills}
+:::: {.panel-tabset .nav-pills}
 
 #### Somatic
 
@@ -166,6 +171,24 @@ d_germ$res |>
   reactable_wrapdown(
     descriptions = d_germ$schema$schema[c("field", "description")],
     id = paste0(tbl_nm, "_germline"),
+    pagination = TRUE
+  )
+```
+
+::::
+
+### GermDels
+
+```{r}
+#| label: purple_germdeltsv
+#| column: screen-inset
+tbl_nm <- "purple_germdeltsv"
+d <- dat$data |>
+  unnest_data(tbl_nm, schemas_all = dat$schemas)
+d$res |>
+  reactable_wrapdown(
+    descriptions = d$schema$schema[c("field", "description")],
+    id = tbl_nm,
     pagination = TRUE
   )
 ```

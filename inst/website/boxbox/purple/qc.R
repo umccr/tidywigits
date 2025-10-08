@@ -1,7 +1,7 @@
-box::use(wigits/utils, wigits/table)
-
 #' @export
 gt_tab <- function(d, schemas_all) {
+  box::use(../wigits/table, ./qc)
+  stopifnot(all(c("res", "schema") %in% names(d)))
   cols_sel <- c(
     "qc_status",
     "gender",
@@ -32,7 +32,7 @@ gt_tab <- function(d, schemas_all) {
       dplyr::everything()
     ) |>
     tidyr::pivot_longer(dplyr::everything(), names_to = "field") |>
-    dplyr::mutate(fill_colour = purrr::map2_chr(field, value, get_fill_colour))
+    dplyr::mutate(fill_colour = purrr::map2_chr(field, value, qc$get_fill_colour))
   d2 <- d$schema$schema |>
     dplyr::bind_rows(
       tibble::tibble(
@@ -47,7 +47,7 @@ gt_tab <- function(d, schemas_all) {
         "method", "Green: NORMAL; Orange: HIGHLY_DIPLOID or SOMATIC; Red: NO_TUMOR",
         "cn_segments", "No colour thresholds",
         "cn_segments_unsupported", "Green: 0; Orange: 1-10; Red: >10",
-        "purity", "Green: 0.8-1.0; Orange: 0.25-0.80; Red: 0-0.25",
+        "purity", "Green: >0.8; Orange: 0.4-0.8; Red: <0.4",
         "gender", "Green: matching values; Red: mismatched values",
         "deleted_genes", "Green: 0-99; Orange: 100-199; Red: >=200",
         "contamination", "Green: 0; Red: >0",
@@ -90,15 +90,19 @@ gt_tab <- function(d, schemas_all) {
       locations = list(gt::cells_body(columns = c("field", "value")))
     ) |>
     gt::cols_align("left") |>
+    # gt::cols_width(
+    #   field ~ gt::pct(50),
+    #   description ~ gt::pct(50)
+    # ) |>
     gt::tab_options(
-      table.width = gt::px(700),
+      table.width = gt::pct(50),
       table.align = "left",
       column_labels.hidden = TRUE
     ) |>
+    gt::opt_stylize(style = 1, color = "gray") |>
     gt::tab_source_note(down)
   return(tab)
 }
-
 
 #' @export
 get_fill_colour <- function(field, value) {
@@ -112,58 +116,49 @@ get_fill_colour <- function(field, value) {
   colour <- dplyr::case_when(
     field == "qc_status" & value == "PASS" ~ green,
     field == "qc_status" & grepl("WARN", value) ~ orange,
-    field == "qc_status" & grepl("FAIL", value) ~ red,
     field == "qc_status" ~ red,
 
     field == "method" & value == "NORMAL" ~ green,
     field == "method" & value %in% c("HIGHLY_DIPLOID", "SOMATIC") ~ orange,
-    field == "method" & value == "NO_TUMOR" ~ red,
     field == "method" ~ red,
 
-    field == "unsupported_cn_segments" & num_val == 0 ~ green,
-    field == "unsupported_cn_segments" & num_val > 0 & num_val <= 10 ~ orange,
-    field == "unsupported_cn_segments" & num_val > 10 ~ red,
-    field == "unsupported_cn_segments" ~ red,
+    field == "cn_segments_unsupported" & num_val == 0 ~ green,
+    field == "cn_segments_unsupported" & num_val > 0 & num_val <= 10 ~ orange,
+    field == "cn_segments_unsupported" ~ red,
 
     field == "cn_segments" & num_val > 0 ~ green,
     field == "cn_segments" ~ red,
 
-    field == "purity" & num_val >= 0.8 & num_val <= 1 ~ green,
-    field == "purity" & num_val >= 0.25 & num_val < 0.8 ~ orange,
-    field == "purity" & num_val >= 0 & num_val < 0.25 ~ red,
+    field == "purity" & num_val >= 0.80 ~ green,
+    field == "purity" & num_val >= 0.40 ~ orange,
     field == "purity" ~ red,
 
     # consolidated gender field
     field == "gender" & !grepl("/", value) ~ green,
     field == "gender" & grepl("/", value) ~ red,
 
-    field == "deleted_genes" & num_val >= 0 & num_val < 100 ~ green,
-    field == "deleted_genes" & num_val >= 100 & num_val < 200 ~ orange,
-    field == "deleted_genes" & num_val >= 200 ~ red,
+    field == "deleted_genes" & num_val < 100 ~ green,
+    field == "deleted_genes" & num_val < 200 ~ orange,
     field == "deleted_genes" ~ red,
 
     field == "contamination" & num_val == 0 ~ green,
-    field == "contamination" & num_val > 0 ~ red,
     field == "contamination" ~ red,
 
     field == "germline_aberrations" & value == "NONE" ~ green,
-    field == "germline_aberrations" & value != "NONE" ~ red,
+    field == "germline_aberrations" ~ red,
 
-    field == "mean_depth_amber" & num_val > 0 & num_val < 25 ~ red,
     field == "mean_depth_amber" & num_val >= 25 & num_val <= 150 ~ green,
     field == "mean_depth_amber" & num_val > 150 ~ orange,
     field == "mean_depth_amber" ~ red,
 
-    field == "loh_percent" & num_val > 0 & num_val < 0.5 ~ green,
-    field == "loh_percent" & num_val >= 0.5 & num_val <= 0.8 ~ orange,
-    field == "loh_percent" & num_val > 0.8 ~ red,
+    field == "loh_percent" & num_val <= 0.5 ~ green,
+    field == "loh_percent" & num_val <= 0.8 ~ orange,
     field == "loh_percent" ~ red,
 
     field == "tinc_level" & num_val == 0 ~ green,
-    field == "tinc_level" & num_val > 0 ~ red,
+    field == "tinc_level" ~ red,
 
     field == "chimerism_percent" & num_val == 0 ~ green,
-    field == "chimerism_percent" & num_val > 0 ~ red,
     field == "chimerism_percent" ~ red,
 
     .default = "white"

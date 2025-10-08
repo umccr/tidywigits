@@ -5,8 +5,9 @@ down_button <- function(d, nm) {
     output_name = nm,
     output_extension = ".csv",
     button_label = "CSV Download",
-    button_type = "primary",
-    icon = "fa fa-download"
+    button_type = "default",
+    has_icon = TRUE,
+    icon = "fa fa-save"
   )
 }
 
@@ -45,6 +46,7 @@ reactable_wrap <- function(x, pagination = FALSE, id, ...) {
 
 #' @export
 reactable_wrapdown <- function(x, descriptions, id = "table", ...) {
+  box::use(./table)
   stopifnot(all(c("field", "description") == colnames(descriptions)))
   field2desc <- tibble::deframe(descriptions)
 
@@ -73,11 +75,11 @@ reactable_wrapdown <- function(x, descriptions, id = "table", ...) {
       col_def
     })
   names(col_defs) <- names(x)
-  table <- reactable_wrap(x, columns = col_defs, id = id, ...)
+  table <- table$reactable_wrap(x, columns = col_defs, id = id, ...)
 
   dbutton <- htmltools::tags$button(
     htmltools::tagList(fontawesome::fa("download"), "CSV Download"),
-    class = "btn btn-primary",
+    class = "btn btn-secondary btn-sm",
     onclick = sprintf("Reactable.downloadDataCSV('%s', '%s.csv')", id, id),
     style = "margin-top: 10px; margin-bottom: 5px;"
   )
