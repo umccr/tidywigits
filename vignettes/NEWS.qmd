@@ -56,6 +56,8 @@ pr <- function(n) {
 - Bamtools: support gene/exon coverage files (`r pr(151)`, `r iss(149)`)
 - Add Neo support (`r pr(152)`, `r iss(144)`)
 - Add Peach support (`r pr(153)`, `r iss(145)`)
+- Add Cider support (`r pr(155)`, `r iss(147)`)
+- Add Teal support (`r pr(154)`, `r iss(146)`)
 
 ## v0.0.5 (2025-09-07)
 

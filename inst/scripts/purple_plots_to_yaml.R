@@ -4,12 +4,12 @@ png_descriptions <- list(
     description = paste(
       "A. Chromosomes (1-22, X, Y). Darker shaded areas: gaps in reference genome (centromeres, heterochromatin & missing short arms).",
       "B. Somatic variants (incl. exon, intron and intergenic regions) divided into SNP AF points (coloured according to base change type (e.g. C>T/G>A in red)),",
-      "and an inner ring of insertion (yellow) and deletion (red) locations.",
+      "and an inner ring of insertion (<span style=\"color:#e6e600\">yellow</span>) and deletion (<span style=\"color:red\">red</span>) locations.",
       "C. Copy number changes (tumor purity-adjusted), including both focal and chromosomal somatic events.",
-      "CN < 2: red; CN > 2: green. Scale ranges from 0 (complete loss) to 6 (high level gains). If CN > 6, shown as 6 with a green dot on the outermost green gridline.",
-      "D. Minor allele copy number (MAP) across the chromosome (range: 0-3), with expected normal MAP = 1. For MAP < 1: loss (orange), representing LOH event.",
-      "For MAP > 1: amplification (blue) events of both A and B alleles at the indicated locations.",
-      "E. Innermost circle displays SVs within or between the chromosomes. Translocations: blue; Deletions: red; Insertions: yellow; Tandem Duplications: green; Inversions: black."
+      "CN < 2: <span style=\"color:red\">red</span>; CN > 2: <span style=\"color:#32CD32\">green</span>. Scale ranges from 0 (complete loss) to 6 (high level gains). If CN > 6, shown as 6 with a green dot on the outermost green gridline.",
+      "D. Minor allele copy number (MAP) across the chromosome (range: 0-3), with expected normal MAP = 1. For MAP < 1: loss (<span style=\"color:#EE7600\">orange</span>), representing LOH event.",
+      "For MAP > 1: amplification (<span style=\"color:#7EC0EE\">blue</span>) events of both A and B alleles at the indicated locations.",
+      "E. Innermost circle displays SVs within or between the chromosomes. Translocations: <span style=\"color:#7EC0EE\">blue</span>; Deletions: <span style=\"color:red\">red</span>; Insertions: <span style=\"color:#e6e600\">yellow</span>; Tandem Duplications: <span style=\"color:#32CD32\">green</span>; Inversions: <span style=\"color:#000000\">black</span>."
     ),
     pattern = ".*\\.circos\\.png$"
   ),
@@ -17,7 +17,7 @@ png_descriptions <- list(
     title = "Circos with BAF points and TN allele ratios.",
     description = paste(
       "A. Chromosomes (1-22, X, Y). Darker shaded areas: gaps in reference genome (centromeres, heterochromatin & missing short arms).",
-      "B. Tumor (blue) and Normal (green) allele ratios",
+      "B. Tumor (<span style=\"color:#7EC0EE\">blue</span>) and Normal (<span style=\"color:#32CD32\">green</span>) allele ratios",
       "C. Beta Allele Frequency (allele frequencies of heterozygous SNPs that are common in germline samples)."
     ),
     pattern = ".*\\.input\\.png$"

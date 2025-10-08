@@ -3,6 +3,7 @@ title: "Summary"
 lightbox:
   match: auto
   effect: fade
+  desc-position: right
 execute: 
   echo: false
 ---
