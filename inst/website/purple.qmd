@@ -22,7 +22,7 @@ options(box.path = box_path)
 box::use(
   wigits/plot[cat_plot],
   wigits/utils[get_data, unnest_data],
-  wigits/table[reactable_wrapdown],
+  wigits/table[reactable_wrapdown, gt_tab],
   ppl_purity = purple/purity,
   ppl_qc = purple/qc,
   ppl_utils = purple/utils

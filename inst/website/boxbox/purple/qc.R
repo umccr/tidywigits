@@ -1,5 +1,5 @@
 #' @export
-gt_tab <- function(d, schemas_all) {
+gt_tab_prep <- function(d, schemas_all) {
   box::use(../wigits/table, ./qc)
   stopifnot(all(c("res", "schema") %in% names(d)))
   cols_sel <- c(
@@ -33,7 +33,7 @@ gt_tab <- function(d, schemas_all) {
     ) |>
     tidyr::pivot_longer(dplyr::everything(), names_to = "field") |>
     dplyr::mutate(fill_colour = purrr::map2_chr(field, value, qc$get_fill_colour))
-  d2 <- d$schema$schema |>
+  descriptions <- d$schema$schema |>
     dplyr::bind_rows(
       tibble::tibble(
         field = "gender",
@@ -57,51 +57,18 @@ gt_tab <- function(d, schemas_all) {
         "tinc_level", "Green: 0; Red: >0",
         "chimerism_percent", "Green: 0; Red: >0"
       )
-  d3 <- dplyr::left_join(d1, d2, by = "field") |>
+  d1 |>
+    dplyr::left_join(descriptions, by = "field") |>
     dplyr::select("field", "value", "fill_colour", "description") |>
     dplyr::left_join(thresh, by = "field") |>
     tidyr::unite("description", c("description", "threshold"), sep = "\n")
-  down <- table$down_button(d3, "purple_qc")
-  tab <- d3 |>
-    gt::gt() |>
-    gt::cols_label(value = "Value", description = "Description") |>
-    # not needed
-    gt::cols_hide(columns = c("fill_colour", "description")) |>
-    # value colour fill
-    gt::tab_style(
-      style = gt::cell_fill(color = gt::from_column("fill_colour")),
-      locations = gt::cells_body(columns = value)
-    ) |>
-    # field name with hover description
-    gt::fmt(
-      columns = field,
-      fns = function(x) {
-        desc <- d3$description[match(x, d3$field)]
-        sprintf(
-          '<span title="%s" style="cursor: help;">%s</span>',
-          desc,
-          x
-        )
-      }
-    ) |>
-    # bold field and value text
-    gt::tab_style(
-      style = list(gt::cell_text(weight = "bold")),
-      locations = list(gt::cells_body(columns = c("field", "value")))
-    ) |>
-    gt::cols_align("left") |>
-    # gt::cols_width(
-    #   field ~ gt::pct(50),
-    #   description ~ gt::pct(50)
-    # ) |>
-    gt::tab_options(
-      table.width = gt::pct(50),
-      table.align = "left",
-      column_labels.hidden = TRUE
-    ) |>
-    gt::opt_stylize(style = 1, color = "gray") |>
-    gt::tab_source_note(down)
-  return(tab)
+}
+
+#' @export
+gt_tab <- function(d, schemas_all) {
+  box::use(../wigits/table, ./qc)
+  qc$gt_tab_prep(d, schemas_all) |>
+    table$gt_tab("purple_qc")
 }
 
 #' @export

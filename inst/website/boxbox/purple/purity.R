@@ -1,5 +1,5 @@
 #' @export
-gt_tab <- function(d, schemas_all) {
+gt_tab_prep <- function(d, schemas_all) {
   box::use(../wigits/table, ./purity)
   stopifnot(all(c("res", "schema") %in% names(d)))
   x1 <- list(
@@ -35,16 +35,17 @@ gt_tab <- function(d, schemas_all) {
     )
   )
   d0 <- d$res |>
-    as.data.frame() |> # TODO!!!!!!!!!!!!!!!!!!!!!!!!!
     dplyr::mutate(dplyr::across(
-      dplyr::starts_with(c(
-        "purity",
-        "ploidy",
-        "diploid_proportion",
-        "polyclonal_proportion",
-        "tmb_per_mb",
-        "ms_indels_per_mb"
-      )),
+      dplyr::starts_with(
+        c(
+          "purity",
+          "ploidy",
+          "diploid_proportion",
+          "polyclonal_proportion",
+          "tmb_per_mb",
+          "ms_indels_per_mb"
+        )
+      ),
       \(x) round(x, 2)
     )) |>
     dplyr::mutate(
@@ -107,53 +108,19 @@ gt_tab <- function(d, schemas_all) {
         "run_mode", "Green: TUMOR_GERMLINE; Blue: other",
         "targeted", "Green: false; Blue: true"
       )
-  d2 <- d1 |>
+  d1 |>
     dplyr::left_join(description1, by = "field") |>
     dplyr::mutate(field = sub("_str$", "", .data$field)) |>
     dplyr::select("field", "value", "fill_colour", "description") |>
     dplyr::left_join(thresh, by = "field") |>
     tidyr::unite("description", c("description", "threshold"), sep = "\n")
-  down <- table$down_button(d2, "purple_purity")
-  tab <- d2 |>
-    gt::gt() |>
-    gt::cols_label(value = "Value", description = "Description") |>
-    # not needed
-    gt::cols_hide(columns = c("fill_colour", "description")) |>
-    # value colour fill
-    gt::tab_style(
-      style = gt::cell_fill(color = gt::from_column("fill_colour")),
-      locations = gt::cells_body(columns = "value")
-    ) |>
-    # field name with hover description
-    gt::fmt(
-      columns = field,
-      fns = function(x) {
-        desc <- d2$description[match(x, d2$field)]
-        sprintf(
-          '<span title="%s" style="cursor: help;">%s</span>',
-          desc,
-          x
-        )
-      }
-    ) |>
-    # bold field and value text
-    gt::tab_style(
-      style = list(gt::cell_text(weight = "bold")),
-      locations = list(gt::cells_body(columns = c("field", "value")))
-    ) |>
-    gt::cols_align("left") |>
-    # gt::cols_width(
-    #   field ~ gt::pct(50),
-    #   description ~ gt::pct(50)
-    # ) |>
-    gt::tab_options(
-      table.width = gt::pct(50),
-      table.align = "left",
-      column_labels.hidden = TRUE
-    ) |>
-    gt::opt_stylize(style = 1, color = "gray") |>
-    gt::tab_source_note(down)
-  return(tab)
+}
+
+#' @export
+gt_tab <- function(d, schemas_all) {
+  box::use(../wigits/table, ./purity)
+  purity$gt_tab_prep(d, schemas_all) |>
+    table$gt_tab("purple_purity")
 }
 
 #' @export
