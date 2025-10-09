@@ -17,3 +17,6 @@ build:
 
 web-preview:
 	@quarto preview inst/website/index.qmd --port 4242 --no-browser --no-watch-inputs --output-dir nogit/website-tmp --embed-resources
+
+web-render:
+	@quarto render inst/website/

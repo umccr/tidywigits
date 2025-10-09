@@ -17,7 +17,7 @@ gt_tab_prep <- function(d, schemas_all) {
       "status",
       "run_mode",
       "targeted",
-      "score",
+      "fit_score",
       "norm_factor",
       "somatic_penalty"
     ),
@@ -101,7 +101,7 @@ gt_tab_prep <- function(d, schemas_all) {
         "whole_genome_duplication", "Green: false; Orange: true",
         "tmb_sv", "Green: 0-500; Orange: 500-1000; Red: >1000",
         "status", "Green: NORMAL; Red: SOMATIC or NO_TUMOR",
-        "score", "Green: 0-0.8; Orange: 0.8-1.0; Red: >1.0",
+        "fit_score", "Green: 0-0.8; Orange: 0.8-1.0; Red: >1.0",
         "norm_factor", "No colour thresholds",
         "somatic_penalty", "Green: 0; Red: >0",
         "method", "Green: NORMAL; Orange: HIGHLY_DIPLOID or SOMATIC; Red: NO_TUMOR",
@@ -118,9 +118,9 @@ gt_tab_prep <- function(d, schemas_all) {
 
 #' @export
 gt_tab <- function(d, schemas_all) {
-  box::use(../wigits/table, ./purity)
-  purity$gt_tab_prep(d, schemas_all) |>
-    table$gt_tab("purple_purity")
+  box::use(../wigits/table[gt_tab], ./purity[gt_tab_prep])
+  gt_tab_prep(d, schemas_all) |>
+    gt_tab("purple_purity")
 }
 
 #' @export
@@ -175,9 +175,9 @@ get_fill_colour <- function(field, value) {
     field == "status" & value == "NORMAL" ~ green,
     field == "status" ~ red,
 
-    field == "score" & num_val <= 0.8 ~ green,
-    field == "score" & num_val <= 1.0 ~ orange,
-    field == "score" ~ red,
+    field == "fit_score" & num_val <= 0.8 ~ green,
+    field == "fit_score" & num_val <= 1.0 ~ orange,
+    field == "fit_score" ~ red,
 
     field == "norm_factor" ~ green,
 

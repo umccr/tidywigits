@@ -358,7 +358,7 @@ tidy:
           - field: 'norm_factor'
             type: 'float'
             description: 'internal factor to convert tumor ratio to cn.'
-          - field: 'score'
+          - field: 'fit_score'
             type: 'float'
             description: 'score of fit (lower is better)'
           - field: 'diploid_proportion'
