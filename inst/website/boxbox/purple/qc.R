@@ -1,6 +1,6 @@
 #' @export
 gt_tab_prep <- function(d, schemas_all) {
-  box::use(../wigits/table, ./qc)
+  box::use(./qc[get_fill_colour])
   stopifnot(all(c("res", "schema") %in% names(d)))
   cols_sel <- c(
     "qc_status",
@@ -32,7 +32,7 @@ gt_tab_prep <- function(d, schemas_all) {
       dplyr::everything()
     ) |>
     tidyr::pivot_longer(dplyr::everything(), names_to = "field") |>
-    dplyr::mutate(fill_colour = purrr::map2_chr(field, value, qc$get_fill_colour))
+    dplyr::mutate(fill_colour = purrr::map2_chr(field, value, get_fill_colour))
   descriptions <- d$schema$schema |>
     dplyr::bind_rows(
       tibble::tibble(

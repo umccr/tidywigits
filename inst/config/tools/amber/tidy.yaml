@@ -120,7 +120,7 @@ tidy:
     schema:
       latest:
         tbl1:
-          - field: 'qcstatus'
+          - field: 'qc_status'
             type: 'char'
             description: 'QC status'
           - field: 'contamination'

@@ -1,0 +1,56 @@
+---
+title: "AMBER"
+lightbox:
+  match: auto
+  effect: fade
+  desc-position: right
+execute: 
+  echo: false
+---
+
+
+```{r}
+#| label: pkg_load
+#| warning: false
+#| message: false
+{
+  use("dplyr")
+  use("tibble", "tibble")
+}
+# box_path <- system.file("website/boxbox", package = "tidywigits")
+box_path <- here::here("inst/website/boxbox")
+options(box.path = box_path)
+box::use(
+  wigits/utils[get_data, unnest_data],
+  wigits/table[reactable_wrapdown],
+  amber_qc = amber/qc
+)
+```
+
+```{r}
+#| label: data_setup
+dat <- get_data()
+dat$data <- dat$data |>
+  dplyr::filter(grepl("amber", .data$tool_parser))
+```
+
+## QC
+
+```{r}
+#| label: amber_qc
+tbl_nm <- "amber_qc"
+d <- dat$data |>
+  unnest_data(tbl_nm, schemas_all = dat$schemas)
+amber_qc$gt_tab(d, dat$schemas)
+```
+
+## ROH
+
+
+```{r}
+#| label: amber_bafpcf
+tbl_nm <- "amber_homozygousregion"
+d <- dat$data |>
+  unnest_data(tbl_nm, schemas_all = dat$schemas)
+d$res |> dplyr::count(.data$filter)
+```
