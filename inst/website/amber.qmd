@@ -6,6 +6,7 @@ lightbox:
   desc-position: right
 execute: 
   echo: false
+html-table-processing: none
 ---
 
 
@@ -17,14 +18,17 @@ execute:
   use("dplyr")
   use("tibble", "tibble")
 }
-# box_path <- system.file("website/boxbox", package = "tidywigits")
-box_path <- here::here("inst/website/boxbox")
-options(box.path = box_path)
-box::use(
+{
+  # box_path <- system.file("website/boxbox", package = "tidywigits")
+  box_path <- here::here("inst/website/boxbox")
+  options(box.path = box_path)
+  box::use(
   wigits/utils[get_data, unnest_data],
   wigits/table[reactable_wrapdown],
-  amber_qc = amber/qc
+  amber_qc = amber/qc,
+  amber_roh = amber/roh
 )
+}
 ```
 
 ```{r}
@@ -44,13 +48,27 @@ d <- dat$data |>
 amber_qc$gt_tab(d, dat$schemas)
 ```
 
-## ROH
-
+## Consanguinity
 
 ```{r}
-#| label: amber_bafpcf
+#| label: amber_homozygousregion
+#| layout-nrow: 1
 tbl_nm <- "amber_homozygousregion"
 d <- dat$data |>
   unnest_data(tbl_nm, schemas_all = dat$schemas)
-d$res |> dplyr::count(.data$filter)
+description <- paste(
+  "Continuous regions of homozygosity (ROH).",
+  "minLength: min ROH length 5 Mb;",
+  "maxHetProportion: max proportion of heterozygous variants in ROH 0.05;"
+)
+tabs <- d$res |>
+  amber_roh$gt_tab()
+tabs$tab2
+tabs$tab1
 ```
+
+::: {.callout-tip}
+## TODO
+
+- Add circos plot for ROH visualization
+:::

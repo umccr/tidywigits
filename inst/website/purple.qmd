@@ -6,6 +6,7 @@ lightbox:
   desc-position: right
 execute: 
   echo: false
+html-table-processing: none
 ---
 
 ```{r}
@@ -39,7 +40,6 @@ dat <- get_data()
 ```{r}
 #| label: purple_qc
 #| #classes: plain
-#| html-table-processing: none
 #| layout-nrow: 1
 tbl_nm <- "purple_qc"
 d <- dat$data |>
