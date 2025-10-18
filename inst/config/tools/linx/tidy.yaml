@@ -82,7 +82,7 @@ tidy:
           - field: 'type' # old
             type: 'char'
             description: 'type of breakend'
-          - field: 'chromosome' # old
+          - field: 'chrom' # old
             type: 'char'
             description: 'chromosome'
           - field: 'orientation' # old
@@ -222,10 +222,10 @@ tidy:
     schema:
       latest:
         tbl1:
-          - field: 'chromosome'
+          - field: 'chrom'
             type: 'char'
             description: 'Chromosome of gene'
-          - field: 'chromosome_band'
+          - field: 'chrom_band'
             type: 'char'
             description: 'Chromosome band of driver'
           - field: 'gene'
@@ -426,7 +426,7 @@ tidy:
             type: 'char'
             description:
               'right breakend is the start breakend of the break junction'
-          - field: 'chromosome'
+          - field: 'chrom'
             type: 'char'
             description: 'chromosome of the linked segment'
           - field: 'arm'
@@ -586,7 +586,7 @@ tidy:
           - field: 'sample_id'
             type: 'char'
             description: 'sample ID'
-          - field: 'chromosome'
+          - field: 'chrom'
             type: 'char'
             description: ''
           - field: 'start'
@@ -603,7 +603,7 @@ tidy:
             description: ''
       latest:
         tbl1:
-          - field: 'chromosome'
+          - field: 'chrom'
             type: 'char'
             description: ''
           - field: 'start'
@@ -741,7 +741,7 @@ tidy:
           - field: 'transcript'
             type: 'char'
             description: ''
-          - field: 'chromosome'
+          - field: 'chrom'
             type: 'char'
             description: ''
           - field: 'annotation_type'
@@ -767,7 +767,7 @@ tidy:
           - field: 'transcript'
             type: 'char'
             description: ''
-          - field: 'chromosome'
+          - field: 'chrom'
             type: 'char'
             description: ''
           - field: 'annotation_type'
@@ -796,7 +796,7 @@ tidy:
           - field: 'transcript'
             type: 'char'
             description: ''
-          - field: 'chromosome'
+          - field: 'chrom'
             type: 'char'
             description: ''
           - field: 'start'
@@ -816,7 +816,7 @@ tidy:
           - field: 'transcript'
             type: 'char'
             description: ''
-          - field: 'chromosome'
+          - field: 'chrom'
             type: 'char'
             description: ''
           - field: 'start'
@@ -842,7 +842,7 @@ tidy:
           - field: 'chain_id'
             type: 'char'
             description: ''
-          - field: 'chromosome'
+          - field: 'chrom'
             type: 'char'
             description: ''
           - field: 'pos_start'
@@ -865,7 +865,7 @@ tidy:
           - field: 'chain_id'
             type: 'char'
             description: ''
-          - field: 'chromosome'
+          - field: 'chrom'
             type: 'char'
             description: ''
           - field: 'pos_start'
@@ -994,6 +994,6 @@ tidy:
           - field: 'version'
             type: 'char'
             description: 'version of the tool'
-          - field: 'build_date'
+          - field: 'date_build'
             type: 'char'
             description: 'build date'

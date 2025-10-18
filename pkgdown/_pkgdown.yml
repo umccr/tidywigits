@@ -44,6 +44,7 @@ reference:
       - Amber
       - Bamtools
       - Chord
+      - Cider
       - Cobalt
       - Cuppa
       - Esvee
@@ -56,6 +57,7 @@ reference:
       - Purple
       - Sage
       - Sigs
+      - Teal
       - Virusbreakend
       - Virusinterpreter
   - title: "Workflows"
@@ -64,3 +66,4 @@ reference:
   - title: "Other"
     contents:
       - WIGITS_TOOLS
+      - purple_plot_getter

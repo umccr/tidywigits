@@ -1,15 +1,17 @@
-require(shiny)
-require(tibble, include.only = "as_tibble")
-require(dplyr, include.only = c("filter", "mutate", "select"))
-require(DBI, include.only = "dbConnect")
-require(RPostgres, include.only = "Postgres")
-require(reactable, include.only = c("reactable", "renderReactable", "reactableOutput", "colDef"))
-require(glue, include.only = "glue")
-require(purrr, include.only = "map")
+{
+  use("shiny")
+  use("tibble", "as_tibble")
+  use("dplyr", c("filter", "mutate", "select"))
+  use("DBI", "dbConnect")
+  use("RPostgres", "Postgres")
+  use("reactable", c("reactable", "renderReactable", "reactableOutput", "colDef"))
+  use("glue", "glue")
+  use("purrr", "map")
+}
 
 # ids.R contains vector of ids
 # nemoids <- c("abc123", "edf456")
-source("ids.R")
+source("../ids_accreditation.R")
 
 # fmt: skip
 table_config <- tibble::tribble(
@@ -28,7 +30,20 @@ table_config <- tibble::tribble(
   "flagstats_flagstats",          "FlagStats",
   "bamtools_wgsmetrics_metrics",  "BamtoolsWgsMetrics",
   "virusbreakend_summary",        "VirusBreakend",
-  "virusinterpreter_annotated",   "VirusInterpreter"
+  "virusinterpreter_annotated",   "VirusInterpreter",
+  "cider_blastn",                 "CiderBlastn",
+  "cider_locstats",               "CiderLocstats",
+  "cider_vdj",                    "CiderVdj",
+  "neo_candidates",               "NeoCandidates",
+  "neo_predictions",              "NeoPredictions",
+  "peach_qc",                     "PeachQC",
+  "peach_events",                 "PeachEvents",
+  "peach_eventsg",                "PeachEventsGene",
+  "peach_hapall",                 "PeachHapAll",
+  "peach_hapbest",                "PeachHapBest",
+  "teal_breakend",                "TealBreakend",
+  "teal_tellength",               "TealTellength"
+
 )
 table_names <- table_config$name
 

@@ -1,0 +1,32 @@
+project:
+  type: website
+format:
+  html:
+    page-layout: full
+    theme:
+      - cosmo
+      - brand
+    css: styles.css
+    toc: true
+website:
+  title: "tidywigits"
+  back-to-top-navigation: true
+  reader-mode: true
+  page-navigation: true
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
+      - href: purple.qmd
+        text: PURPLE
+      - href: amber.qmd
+        text: AMBER
+      - href: versions.qmd
+        text: Versions
+#  sidebar:
+#    style: floating
+#    search: true
+#    contents:
+#      - index.qmd
+#      - purple.qmd
+#      - amber.qmd

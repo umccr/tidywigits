@@ -21,11 +21,13 @@ Remotes:
     umccr/nemo
 Imports:
     dplyr,
+    fs,
     glue,
     nemo,
     R6,
     readr,
     rlang,
+    stringr,
     tibble,
     tidyr
 Suggests:

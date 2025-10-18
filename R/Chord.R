@@ -43,7 +43,8 @@ Chord <- R6::R6Class(
     #' Path to file.
     parse_signatures = function(x) {
       hdr <- nemo::file_hdr(x)
-      schema <- self$get_raw_schema("signatures") |>
+      schema <- self$get_raw_schema("signatures", v = "latest") |>
+        dplyr::select("field", "type") |>
         tibble::deframe()
 
       # header contains sample column in latest version

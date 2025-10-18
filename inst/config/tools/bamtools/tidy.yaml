@@ -182,7 +182,7 @@ tidy:
     schema:
       latest:
         tbl1:
-          - field: 'chromosome'
+          - field: 'chrom'
             type: 'char'
           - field: 'pos_start'
             type: 'float'
@@ -262,7 +262,7 @@ tidy:
           - field: 'gene'
             type: 'char'
             description: 'gene name'
-          - field: 'chromosome'
+          - field: 'chrom'
             type: 'char'
             description: 'chromosome'
           - field: 'pos_start'
@@ -489,7 +489,7 @@ tidy:
           - field: 'gene'
             type: 'char'
             description: 'gene name'
-          - field: 'chromosome'
+          - field: 'chrom'
             type: 'char'
             description: 'chromosome'
           - field: 'start'

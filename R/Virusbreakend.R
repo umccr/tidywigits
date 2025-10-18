@@ -31,7 +31,8 @@ Virusbreakend <- R6::R6Class(
     #' @param x (`character(1)`)\cr
     #' Path to file.
     parse_summary = function(x) {
-      schema <- self$get_raw_schema("summary")
+      schema <- self$get_raw_schema("summary", v = "latest") |>
+        dplyr::select("field", "type")
       # file is either completely empty, or with colnames + data
       hdr <- nemo::file_hdr(x)
       if (length(hdr) == 0) {

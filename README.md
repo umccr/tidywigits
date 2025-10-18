@@ -53,10 +53,21 @@ system.file("extdata/oa", package = "tidywigits") |>
 │   ├── sample1.amber.homozygousregion.tsv
 │   └── sample1.amber.qc
 ├── bamtools
+│   ├── sample1.bam_metric.coverage.tsv
+│   ├── sample1.bam_metric.exon_medians.tsv
+│   ├── sample1.bam_metric.flag_counts.tsv
+│   ├── sample1.bam_metric.frag_length.tsv
+│   ├── sample1.bam_metric.gene_coverage.tsv
+│   ├── sample1.bam_metric.partition_stats.tsv
+│   ├── sample1.bam_metric.summary.tsv
 │   └── sample1.wgsmetrics
 ├── chord
 │   ├── sample1.chord.mutation_contexts.tsv
 │   └── sample1.chord.prediction.tsv
+├── cider
+│   ├── sample1.cider.blastn_match.tsv.gz
+│   ├── sample1.cider.locus_stats.tsv
+│   └── sample1.cider.vdj.tsv.gz
 ├── cobalt
 │   ├── cobalt.version
 │   ├── sample1.cobalt.gc.median.tsv
@@ -94,6 +105,15 @@ system.file("extdata/oa", package = "tidywigits") |>
 │       ├── sample1.linx.vis_protein_domain.tsv
 │       ├── sample1.linx.vis_segments.tsv
 │       └── sample1.linx.vis_sv_data.tsv
+├── neo
+│   ├── sample1.neo.neo_data.tsv
+│   └── sample1.neo.neoepitope.tsv
+├── peach
+│   ├── sample1.peach.events.tsv
+│   ├── sample1.peach.gene.events.tsv
+│   ├── sample1.peach.haplotypes.all.tsv
+│   ├── sample1.peach.haplotypes.best.tsv
+│   └── sample1.peach.qc.tsv
 ├── purple
 │   ├── purple.version
 │   ├── sample1.purple.cnv.gene.tsv
@@ -120,6 +140,9 @@ system.file("extdata/oa", package = "tidywigits") |>
 ├── sigs
 │   ├── sample1.sig.allocation.tsv
 │   └── sample1.sig.snv_counts.csv
+├── teal
+│   ├── sample1.teal.breakend.tsv.gz
+│   └── sample1.teal.tellength.tsv
 ├── virusbreakend
 │   └── sample1.virusbreakend.vcf.summary.tsv
 └── virusinterpreter
@@ -141,20 +164,20 @@ res <- w$nemofy(odir = out_dir, format = "parquet", id = "parquet_example")
 fs::dir_info(out_dir) |>
   dplyr::mutate(bname = basename(.data$path)) |>
   dplyr::select("bname", "size", "type")
-# A tibble: 64 × 3
-   bname                                              size type 
-   <chr>                                       <fs::bytes> <fct>
- 1 sample1_2_sage_bqrtsv.parquet                      3.1K file 
- 2 sample1_alignments_dupfreq.parquet                1.95K file 
- 3 sample1_amber_bafpcf.parquet                      3.27K file 
- 4 sample1_amber_contaminationtsv.parquet            4.13K file 
- 5 sample1_amber_homozygousregion.parquet            3.18K file 
- 6 sample1_amber_qc.parquet                          2.35K file 
- 7 sample1_bamtools_wgsmetrics_histo.parquet         4.19K file 
- 8 sample1_bamtools_wgsmetrics_metrics.parquet      10.12K file 
- 9 sample1_chord_prediction.parquet                  3.43K file 
-10 sample1_chord_signatures.parquet                  2.17K file 
-# ℹ 54 more rows
+# A tibble: 85 × 3
+   bname                                         size type 
+   <chr>                                  <fs::bytes> <fct>
+ 1 sample1_2_sage_bqrtsv.parquet                 3.1K file 
+ 2 sample1_alignments_dupfreq.parquet           1.95K file 
+ 3 sample1_amber_bafpcf.parquet                 3.27K file 
+ 4 sample1_amber_contaminationtsv.parquet       4.13K file 
+ 5 sample1_amber_homozygousregion.parquet       3.18K file 
+ 6 sample1_amber_qc.parquet                     2.35K file 
+ 7 sample1_bamtools_coverage.parquet            1.72K file 
+ 8 sample1_bamtools_exoncvg.parquet             2.99K file 
+ 9 sample1_bamtools_flagstats.parquet           6.44K file 
+10 sample1_bamtools_fraglength.parquet          1.69K file 
+# ℹ 75 more rows
 ```
 
 - PostgreSQL:

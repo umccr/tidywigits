@@ -17,6 +17,7 @@ requirements:
   host:
     - r-base
     - r-dplyr
+    - r-fs
     - r-glue
     - r-knitr
     - r-nemo
@@ -24,11 +25,13 @@ requirements:
     - r-readr
     - r-rlang
     - r-rmarkdown
+    - r-stringr
     - r-tibble
     - r-tidyr
   run:
     - r-base
     - r-dplyr
+    - r-fs
     - r-glue
     - r-knitr
     - r-nemo
@@ -36,6 +39,7 @@ requirements:
     - r-readr
     - r-rlang
     - r-rmarkdown
+    - r-stringr
     - r-tibble
     - r-tidyr
 

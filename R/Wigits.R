@@ -23,6 +23,7 @@
 #'     id = "runABC456",
 #'     dbconn = dbconn
 #' )
+#' DBI::dbDisconnect(dbconn)
 #' }
 #' @export
 Wigits <- R6::R6Class(
@@ -38,6 +39,7 @@ Wigits <- R6::R6Class(
         amber = Amber,
         bamtools = Bamtools,
         chord = Chord,
+        cider = Cider,
         cobalt = Cobalt,
         cuppa = Cuppa,
         flagstats = Flagstats,
@@ -68,6 +70,7 @@ WIGITS_TOOLS <- c(
   "amber",
   "bamtools",
   "chord",
+  "cider",
   "cobalt",
   "cuppa",
   "esvee",
