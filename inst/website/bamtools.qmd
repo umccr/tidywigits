@@ -1,0 +1,63 @@
+---
+title: "BAMTOOLS"
+lightbox:
+  match: auto
+  effect: fade
+  desc-position: right
+execute:
+  echo: false
+html-table-processing: none
+---
+
+
+```{r}
+#| label: pkg_load
+#| warning: false
+#| message: false
+{
+  use("dplyr")
+  use("tibble", "tibble")
+  # box_path <- system.file("website/boxbox", package = "tidywigits")
+  box_path <- here::here("inst/website/boxbox")
+  options(box.path = box_path)
+  box::use(
+    wigits/utils[get_data, unnest_data_multi],
+    wigits/table[reactable_wrapdown],
+  )
+}
+```
+
+```{r}
+#| label: data_setup
+dat <- get_data()
+```
+
+## Summary
+
+```{r}
+#| label: bamtools_summary
+#| column: page
+tbl_nm <- "bamtools_summary"
+d1 <- dat$data |>
+  unnest_data_multi(tbl_nm, schemas_all = dat$schemas, subnest = "summary", tb = "tbl1")
+d2 <- dat$data |>
+  unnest_data_multi(tbl_nm, schemas_all = dat$schemas, subnest = "covx", tbl = "tbl2")
+descr1 <- tibble::tibble(field = "prefix", description = "File prefix") |>
+  dplyr::bind_rows(d1$schema$schema[c("field", "description")])
+d1$res |>
+  reactable_wrapdown(
+    descriptions = descr1,
+    id = paste0(tbl_nm, "_summary"),
+    pagination = TRUE
+  )
+d2$res |>
+  dplyr::select("prefix", "covx", "value") |>
+  ggplot2::ggplot(ggplot2::aes(x = covx, y = value, colour = prefix)) +
+  ggplot2::geom_line() +
+  ggplot2::theme_minimal()
+```
+
+::: {.callout-tip}
+## TODO
+
+:::

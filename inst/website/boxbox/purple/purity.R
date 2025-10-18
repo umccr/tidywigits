@@ -1,6 +1,6 @@
 #' @export
 gt_tab_prep <- function(d, schemas_all) {
-  box::use(../wigits/table, ./purity)
+  box::use(./purity[get_fill_colour])
   stopifnot(all(c("res", "schema") %in% names(d)))
   x1 <- list(
     select = c(
@@ -62,7 +62,7 @@ gt_tab_prep <- function(d, schemas_all) {
     # determine the field order
     dplyr::select(dplyr::any_of(x1$select), dplyr::everything()) |>
     tidyr::pivot_longer(dplyr::everything(), names_to = "field") |>
-    dplyr::mutate(fill_colour = purrr::map2_chr(field, value, purity$get_fill_colour))
+    dplyr::mutate(fill_colour = purrr::map2_chr(field, value, get_fill_colour))
   # now grab the colour for the str fields from the original field
   d1 <- d0 |>
     dplyr::mutate(

@@ -43,10 +43,12 @@ Bamtools <- R6::R6Class(
       d <- x
       schema1 <- self$get_tidy_schema("summary", subtbl = "tbl1")
       schema2 <- self$get_tidy_schema("summary", subtbl = "tbl2")
+      # d1 maintains file_version attr
       d1 <- d |>
         dplyr::select(!dplyr::contains("DepthCoverage_"))
       stopifnot(ncol(d1) == nrow(schema1))
       colnames(d1) <- schema1[["field"]]
+      # d2 requires file_version attr to be set
       d2 <- d |>
         dplyr::select(dplyr::contains("DepthCoverage_")) |>
         tidyr::pivot_longer(
@@ -56,7 +58,8 @@ Bamtools <- R6::R6Class(
           names_prefix = "DepthCoverage_"
         ) |>
         dplyr::mutate(covx = as.numeric(.data$covdp)) |>
-        dplyr::select("covx", "value")
+        dplyr::select("covx", "value") |>
+        nemo::set_tbl_version_attr(nemo::get_tbl_version_attr(d1))
       stopifnot(identical(colnames(d2), schema2[["field"]]))
       list(summary = d1, covx = d2) |>
         nemo::enframe_data()

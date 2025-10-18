@@ -16,18 +16,17 @@ html-table-processing: none
 {
   use("dplyr")
   use("tibble", "tibble") # needed for tbl print
-}
-# box_path <- system.file("website/boxbox", package = "tidywigits")
-box_path <- here::here("inst/website/boxbox")
-options(box.path = box_path)
-box::use(
-  wigits/plot[cat_plot],
-  wigits/utils[get_data, unnest_data],
-  wigits/table[reactable_wrapdown, gt_tab],
-  ppl_purity = purple/purity,
-  ppl_qc = purple/qc,
-  ppl_utils = purple/utils
+  # options(box.path = system.file("website/boxbox", package = "tidywigits"))
+  options(box.path = here::here("inst/website/boxbox"))
+  box::use(
+    wigits/plot[cat_plot],
+    wigits/utils[get_data, unnest_data],
+    wigits/table[reactable_wrapdown, gt_tab],
+    ppl_purity = purple/purity,
+    ppl_qc = purple/qc,
+    ppl_utils = purple/utils
 )
+}
 ```
 
 ```{r}
