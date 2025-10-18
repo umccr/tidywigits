@@ -21,6 +21,8 @@ website:
         text: PURPLE
       - href: amber.qmd
         text: AMBER
+      - href: versions.qmd
+        text: Versions
 #  sidebar:
 #    style: floating
 #    search: true

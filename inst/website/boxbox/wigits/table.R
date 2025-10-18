@@ -85,7 +85,6 @@ gt_tab <- function(x, id) {
   down <- table$down_button(x, id)
   gt::gt(x) |>
     gt::cols_label(value = "Value", description = "Description") |>
-    # not needed
     gt::cols_hide(columns = c("fill_colour", "description")) |>
     # value colour fill
     gt::tab_style(
@@ -132,6 +131,7 @@ down_button <- function(d, nm) {
     button_label = "CSV Download",
     button_type = "default",
     has_icon = TRUE,
-    icon = "fa fa-save"
+    icon = "fa fa-save",
+    csv2 = FALSE
   )
 }

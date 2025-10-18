@@ -6,6 +6,7 @@ lightbox:
   desc-position: right
 execute: 
   echo: false
+html-table-processing: none
 ---
 
 ```{r}
@@ -55,7 +56,6 @@ cat_plot(p, "circos_snv_indel_cn_sv", group = "ppl_circos")
 
 ```{r}
 #| label: purple_qc
-#| classes: plain
 d <- dat$data |>
   unnest_data("purple_qc", schemas_all = dat$schemas)
 ppl_qc$gt_tab(d, dat$schemas)

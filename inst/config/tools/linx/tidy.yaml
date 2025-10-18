@@ -994,6 +994,6 @@ tidy:
           - field: 'version'
             type: 'char'
             description: 'version of the tool'
-          - field: 'build_date'
+          - field: 'date_build'
             type: 'char'
             description: 'build date'
