@@ -68,7 +68,7 @@ raw:
     schema:
       latest:
         - field: 'Coverage'
-          type: 'char'
+          type: 'float'
         - field: 'Count'
           type: 'float'
   flagstats:
