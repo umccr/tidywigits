@@ -97,6 +97,10 @@ p1 <- d1$res |>
   ggplot2::coord_flip()
 ```
 
+:::{.panel-tabset .nav-pills}
+
+### Scatter Plot 1
+
 ```{r}
 #| label: cvg_exon_scatter_plot1
 #| fig-width: 10
@@ -104,15 +108,44 @@ p1 <- d1$res |>
 p1
 ```
 
-```{r}
-#| label: cvg_exon_plot_bar
-bt_utils$cvg_exon_plot_bar(d1$res)
-```
+### Scatter Plot 2
 
 ```{r}
 #| label: cvg_exon_plot_scatter
 bt_utils$cvg_exon_plot_scatter(d1$res)
 ```
+
+### Bar Plot
+
+```{r}
+#| label: cvg_exon_plot_bar
+bt_utils$cvg_exon_plot_bar(d1$res)
+```
+
+:::
+
+## Coverage Gene
+
+```{r}
+#| label: bamtools_genecvg
+tbl_nm <- "bamtools_genecvg"
+d1 <- dat$data |>
+  unnest_data_multi(tbl_nm, schemas_all = dat$schemas, subnest = "genes")
+d2 <- dat$data |>
+  unnest_data_multi(tbl_nm, schemas_all = dat$schemas, subnest = "cvg")
+```
+
+
+:::{.panel-tabset .nav-pills}
+
+### Bar Plot
+
+```{r}
+#| label: cvg_gene_plot_bar
+bt_utils$cvg_gene_plot_bar(d2$res)
+```
+
+:::
 
 ::: {.callout-tip}
 ## TODO

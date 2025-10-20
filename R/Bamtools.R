@@ -248,19 +248,22 @@ Bamtools <- R6::R6Class(
     #' Path to file.
     tidy_genecvg = function(x) {
       d <- self$.tidy_file(x, "genecvg") |>
-        dplyr::select("data") |>
-        tidyr::unnest("data")
+        dplyr::select("data")
+      version <- nemo::get_tbl_version_attr(d[["data"]][[1]])
+      d <- d |> tidyr::unnest("data")
       # make sure genes are unique
       stopifnot(nrow(d) == nrow(dplyr::distinct(d, .data$gene)))
       genes <- d |>
-        dplyr::select(!dplyr::starts_with("dr_"))
+        dplyr::select(!dplyr::starts_with("dr_")) |>
+        nemo::set_tbl_version_attr(version)
       cvg <- d |>
         tidyr::pivot_longer(
           dplyr::starts_with("dr_"),
           names_to = "dr",
           values_to = "value"
         ) |>
-        dplyr::select("gene", "dr", "value")
+        dplyr::select("gene", "dr", "value") |>
+        nemo::set_tbl_version_attr(version)
       list(genes = genes, cvg = cvg) |>
         nemo::enframe_data()
     },

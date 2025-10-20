@@ -210,3 +210,71 @@ cvg_exon_plot_bar <- function(d, thresholds = c(1, 5, 10, 20, 30, 50, 100)) {
       margin = list(b = 100)
     )
 }
+
+#' @export
+cvg_gene_plot_bar <- function(d) {
+  parse_depth <- function(dr_string) {
+    dplyr::case_when(
+      # 10000plus
+      stringr::str_detect(dr_string, "plus") ~ 10000,
+      # dr_70_79
+      stringr::str_detect(dr_string, "_(\\d+)_(\\d+)$") ~
+        as.numeric(stringr::str_extract(dr_string, "(?<=_)\\d+(?=_\\d+$)")),
+      # dr_0
+      stringr::str_detect(dr_string, "_(\\d+)$") ~
+        as.numeric(stringr::str_extract(dr_string, "\\d+$")),
+      TRUE ~ NA_real_
+    )
+  }
+
+  df <- d |>
+    dplyr::mutate(depth_start = parse_depth(.data$dr))
+  thresholds <- c(10, 20, 30)
+
+  coverage_summary <- thresholds |>
+    purrr::map(\(thresh) {
+      df |>
+        dplyr::group_by(gene) |>
+        dplyr::summarise(
+          total_bases = sum(value),
+          bases_below = sum(value[depth_start < thresh]),
+          .groups = "drop"
+        ) |>
+        dplyr::mutate(
+          percent_below = (bases_below / total_bases) * 100,
+          threshold = thresh
+        )
+    }) |>
+    dplyr::bind_rows()
+
+  top_genes_30x <- coverage_summary |>
+    dplyr::filter(.data$threshold == 30) |>
+    dplyr::arrange(dplyr::desc(.data$percent_below)) |>
+    utils::head(20) |>
+    dplyr::pull(gene)
+
+  coverage_summary |>
+    dplyr::filter(.data$gene %in% top_genes_30x) |>
+    dplyr::mutate(threshold = glue::glue("<{.data$threshold}x")) |>
+    ggplot2::ggplot(ggplot2::aes(
+      x = stats::reorder(gene, percent_below),
+      y = percent_below,
+      fill = threshold
+    )) +
+    ggplot2::geom_col(position = "dodge") +
+    ggplot2::coord_flip() +
+    ggplot2::scale_fill_manual(
+      values = c("<10x" = "#DC3545", "<20x" = "#FD7E14", "<30x" = "#FFC107")
+    ) +
+    ggplot2::labs(
+      title = "Genes with Poor Coverage",
+      subtitle = "Top 20 genes by % bases below 30x",
+      x = NULL,
+      y = "% of bases below threshold",
+      fill = "Threshold"
+    ) +
+    ggplot2::theme_minimal() +
+    ggplot2::theme(panel.grid.major.y = ggplot2::element_blank(), legend.position = "top")
+}
+
+cvg_gene_plot_bar_missedlikelihood <- function(d) {}
