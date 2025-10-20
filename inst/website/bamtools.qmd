@@ -23,7 +23,7 @@ html-table-processing: none
   box::use(
     wigits/utils[get_data, unnest_data_multi],
     wigits/table[reactable_wrapdown],
-    bamtools/utils[cvg_exon_summary]
+    bt_utils = bamtools/utils
   )
 }
 ```
@@ -70,7 +70,12 @@ d1 <- dat$data |>
 d1$res |>
   ggplot2::ggplot(ggplot2::aes(x = coverage, y = count, colour = prefix)) +
   ggplot2::geom_line() +
-  ggplot2::theme_minimal()
+  # ggplot2::geom_point() +
+  ggplot2::scale_y_continuous(labels = scales::comma) +
+  ggplot2::theme_minimal() +
+  ggplot2::theme(
+    axis.text.y = ggplot2::element_text(angle = 60, hjust = 1)
+  )
 ```
 
 ## Coverage Exon
@@ -86,76 +91,27 @@ p1 <- d1$res |>
   ggplot2::geom_point(alpha = 1 / 2, shape = 21, colour = "black") +
   ggplot2::theme(
     legend.position = "top",
-    axis.text.x = ggplot2::element_text(angle = 45, hjust = 1, size = 5)
+    axis.text.y = ggplot2::element_text(angle = 45, hjust = 1, size = 6)
   ) +
   ggplot2::scale_x_discrete(guide = ggplot2::guide_axis(n.dodge = 5)) +
   ggplot2::coord_flip()
-thresholds <- c(1, 5, 10, 20, 30, 50, 100)
-sry_all <- purrr::map(thresholds, ~ cvg_exon_summary(d1$res, threshold = .x)) |>
-  dplyr::bind_rows()
-bar_data <- sry_all |>
-  dplyr::filter(.data$n_below > 0) |> # Only show genes with issues
-  dplyr::arrange(.data$threshold, desc(.data$n_below))
-bar_fig <- plotly::plot_ly()
-for (i in seq_along(thresholds)) {
-  thresh <- thresholds[i]
-  plot_data <- bar_data |> dplyr::filter(.data$threshold == thresh)
-  bar_fig <- bar_fig |>
-    plotly::add_bars(
-      data = plot_data,
-      x = ~ stats::reorder(gene, -n_below),
-      y = ~n_below,
-      name = paste("Threshold:", thresh),
-      visible = (i == 3),
-      text = ~ paste0(
-        "Percent below: ",
-        round(pct_below, 1),
-        "%\n",
-        "Min coverage: ",
-        round(min_cvg, 0),
-        "\n",
-        "Median coverage: ",
-        round(median_cvg, 0)
-      ),
-      hovertemplate = "<b>%{x}</b><br>Exons below threshold: %{y}<br>%{text}<extra></extra>",
-      customdata = ~ cbind(pct_below, min_cvg, median_cvg)
-    )
-}
-steps <- list()
-for (i in seq_along(thresholds)) {
-  step <- list(
-    method = "update",
-    args = list(
-      list(visible = rep(FALSE, length(thresholds))),
-      list(title = paste0("Genes with Exons Below Coverage Threshold = ", thresholds[i]))
-    ),
-    label = as.character(thresholds[i])
-  )
-  step$args[[1]]$visible[i] <- TRUE
-  steps[[i]] <- step
-}
+```
 
-bar_fig <- bar_fig |>
-  plotly::layout(
-    title = "Genes with Exons Below Coverage Threshold = 20",
-    xaxis = list(
-      title = "Gene",
-      tickangle = -45
-    ),
-    yaxis = list(title = "Number of Exons Below Threshold"),
-    sliders = list(
-      list(
-        active = 2, # Start at threshold = 20 (index 2)
-        currentvalue = list(prefix = "Coverage Threshold: "),
-        pad = list(t = 60),
-        steps = steps
-      )
-    ),
-    hovermode = "closest",
-    margin = list(b = 100)
-  )
+```{r}
+#| label: cvg_exon_scatter_plot1
+#| fig-width: 10
+#| fig-height: 25
+p1
+```
 
-print(bar_fig)
+```{r}
+#| label: cvg_exon_plot_bar
+bt_utils$cvg_exon_plot_bar(d1$res)
+```
+
+```{r}
+#| label: cvg_exon_plot_scatter
+bt_utils$cvg_exon_plot_scatter(d1$res)
 ```
 
 ::: {.callout-tip}
