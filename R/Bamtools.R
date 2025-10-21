@@ -43,10 +43,12 @@ Bamtools <- R6::R6Class(
       d <- x
       schema1 <- self$get_tidy_schema("summary", subtbl = "tbl1")
       schema2 <- self$get_tidy_schema("summary", subtbl = "tbl2")
+      # d1 maintains file_version attr
       d1 <- d |>
         dplyr::select(!dplyr::contains("DepthCoverage_"))
       stopifnot(ncol(d1) == nrow(schema1))
       colnames(d1) <- schema1[["field"]]
+      # d2 requires file_version attr to be set
       d2 <- d |>
         dplyr::select(dplyr::contains("DepthCoverage_")) |>
         tidyr::pivot_longer(
@@ -56,7 +58,8 @@ Bamtools <- R6::R6Class(
           names_prefix = "DepthCoverage_"
         ) |>
         dplyr::mutate(covx = as.numeric(.data$covdp)) |>
-        dplyr::select("covx", "value")
+        dplyr::select("covx", "value") |>
+        nemo::set_tbl_version_attr(nemo::get_tbl_version_attr(d1))
       stopifnot(identical(colnames(d2), schema2[["field"]]))
       list(summary = d1, covx = d2) |>
         nemo::enframe_data()
@@ -245,19 +248,22 @@ Bamtools <- R6::R6Class(
     #' Path to file.
     tidy_genecvg = function(x) {
       d <- self$.tidy_file(x, "genecvg") |>
-        dplyr::select("data") |>
-        tidyr::unnest("data")
+        dplyr::select("data")
+      version <- nemo::get_tbl_version_attr(d[["data"]][[1]])
+      d <- d |> tidyr::unnest("data")
       # make sure genes are unique
       stopifnot(nrow(d) == nrow(dplyr::distinct(d, .data$gene)))
       genes <- d |>
-        dplyr::select(!dplyr::starts_with("dr_"))
+        dplyr::select(!dplyr::starts_with("dr_")) |>
+        nemo::set_tbl_version_attr(version)
       cvg <- d |>
         tidyr::pivot_longer(
           dplyr::starts_with("dr_"),
           names_to = "dr",
           values_to = "value"
         ) |>
-        dplyr::select("gene", "dr", "value")
+        dplyr::select("gene", "dr", "value") |>
+        nemo::set_tbl_version_attr(version)
       list(genes = genes, cvg = cvg) |>
         nemo::enframe_data()
     },

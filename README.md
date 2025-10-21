@@ -173,8 +173,8 @@ fs::dir_info(out_dir) |>
  4 sample1_amber_contaminationtsv.parquet       4.13K file 
  5 sample1_amber_homozygousregion.parquet       3.18K file 
  6 sample1_amber_qc.parquet                     2.35K file 
- 7 sample1_bamtools_coverage.parquet            1.72K file 
- 8 sample1_bamtools_exoncvg.parquet             2.99K file 
+ 7 sample1_bamtools_coverage.parquet            1.79K file 
+ 8 sample1_bamtools_exoncvg.parquet             2.97K file 
  9 sample1_bamtools_flagstats.parquet           6.44K file 
 10 sample1_bamtools_fraglength.parquet          1.69K file 
 # ℹ 75 more rows

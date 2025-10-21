@@ -22,6 +22,9 @@
 ^data-raw$
 ^deploy$
 ^docs$
+^inst/website/\.quarto$
+^inst/website/_site$
+^inst/website/nogit$
 ^nogit$
 ^pkgdown$
 ^vignettes$

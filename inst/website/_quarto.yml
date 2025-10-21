@@ -1,5 +1,8 @@
 project:
   type: website
+  # render:
+  #   - index.qmd
+  #   - neo.qmd
 format:
   html:
     page-layout: full
@@ -21,6 +24,26 @@ website:
         text: PURPLE
       - href: amber.qmd
         text: AMBER
+      - href: bamtools.qmd
+        text: BAMTOOLS
+      - href: chord.qmd
+        text: CHORD
+      - href: cider.qmd
+        text: CIDER
+      - href: cuppa.qmd
+        text: CUPPA
+      - href: lilac.qmd
+        text: LILAC
+      - href: neo.qmd
+        text: NEO
+      - href: peach.qmd
+        text: PEACH
+      - href: sigs.qmd
+        text: SIGS
+      - href: teal.qmd
+        text: TEAL
+      - href: virus.qmd
+        text: VIRUS
       - href: versions.qmd
         text: Versions
 #  sidebar:

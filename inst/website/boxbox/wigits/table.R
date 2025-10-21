@@ -33,7 +33,7 @@ reactable_wrap <- function(x, pagination = FALSE, id, ...) {
 
 #' @export
 reactable_wrapdown <- function(x, descriptions, id = "table", ...) {
-  box::use(./table)
+  box::use(./table[reactable_wrap])
   stopifnot(all(c("field", "description") == colnames(descriptions)))
   field2desc <- tibble::deframe(descriptions)
 
@@ -62,7 +62,7 @@ reactable_wrapdown <- function(x, descriptions, id = "table", ...) {
       col_def
     })
   names(col_defs) <- names(x)
-  table <- table$reactable_wrap(x, columns = col_defs, id = id, ...)
+  table <- reactable_wrap(x, columns = col_defs, id = id, ...)
 
   dbutton <- htmltools::tags$button(
     htmltools::tagList(fontawesome::fa("download"), "CSV Download"),
@@ -81,8 +81,8 @@ reactable_wrapdown <- function(x, descriptions, id = "table", ...) {
 
 #' @export
 gt_tab <- function(x, id) {
-  box::use(./table)
-  down <- table$down_button(x, id)
+  box::use(./table[down_button])
+  down <- down_button(x, id)
   gt::gt(x) |>
     gt::cols_label(value = "Value", description = "Description") |>
     gt::cols_hide(columns = c("fill_colour", "description")) |>

@@ -1,0 +1,61 @@
+---
+title: "SIGS"
+execute: 
+  echo: false
+html-table-processing: none
+---
+
+
+```{r}
+#| label: pkg_load
+#| warning: false
+#| message: false
+{
+  use("dplyr")
+  use("tibble", "tibble")
+  # box_path <- system.file("website/boxbox", package = "tidywigits")
+  box_path <- here::here("inst/website/boxbox")
+  options(box.path = box_path)
+  box::use(
+    wigits/utils[get_data, unnest_data],
+    wigits/table[reactable_wrapdown],
+  )
+}
+```
+
+```{r}
+#| label: data_setup
+dat <- get_data()
+tool <- "sigs"
+dat$data <- dat$data |>
+  dplyr::filter(grepl(tool, .data$tool_parser))
+dat$schemas <- dat$schemas |>
+  dplyr::filter(.data$tool == {{ tool }})
+```
+
+## Allocation
+
+```{r}
+#| label: sigs_allocation
+tbl_nm <- "sigs_allocation"
+d <- dat$data |>
+  unnest_data(tbl_nm, schemas_all = dat$schemas)
+gt::gt(d$res)
+```
+
+## SNV counts
+
+```{r}
+#| label: sigs_snvcounts
+tbl_nm <- "sigs_snvcounts"
+d <- dat$data |>
+  unnest_data(tbl_nm, schemas_all = dat$schemas)
+d$res
+```
+
+
+::: {.callout-tip}
+## TODO
+
+- TODO1
+:::

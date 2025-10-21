@@ -90,7 +90,7 @@ tidy:
       latest:
         tbl1:
           - field: 'coverage'
-            type: 'char'
+            type: 'float'
             description: 'Coverage'
           - field: 'count'
             type: 'float'

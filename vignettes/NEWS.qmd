@@ -50,8 +50,9 @@ pr <- function(n) {
 }
 ```
 
-## DEV
+## v0.0.6 (2025-10-21)
 
+- Quarto Website setup for tidywigits outputs (`r pr(157)`, `r pr(160)`, `r iss(156)`)
 - Purple: handle v4.1 (`r pr(150)`, `r iss(141)`)
 - Bamtools: support gene/exon coverage files (`r pr(151)`, `r iss(149)`)
 - Add Neo support (`r pr(152)`, `r iss(144)`)

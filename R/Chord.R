@@ -43,7 +43,8 @@ Chord <- R6::R6Class(
     #' Path to file.
     parse_signatures = function(x) {
       hdr <- nemo::file_hdr(x)
-      schema <- self$get_raw_schema("signatures", v = "latest") |>
+      version <- "latest" # only one version currently supported
+      schema <- self$get_raw_schema("signatures", v = version) |>
         dplyr::select("field", "type") |>
         tibble::deframe()
 
@@ -55,7 +56,8 @@ Chord <- R6::R6Class(
         stopifnot(identical(hdr, names(schema)))
         cnames <- hdr
       }
-      d <- readr::read_tsv(x, col_names = cnames, col_types = schema, skip = 1)
+      d <- readr::read_tsv(x, col_names = cnames, col_types = schema, skip = 1) |>
+        nemo::set_tbl_version_attr(version)
       d[]
     },
     #' @description Tidy `signatures.txt` file.
@@ -66,13 +68,15 @@ Chord <- R6::R6Class(
       if (!tibble::is_tibble(x)) {
         x <- self$parse_signatures(x)
       }
+      version <- nemo::get_tbl_version_attr(x)
       d <- x |>
         tidyr::pivot_longer(
           cols = -c("sample_id"),
           names_to = "signature",
           values_to = "count"
         ) |>
-        dplyr::select("signature", "count")
+        dplyr::select("signature", "count") |>
+        nemo::set_tbl_version_attr(version)
       schema <- self$get_tidy_schema("signatures")
       stopifnot(identical(colnames(d), schema[["field"]]))
       list(signatures = d) |>
