@@ -56,7 +56,7 @@ gt_tab_prep <- function(d, schemas_all) {
 gt_tab <- function(d, schemas_all) {
   box::use(../wigits/table[gt_tab], ./qc[gt_tab_prep])
   gt_tab_prep(d, schemas_all) |>
-    gt_tab("amber_qc")
+    gt_tab("lilac_qc")
 }
 
 #' @export
