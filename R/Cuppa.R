@@ -84,6 +84,7 @@ Cuppa <- R6::R6Class(
       if (!tibble::is_tibble(x)) {
         x <- self$parse_predsum(x)
       }
+      version <- nemo::get_tbl_version_attr(x)
       d <- x |>
         tidyr::pivot_longer(
           dplyr::contains("pred_class_"),
@@ -100,7 +101,8 @@ Cuppa <- R6::R6Class(
           names_transform = list(pred_prob_rank = as.integer)
         ) |>
         dplyr::relocate("extra_info", .after = dplyr::last_col()) |>
-        dplyr::relocate("extra_info_format", .after = dplyr::last_col())
+        dplyr::relocate("extra_info_format", .after = dplyr::last_col()) |>
+        nemo::set_tbl_version_attr(version)
       schema <- self$get_tidy_schema("predsum")
       stopifnot(identical(colnames(d), schema[["field"]]))
       list(predsum = d) |>
