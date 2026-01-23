@@ -3,7 +3,7 @@ description:
 raw:
   dupfreq:
     description: 'Duplicate read count and frequency.'
-    pattern: "\\.duplicate_freq\\.tsv$"
+    pattern: "(\\.redux)?\\.duplicate_freq\\.tsv$"
     ftype: 'tsv'
     schema:
       latest:
