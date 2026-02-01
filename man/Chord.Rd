@@ -12,7 +12,7 @@ indir <- system.file("extdata/oa", package = "tidywigits")
 odir <- tempdir()
 id <- "chord_run1"
 obj <- cls$new(indir)
-obj$nemofy(odir = odir, format = "parquet", id = id)
+obj$nemofy(diro = odir, format = "parquet", input_id = id)
 (lf <- list.files(odir, pattern = "chord.*parquet", full.names = FALSE))
 }
 \section{Super class}{

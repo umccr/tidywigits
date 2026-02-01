@@ -8,7 +8,7 @@
 #' odir <- tempdir()
 #' id <- "isofox_run1"
 #' obj <- cls$new(indir)
-#' obj$nemofy(odir = odir, format = "parquet", input_id = id)
+#' obj$nemofy(diro = odir, format = "parquet", input_id = id)
 #' (lf <- list.files(odir, pattern = "parquet", full.names = FALSE))
 #' #TODO: add isofox test data
 #' @export

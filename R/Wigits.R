@@ -8,7 +8,7 @@
 #' w <- Wigits$new(path)
 #' x <-
 #'   w$nemofy(
-#'     odir = "nogit/test_data",
+#'     diro = "nogit/test_data",
 #'     format = "parquet",
 #'     input_id = "run1"
 #' )

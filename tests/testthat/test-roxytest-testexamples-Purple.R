@@ -9,7 +9,7 @@ test_that("Function Purple() @ L16", {
   odir <- tempdir()
   id <- "purple_run1"
   obj <- cls$new(indir)
-  obj$nemofy(odir = odir, format = "parquet", id = id)
+  obj$nemofy(diro = odir, format = "parquet", input_id = id)
   (lf <- list.files(odir, pattern = "purple.*parquet", full.names = FALSE))
   expect_equal(length(lf), 11)
 })

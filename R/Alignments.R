@@ -8,7 +8,7 @@
 #' odir <- tempdir()
 #' id <- "alignments_run1"
 #' obj <- cls$new(indir)
-#' obj$nemofy(odir = odir, format = "parquet", input_id = id)
+#' obj$nemofy(diro = odir, format = "parquet", input_id = id)
 #' (lf <- list.files(odir, pattern = "alignments.*parquet", full.names = FALSE))
 #' @testexamples
 #' expect_equal(grepv("parquet", lf), "sample1_alignments_dupfreq.parquet")

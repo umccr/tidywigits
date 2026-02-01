@@ -8,7 +8,7 @@
 #' odir <- tempdir()
 #' id <- "cider_run1"
 #' obj <- cls$new(indir)
-#' obj$nemofy(odir = odir, format = "parquet", input_id = id)
+#' obj$nemofy(diro = odir, format = "parquet", input_id = id)
 #' (lf <- list.files(odir, pattern = "cider.*parquet", full.names = FALSE))
 #' @testexamples
 #' expect_equal(length(lf), 3)
