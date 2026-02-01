@@ -8,7 +8,7 @@
 #' odir <- tempdir()
 #' id <- "flagstats_run1"
 #' obj <- cls$new(indir)
-#' obj$nemofy(odir = odir, format = "parquet", id = id)
+#' obj$nemofy(odir = odir, format = "parquet", input_id = id)
 #' (lf <- list.files(odir, pattern = "parquet", full.names = FALSE))
 #' #TODO: add flagstats test data
 #' @export
