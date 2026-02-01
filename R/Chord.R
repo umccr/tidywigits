@@ -8,7 +8,7 @@
 #' odir <- tempdir()
 #' id <- "chord_run1"
 #' obj <- cls$new(indir)
-#' obj$nemofy(odir = odir, format = "parquet", id = id)
+#' obj$nemofy(diro = odir, format = "parquet", input_id = id)
 #' (lf <- list.files(odir, pattern = "chord.*parquet", full.names = FALSE))
 #' @testexamples
 #' expect_equal(length(lf), 2)

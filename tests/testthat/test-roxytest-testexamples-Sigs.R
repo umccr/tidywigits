@@ -9,7 +9,7 @@ test_that("Function Sigs() @ L16", {
   odir <- tempdir()
   id <- "sigs_run1"
   obj <- cls$new(indir)
-  obj$nemofy(odir = odir, format = "parquet", id = id)
+  obj$nemofy(diro = odir, format = "parquet", input_id = id)
   (lf <- list.files(odir, pattern = "sigs.*parquet", full.names = FALSE))
   expect_equal(length(lf), 2)
 })

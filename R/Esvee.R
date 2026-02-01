@@ -8,7 +8,7 @@
 #' odir <- tempdir()
 #' id <- "esvee_run1"
 #' obj <- cls$new(indir)
-#' obj$nemofy(odir = odir, format = "parquet", id = id)
+#' obj$nemofy(diro = odir, format = "parquet", input_id = id)
 #' (lf <- list.files(odir, pattern = "cobalt.*parquet", full.names = FALSE))
 #' #TODO: add esvee test data
 #' @export

@@ -12,9 +12,9 @@ path <- here::here("nogit/oa_v2")
 w <- Wigits$new(path)
 x <-
   w$nemofy(
-    odir = "nogit/test_data",
+    diro = "nogit/test_data",
     format = "parquet",
-    id = "run1"
+    input_id = "run1"
 )
 dbconn <- DBI::dbConnect(
   drv = RPostgres::Postgres(),
@@ -24,7 +24,7 @@ dbconn <- DBI::dbConnect(
 x <-
   w$nemofy(
     format = "db",
-    id = "runABC456",
+    input_id = "runABC456",
     dbconn = dbconn
 )
 DBI::dbDisconnect(dbconn)
@@ -44,6 +44,7 @@ DBI::dbDisconnect(dbconn)
 <details><summary>Inherited methods</summary>
 <ul>
 <li><span class="pkg-link" data-pkg="nemo" data-topic="Workflow" data-id="filter_files"><a href='../../nemo/html/Workflow.html#method-Workflow-filter_files'><code>nemo::Workflow$filter_files()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="nemo" data-topic="Workflow" data-id="get_metadata"><a href='../../nemo/html/Workflow.html#method-Workflow-get_metadata'><code>nemo::Workflow$get_metadata()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="nemo" data-topic="Workflow" data-id="get_raw_schemas_all"><a href='../../nemo/html/Workflow.html#method-Workflow-get_raw_schemas_all'><code>nemo::Workflow$get_raw_schemas_all()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="nemo" data-topic="Workflow" data-id="get_tbls"><a href='../../nemo/html/Workflow.html#method-Workflow-get_tbls'><code>nemo::Workflow$get_tbls()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="nemo" data-topic="Workflow" data-id="get_tidy_schemas_all"><a href='../../nemo/html/Workflow.html#method-Workflow-get_tidy_schemas_all'><code>nemo::Workflow$get_tidy_schemas_all()</code></a></span></li>

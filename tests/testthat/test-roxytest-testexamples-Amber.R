@@ -9,7 +9,7 @@ test_that("Function Amber() @ L16", {
   odir <- tempdir()
   id <- "amber_run1"
   obj <- cls$new(indir)
-  obj$nemofy(odir = odir, format = "parquet", id = id)
+  obj$nemofy(diro = odir, format = "parquet", input_id = id)
   (lf <- list.files(odir, pattern = "amber.*parquet", full.names = FALSE))
   expect_equal(length(lf), 4)
 })

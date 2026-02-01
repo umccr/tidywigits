@@ -8,9 +8,9 @@
 #' w <- Wigits$new(path)
 #' x <-
 #'   w$nemofy(
-#'     odir = "nogit/test_data",
+#'     diro = "nogit/test_data",
 #'     format = "parquet",
-#'     id = "run1"
+#'     input_id = "run1"
 #' )
 #' dbconn <- DBI::dbConnect(
 #'   drv = RPostgres::Postgres(),
@@ -20,7 +20,7 @@
 #' x <-
 #'   w$nemofy(
 #'     format = "db",
-#'     id = "runABC456",
+#'     input_id = "runABC456",
 #'     dbconn = dbconn
 #' )
 #' DBI::dbDisconnect(dbconn)
