@@ -37,6 +37,7 @@ DBI::dbDisconnect(dbconn)
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-Wigits-new}{\code{Wigits$new()}}
+\item \href{#method-Wigits-get_metadata}{\code{Wigits$get_metadata()}}
 \item \href{#method-Wigits-clone}{\code{Wigits$clone()}}
 }
 }
@@ -44,7 +45,6 @@ DBI::dbDisconnect(dbconn)
 <details><summary>Inherited methods</summary>
 <ul>
 <li><span class="pkg-link" data-pkg="nemo" data-topic="Workflow" data-id="filter_files"><a href='../../nemo/html/Workflow.html#method-Workflow-filter_files'><code>nemo::Workflow$filter_files()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="nemo" data-topic="Workflow" data-id="get_metadata"><a href='../../nemo/html/Workflow.html#method-Workflow-get_metadata'><code>nemo::Workflow$get_metadata()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="nemo" data-topic="Workflow" data-id="get_raw_schemas_all"><a href='../../nemo/html/Workflow.html#method-Workflow-get_raw_schemas_all'><code>nemo::Workflow$get_raw_schemas_all()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="nemo" data-topic="Workflow" data-id="get_tbls"><a href='../../nemo/html/Workflow.html#method-Workflow-get_tbls'><code>nemo::Workflow$get_tbls()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="nemo" data-topic="Workflow" data-id="get_tidy_schemas_all"><a href='../../nemo/html/Workflow.html#method-Workflow-get_tidy_schemas_all'><code>nemo::Workflow$get_tidy_schemas_all()</code></a></span></li>
@@ -72,6 +72,42 @@ Create a new Wigits object.
 Path(s) to Wigits results.}
 }
 \if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Wigits-get_metadata"></a>}}
+\if{latex}{\out{\hypertarget{method-Wigits-get_metadata}{}}}
+\subsection{Method \code{get_metadata()}}{
+Get metadata. Overwrites parent class to handle
+tidywigits not being a dependency of nemo (see tidywigits issue 167)
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Wigits$get_metadata(
+  input_id,
+  output_id,
+  output_dir,
+  pkgs = c("nemo", "tidywigits")
+)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{input_id}}{(\code{character(1)})\cr
+Input ID to use for the dataset (e.g. \code{run123}).}
+
+\item{\code{output_id}}{(\code{character(1)})\cr
+Output ID to use for the dataset (e.g. \code{run123}).}
+
+\item{\code{output_dir}}{(\code{character(1)})\cr
+Output directory.}
+
+\item{\code{pkgs}}{(\code{character(n)})\cr
+Which R packages to extract versions for.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+List with metadata
 }
 }
 \if{html}{\out{<hr>}}

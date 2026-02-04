@@ -164,6 +164,7 @@ Purple <- R6::R6Class(
     tidy_somhist = function(x) {
       self$.tidy_file(x, "somhist")
     },
+
     #' @description Read `purple.version` file.
     #' @param x (`character(1)`)\cr
     #' Path to file.
