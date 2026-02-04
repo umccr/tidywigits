@@ -21,6 +21,7 @@ requirements:
     - r-glue
     - r-knitr
     - r-nemo
+    - r-purrr
     - r-r6
     - r-readr
     - r-rlang
@@ -28,6 +29,7 @@ requirements:
     - r-stringr
     - r-tibble
     - r-tidyr
+    - r-yaml
   run:
     - r-base
     - r-dplyr

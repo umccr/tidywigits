@@ -56,6 +56,25 @@ Wigits <- R6::R6Class(
         virusinterpreter = Virusinterpreter
       )
       super$initialize(name = "Wigits", path = path, tools = tools)
+    },
+    #' @description Get metadata. Overwrites parent class to handle
+    #' tidywigits not being a dependency of nemo (see tidywigits issue 167)
+    #' @param input_id (`character(1)`)\cr
+    #' Input ID to use for the dataset (e.g. `run123`).
+    #' @param output_id (`character(1)`)\cr
+    #' Output ID to use for the dataset (e.g. `run123`).
+    #' @param output_dir (`character(1)`)\cr
+    #' Output directory.
+    #' @param pkgs (`character(n)`)\cr
+    #' Which R packages to extract versions for.
+    #' @return List with metadata
+    get_metadata = function(input_id, output_id, output_dir, pkgs = c("nemo", "tidywigits")) {
+      super$get_metadata(
+        input_id = input_id,
+        output_id = output_id,
+        output_dir = output_dir,
+        pkgs = pkgs
+      )
     }
   ) # public end
 )
