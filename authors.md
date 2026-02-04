@@ -10,14 +10,14 @@
 Source:
 [`DESCRIPTION`](https://github.com/umccr/tidywigits/blob/main/DESCRIPTION)
 
-Diakumis P (2026). *tidywigits: Tidy WiGiTS*. R package version
-0.0.5.9001, https://umccr.github.io/tidywigits/,
+Diakumis P (2026). *tidywigits: Tidy WiGiTS*. R package version 0.0.6,
+https://umccr.github.io/tidywigits/,
 <https://github.com/umccr/tidywigits>.
 
     @Manual{,
       title = {tidywigits: Tidy WiGiTS},
       author = {Peter Diakumis},
       year = {2026},
-      note = {R package version 0.0.5.9001, https://umccr.github.io/tidywigits/},
+      note = {R package version 0.0.6, https://umccr.github.io/tidywigits/},
       url = {https://github.com/umccr/tidywigits},
     }
