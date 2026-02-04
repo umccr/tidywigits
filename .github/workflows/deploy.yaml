@@ -14,7 +14,7 @@ env:
   conda_recipe: deploy/conda/recipe
   conda_env_yaml: deploy/conda/env/yaml
   conda_env_lock: deploy/conda/env/lock
-  VERSION: '0.0.5.9001' # bump
+  VERSION: '0.0.6' # bump
 
 jobs:
   condarise-dockerise:
