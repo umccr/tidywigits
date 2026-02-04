@@ -17,6 +17,8 @@ BugReports: https://github.com/umccr/tidywigits/issues
 License: MIT + file LICENSE
 Depends:
     R (>= 4.4)
+Remotes:
+    umccr/nemo
 Imports:
     dplyr,
     fs,
