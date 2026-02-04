@@ -135,7 +135,7 @@ jobs:
         with:
           ref: v${{ env.VERSION }}
       - name: DVC setup
-        uses: iterative/setup-dvc@v1
+        uses: iterative/setup-dvc@v2
       - name: DVC pull
         run: |
           dvc pull

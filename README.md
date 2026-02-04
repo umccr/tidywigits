@@ -160,24 +160,24 @@ format or a PostgreSQL database as follows:
 in_dir <- system.file("extdata/oa", package = "tidywigits")
 out_dir <- tempdir() |> fs::dir_create("parquet_example")
 w <- Wigits$new(in_dir)
-res <- w$nemofy(odir = out_dir, format = "parquet", id = "parquet_example")
+res <- w$nemofy(diro = out_dir, format = "parquet", input_id = "parquet_example")
 fs::dir_info(out_dir) |>
   dplyr::mutate(bname = basename(.data$path)) |>
   dplyr::select("bname", "size", "type")
-# A tibble: 85 × 3
+# A tibble: 86 × 3
    bname                                         size type 
    <chr>                                  <fs::bytes> <fct>
- 1 sample1_2_sage_bqrtsv.parquet                 3.1K file 
- 2 sample1_alignments_dupfreq.parquet           1.95K file 
- 3 sample1_amber_bafpcf.parquet                 3.27K file 
- 4 sample1_amber_contaminationtsv.parquet       4.13K file 
- 5 sample1_amber_homozygousregion.parquet       3.18K file 
- 6 sample1_amber_qc.parquet                     2.35K file 
- 7 sample1_bamtools_coverage.parquet            1.79K file 
- 8 sample1_bamtools_exoncvg.parquet             2.97K file 
- 9 sample1_bamtools_flagstats.parquet           6.44K file 
-10 sample1_bamtools_fraglength.parquet          1.69K file 
-# ℹ 75 more rows
+ 1 metadata.json                               11.19K file 
+ 2 sample1_2_sage_bqrtsv.parquet                4.17K file 
+ 3 sample1_alignments_dupfreq.parquet           2.84K file 
+ 4 sample1_amber_bafpcf.parquet                 4.32K file 
+ 5 sample1_amber_contaminationtsv.parquet       5.27K file 
+ 6 sample1_amber_homozygousregion.parquet       4.24K file 
+ 7 sample1_amber_qc.parquet                     3.28K file 
+ 8 sample1_bamtools_coverage.parquet            2.65K file 
+ 9 sample1_bamtools_exoncvg.parquet             3.96K file 
+10 sample1_bamtools_flagstats.parquet           7.54K file 
+# ℹ 76 more rows
 ```
 
 - PostgreSQL:
@@ -193,7 +193,7 @@ dbconn <- DBI::dbConnect(
 )
 res <- w$nemofy(
   format = "db",
-  id = "db_example",
+  input_id = "db_example",
   dbconn = dbconn
 )
 ```
@@ -207,7 +207,7 @@ Using {remotes} directly from GitHub:
 ``` r
 install.packages("remotes")
 remotes::install_github("umccr/tidywigits") # latest main commit
-remotes::install_github("umccr/tidywigits@v0.0.5") # released version
+remotes::install_github("umccr/tidywigits@v0.0.5.9000") # released version
 ```
 
 Alternatively:
@@ -235,7 +235,7 @@ export PATH="${tw_cli}:${PATH}"
 ```
 
     $ tidywigits.R --version
-    tidywigits 0.0.5
+    tidywigits 0.0.5.9000
 
     #-----------------------------------#
     $ tidywigits.R --help

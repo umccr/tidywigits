@@ -67,3 +67,4 @@ reference:
     contents:
       - WIGITS_TOOLS
       - purple_plot_getter
+      - s3sync

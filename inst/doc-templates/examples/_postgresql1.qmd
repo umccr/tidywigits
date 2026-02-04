@@ -21,7 +21,7 @@ dbconn <- DBI::dbConnect(
 )
 res <- w$nemofy(
   format = "db",
-  id = "db_example",
+  input_id = "db_example",
   dbconn = dbconn
 )
 ```
