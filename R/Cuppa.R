@@ -74,7 +74,32 @@ Cuppa <- R6::R6Class(
     #' @param x (`character(1)`)\cr
     #' Path to file.
     parse_predsum = function(x) {
-      self$.parse_file(x, "predsum")
+      cnames <- nemo::file_hdr(x, delim = "\t")
+      extra_info_cols <- c("extra_info", "extra_info_format")
+      # Mess is caused due to cuppa not generating extra_info_cols for rna-only
+      # (see #issue169). Add those as empty cols as a workaround.
+      is_rna <- !all(extra_info_cols %in% cnames)
+      if (is_rna) {
+        cnames <- c(cnames, extra_info_cols)
+      }
+      schema <- nemo::schema_guess(
+        pname = "predsum",
+        cnames = cnames,
+        schemas_all = self$raw_schemas_all
+      )
+      if (is_rna) {
+        schema[["schema"]] <- schema[["schema"]] |>
+          dplyr::filter(!.data$field %in% extra_info_cols)
+      }
+      schema[["schema"]] <- schema[["schema"]] |>
+        tibble::deframe()
+      ctypes <- rlang::exec(readr::cols, !!!schema[["schema"]])
+      d <- readr::read_delim(file = x, delim = "\t", col_types = ctypes)
+      if (is_rna) {
+        d[extra_info_cols] <- NA_character_
+      }
+      attr(d, "file_version") <- schema[["version"]]
+      d[]
     },
     #' @description Tidy `cuppa.pred_summ.tsv` file.
     #' @param x (`character(1)`)\cr
