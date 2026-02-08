@@ -1,5 +1,12 @@
 # NEWS
 
+## v0.0.7 (2026-02-09)
+
+- cuppa: handle rna predsum
+  ([pr170](https://github.com/umccr/tidywigits/pull/170),
+  [iss169](https://github.com/umccr/tidywigits/issues/169))
+- s3sync: add isofox + alignments md.metrics
+
 ## v0.0.6 (2026-02-04)
 
 - Add Neo support
