@@ -4,7 +4,7 @@ with the deployed conda package:
 ```bash
 pixi init -c umccr -c conda-forge ./tidy_env
 cd ./tidy_env
-pixi add r-tidywigits==0.0.6.9001
+pixi add r-tidywigits==0.0.7
 ```
 
 Then you can create a task to run the `tidywigits.R` CLI script:
