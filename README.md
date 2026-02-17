@@ -167,7 +167,7 @@ fs::dir_info(out_dir) |>
 # A tibble: 86 × 3
    bname                                         size type 
    <chr>                                  <fs::bytes> <fct>
- 1 metadata.json                               11.19K file 
+ 1 metadata.json                               11.18K file 
  2 sample1_2_sage_bqrtsv.parquet                4.17K file 
  3 sample1_alignments_dupfreq.parquet           2.84K file 
  4 sample1_amber_bafpcf.parquet                 4.32K file 
