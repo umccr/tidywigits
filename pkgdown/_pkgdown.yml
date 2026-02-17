@@ -6,7 +6,7 @@ authors:
 home:
   title: "Tidy WiGiTS Outputs"
   description: >
-    A tidyverse R6 approach for working with the Hartwig Medical Centre's WiGiTS data.
+    Parse and tidy outputs from the Hartwig Medical Foundation's WiGiTS pipeline.
 template:
   bootstrap: 5
   bootswatch: zephyr
