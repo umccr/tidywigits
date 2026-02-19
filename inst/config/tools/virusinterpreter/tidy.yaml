@@ -88,7 +88,7 @@ tidy:
             description:
               'boolean indicating whether the detected viral presence is
               considered a driver'
-          - field: 'blacklisted'
+          - field: 'blacklisted' # changed
             type: 'char'
             description: 'Virus should be blacklisted (e.g. in case of HIV)'
           - field: 'driver_likelihood'

@@ -140,7 +140,7 @@ tidy:
           - field: 'window_count_depth'
             type: 'float'
             description: 'count of cobalt windows covered by this segment'
-          - field: 'gc_content'
+          - field: 'gc_content' # changed
             type: 'float'
             description: 'proportion of segment that is G or C'
   cnvsomtsv:
@@ -542,10 +542,10 @@ tidy:
           - field: 'loh_percent'
             type: 'float'
             description: 'LOH percentage'
-          - field: 'tinc_level'
+          - field: 'tinc_level' # changed
             type: 'float'
             description: 'tumor in normal contamination level'
-          - field: 'chimerism_percent'
+          - field: 'chimerism_percent' # changed
             type: 'float'
             description: 'chimerism percentage (presence of a donor sample)'
   somclonality:

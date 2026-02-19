@@ -4,7 +4,7 @@ tidy:
     schema:
       v1.4:
         tbl1:
-          - field: 'sample_id'
+          - field: 'sample_id' # changed
             type: 'char'
             description: 'sample ID'
           - field: 'category'

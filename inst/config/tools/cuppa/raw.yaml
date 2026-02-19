@@ -7,7 +7,7 @@ raw:
     ftype: 'csv'
     schema:
       v1.4:
-        - field: 'SampleId'
+        - field: 'SampleId' # changed
           type: 'char'
         - field: 'Category'
           type: 'char'

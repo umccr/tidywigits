@@ -46,7 +46,7 @@ raw:
           type: 'char' # handle null
         - field: 'reported'
           type: 'char'
-        - field: 'blacklisted'
+        - field: 'blacklisted' # changed
           type: 'char'
         - field: 'driverLikelihood'
           type: 'char'
