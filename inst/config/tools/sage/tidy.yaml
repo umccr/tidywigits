@@ -33,7 +33,7 @@ tidy:
           - field: 'context'
             type: 'char'
             description: 'trinucleotide context'
-          - field: 'read_type' # new
+          - field: 'read_type' # changed
             type: 'char'
             description: 'read type'
           - field: 'count'

@@ -6,6 +6,21 @@ raw:
     pattern: "\\.cup\\.data\\.csv$"
     ftype: 'csv'
     schema:
+      v1.4:
+        - field: 'SampleId' # changed
+          type: 'char'
+        - field: 'Category'
+          type: 'char'
+        - field: 'ResultType'
+          type: 'char'
+        - field: 'DataType'
+          type: 'char'
+        - field: 'Value'
+          type: 'char'
+        - field: 'RefCancerType'
+          type: 'char'
+        - field: 'RefValue'
+          type: 'float'
       latest:
         - field: 'Category'
           type: 'char'

@@ -44,21 +44,21 @@ raw:
           type: 'float'
         - field: 'totalExonCount'
           type: 'float'
-        - field: 'type' # old
+        - field: 'type' # changed
           type: 'char'
-        - field: 'chromosome' # old
+        - field: 'chromosome' # changed
           type: 'char'
-        - field: 'orientation' # old
+        - field: 'orientation' # changed
           type: 'char'
-        - field: 'strand' # old
+        - field: 'strand' # changed
           type: 'char'
-        - field: 'chrBand' # old
+        - field: 'chrBand' # changed
           type: 'char'
         - field: 'exonUp'
           type: 'float'
         - field: 'exonDown'
           type: 'float'
-        - field: 'junctionCopyNumber' # old
+        - field: 'junctionCopyNumber' # changed
           type: 'float'
       latest:
         - field: 'id'
@@ -369,7 +369,7 @@ raw:
     ftype: 'tsv'
     schema:
       v1.25:
-        - field: 'SampleId'
+        - field: 'SampleId' # changed
           type: 'char'
         - field: 'Chromosome'
           type: 'char'
@@ -398,7 +398,7 @@ raw:
     ftype: 'tsv'
     schema:
       v1.25:
-        - field: 'SampleId'
+        - field: 'SampleId' # changed
           type: 'char'
         - field: 'ClusterId'
           type: 'char'
@@ -471,7 +471,7 @@ raw:
     ftype: 'tsv'
     schema:
       v1.25:
-        - field: 'SampleId'
+        - field: 'SampleId' # changed
           type: 'char'
         - field: 'ClusterId'
           type: 'char'
@@ -512,7 +512,7 @@ raw:
     ftype: 'tsv'
     schema:
       v1.25:
-        - field: 'SampleId'
+        - field: 'SampleId' # changed
           type: 'char'
         - field: 'ClusterId'
           type: 'char'
@@ -545,7 +545,7 @@ raw:
     ftype: 'tsv'
     schema:
       v1.25:
-        - field: 'SampleId'
+        - field: 'SampleId' # changed
           type: 'char'
         - field: 'ClusterId'
           type: 'char'
@@ -582,7 +582,7 @@ raw:
     ftype: 'tsv'
     schema:
       v1.25:
-        - field: 'SampleId'
+        - field: 'SampleId' # changed
           type: 'char'
         - field: 'ClusterId'
           type: 'char'

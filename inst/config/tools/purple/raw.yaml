@@ -80,7 +80,7 @@ raw:
           type: 'float'
         - field: 'depthWindowCount'
           type: 'float'
-        - field: 'gcContent'
+        - field: 'gcContent' # changed
           type: 'float'
   cnvsomtsv:
     description: 'Copy number profile of all (contiguous) segments of the tumor sample.'
@@ -327,9 +327,9 @@ raw:
           type: 'float'
         - field: 'LohPercent'
           type: 'float'
-        - field: 'TincLevel'
+        - field: 'TincLevel' # changed
           type: 'float'
-        - field: 'ChimerismPercentage'
+        - field: 'ChimerismPercentage' # changed
           type: 'float'
   somclonality:
     description: 'Clonality peak model data.'

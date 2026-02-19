@@ -79,19 +79,19 @@ tidy:
           - field: 'total_exon_count'
             type: 'float'
             description: 'total number of exons in the transcript'
-          - field: 'type' # old
+          - field: 'type' # changed
             type: 'char'
             description: 'type of breakend'
-          - field: 'chrom' # old
+          - field: 'chrom' # changed
             type: 'char'
             description: 'chromosome'
-          - field: 'orientation' # old
+          - field: 'orientation' # changed
             type: 'char'
             description: 'orientation'
-          - field: 'strand' # old
+          - field: 'strand' # changed
             type: 'char'
             description: 'strand'
-          - field: 'chr_band' # old
+          - field: 'chr_band' # changed
             type: 'char'
             description: 'chromosome band'
           - field: 'exon_up'
@@ -100,7 +100,7 @@ tidy:
           - field: 'exon_down'
             type: 'float'
             description: '.'
-          - field: 'junction_cn' # old
+          - field: 'junction_cn' # changed
             type: 'float'
             description: 'junction cn'
       latest:
@@ -583,7 +583,7 @@ tidy:
     schema:
       v1.25:
         tbl1:
-          - field: 'sample_id'
+          - field: 'sample_id' # changed
             type: 'char'
             description: 'sample ID'
           - field: 'chrom'
@@ -623,7 +623,7 @@ tidy:
     schema:
       v1.25:
         tbl1:
-          - field: 'sample_id'
+          - field: 'sample_id' # changed
             type: 'char'
             description: 'sample ID'
           - field: 'cluster_id'
@@ -729,7 +729,7 @@ tidy:
     schema:
       v1.25:
         tbl1:
-          - field: 'sample_id'
+          - field: 'sample_id' # changed
             type: 'char'
             description: 'sample ID'
           - field: 'cluster_id'
@@ -787,7 +787,7 @@ tidy:
     schema:
       v1.25:
         tbl1:
-          - field: 'sample_id'
+          - field: 'sample_id' # changed
             type: 'char'
             description: 'sample ID'
           - field: 'cluster_id'
@@ -833,7 +833,7 @@ tidy:
     schema:
       v1.25:
         tbl1:
-          - field: 'sample_id'
+          - field: 'sample_id' # changed
             type: 'char'
             description: 'sample ID'
           - field: 'cluster_id'
@@ -885,7 +885,7 @@ tidy:
     schema:
       v1.25:
         tbl1:
-          - field: 'sample_id'
+          - field: 'sample_id' # changed
             type: 'char'
             description: 'sample ID'
           - field: 'cluster_id'
